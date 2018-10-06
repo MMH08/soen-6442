@@ -1,15 +1,21 @@
 package com.soen.risk.entity;
 
+/**
+ *
+ */
 public class Country {
-	private int id;
 	private String name;
 	private String coordinateX;
 	private String coordinateY;
 	private int army;
-	
+
+	/**
+	 *
+	 *
+	 * @param name
+	 */
 	// -------------------------------------------------------------
-	public Country(int id, String name) {
-		this.setId(id);
+	public Country(String name) {
 		this.setName(name);
 	}
 	
@@ -21,14 +27,6 @@ public class Country {
 
 	public void setArmy(int army) {
 		this.army = army;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getName() {

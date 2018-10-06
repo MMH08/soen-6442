@@ -1,46 +1,89 @@
 package com.soen.risk.entity;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+/**
+ *
+ * @author :
+ *
+ */
 public class Map {
-	private final int MAX_COUNTRIES = 26;
 	private String name;
 	
 	private List<Continent> continents;
 	
 	private List<Country> countries;
-	private int adjCountry[][];
-	
-	// -------------------------------------------------------------
-	
-	public Map(String name) {
-		this.setName(name);
+	private  LinkedList<LinkedList> adjCountry;
+
+    /**
+     *
+     */
+	public Map() {
 		this.continents = new ArrayList<>();
 		this.countries = new ArrayList<>();
-		this.adjCountry = new int[MAX_COUNTRIES][MAX_COUNTRIES];
+		this.adjCountry = new LinkedList<>();
 	}
-	
+
+    /**
+     * @param continent
+     */
 	public void addContinent(Continent continent) {
 		continents.add(continent);
 	}
-	
+
+    /**
+     * @param country1
+     * @param country2
+     */
 	public void connect(Country country1, Country country2) {
-		adjCountry[country1.getId()][country2.getId()] = 1;
-		adjCountry[country2.getId()][country1.getId()] = 1;
 	}
-	
-	public void addCountry(Country country) {
-		countries.add(country);
-	}
-	
+
 	// -------------------------------------------------------------
-	
+
+    /**
+     *
+     * @param filename
+     *
+     * @since 2018-10-06
+     * @author Amit Sachdev
+     */
+	public void load(String filename) {
+	}
+
+	/**
+     *
+     *
+     * @since 2018-10-06
+     * @author Manmeet Singh
+     */
+	public void save() {
+	}
+
+    /**
+     * @return
+     *
+     * @author Nivetha
+     * @since 2018-10-06
+     */
+	public boolean isValid(){
+	    return false;
+    }
 	
 	
 	// -------------------------------------------------------------
 
-	public String getName() {
+    /**
+     * @param country
+     */
+    private void addCountry(Country country) {
+        countries.add(country);
+    }
+
+    // -------------------------------------------------------------
+
+    public String getName() {
 		return name;
 	}
 
@@ -55,17 +98,14 @@ public class Map {
 		this.countries = countries;
 	}
 
-	public int[][] getAdjCountry() {
+	public LinkedList getAdjCountry() {
 		return adjCountry;
 	}
 
-	public void setAdjCountry(int[][] adjCountry) {
+	public void setAdjCountry(LinkedList adjCountry) {
 		this.adjCountry = adjCountry;
 	}
 
-	public int getMAX_COUNTRIES() {
-		return MAX_COUNTRIES;
-	}
 
 	// -------------------------------------------------------------
 

@@ -3,17 +3,26 @@ package com.soen.risk.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class Player {
 	private String name;
 	private int armyCapacity;
 	private List<Country> countries;
-	
+
+	/**
+	 *
+	 */
 	// -------------------------------------------------------------
-	public Player(String name) {
-		this.setName(name);
+	public Player(int nameSuffix) {
+		this.name = "Player_" + String.valueOf(nameSuffix);
 		this.countries = new ArrayList<>();
 	}
-	
+
+	/**
+	 * @param c
+	 */
 	public void addCountry(Country c) {
 		this.countries.add(c);
 	}
@@ -34,13 +43,5 @@ public class Player {
 	public void setArmyCapacity(int armyCapacity) {
 		this.armyCapacity = armyCapacity;
 	}
-
-//	public List<Country> getCountries() {
-//		return countries;
-//	}
-//
-//	public void setCountries(List<Country> countries) {
-//		this.countries = countries;
-//	}
 
 }

@@ -3,21 +3,36 @@ package com.soen.risk.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class Game {
+	private int countOfPlayers;
 	private Map map;
 	private List<Player> players;
-	
-	public Game(Map map) {
+
+	/**
+	 * @param map
+	 * @param countOfPlayers
+	 */
+	public Game(Map map, int countOfPlayers) {
 		this.map = map;
+		this.countOfPlayers = countOfPlayers;
 		this.players = new ArrayList<>();
 	}
-	
+
+	/**
+	 * @param p
+	 */
 	public void addPlayer(Player p) {
 		players.add(p);
 	}
 	
 	// -------------------------------------------------------------
-	
+
+	/**
+	 * @return
+	 */
 	public boolean isNotOver() {
 		//return (map.fetchOwners().size() == 1) ? false: true;	
 		return false;

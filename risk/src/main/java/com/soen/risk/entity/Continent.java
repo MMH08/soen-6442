@@ -3,34 +3,33 @@ package com.soen.risk.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class Continent {
 
-	private int id;
 	private String name;
 	private int controlValue;
 	private List<Country> countries;
 
 	// -------------------------------------------------------------
 
-	public Continent(int id, String name) {
-		this.id = id;
+	/**
+	 * @param name
+	 */
+	public Continent(String name) {
 		this.name = name;
 		this.countries = new ArrayList<>();
 	}
 
+	/**
+	 * @param country
+	 */
 	public void addCountry(Country country) {
 		this.countries.add(country);
 	}
 
 	// -------------------------------------------------------------
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
