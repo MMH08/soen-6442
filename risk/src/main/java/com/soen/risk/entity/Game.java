@@ -10,6 +10,7 @@ public class Game {
 	private int countOfPlayers;
 	private Map map;
 	private List<Player> players;
+	private String[] phases = { "reinforce", "attack", "fortify" };
 
 	/**
 	 * @param map
@@ -59,6 +60,12 @@ public class Game {
 		// TODO Auto-generated method stub
 		
 	}
-	
 
+    public String[] getPhases() {
+        return phases;
+    }
+
+    public void setPhases(String[] phases) {
+        this.phases = phases;
+    }
 }
