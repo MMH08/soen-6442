@@ -1,8 +1,9 @@
 package com.soen.risk.entity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
+import java.util.Random;
 /**
  *
  *
@@ -48,15 +49,21 @@ public class Game {
     }
 
     public void allocateInitialCountries(){
-        // random assignment
-        // for each country in this.map.getCountries()
-        // shuffle player from the this.players
-        // player.addCountry(Country object)
+    	Random rand = new Random();
+    	for(Country country: map.getCountries()) {
+    		int indexOfPlayer = rand.nextInt(players.size());
+    		players.get(indexOfPlayer).addCountry(country);
+    	}
     }
-
-    public void allocateInitialArmy(){
-        // for each player this.players
-        // armyCapacity has to be filled in
+    
+    //Army size = number of countries with each player * (2-4) times)
+    public void allocateInitialArmy() {
+    	Random rand = new Random();
+    	for(Player player: players)
+    	{
+    		player.setArmyCapacity(player.getCountry().size() * (2 +  rand.nextInt(2)));   		
+    		
+    	}
     }
 
     // -------------------------------------------------------------
