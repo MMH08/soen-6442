@@ -26,7 +26,10 @@ public class Player {
 	public void addCountry(Country c) {
 		this.countries.add(c);
 	}
-	
+	public List<Country> getCountry()
+	{
+		return this.countries;
+	}
 	// -------------------------------------------------------------
 	public String getName() {
 		return name;
