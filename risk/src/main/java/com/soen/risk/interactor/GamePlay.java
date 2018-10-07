@@ -1,5 +1,7 @@
 package com.soen.risk.interactor;
 
+import java.util.ArrayList;
+
 import com.soen.risk.entity.Game;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.Player;
@@ -34,11 +36,42 @@ public class GamePlay {
 
     public void updateCurrentPhase(){
         String[] phases = {"reinforcePhase", "attackPhase", "fortifyPhase"};
+        for(int i=0;i<phases.length;i++)
+        {
+        	if(currentPhase.getName().equals(phases[i]))
+        	{
+        		if(i == phases.length -1)
+        		 {
+        			this.setCurrentPhase(PhaseFactory.build(phases[0]));
+        		 }
+        		else 
+        		{
+        			this.setCurrentPhase(PhaseFactory.build(phases[i+1]));
+        		}
+        	}
+        }
         // change phase in circular fashion.
     }
 
     public void updateCurrentPlayer(){
-        // change player in circular fashion.
+        
+        int count = 0;
+        for(Player p:  game.getPlayers())
+        {
+        	if(p.getName().equals(currentPlayer.getName()))
+        	{
+        		if(count == game.getPlayers().size()-1)
+        		{
+        			currentPlayer = game.getPlayers().get(0);
+        		}
+        		else 
+        		{
+        			currentPlayer = game.getPlayers().get(count+1);
+        		}
+        		break;
+        	}
+        	count++;
+        }
 
     }
 
@@ -61,15 +94,6 @@ public class GamePlay {
     public void setCurrentPhase(Phase currentPhase) {
         this.currentPhase = currentPhase;
     }
-    //    public void executePhases() {
-//        while (game.isNotOver()) {
-//            for (Player player : this.game.getPlayers()) {
-//                for (String phaseName : this.game.getPhases()) {
-//                    PhaseFactory.Phase phase = PhaseFactory.build(phaseName);
-//                    phase.execute();
-//                }
-//            }
-//        }
-//    }
+   
 
 }
