@@ -2,7 +2,6 @@ package com.soen.risk.interactor;
 
 import com.soen.risk.entity.Game;
 import com.soen.risk.entity.Map;
-import com.soen.risk.entity.Player;
 
 public class GamePlay {
     private static GamePlay gamePlayInstance = null;
