@@ -26,10 +26,21 @@ public class Player {
 	public void addCountry(Country c) {
 		this.countries.add(c);
 	}
-	public List<Country> getCountry()
+
+	public List<Country> getCountries()
 	{
 		return this.countries;
 	}
+
+	/**
+	 *
+	 *
+	 * @return
+	 */
+	public String nextCountryToAssignArmy(){
+		return null;
+	}
+
 	// -------------------------------------------------------------
 	public String getName() {
 		return name;

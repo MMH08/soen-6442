@@ -6,6 +6,7 @@ import com.soen.risk.interactor.GamePlay;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/risk")
@@ -30,9 +31,13 @@ public class ApiController {
     }
 
     @RequestMapping("/startupPhase")
-    public String startupPhase() {
+    public ModelAndView startupPhase() {
+        ModelAndView model = new ModelAndView("startupphase");
         Player player = GamePlay.getInstance().getCurrentPlayer();
-        return "startupphase";
+        model.addObject("armyCapacity", player.getArmyCapacity());
+        model.addObject("playerName", player.getName());
+        model.addObject("countryName", player.nextCountryToAssignArmy());
+        return model;
     }
 
     @RequestMapping("/reinforcePhase")
