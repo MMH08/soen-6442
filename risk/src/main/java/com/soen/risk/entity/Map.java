@@ -50,6 +50,7 @@ public class Map {
      * @author Amit Sachdev
      */
 	public void load(String filename) {
+
 	}
 
 	/**

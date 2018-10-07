@@ -17,4 +17,28 @@ public class GameTest {
     @Test
     public void assignArmy() {
     }
+
+    @Test
+    public void allocateInitialCountries() {
+    }
+
+    @Test
+    public void allocateInitialArmy() {
+    }
+
+    @Test
+    public void getMap() {
+    }
+
+    @Test
+    public void setMap() {
+    }
+
+    @Test
+    public void getPlayers() {
+    }
+
+    @Test
+    public void setPlayers() {
+    }
 }

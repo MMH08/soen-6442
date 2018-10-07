@@ -46,6 +46,19 @@ public class Game {
         //return (map.fetchOwners().size() == 1) ? false: true;
         return false;
     }
+
+    public void allocateInitialCountries(){
+        // random assignment
+        // for each country in this.map.getCountries()
+        // shuffle player from the this.players
+        // player.addCountry(Country object)
+    }
+
+    public void allocateInitialArmy(){
+        // for each player this.players
+        // armyCapacity has to be filled in
+    }
+
     // -------------------------------------------------------------
 
     public Map getMap() {
@@ -64,16 +77,4 @@ public class Game {
         this.players = players;
     }
 
-    public void assignArmy(Player p) {
-        // TODO Auto-generated method stub
-
-    }
-
-    public String[] getPhases() {
-        return phases;
-    }
-
-    public void setPhases(String[] phases) {
-        this.phases = phases;
-    }
 }

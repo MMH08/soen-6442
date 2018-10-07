@@ -1,9 +1,9 @@
 package com.soen.risk.interactor.phase;
 
-import com.soen.risk.interactor.PhaseFactory;
+import com.soen.risk.interactor.Phase;
 
-public class ReinforcePhase implements PhaseFactory.Phase {
-    @Override
+public class ReinforcePhase extends Phase {
+
     public void execute() {
 
     }
