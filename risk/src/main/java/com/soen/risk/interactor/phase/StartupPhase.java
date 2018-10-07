@@ -4,7 +4,11 @@ import com.soen.risk.interactor.Phase;
 
 public class StartupPhase extends Phase {
 
-    public void execute() {
+    public StartupPhase(){
+        this.setName("startupPhase");
+    }
+
+    public void execute(String countryName, int armyCount) {
 
     }
 }

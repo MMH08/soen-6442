@@ -1,15 +1,13 @@
 package com.soen.risk.controller;
 
-import com.soen.risk.entity.Game;
 import com.soen.risk.entity.Map;
+import com.soen.risk.entity.Player;
 import com.soen.risk.interactor.GamePlay;
-import com.soen.risk.interactor.Phase;
-import com.soen.risk.interactor.PhaseFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/risk")
 public class ApiController {
 
@@ -19,17 +17,39 @@ public class ApiController {
     }
 
     @RequestMapping("/GamePlay")
-    public Game play(@RequestParam("filename") String filename, @RequestParam("players") int countOfPlayers) {
+    public String play(@RequestParam("filename") String filename, @RequestParam("players") int countOfPlayers) {
         GamePlay gamePlay = GamePlay.getInstance();
         gamePlay.build(filename, countOfPlayers);
-        return gamePlay.getGame();
+        return "gameplay";
+    }
+
+    @RequestMapping("/phaseResolver")
+    public String phaseResolver() {
+        GamePlay gamePlay = GamePlay.getInstance();
+        return "redirect:/" + gamePlay.getCurrentPhase().getName();
+    }
+
+    @RequestMapping("/startupPhase")
+    public String startupPhase() {
+        Player player = GamePlay.getInstance().getCurrentPlayer();
+        return "startupphase";
+    }
+
+    @RequestMapping("/reinforcePhase")
+    public String reinforcePhase() {
+        Player player = GamePlay.getInstance().getCurrentPlayer();
+        return "reinforcephase";
+    }
+
+    @RequestMapping("/fortifyPhase")
+    public String fortifyPhase() {
+        Player player = GamePlay.getInstance().getCurrentPlayer();
+        return "fortifyphase";
     }
 
     @RequestMapping("/addArmy")
-    public Game addArmyToOwnCountry(@RequestParam("armyCount") int armyCount, @RequestParam("country") String countryName) {
-        Phase phase = PhaseFactory.build("startup");
-        phase.execute();
-        return phase.getGame();
+    public void addArmyToOwnCountry(@RequestParam("armyCount") int armyCount,
+                                    @RequestParam("country") String countryName) {
     }
 
     @RequestMapping("/nextMove")

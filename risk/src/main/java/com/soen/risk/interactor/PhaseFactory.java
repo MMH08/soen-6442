@@ -6,16 +6,16 @@ import com.soen.risk.interactor.phase.FortifyPhase;
 import com.soen.risk.interactor.phase.ReinforcePhase;
 import com.soen.risk.interactor.phase.StartupPhase;
 
-public class PhaseFactory {
-    public static Phase build(String name) {
+class PhaseFactory {
+    static Phase build(String name) {
         switch (name.toLowerCase()) {
-            case "startup":
+            case "startupphase":
                 return new StartupPhase();
-            case "reinforce":
+            case "reinforcephase":
                 return new ReinforcePhase();
-            case "attack":
+            case "attackphase":
                 return new AttackPhase();
-            case "fortify":
+            case "fortifyphase":
                 return new FortifyPhase();
         }
         return null;

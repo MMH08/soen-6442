@@ -1,15 +1,13 @@
 package com.soen.risk.interactor;
 
-import com.soen.risk.entity.Game;
+public class Phase {
+    private String name;
 
-public abstract class Phase {
-    private GamePlay gamePlay = GamePlay.getInstance();
-
-    public abstract void execute();
-
-    public Game getGame(){
-        return this.gamePlay.getGame();
+    public String getName(){
+        return this.name;
     }
 
-
+    public void setName(String name){
+        this.name = name;
+    }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 public class Game {
     private Map map;
     private List<Player> players;
-    private String[] phases = {"reinforce", "attack", "fortify"};
 
     /**
      *
