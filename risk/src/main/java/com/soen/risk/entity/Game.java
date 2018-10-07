@@ -60,7 +60,7 @@ public class Game {
     	Random rand = new Random();
     	for(Player player: players)
     	{
-    		player.setArmyCapacity(player.getCountry().size() * (2 +  rand.nextInt(2)));   		
+    		player.setArmyCapacity(player.getCountries().size() * (2 +  rand.nextInt(2)));
     		
     	}
     }
