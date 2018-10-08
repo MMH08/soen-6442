@@ -3,13 +3,14 @@ package com.soen.risk.controller;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.Player;
 import com.soen.risk.interactor.GamePlay;
+import com.soen.risk.interactor.Phase;
+import com.soen.risk.interactor.phase.StartupPhase;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/risk")
 public class ApiController {
 
     @RequestMapping("/createMap")
@@ -53,8 +54,12 @@ public class ApiController {
     }
 
     @RequestMapping("/addArmy")
-    public void addArmyToOwnCountry(@RequestParam("armyCount") int armyCount,
+    public String addArmyToOwnCountry(@RequestParam("playerName") String playerName,
+                                    @RequestParam("armyCount") int armyCount,
                                     @RequestParam("country") String countryName) {
+        StartupPhase phase = new StartupPhase();
+        phase.execute(playerName, countryName, armyCount);
+        return "redirect:/phaseResolver";
     }
 
     @RequestMapping("/nextMove")
