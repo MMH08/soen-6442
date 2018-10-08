@@ -258,7 +258,10 @@ public class Map {
 	public void setAdjCountry(LinkedList adjCountry) {
 		this.adjCountry = adjCountry;
 	}
-
+	public ArrayList<Continent> getContinents()
+	{
+		return continents;
+	}
 
 	// -------------------------------------------------------------
 

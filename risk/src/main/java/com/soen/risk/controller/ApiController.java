@@ -58,7 +58,7 @@ public class ApiController {
                                     @RequestParam("armyCount") int armyCount,
                                     @RequestParam("country") String countryName) {
         StartupPhase phase = new StartupPhase();
-        phase.execute(playerName, countryName, armyCount);
+        phase.execute(countryName, armyCount);
         return "redirect:/phaseResolver";
     }
 

@@ -38,8 +38,15 @@ public class Player {
 	 * @return
 	 */
 	public String nextCountryToAssignArmy(){
-		return null;
-		//Count
+		
+		for(Country c: countries)
+		{
+			if(c.getArmy() == 0)
+			{
+				return c.getName();
+			}
+		}
+		return "";
 	}
 
 	// -------------------------------------------------------------
