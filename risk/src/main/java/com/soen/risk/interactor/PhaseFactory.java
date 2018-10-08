@@ -6,7 +6,7 @@ import com.soen.risk.interactor.phase.FortifyPhase;
 import com.soen.risk.interactor.phase.ReinforcePhase;
 import com.soen.risk.interactor.phase.StartupPhase;
 
-class PhaseFactory {
+public class PhaseFactory {
     static Phase build(String name) {
         switch (name.toLowerCase()) {
             case "startupphase":
@@ -19,6 +19,15 @@ class PhaseFactory {
                 return new FortifyPhase();
         }
         return null;
+    }
+
+    public interface Phase<T> {
+        public boolean isValid();
+        public void begin();
+        public void execute(T request);
+        public void exit();
+        public String getName();
+
     }
 }
 

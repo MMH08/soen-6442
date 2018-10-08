@@ -1,14 +1,38 @@
 package com.soen.risk.interactor.phase;
 
-import com.soen.risk.interactor.Phase;
 
-public class AttackPhase extends Phase {
+import com.soen.risk.boundary.AttackPhaseRequest;
+import com.soen.risk.interactor.PhaseFactory;
 
-    public AttackPhase(){
-        this.setName("attackPhase");
+public class AttackPhase implements PhaseFactory.Phase<AttackPhaseRequest> {
+    private String name;
+
+    public AttackPhase() {
+        this.name = "attackPhase";
     }
 
-    public void execute() {
+    @Override
+    public boolean isValid() {
+        return false;
+    }
 
+    @Override
+    public void begin() {
+
+    }
+
+    @Override
+    public void execute(AttackPhaseRequest request) {
+
+    }
+
+    @Override
+    public void exit() {
+
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }

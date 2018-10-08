@@ -1,13 +1,37 @@
 package com.soen.risk.interactor.phase;
 
-import com.soen.risk.interactor.Phase;
+import com.soen.risk.boundary.FortifyPhaseRequest;
+import com.soen.risk.interactor.PhaseFactory;
 
-public class FortifyPhase extends Phase {
+public class FortifyPhase implements PhaseFactory.Phase<FortifyPhaseRequest> {
+    private String name;
+
     public FortifyPhase(){
-        this.setName("fortifyPhase");
+        this.name = "fortifyPhase";
     }
 
-    public void execute() {
+    @Override
+    public boolean isValid() {
+        return false;
+    }
 
+    @Override
+    public void begin() {
+
+    }
+
+    @Override
+    public void execute(FortifyPhaseRequest request) {
+
+    }
+
+    @Override
+    public void exit() {
+
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }

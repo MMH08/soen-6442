@@ -1,9 +1,11 @@
 package com.soen.risk.controller;
 
+import com.soen.risk.boundary.ReinforcePhaseRequest;
+import com.soen.risk.boundary.StartupPhaseRequest;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.Player;
 import com.soen.risk.interactor.GamePlay;
-import com.soen.risk.interactor.Phase;
+import com.soen.risk.interactor.phase.ReinforcePhase;
 import com.soen.risk.interactor.phase.StartupPhase;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +20,13 @@ public class ApiController {
         Map map = new Map();
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+
     @RequestMapping("/GamePlay")
     public String play(@RequestParam("filename") String filename, @RequestParam("players") int countOfPlayers) {
         GamePlay gamePlay = GamePlay.getInstance();
         gamePlay.build(filename, countOfPlayers);
-        return "gameplay";
+        return "redirect:/phaseResolver";
     }
 
     @RequestMapping("/phaseResolver")
@@ -37,34 +41,42 @@ public class ApiController {
         Player player = GamePlay.getInstance().getCurrentPlayer();
         model.addObject("armyCapacity", player.getArmyCapacity());
         model.addObject("playerName", player.getName());
-        model.addObject("countryName", player.nextCountryToAssignArmy());
+        model.addObject("countryName", player.nextCountryToAssignArmy().getName());
         return model;
     }
 
-    @RequestMapping("/reinforcePhase")
-    public String reinforcePhase() {
-        Player player = GamePlay.getInstance().getCurrentPlayer();
-        return "reinforcephase";
-    }
-
-    @RequestMapping("/fortifyPhase")
-    public String fortifyPhase() {
-        Player player = GamePlay.getInstance().getCurrentPlayer();
-        return "fortifyphase";
-    }
-
-    @RequestMapping("/addArmy")
-    public String addArmyToOwnCountry(@RequestParam("playerName") String playerName,
-                                    @RequestParam("armyCount") int armyCount,
-                                    @RequestParam("country") String countryName) {
+    @RequestMapping("/startupPhase/addArmy")
+    public String addArmyToOwnCountry(@RequestParam("armyCount") int armyCount,
+                                      @RequestParam("country") String countryName) {
+        StartupPhaseRequest request = new StartupPhaseRequest(countryName, armyCount);
         StartupPhase phase = new StartupPhase();
-        phase.execute(countryName, armyCount);
+        phase.execute(request);
         return "redirect:/phaseResolver";
     }
 
-    @RequestMapping("/nextMove")
-    public void nextMove() {
-        GamePlay.getInstance();
+    @RequestMapping("/reinforcePhase")
+    public ModelAndView reinforcePhase() {
+        ModelAndView model = new ModelAndView("reinforcephase");
+        GamePlay gamePlay = GamePlay.getInstance();
+        Player player = gamePlay.getCurrentPlayer();
+        model.addObject("playerName", player.getName());
+        model.addObject("reinforceArmyCount", player.getReinforceArmyCapacity(gamePlay.getGame().getMap()));
+        model.addObject("countryNames", player.getCountries());
+        return model;
+    }
+
+    @RequestMapping("/reinforcePhase/addArmy")
+    public String addReinforceArmy(@RequestParam("countryNames") String countryNames, @RequestParam("armyCounts") String armyCounts) {
+        ReinforcePhaseRequest request = new ReinforcePhaseRequest(countryNames, armyCounts);
+        new ReinforcePhase().execute(request);
+        return "redirect:/phaseResolver";
+    }
+
+    @RequestMapping("/fortifyPhase")
+    public ModelAndView fortifyPhase() {
+        ModelAndView model = new ModelAndView("fortifyphase");
+        Player player = GamePlay.getInstance().getCurrentPlayer();
+        return model;
     }
 
 }
