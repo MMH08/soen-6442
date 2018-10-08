@@ -13,7 +13,7 @@ public class AttackPhase implements PhaseFactory.Phase<AttackPhaseRequest> {
 
     @Override
     public boolean isValid() {
-        return false;
+        return true;
     }
 
     @Override

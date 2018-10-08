@@ -7,23 +7,26 @@ import com.soen.risk.interactor.PhaseFactory;
 
 public class StartupPhase implements PhaseFactory.Phase<StartupPhaseRequest> {
     private String name;
+    private GamePlay gamePlay;
 
     public StartupPhase() {
         this.name = "startupPhase";
+        this.gamePlay = GamePlay.getInstance();
     }
 
     public boolean isValid(){
-        return false;
+        // TODO: Add method to skip the player in case all countries have been filled.
+        // gamePlay.getCurrentPlayer()
+        // in case of false, call exit()
+        return true;
     }
 
     public void begin(){
-
     }
 
     @Override
     public void execute(StartupPhaseRequest request) {
-        Map m = GamePlay.getInstance().getGame().getMap();
-        for (Country c : m.getCountries()) {
+        for (Country c : this.gamePlay.getGame().getMap().getCountries()) {
             if (c.getName().equals(request.getCountryName())) {
                 c.setArmy(request.getArmyCount());
                 break;
@@ -32,7 +35,7 @@ public class StartupPhase implements PhaseFactory.Phase<StartupPhaseRequest> {
     }
 
     public void exit(){
-
+        this.gamePlay.updateCurrentPlayer();
     }
 
     public String getName(){

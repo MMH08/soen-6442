@@ -50,7 +50,11 @@ public class ApiController {
                                       @RequestParam("country") String countryName) {
         StartupPhaseRequest request = new StartupPhaseRequest(countryName, armyCount);
         StartupPhase phase = new StartupPhase();
-        phase.execute(request);
+        if (phase.isValid()) {
+            phase.begin();
+            phase.execute(request);
+            phase.exit();
+        }
         return "redirect:/phaseResolver";
     }
 
@@ -68,7 +72,12 @@ public class ApiController {
     @RequestMapping("/reinforcePhase/addArmy")
     public String addReinforceArmy(@RequestParam("countryNames") String countryNames, @RequestParam("armyCounts") String armyCounts) {
         ReinforcePhaseRequest request = new ReinforcePhaseRequest(countryNames, armyCounts);
-        new ReinforcePhase().execute(request);
+        ReinforcePhase phase = new ReinforcePhase();
+        if (phase.isValid()) {
+            phase.begin();
+            phase.execute(request);
+            phase.exit();
+        }
         return "redirect:/phaseResolver";
     }
 
@@ -76,6 +85,7 @@ public class ApiController {
     public ModelAndView fortifyPhase() {
         ModelAndView model = new ModelAndView("fortifyphase");
         Player player = GamePlay.getInstance().getCurrentPlayer();
+        model.addObject("playerName", player.getName());
         return model;
     }
 

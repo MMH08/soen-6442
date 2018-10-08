@@ -16,7 +16,7 @@ public class ReinforcePhase implements PhaseFactory.Phase<ReinforcePhaseRequest>
 
     @Override
     public boolean isValid() {
-        return false;
+        return true;
     }
 
     @Override

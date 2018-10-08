@@ -12,7 +12,7 @@ public class FortifyPhase implements PhaseFactory.Phase<FortifyPhaseRequest> {
 
     @Override
     public boolean isValid() {
-        return false;
+        return true;
     }
 
     @Override
