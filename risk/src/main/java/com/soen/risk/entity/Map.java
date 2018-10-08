@@ -2,6 +2,7 @@ package com.soen.risk.entity;
 
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -214,16 +215,46 @@ public class Map {
 	public void save() {
 	}
 
-    /**
-     * @return
-     *
+	/**
+     * Validates the continents and country objects for duplicate values.
+     * @return true is no duplicates found
+     *		   false for duplicate occurrence
      * @author Nivetha
      * @since 2018-10-06
      */
 	public boolean isValid(){
-	    return false;
-    }
-	
+		
+		if(!continents.isEmpty()) {
+		HashSet<String> hs = new HashSet<String>();
+		for (Continent u : continents) {
+			
+			  if(hs.add(u.getName())==false)
+			        System.out.println("Continents"+u.getName()); 
+			  return false;
+			}  
+		}
+		else
+		{
+			System.out.println("Continents are empty");
+			return false;
+		}
+		if(!countries.isEmpty()) {
+		HashSet<String> hs1 = new HashSet<String>();
+		for (Country u : countries) {
+			  
+			  if(hs1.add(u.getName())==false)
+			        System.out.println("Countries"+u.getName()); 
+			 return false; 
+			}
+		}
+		else {
+			System.out.println("countries are empty");
+			return false;
+		}
+		return true;
+		
+	}
+
 	
 	// -------------------------------------------------------------
 
