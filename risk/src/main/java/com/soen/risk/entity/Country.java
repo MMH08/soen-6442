@@ -7,7 +7,7 @@ public class Country {
 	private String name;
 	private String coordinateX;
 	private String coordinateY;
-	private int army;
+	private int army = 0;
 
 	/**
 	 *
@@ -54,4 +54,7 @@ public class Country {
 	}
 
 
+	public boolean isEmpty() {
+		return this.army == 0;
+	}
 }
