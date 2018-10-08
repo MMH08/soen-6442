@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * This is the Continent class that adds country names ,their control values and
+   list of countries to the map.
+ * 
  */
 public class Continent {
 
@@ -15,7 +17,8 @@ public class Continent {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param name
+	 * Continent name of the map
+	 * @param name 
 	 */
 	public Continent(String name) {
 		this.name = name;
@@ -23,6 +26,7 @@ public class Continent {
 	}
 
 	/**
+	 * Adds the specifications of country to the continent 
 	 * @param country
 	 */
 	public void addCountry(Country country) {
