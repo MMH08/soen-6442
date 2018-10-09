@@ -22,6 +22,10 @@ public class ReinforcePhaseRequest {
         }
     }
 
+    public HashMap<String,Integer> getMap()
+    {
+    	return hm;
+    }
 
     public String getCountryName() {
         return countryName;
