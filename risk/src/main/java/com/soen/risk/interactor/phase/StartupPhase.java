@@ -15,9 +15,9 @@ public class StartupPhase implements PhaseFactory.Phase<StartupPhaseRequest> {
     }
 
     public boolean isValid() {
-        // TODO: Add method to skip the player in case all countries have been filled.
-        // gamePlay.getCurrentPlayer()
-        // in case of false, call exit()
+        // TODO: check validity by iterating over players and find their army capacity.
+        // if army capacity is 0 for all -- then exit startup phase.
+        // if current player is having army capacity 0 then exit current phase i.e, change player -- call exit method.
         return true;
     }
 

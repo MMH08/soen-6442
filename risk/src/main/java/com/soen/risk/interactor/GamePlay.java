@@ -58,9 +58,9 @@ public class GamePlay {
         for (Player p : game.getPlayers()) {
             if (p.getName().equals(currentPlayer.getName())) {
                 if (count == game.getPlayers().size() - 1) {
-                    currentPlayer = game.getPlayers().get(0);
+                    this.setCurrentPlayer(game.getPlayers().get(0));
                 } else {
-                    currentPlayer = game.getPlayers().get(count + 1);
+                    this.setCurrentPlayer(game.getPlayers().get(count + 1));
                 }
                 break;
             }
