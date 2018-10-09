@@ -2,6 +2,7 @@ package com.soen.risk.entity;
 
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -108,7 +109,7 @@ public class Map {
         this.map_name_creation(arr);
     }
 
-    public void map_name_creation(String s[]) {
+    private void map_name_creation(String s[]) {
         LinkedList temp_list = new LinkedList<String>();
 
         int i = 0;
@@ -120,19 +121,15 @@ public class Map {
     }
 
     //Function to intialize map country object creation
-    public void create_map_object_function() {
+    private void create_map_object_function() {
         //this.adjCountry = new LinkedList<LinkedList>();
         this.map_country_object_creation();
     }
 
     //Function to create 2D linked list on basis of country object
     private Country retrieve_country_object(String s) {
-        Iterator il = countries.iterator();
-        while (il.hasNext()) {
-            Country c = (Country) il.next();
-            if (c.getName().equals(s)) {
-                return c;
-            }
+        for (Country c : countries) {
+            if (c.getName().equals(s)) return c;
         }
         return null;
     }
@@ -178,17 +175,46 @@ public class Map {
     public void save() {
     }
 
-    /**
-     * @return
+	/**
+     * Validates the continents and country objects for duplicate values.
+     * @return true is no duplicates found
+     *		   false for duplicate occurrence
      * @author Nivetha
      * @since 2018-10-06
      */
-    public boolean isValid() {
-        return false;
-    }
+	public boolean isValid(){
+		
+		if(!continents.isEmpty()) {
+		HashSet<String> hs = new HashSet<String>();
+		for (Continent u : continents) {
+			
+			  if(hs.add(u.getName())==false)
+			        System.out.println("Continents"+u.getName()); 
+			  return false;
+			}  
+		}
+		else
+		{
+			System.out.println("Continents are empty");
+			return false;
+		}
+		if(!countries.isEmpty()) {
+		HashSet<String> hs1 = new HashSet<String>();
+		for (Country u : countries) {
+			  
+			  if(hs1.add(u.getName())==false)
+			        System.out.println("Countries"+u.getName()); 
+			 return false; 
+			}
+		}
+		else {
+			System.out.println("countries are empty");
+			return false;
+		}
+		return true;
+		
+	}
 
-
-    // -------------------------------------------------------------
 
     /**
      * @param country
