@@ -15,15 +15,37 @@
                 <div id="textpadding">
                     <h2>Risk - Game Play</h2>
                     <div class="sticky">
-                    <i class="fa fa-info-circle" aria-hidden="true"></i> <b>Startup Phase</b>
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> <b>Startup Phase</b>
                     </div>
                     <br/>
-                    <p th:text="${playerName}">Player name</p>
-                    <p th:text="${countryName}">Country name</p>
-                    <p th:text="${armyCapacity}">Army capacity</p>
+                    <form method="get" th:action="@{/startupPhase/addArmy}">
+                        <table>
+                            <tr>
+                                <td>Player name:</td>
+                                <td><span th:text="${playerName}">Player name</span></td>
+                            </tr>
+                            <tr>
+                                <td>Remaining army capacity:</td>
+                                <td><span th:text="${armyCapacity}">Army capacity</span></td>
+                            </tr>
+                            <tr>
+                                <td>Country name:</td>
+                                <td>
+                                    <input type="text" disabled th:value="${countryName}" name="country"/>
+                                    <input type="hidden" th:value="${countryName}" name="country"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Allocate army:</td>
+                                <td><input type="text" name="armyCount"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" name="submit" value="Add"/></td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
-
-
             </div>
         </div>
     </div>
