@@ -4,8 +4,13 @@ import com.soen.risk.entity.Game;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.Player;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class GamePlay {
+    static Logger logger = Logger.getLogger(GamePlay.class.getName());
+
     private static GamePlay gamePlayInstance = null;
     private Game game;
 
@@ -30,6 +35,7 @@ public class GamePlay {
         this.game.allocateInitialCountries();
         this.game.allocateInitialArmy();
         this.setCurrentPhase(PhaseFactory.build("startupPhase"));
+        this.setCurrentPlayer(this.game.getPlayers().get(0));
     }
 
     public void updateCurrentPhase() {
@@ -72,6 +78,7 @@ public class GamePlay {
     }
 
     public void setCurrentPlayer(Player currentPlayer) {
+        logger.log(Level.INFO, "Changing player to " + currentPlayer.getName());
         this.currentPlayer = currentPlayer;
     }
 
@@ -80,6 +87,7 @@ public class GamePlay {
     }
 
     public void setCurrentPhase(PhaseFactory.Phase currentPhase) {
+        logger.log(Level.INFO, "Changing phase to " + currentPhase.getName());
         this.currentPhase = currentPhase;
     }
 

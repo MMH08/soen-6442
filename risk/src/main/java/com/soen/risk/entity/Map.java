@@ -1,16 +1,15 @@
 package com.soen.risk.entity;
 
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author :
  */
 public class Map {
+    static Logger logger = Logger.getLogger(Map.class.getName());
     private String name;
 
     private ArrayList<Continent> continents;
@@ -50,15 +49,13 @@ public class Map {
      * @since 2018-10-06
      */
     public void load(String filename) {
-        System.out.println("Reading filename " + filename);
+        logger.log(Level.INFO, "Reading filename " + filename);
         try {
             Scanner reading_file = new Scanner(new FileReader(filename));
             int flag_continent = 0, flag_country = 0;
 
             while (reading_file.hasNext()) {
                 String temp = reading_file.nextLine();
-                System.out.println(temp);
-
                 if (!temp.equals("") && flag_continent == 1) this.addNewContinent(temp);
                 else if (temp.equals("") && flag_continent == 1) flag_continent = 0;
 
@@ -71,12 +68,12 @@ public class Map {
             reading_file.close();
             this.create_map_object_function();
         } catch (Exception e) {
-            System.out.println("System Error");
+            logger.log(Level.SEVERE, e.getMessage());
         }
     }
 
     public void addNewContinent(String temp) {
-        System.out.println("Adding continent " + temp);
+        logger.log(Level.FINE,"Adding continent " + temp);
         String split_continent[] = temp.split("=");
         Continent cont = new Continent(split_continent[0]);
         cont.setControlValue(Integer.valueOf(split_continent[1]));
@@ -84,7 +81,7 @@ public class Map {
     }
 
     public void addNewCountry(String temp) {
-        System.out.println("Adding new country " + temp);
+        logger.log(Level.FINE, "Adding new country " + temp);
         String split_country[] = temp.split(",");
         Country coun = new Country(split_country[0]);
         coun.setCoordinateX(split_country[1]);
@@ -175,45 +172,43 @@ public class Map {
     public void save() {
     }
 
-	/**
+    /**
      * Validates the continents and country objects for duplicate values.
+     *
      * @return true is no duplicates found
-     *		   false for duplicate occurrence
+     * false for duplicate occurrence
      * @author Nivetha
      * @since 2018-10-06
      */
-	public boolean isValid(){
-		
-		if(!continents.isEmpty()) {
-		HashSet<String> hs = new HashSet<String>();
-		for (Continent u : continents) {
-			
-			  if(hs.add(u.getName())==false)
-			        System.out.println("Continents"+u.getName()); 
-			  return false;
-			}  
-		}
-		else
-		{
-			System.out.println("Continents are empty");
-			return false;
-		}
-		if(!countries.isEmpty()) {
-		HashSet<String> hs1 = new HashSet<String>();
-		for (Country u : countries) {
-			  
-			  if(hs1.add(u.getName())==false)
-			        System.out.println("Countries"+u.getName()); 
-			 return false; 
-			}
-		}
-		else {
-			System.out.println("countries are empty");
-			return false;
-		}
-		return true;
-		
-	}
+    public boolean isValid() {
+
+        if (!continents.isEmpty()) {
+            HashSet<String> hs = new HashSet<String>();
+            for (Continent u : continents) {
+
+                if (hs.add(u.getName()) == false)
+                    logger.log(Level.FINE,"Continents" + u.getName());
+                return false;
+            }
+        } else {
+            logger.log(Level.INFO,"Continents are empty");
+            return false;
+        }
+        if (!countries.isEmpty()) {
+            HashSet<String> hs1 = new HashSet<String>();
+            for (Country u : countries) {
+
+                if (hs1.add(u.getName()) == false)
+                    logger.log(Level.FINE, "Countries" + u.getName());
+                return false;
+            }
+        } else {
+            logger.log(Level.INFO,"countries are empty");
+            return false;
+        }
+        return true;
+
+    }
 
 
     /**
