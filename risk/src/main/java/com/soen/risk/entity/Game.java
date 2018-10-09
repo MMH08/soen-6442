@@ -32,6 +32,7 @@ public class Game {
      * @param countOfPlayers
      */
     private void addPlayers(int countOfPlayers) {
+        System.out.println("Adding players " + String.valueOf(countOfPlayers));
         for (int i = 0; i < countOfPlayers; i++)
             this.players.add(new Player(i));
     }
@@ -52,6 +53,7 @@ public class Game {
     	for(Country country: map.getCountries()) {
     		int indexOfPlayer = rand.nextInt(players.size());
     		players.get(indexOfPlayer).addCountry(country);
+    		System.out.println("Adding country " + country.getName() + " to player " + players.get(indexOfPlayer).getName());
     	}
     }
     

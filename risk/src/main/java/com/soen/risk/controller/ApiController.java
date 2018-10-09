@@ -15,9 +15,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ApiController {
 
+    @RequestMapping("")
+    public String index(){
+        return "index";
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+
     @RequestMapping("/createMap")
     public void createMap() {
-        Map map = new Map();
+        //Map map = new Map();
     }
 
     // -----------------------------------------------------------------------------------------------------------------

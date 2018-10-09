@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:fragment="header">
+        <title>Risk | SOEN 6441</title>
+        <meta name="description" content="">
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
+
+
+        <link th:href="@{css/font-awesome.min.css}" rel="stylesheet">
+        <link th:href="@{css/jquery-ui.min.css}" rel="stylesheet">
+        <link th:href="@{css/style.css}" rel="stylesheet">
+
+        <script th:src="@{js/jquery.js}"></script>
+        <script th:src="@{js/jquery-ui.min.js}"></script>
+    </div>
+</head>
+
+<body>
+<div th:fragment="nav">
+
+    <div id="header" style="background-image: url('/img/header.jpg');">
+
+    </div>
+
+    <div id="menu">
+        <a title="home" th:href="@{/}">home</a>&nbsp;&nbsp; |&nbsp;&nbsp;
+        <a title="new map" th:href="@{/createMap}">new map</a>&nbsp;&nbsp; |&nbsp;&nbsp;
+        <a title="edit map" th:href="@{/editMap}">edit map</a>
+    </div>
+
+</div>
+
+<div th:fragment="footer">
+    <script th:src="@{js/application.js}"></script>
+    <div id="footer">All rights reserved. copyrights &copy; 2018.</div>
+</div>
+
+</body>
+</html>

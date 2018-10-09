@@ -1,0 +1,126 @@
+body
+{
+    margin: 20px;
+    padding: 0px;
+    background: #FFF;
+    font-family: trebuchet ms, verdana, arial, helvetica, sans-serif;
+    font-size: 80%;
+    color: #52543D;
+}
+
+table{
+    font-size:100%;
+    color: #52543D;
+}
+
+a:active, a:visited, a:link
+{
+    color: #000;
+    text-decoration: none;
+}
+
+a:hover
+{
+    color: #4F3A31;
+    text-decoration: none;
+}
+
+h2{
+    margin: 0px;
+}
+
+#header
+{
+    width: 760px;
+    height: 120px;
+    border:1px solid #9F9F71;
+    background: #FAFAF8;
+    border-bottom: 0px;
+}
+
+#header img{
+    float: right;
+    padding: 25px 10px;
+    height: 70px;
+}
+
+#menu
+{
+    width: 740px;
+    padding: 5px 10px;
+    border:1px solid #9F9F71;
+    margin-bottom: 10px;
+    text-align: right;
+    background: #FAFAF8;
+}
+
+#box
+{
+    border:1px solid #9F9F71;
+    background: #FAFAF8;
+}
+
+#content
+{
+    width: 760px;
+    height: 350px;
+    line-height: 150%;
+}
+
+#content h2
+{
+    border-bottom: 1px dashed #808080;
+    font-family: arial;
+    font-weight: 100;
+    padding: 10px 0px;
+    letter-spacing: 8px;
+    font-size: 175%;
+}
+
+.overflow
+{
+    overflow: auto;
+    width: 760px;
+    height: 350px;
+}
+
+#textpadding
+{
+    padding: 1px 10px;
+}
+
+#footer
+{
+    width: 740px;
+    padding: 5px 10px;
+    border:1px solid #9F9F71;
+    margin-top: 10px;
+    text-align: right;
+    background: #FAFAF8;
+}
+
+.messagetable td{
+
+    vertical-align: top;
+    padding-left: 10px;
+
+}
+
+.middletable td{
+    vertical-align: middle;
+    padding-left: 10px;
+}
+
+.center-text img{
+    vertical-align: middle;
+}
+
+.connectiontable td{
+    vertical-align: top;
+    padding-left: 10px;
+}
+
+.sticky{
+    border-bottom: 1px dashed #808080;
+    font-family: arial;
+}

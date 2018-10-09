@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="layout :: header"/>
+</head>
+<body>
+<div id="container" style="margin: 0px auto; width: 760px;">
+
+    <div th:replace="layout :: nav"/>
+
+    <div id="box">
+        <div id="content">
+            <div class="overflow">
+                <div id="textpadding">
+                    <h2>Risk - Game Play</h2>
+                    <!--<div class="sticky">-->
+                    <!--<i class="fa fa-info-circle" aria-hidden="true"></i> <b>About</b>-->
+                    <!--</div>-->
+                    <br/>
+                    <form th:action="@{/GamePlay}" method="get">
+                        <table>
+                            <tr>
+                                <td># players</td>
+                                <td><input type="text" name="players"/></td>
+                            </tr>
+                            <tr>
+                                <td>Map file path</td>
+                                <td><input type="text" name="filename"/></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" name="submit" value="Play Game"></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="layout :: footer"/>
+</div>
+
+</body>
+</html>
