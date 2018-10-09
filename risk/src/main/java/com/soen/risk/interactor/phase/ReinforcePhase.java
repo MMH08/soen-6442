@@ -26,14 +26,17 @@ public class ReinforcePhase implements PhaseFactory.Phase<ReinforcePhaseRequest>
 
     @Override
     public void execute(ReinforcePhaseRequest request) {
-        // TODO: work in loop (hashmap)
-        Map m = GamePlay.getInstance().getGame().getMap();
-        for (Country c : m.getCountries()) {
-            if (c.getName().equals(request.getCountryName())) {
-                c.setArmy(c.getArmy() + request.getArmyCount());
-                break;
-            }
-        }
+        
+    	Map m = GamePlay.getInstance().getGame().getMap();
+    	request.getMap().forEach((key,value)->{
+			for (Country c : m.getCountries()) {		        
+	            if (c.getName().equals(key)) {
+	                c.setArmy(c.getArmy() + value);
+	                break;
+	            }
+	        }
+			}
+	);  
     }
 
     @Override
