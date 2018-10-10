@@ -1,4 +1,4 @@
-package com.soen.risk.boundary;
+package com.soen.risk.request;
 
 public class AttackPhaseRequest {
 }

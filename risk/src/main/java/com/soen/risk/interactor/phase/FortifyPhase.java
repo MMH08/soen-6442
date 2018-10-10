@@ -1,6 +1,6 @@
 package com.soen.risk.interactor.phase;
 
-import com.soen.risk.boundary.FortifyPhaseRequest;
+import com.soen.risk.request.FortifyPhaseRequest;
 import com.soen.risk.interactor.PhaseFactory;
 
 public class FortifyPhase implements PhaseFactory.Phase<FortifyPhaseRequest> {

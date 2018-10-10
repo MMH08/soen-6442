@@ -6,6 +6,8 @@ import com.soen.risk.interactor.phase.FortifyPhase;
 import com.soen.risk.interactor.phase.ReinforcePhase;
 import com.soen.risk.interactor.phase.StartupPhase;
 
+import java.util.logging.Logger;
+
 public class PhaseFactory {
     static Phase build(String name) {
         switch (name.toLowerCase()) {
@@ -22,10 +24,16 @@ public class PhaseFactory {
     }
 
     public interface Phase<T> {
+        static Logger logger = Logger.getLogger(Phase.class.getName());
+
         public boolean isValid();
+
         public void begin();
+
         public void execute(T request);
+
         public void exit();
+
         public String getName();
 
     }

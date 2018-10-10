@@ -1,6 +1,6 @@
 package com.soen.risk.interactor.phase;
 
-import com.soen.risk.boundary.ReinforcePhaseRequest;
+import com.soen.risk.request.ReinforcePhaseRequest;
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 import com.soen.risk.interactor.GamePlay;
@@ -26,17 +26,16 @@ public class ReinforcePhase implements PhaseFactory.Phase<ReinforcePhaseRequest>
 
     @Override
     public void execute(ReinforcePhaseRequest request) {
-        
-    	Map m = GamePlay.getInstance().getGame().getMap();
-    	request.getMap().forEach((key,value)->{
-			for (Country c : m.getCountries()) {		        
-	            if (c.getName().equals(key)) {
-	                c.setArmy(c.getArmy() + value);
-	                break;
-	            }
-	        }
-			}
-	);  
+        Map m = GamePlay.getInstance().getGame().getMap();
+        request.getMap().forEach((key, value) -> {
+                    for (Country c : m.getCountries()) {
+                        if (c.getName().equals(key)) {
+                            c.setArmy(c.getArmy() + value);
+                            break;
+                        }
+                    }
+                }
+        );
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.soen.risk.interactor.phase;
 
 
-import com.soen.risk.boundary.AttackPhaseRequest;
+import com.soen.risk.request.AttackPhaseRequest;
 import com.soen.risk.interactor.PhaseFactory;
 
 public class AttackPhase implements PhaseFactory.Phase<AttackPhaseRequest> {

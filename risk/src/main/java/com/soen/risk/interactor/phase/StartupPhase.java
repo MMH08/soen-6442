@@ -1,6 +1,6 @@
 package com.soen.risk.interactor.phase;
 
-import com.soen.risk.boundary.StartupPhaseRequest;
+import com.soen.risk.request.StartupPhaseRequest;
 import com.soen.risk.entity.Country;
 import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.interactor.PhaseFactory;

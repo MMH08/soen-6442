@@ -1,12 +1,13 @@
 package com.soen.risk.controller;
 
-import com.soen.risk.boundary.ReinforcePhaseRequest;
-import com.soen.risk.boundary.StartupPhaseRequest;
-import com.soen.risk.entity.Map;
 import com.soen.risk.entity.Player;
 import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.interactor.phase.ReinforcePhase;
 import com.soen.risk.interactor.phase.StartupPhase;
+import com.soen.risk.request.ReinforcePhaseRequest;
+import com.soen.risk.request.StartupPhaseRequest;
+import com.soen.risk.usecase.PhaseResolver;
+import com.soen.risk.usecase.StartGame;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ApiController {
 
     @RequestMapping("")
-    public String index(){
+    public String index() {
         return "index";
     }
 
@@ -30,16 +31,17 @@ public class ApiController {
     // -----------------------------------------------------------------------------------------------------------------
 
     @RequestMapping("/GamePlay")
-    public String play(@RequestParam("filename") String filename, @RequestParam("players") int countOfPlayers) {
-        GamePlay gamePlay = GamePlay.getInstance();
-        gamePlay.build(filename, countOfPlayers);
+    public String startGame(@RequestParam("filename") String filename, @RequestParam("players") String countOfPlayers) {
+        StartGame usecase = new StartGame(filename, countOfPlayers);
+        usecase.execute();
         return "redirect:/phaseResolver";
     }
 
     @RequestMapping("/phaseResolver")
     public String phaseResolver() {
-        GamePlay gamePlay = GamePlay.getInstance();
-        return "redirect:/" + gamePlay.getCurrentPhase().getName();
+        PhaseResolver usecase = new PhaseResolver();
+        usecase.execute();
+        return "redirect:/" + usecase.getResponse().getPhaseName();
     }
 
     @RequestMapping("/startupPhase")
