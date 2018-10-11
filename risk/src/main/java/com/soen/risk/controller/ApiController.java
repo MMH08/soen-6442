@@ -47,6 +47,7 @@ public class ApiController {
         model.addObject("armyCapacity", response.getArmyCapacity());
         model.addObject("playerName", response.getPlayerName());
         model.addObject("countryName", response.getCountryName());
+        model.addObject("countries", response.getCountries());
         return model;
     }
 
@@ -67,13 +68,13 @@ public class ApiController {
         ReinforceInfoResponse response = usecase.execute();
         model.addObject("reinforceArmyCount", response.getReinforceArmyCapacity());
         model.addObject("playerName", response.getPlayerName());
-        model.addObject("countryNames", response.getCountries());
+        model.addObject("countries", response.getCountries());
         return model;
     }
 
     @RequestMapping("/reinforcePhase/addArmy")
-    public String addReinforceArmy(@RequestParam("countryNames") String countryNames, @RequestParam("armyCounts") String armyCounts) {
-        AddReinforceArmy usecase = new AddReinforceArmy(countryNames, armyCounts);
+    public String addReinforceArmy(@RequestParam("armyCounts") String armyCounts) {
+        AddReinforceArmy usecase = new AddReinforceArmy(armyCounts);
         usecase.execute();
         return "redirect:/phaseResolver";
     }

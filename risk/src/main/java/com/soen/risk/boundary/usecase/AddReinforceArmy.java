@@ -16,7 +16,7 @@ public class AddReinforceArmy implements Usecase {
 
     @Override
     public ReinforcePhaseResponse execute() {
-        ReinforcePhase phase = new ReinforcePhase(this.request.getMap());
+        ReinforcePhase phase = new ReinforcePhase(this.request.getArmyCounts());
         if (phase.isValid()) {
             phase.begin();
             phase.execute();

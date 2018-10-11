@@ -1,29 +1,20 @@
 package com.soen.risk.boundary.request;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class ReinforcePhaseRequest {
-    private HashMap<String, Integer> hm;
-    private String countryNames;
-    private String armyCounts;
+    private ArrayList<Integer> armyCounts;
 
     public ReinforcePhaseRequest(String... args) {
-        this.countryNames = args[0];
-        this.armyCounts = args[1];
-
-        StringTokenizer countryNameToken = new StringTokenizer(countryNames, ",");
-        StringTokenizer armyCountToken = new StringTokenizer(armyCounts, ",");
-        hm = new HashMap<>();
-        while (countryNameToken.hasMoreTokens()) {
-            while (armyCountToken.hasMoreTokens()) {
-                hm.put(countryNameToken.nextToken(), Integer.parseInt(armyCountToken.nextToken()));
-
-            }
+        armyCounts = new ArrayList<>();
+        StringTokenizer armyCountToken = new StringTokenizer(args[0], ",");
+        while (armyCountToken.hasMoreTokens()) {
+            armyCounts.add(Integer.parseInt(armyCountToken.nextToken()));
         }
     }
 
-    public HashMap<String, Integer> getMap() {
-        return hm;
+    public ArrayList<Integer> getArmyCounts() {
+        return armyCounts;
     }
 }

@@ -5,6 +5,7 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 import com.soen.risk.interactor.GamePlay;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ReinforcePhase implements Phase {
@@ -12,7 +13,7 @@ public class ReinforcePhase implements Phase {
     private String name;
     private HashMap<String, Integer> countryArmyCollection;
 
-    public ReinforcePhase(HashMap<String, Integer> countryArmyCollection) {
+    public ReinforcePhase(ArrayList<Integer> armyCounts) {
         this.countryArmyCollection = countryArmyCollection;
         this.name = "reinforcePhase";
     }

@@ -22,6 +22,7 @@ public class StartupInfo implements Usecase {
         response.setCountryName(player.nextCountryToAssignArmy().getName());
         response.setArmyCapacity(player.getArmyCapacity());
         response.setPlayerName(player.getName());
+        response.setCountries(player.getCountryNames());
         return response;
     }
 }
