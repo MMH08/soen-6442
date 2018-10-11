@@ -10,7 +10,6 @@ public class Player {
     private String name;
     private int armyCapacity;
     private List<Country> countries;
-    private int reinforceArmyCapacity;
 
     /**
      *
@@ -79,11 +78,15 @@ public class Player {
         }
         //If Player do not have all country of a continent
         int number_of_countries = this.getCountries().size();
-        return (int) Math.ceil(number_of_countries/3.0);
+        return (int) Math.ceil(number_of_countries / 3.0);
 
     }
 
-    public void setReinforceArmyCapacity(int reinforceArmyCapacity) {
-        this.reinforceArmyCapacity = reinforceArmyCapacity;
+    public List<String> getCountryNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for (Country country : countries)
+            names.add(country.getName());
+        return names;
     }
+
 }

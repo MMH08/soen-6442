@@ -1,15 +1,20 @@
 package com.soen.risk.interactor.phase;
 
-import com.soen.risk.request.StartupPhaseRequest;
 import com.soen.risk.entity.Country;
 import com.soen.risk.interactor.GamePlay;
-import com.soen.risk.interactor.PhaseFactory;
+import com.soen.risk.interactor.Phase;
 
-public class StartupPhase implements PhaseFactory.Phase<StartupPhaseRequest> {
+public class StartupPhase implements Phase {
+    private String countryName;
+    private int armyCount;
+
     private String name;
     private GamePlay gamePlay;
 
-    public StartupPhase() {
+    public StartupPhase(String countryName, int armyCount) {
+        this.countryName = countryName;
+        this.armyCount = armyCount;
+
         this.name = "startupPhase";
         this.gamePlay = GamePlay.getInstance();
     }
@@ -25,12 +30,12 @@ public class StartupPhase implements PhaseFactory.Phase<StartupPhaseRequest> {
     }
 
     @Override
-    public void execute(StartupPhaseRequest request) {
+    public void execute() {
         for (Country c : this.gamePlay.getGame().getMap().getCountries()) {
-            if (c.getName().equals(request.getCountryName())) {
-                c.setArmy(request.getArmyCount());
+            if (c.getName().equals(this.countryName)) {
+                c.setArmy(this.armyCount);
                 this.gamePlay.getCurrentPlayer().setArmyCapacity(
-                        this.gamePlay.getCurrentPlayer().getArmyCapacity() - request.getArmyCount());
+                        this.gamePlay.getCurrentPlayer().getArmyCapacity() - this.armyCount);
                 break;
             }
         }

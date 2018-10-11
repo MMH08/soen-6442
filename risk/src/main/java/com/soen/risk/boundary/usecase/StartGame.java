@@ -1,9 +1,9 @@
-package com.soen.risk.usecase;
+package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.interactor.GamePlay;
-import com.soen.risk.request.StartGameRequest;
-import com.soen.risk.response.StartGameResponse;
+import com.soen.risk.boundary.request.StartGameRequest;
+import com.soen.risk.boundary.response.StartGameResponse;
 
 public class StartGame implements Usecase {
 
@@ -16,13 +16,9 @@ public class StartGame implements Usecase {
     }
 
     @Override
-    public void execute() {
+    public StartGameResponse execute() {
         GamePlay gamePlay = GamePlay.getInstance();
         gamePlay.build(request.getFilename(), request.getCountOfPlayers());
-    }
-
-    @Override
-    public Object getResponse() {
-        return null;
+        return response;
     }
 }

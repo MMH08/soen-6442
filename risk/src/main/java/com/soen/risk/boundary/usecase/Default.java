@@ -1,4 +1,4 @@
-package com.soen.risk.usecase;
+package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
 
@@ -11,12 +11,7 @@ public class Default implements Usecase {
 
 
     @Override
-    public void execute() {
-
-    }
-
-    @Override
-    public Object getResponse() {
-        return null;
+    public String execute() {
+        return "default";
     }
 }

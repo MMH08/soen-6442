@@ -16,7 +16,7 @@ public class GamePlay {
 
     // status
     private Player currentPlayer;
-    private PhaseFactory.Phase currentPhase;
+    private String currentPhase;
 
     public static GamePlay getInstance() {
         if (gamePlayInstance == null)
@@ -34,18 +34,18 @@ public class GamePlay {
         this.game = new Game(map, countOfPlayers);
         this.game.allocateInitialCountries();
         this.game.allocateInitialArmy();
-        this.setCurrentPhase(PhaseFactory.build("startupPhase"));
+        this.setCurrentPhase("startupPhase");
         this.setCurrentPlayer(this.game.getPlayers().get(0));
     }
 
     public void updateCurrentPhase() {
         String[] phases = {"reinforcePhase", "attackPhase", "fortifyPhase"};
         for (int i = 0; i < phases.length; i++) {
-            if (currentPhase.getName().equals(phases[i])) {
+            if (currentPhase.equals(phases[i])) {
                 if (i == phases.length - 1) {
-                    this.setCurrentPhase(PhaseFactory.build(phases[0]));
+                    this.setCurrentPhase(phases[0]);
                 } else {
-                    this.setCurrentPhase(PhaseFactory.build(phases[i + 1]));
+                    this.setCurrentPhase(phases[i + 1]);
                 }
             }
         }
@@ -82,12 +82,12 @@ public class GamePlay {
         this.currentPlayer = currentPlayer;
     }
 
-    public PhaseFactory.Phase getCurrentPhase() {
+    public String getCurrentPhase() {
         return currentPhase;
     }
 
-    public void setCurrentPhase(PhaseFactory.Phase currentPhase) {
-        logger.log(Level.INFO, "Changing phase to " + currentPhase.getName());
+    public void setCurrentPhase(String currentPhase) {
+        logger.log(Level.INFO, "Changing phase to " + currentPhase);
         this.currentPhase = currentPhase;
     }
 

@@ -1,13 +1,7 @@
 package com.soen.risk.controller;
 
-import com.soen.risk.entity.Player;
-import com.soen.risk.interactor.GamePlay;
-import com.soen.risk.interactor.phase.ReinforcePhase;
-import com.soen.risk.interactor.phase.StartupPhase;
-import com.soen.risk.request.ReinforcePhaseRequest;
-import com.soen.risk.request.StartupPhaseRequest;
-import com.soen.risk.usecase.PhaseResolver;
-import com.soen.risk.usecase.StartGame;
+import com.soen.risk.boundary.response.*;
+import com.soen.risk.boundary.usecase.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,61 +34,57 @@ public class ApiController {
     @RequestMapping("/phaseResolver")
     public String phaseResolver() {
         PhaseResolver usecase = new PhaseResolver();
-        usecase.execute();
-        return "redirect:/" + usecase.getResponse().getPhaseName();
+        PhaseResolverResponse response = usecase.execute();
+        return "redirect:/" + response.getPhaseName();
     }
 
     @RequestMapping("/startupPhase")
     public ModelAndView startupPhase() {
         ModelAndView model = new ModelAndView("startupphase");
-        Player player = GamePlay.getInstance().getCurrentPlayer();
-        model.addObject("armyCapacity", player.getArmyCapacity());
-        model.addObject("playerName", player.getName());
-        model.addObject("countryName", player.nextCountryToAssignArmy().getName());
+
+        StartupInfo usecase = new StartupInfo();
+        StartupInfoResponse response = usecase.execute();
+
+        model.addObject("armyCapacity", response.getArmyCapacity());
+        model.addObject("playerName", response.getPlayerName());
+        model.addObject("countryName", response.getCountryName());
         return model;
     }
 
     @RequestMapping("/startupPhase/addArmy")
-    public String addArmyToOwnCountry(@RequestParam("armyCount") int armyCount,
+    public String addArmyToOwnCountry(@RequestParam("armyCount") String armyCount,
                                       @RequestParam("country") String countryName) {
-        StartupPhaseRequest request = new StartupPhaseRequest(countryName, armyCount);
-        StartupPhase phase = new StartupPhase();
-        if (phase.isValid()) {
-            phase.begin();
-            phase.execute(request);
-            phase.exit();
-        }
+
+        AddStartupArmy usecase = new AddStartupArmy(armyCount, countryName);
+        StartupPhaseResponse response = usecase.execute();
         return "redirect:/phaseResolver";
     }
 
     @RequestMapping("/reinforcePhase")
     public ModelAndView reinforcePhase() {
         ModelAndView model = new ModelAndView("reinforcephase");
-        GamePlay gamePlay = GamePlay.getInstance();
-        Player player = gamePlay.getCurrentPlayer();
-        model.addObject("playerName", player.getName());
-        model.addObject("reinforceArmyCount", player.getReinforceArmyCapacity(gamePlay.getGame().getMap()));
-        model.addObject("countryNames", player.getCountries());
+
+        ReinforceInfo usecase = new ReinforceInfo();
+        ReinforceInfoResponse response = usecase.execute();
+        model.addObject("reinforceArmyCount", response.getReinforceArmyCapacity());
+        model.addObject("playerName", response.getPlayerName());
+        model.addObject("countryNames", response.getCountries());
         return model;
     }
 
     @RequestMapping("/reinforcePhase/addArmy")
     public String addReinforceArmy(@RequestParam("countryNames") String countryNames, @RequestParam("armyCounts") String armyCounts) {
-        ReinforcePhaseRequest request = new ReinforcePhaseRequest(countryNames, armyCounts);
-        ReinforcePhase phase = new ReinforcePhase();
-        if (phase.isValid()) {
-            phase.begin();
-            phase.execute(request);
-            phase.exit();
-        }
+        AddReinforceArmy usecase = new AddReinforceArmy(countryNames, armyCounts);
+        usecase.execute();
         return "redirect:/phaseResolver";
     }
 
     @RequestMapping("/fortifyPhase")
     public ModelAndView fortifyPhase() {
         ModelAndView model = new ModelAndView("fortifyphase");
-        Player player = GamePlay.getInstance().getCurrentPlayer();
-        model.addObject("playerName", player.getName());
+        FortifyInfo usecase = new FortifyInfo();
+        FortifyInfoResponse response = usecase.execute();
+        model.addObject("playerName", response.getPlayerName());
         return model;
     }
 

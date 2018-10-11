@@ -1,16 +1,19 @@
 package com.soen.risk.interactor.phase;
 
-import com.soen.risk.request.ReinforcePhaseRequest;
+import com.soen.risk.interactor.Phase;
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 import com.soen.risk.interactor.GamePlay;
-import com.soen.risk.interactor.PhaseFactory;
 
-public class ReinforcePhase implements PhaseFactory.Phase<ReinforcePhaseRequest> {
+import java.util.HashMap;
+
+public class ReinforcePhase implements Phase {
 
     private String name;
+    private HashMap<String, Integer> countryArmyCollection;
 
-    public ReinforcePhase() {
+    public ReinforcePhase(HashMap<String, Integer> countryArmyCollection) {
+        this.countryArmyCollection = countryArmyCollection;
         this.name = "reinforcePhase";
     }
 
@@ -25,9 +28,9 @@ public class ReinforcePhase implements PhaseFactory.Phase<ReinforcePhaseRequest>
     }
 
     @Override
-    public void execute(ReinforcePhaseRequest request) {
+    public void execute() {
         Map m = GamePlay.getInstance().getGame().getMap();
-        request.getMap().forEach((key, value) -> {
+        countryArmyCollection.forEach((key, value) -> {
                     for (Country c : m.getCountries()) {
                         if (c.getName().equals(key)) {
                             c.setArmy(c.getArmy() + value);

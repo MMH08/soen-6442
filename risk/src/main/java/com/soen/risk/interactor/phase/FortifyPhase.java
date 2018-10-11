@@ -1,12 +1,11 @@
 package com.soen.risk.interactor.phase;
 
-import com.soen.risk.request.FortifyPhaseRequest;
-import com.soen.risk.interactor.PhaseFactory;
+import com.soen.risk.interactor.Phase;
 
-public class FortifyPhase implements PhaseFactory.Phase<FortifyPhaseRequest> {
+public class FortifyPhase implements Phase {
     private String name;
 
-    public FortifyPhase(){
+    public FortifyPhase() {
         this.name = "fortifyPhase";
     }
 
@@ -21,7 +20,7 @@ public class FortifyPhase implements PhaseFactory.Phase<FortifyPhaseRequest> {
     }
 
     @Override
-    public void execute(FortifyPhaseRequest request) {
+    public void execute() {
 
     }
 
