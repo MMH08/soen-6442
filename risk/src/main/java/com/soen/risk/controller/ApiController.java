@@ -44,7 +44,6 @@ public class ApiController {
 
         StartupInfo usecase = new StartupInfo();
         StartupInfoResponse response = usecase.execute();
-
         model.addObject("armyCapacity", response.getArmyCapacity());
         model.addObject("playerName", response.getPlayerName());
         model.addObject("countryName", response.getCountryName());

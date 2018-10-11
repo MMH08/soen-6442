@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 
 public class GamePlay {
-    static Logger logger = Logger.getLogger(GamePlay.class.getName());
+    private static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
     private static GamePlay gamePlayInstance = null;
     private Game game;
@@ -77,7 +77,7 @@ public class GamePlay {
         return currentPlayer;
     }
 
-    public void setCurrentPlayer(Player currentPlayer) {
+    private void setCurrentPlayer(Player currentPlayer) {
         logger.log(Level.INFO, "Changing player to " + currentPlayer.getName());
         this.currentPlayer = currentPlayer;
     }
@@ -86,7 +86,7 @@ public class GamePlay {
         return currentPhase;
     }
 
-    public void setCurrentPhase(String currentPhase) {
+    private void setCurrentPhase(String currentPhase) {
         logger.log(Level.INFO, "Changing phase to " + currentPhase);
         this.currentPhase = currentPhase;
     }

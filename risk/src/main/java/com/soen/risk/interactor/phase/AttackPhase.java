@@ -1,9 +1,9 @@
 package com.soen.risk.interactor.phase;
 
 
-import com.soen.risk.boundary.request.AttackPhaseRequest;
+import com.soen.risk.interactor.Phase;
 
-public class AttackPhase implements PhaseFactory.Phase<AttackPhaseRequest> {
+public class AttackPhase implements Phase {
     private String name;
 
     public AttackPhase() {
@@ -21,7 +21,7 @@ public class AttackPhase implements PhaseFactory.Phase<AttackPhaseRequest> {
     }
 
     @Override
-    public void execute(AttackPhaseRequest request) {
+    public void execute() {
 
     }
 
