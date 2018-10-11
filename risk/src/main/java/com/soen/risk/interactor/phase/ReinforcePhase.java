@@ -3,6 +3,7 @@ package com.soen.risk.interactor.phase;
 import com.soen.risk.interactor.Phase;
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
+import com.soen.risk.entity.Player;
 import com.soen.risk.interactor.GamePlay;
 
 import java.util.ArrayList;
@@ -30,21 +31,19 @@ public class ReinforcePhase implements Phase {
 
     @Override
     public void execute() {
-        Map m = GamePlay.getInstance().getGame().getMap();
-        countryArmyCollection.forEach((key, value) -> {
-                    for (Country c : m.getCountries()) {
-                        if (c.getName().equals(key)) {
-                            c.setArmy(c.getArmy() + value);
-                            break;
-                        }
-                    }
-                }
-        );
+        Player p = GamePlay.getInstance().getCurrentPlayer();
+        int i=0;
+        for(Country c: p.getCountries())
+        {
+        	c.setArmy(c.getArmy() + this.countryArmyCollection.get(i));
+        	i++;
+        }
+        
     }
 
     @Override
     public void exit() {
-
+    	GamePlay.getInstance().updateCurrentPhase();
     }
 
     @Override
