@@ -1,12 +1,14 @@
 package com.soen.risk.interactor.phase;
 
 import com.soen.risk.entity.Country;
+import com.soen.risk.entity.Player;
 import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.interactor.Phase;
 
 public class StartupPhase implements Phase {
     private String countryName;
     private int armyCount;
+
 
     private String name;
     private GamePlay gamePlay;
@@ -20,10 +22,25 @@ public class StartupPhase implements Phase {
     }
 
     public boolean isValid() {
-        // TODO: check validity by iterating over players and find their army capacity.
-        // if army capacity is 0 for all -- then exit startup phase.
-        // if current player is having army capacity 0 then exit current phase i.e, change player -- call exit method.
+        if (allPlayersHaveZeroArmy()) {
+            this.gamePlay.updateCurrentPhase();
+            return false;
+        } else if (currentPlayerHasZeroArmy()) {
+            this.gamePlay.updateCurrentPlayer();
+            return false;
+        }
         return true;
+    }
+
+    private boolean allPlayersHaveZeroArmy() {
+        for (Player p : this.gamePlay.getGame().getPlayers()) {
+            if (p.getArmyCapacity() != 0) return false;
+        }
+        return true;
+    }
+
+    private boolean currentPlayerHasZeroArmy() {
+        return this.gamePlay.getCurrentPlayer().getArmyCapacity() == 0;
     }
 
     public void begin() {
