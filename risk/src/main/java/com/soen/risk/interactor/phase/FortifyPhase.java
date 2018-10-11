@@ -1,5 +1,9 @@
 package com.soen.risk.interactor.phase;
 
+import java.util.*;
+
+import com.soen.risk.entity.Player;
+import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.interactor.Phase;
 
 public class FortifyPhase implements Phase {
@@ -16,6 +20,11 @@ public class FortifyPhase implements Phase {
 
     @Override
     public void begin() {
+    	Player p = GamePlay.getInstance().getCurrentPlayer();
+    	if(p.getCountries().size() == 0)
+    	{
+    		GamePlay.getInstance().getGame().dropPlayer(p);    		
+    	}
 
     }
 
