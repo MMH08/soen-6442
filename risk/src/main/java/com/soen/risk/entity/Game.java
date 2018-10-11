@@ -35,7 +35,19 @@ public class Game {
         for (int i = 0; i < countOfPlayers; i++)
             this.players.add(new Player(i));
     }
-
+    public void dropPlayer(Player p)
+    {
+    	int i=0;
+		for(Player p1: players)
+		{
+			if(p.equals(p1))
+			{
+				players.remove(i);
+				break;
+			}
+			i++;
+		}
+    }
     // -------------------------------------------------------------
 
     /**
