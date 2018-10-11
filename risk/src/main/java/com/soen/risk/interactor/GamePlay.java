@@ -39,7 +39,13 @@ public class GamePlay {
     }
 
     public void updateCurrentPhase() {
+        if (this.getCurrentPhase().equals("startupPhase")) {
+            this.setCurrentPhase("reinforcePhase");
+            return;
+        }
+
         String[] phases = {"reinforcePhase", "attackPhase", "fortifyPhase"};
+
         for (int i = 0; i < phases.length; i++) {
             if (currentPhase.equals(phases[i])) {
                 if (i == phases.length - 1) {
@@ -49,7 +55,6 @@ public class GamePlay {
                 }
             }
         }
-        // change phase in circular fashion.
     }
 
     public void updateCurrentPlayer() {

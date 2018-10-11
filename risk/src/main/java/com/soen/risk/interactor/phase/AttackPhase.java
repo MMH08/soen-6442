@@ -32,6 +32,6 @@ public class AttackPhase implements Phase {
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 }

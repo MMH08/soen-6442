@@ -31,6 +31,6 @@ public class FortifyPhase implements Phase {
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 }

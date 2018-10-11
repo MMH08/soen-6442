@@ -88,4 +88,12 @@ public class ApiController {
         return model;
     }
 
+    @RequestMapping("/fortifyPhase")
+    public String moveFortifyArmy() {
+        MoveFortifyArmy usecase = new MoveFortifyArmy();
+        FortifyPhaseResponse response = usecase.execute();
+        return "redirect:/phaseResolver";
+    }
+
+
 }
