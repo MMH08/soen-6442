@@ -20,12 +20,15 @@
 	</tr>
 	<c:forEach items="${continentForm.continents}" var="continent" varStatus="status">
 		<tr>
-			<td>${continent.controlValue}</td>
+			<td>${continent.continentName}</td>
+			<td><form:input name="${continentForm.countryList}" type="tex" path="continentForm.countryList"/></td>
 			
 		</tr>
 	</c:forEach>
+	
 </table>	
 <br/>
+<input type="submit" value="Click Ok to add countries" />
 <input type="button" value="Back" onclick="javascript:history.back()"/>
 </body>
 </html>

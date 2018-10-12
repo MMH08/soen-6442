@@ -66,6 +66,28 @@ public class RiskController
 		return new ModelAndView("cont", "continentForm", continentForm);
 	}
 	
+	
+	@RequestMapping(value = "/saveCountries", method = RequestMethod.POST)
+	public ModelAndView saveCountries(@ModelAttribute("continentForm") ContinentForm continentForm)
+	{
+		
+		List<Continent> continents = continentForm.getContinents();
+		List<Country> countries=continentForm.getCountryList();
+		
+		/*if(null != continents && continents.size() > 0) 
+		{
+			RiskController.continents = continents;
+			for (Continent continent : continents) {
+				System.out.println( continent.getControlValue()+","+continent.getContinentName());
+			}
+		}*/
+		
+		return new ModelAndView("cont", "continentForm", continentForm);
+	}
+	
+	
+	
+	
 	/*@RequestMapping("/")
 	public ModelAndView welcome(HttpServletRequest request, HttpServletResponse response) {
 		
