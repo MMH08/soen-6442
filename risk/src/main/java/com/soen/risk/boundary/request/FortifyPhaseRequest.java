@@ -1,4 +1,8 @@
 package com.soen.risk.boundary.request;
 
-public class FortifyPhaseRequest {
+import com.soen.risk.boundary.Request;
+
+public class FortifyPhaseRequest implements Request {
+    public FortifyPhaseRequest(String... args) {
+    }
 }

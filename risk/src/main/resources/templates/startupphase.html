@@ -19,7 +19,7 @@
                     </div>
                     <br/>
                     <form method="get" th:action="@{/startupPhase/addArmy}">
-                        <table>
+                        <table class="left-table">
                             <tr>
                                 <td>Player name:</td>
                                 <td><span th:text="${playerName}">Player name</span></td>
@@ -42,6 +42,19 @@
                             <tr>
                                 <td></td>
                                 <td><input type="submit" name="submit" value="Add"/></td>
+                            </tr>
+                        </table>
+
+                        <table class="left-table">
+                            <tr>
+                                <th>&ensp;&ensp;</th>
+                                <th><i class="fas fa-globe-americas" aria-hidden="true"></i></th>
+                                <th>Allocated countries</th>
+                            </tr>
+                            <tr th:each="country : ${countries}">
+                                <td>&ensp;&ensp;</td>
+                                <td>&ensp;&ensp;</td>
+                                <td th:text="${country}">country name</td>
                             </tr>
                         </table>
                     </form>
