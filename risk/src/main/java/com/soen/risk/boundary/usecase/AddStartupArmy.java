@@ -1,9 +1,9 @@
 package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
-import com.soen.risk.interactor.phase.StartupPhase;
 import com.soen.risk.boundary.request.StartupPhaseRequest;
 import com.soen.risk.boundary.response.StartupPhaseResponse;
+import com.soen.risk.interactor.phase.StartupPhase;
 
 public class AddStartupArmy implements Usecase {
     private StartupPhaseRequest request;
