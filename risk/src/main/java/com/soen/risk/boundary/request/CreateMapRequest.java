@@ -1,9 +1,15 @@
 package com.soen.risk.boundary.request;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.soen.risk.boundary.Request;
 
-public class CreateMapRequest {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.regex.Pattern;
+
+public class CreateMapRequest implements Request {
     private String name;
     private List<String> continents;
     private List<String> countries;
@@ -18,11 +24,7 @@ public class CreateMapRequest {
         setCountries(args[3]);
         setCountryOwners(args[4]);
         setConnections(args[5]);
-        this.continents = new ArrayList<>();
-        this.countries = new ArrayList<>();
-        this.controlValues = new ArrayList<>();
-        this.countryOwners = new ArrayList<>();
-        this.connections = new ArrayList<>();
+
     }
 
     public String getName() {
@@ -37,52 +39,42 @@ public class CreateMapRequest {
         return continents;
     }
 
-    public void setContinents(String cont) {
-        //TODO
-    	String s[] = cont.split(",");
-    	for(int i=0;i<s.length;i++)
-    	{
-    		this.continents.add(s[i]);
-    	}
+    private void setContinents(String cont) {
+        logger.log(Level.INFO, "continents : " + cont);
+        this.continents = new ArrayList<>();
+        Collections.addAll(this.continents, cont.split(","));
     }
 
     public List<String> getCountries() {
         return countries;
     }
 
-    public void setCountries(String cont) {
-        // TODO
-    	String s[] = cont.split(",");
-    	for(int i=0;i<s.length;i++)
-    	{
-    		this.countries.add(s[i]);
-    	}
+    private void setCountries(String cont) {
+        logger.log(Level.INFO, "countries : " + cont);
+        this.countries = new ArrayList<>();
+        Collections.addAll(this.countries, cont.split(","));
     }
 
     public List<Integer> getControlValues() {
         return controlValues;
     }
 
-    public void setControlValues(String cont) {
-        //TODO
-    	String s[] = cont.split(",");
-    	for(int i=0;i<s.length;i++)
-    	{
-    		this.controlValues.add(Integer.valueOf(s[i]));
-    	}
+    private void setControlValues(String cont) {
+        logger.log(Level.INFO, "control values : " + cont);
+        this.controlValues = new ArrayList<>();
+        for (String controlValue : cont.split(",")) {
+            this.controlValues.add(Integer.valueOf(controlValue));
+        }
     }
 
     public List<String> getCountryOwners() {
         return countryOwners;
     }
 
-    public void setCountryOwners(String cont) {
-        //TODO
-    	String s[] = cont.split(",");
-    	for(int i=0;i<s.length;i++)
-    	{
-    		this.countryOwners.add(s[i]);
-    	}
+    private void setCountryOwners(String cont) {
+        logger.log(Level.INFO, "country owners : " + cont);
+        this.countryOwners = new ArrayList<>();
+        this.countryOwners.addAll(Arrays.asList(cont.split(",")));
     }
 
     public List<List<String>> getConnections() {
@@ -90,18 +82,18 @@ public class CreateMapRequest {
     }
 
     // Format: c1,c2,c3|c4,c3|c4,c5
-    public void setConnections(String cont) {
-        //TODO
-    	String s[] = cont.split("|");
-    	for(int i=0;i<s.length;i++)
-    	{
-    		ArrayList<String> ll = new ArrayList();
-    		String in[] = s[i].split(",");
-    		for(int j=0;j<in.length;j++)
-    		{
-    			ll.add(in[j]);
-    		}
-    		connections.add(ll);
-    	}
+    private void setConnections(String cont) {
+        logger.log(Level.INFO, "connections : " + cont);
+        this.connections = new ArrayList<>();
+
+        ArrayList<String> connection;
+        for (String linkedCountryNames : cont.split(Pattern.quote("|"))) {
+            logger.log(Level.INFO, "LinkedCountryNames:: " + linkedCountryNames);
+            connection = new ArrayList<>();
+            for(String neighbour: linkedCountryNames.split(",")){
+                connection.add(neighbour);
+            }
+            connections.add(connection);
+        }
     }
 }

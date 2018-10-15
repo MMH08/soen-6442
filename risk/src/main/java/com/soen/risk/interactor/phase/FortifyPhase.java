@@ -1,4 +1,5 @@
 //REQUIRED!! Provide from which country to which country army move and number of army move
+//IMPORTANT!! Check if desired countries to move should be less than capacity of country
 package com.soen.risk.interactor.phase;
 
 import java.util.*;
@@ -148,7 +149,7 @@ public class FortifyPhase implements Phase {
 			}
 		}
 		
-		LinkedList<LinkedList> ll = GamePlay.getInstance().getGame().getMap().getAdjCountry();
+		LinkedList<LinkedList<Country>> ll = GamePlay.getInstance().getGame().getMap().getAdjCountry();
 		
     	LinkedList<Integer> adj[] = new LinkedList[ll.size()];
     	for(int i=0;i<ll.size();i++)

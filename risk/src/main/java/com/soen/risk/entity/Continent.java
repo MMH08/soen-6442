@@ -2,6 +2,8 @@ package com.soen.risk.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * <h2>Continent Class</h2>
@@ -12,7 +14,7 @@ import java.util.List;
  * @version 1.0.0
  */
 public class Continent {
-
+	private static Logger logger = Logger.getLogger(Continent.class.getName());
 	private String name;
 	private int controlValue;
 	private List<Country> countries;
@@ -33,6 +35,7 @@ public class Continent {
 	 * @param country
 	 */
 	public void addCountry(Country country) {
+		logger.log(Level.INFO, "Adding country " + country.getName());
 		this.countries.add(country);
 	}
 

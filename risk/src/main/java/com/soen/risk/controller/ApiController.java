@@ -78,13 +78,13 @@ public class ApiController {
                                @RequestParam("continentOfCountries") String continentOfCountries,
                                @RequestParam("connectionString") String connectionString){
         CreateMap usecase = new CreateMap(name, continentNames, controlValues, countryNames, continentOfCountries, connectionString);
+        usecase.execute();
         return "redirect:/";
     }
 
 
-
-
     // -----------------------------------------------------------------------------------------------------------------
+
 
 
     // -----------------------------------------------------------------------------------------------------------------
