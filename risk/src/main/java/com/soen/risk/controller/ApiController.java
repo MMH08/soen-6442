@@ -2,6 +2,9 @@ package com.soen.risk.controller;
 
 import com.soen.risk.boundary.response.*;
 import com.soen.risk.boundary.usecase.*;
+
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +34,35 @@ public class ApiController {
         return "redirect:/phaseResolver";
     }
 
+    @RequestMapping("/EditMap")
+    public ModelAndView editMap() {
+    	
+    	ModelAndView model = new ModelAndView("editMap");
+    	return model;
+    }
+    
+    @RequestMapping("/EditRetrieve")
+    public ModelAndView RetrieveMap(@RequestParam("filename") String filename) {
+    	
+    	ModelAndView model = new ModelAndView("edit");
+    	EditMap EditMap = new EditMap();
+    	ArrayList<String> countryNames= EditMap.Retrieve(filename);
+    	ArrayList<String> continentNames= EditMap.RetrieveContinent(filename);
+    	model.addObject("Country", countryNames);
+    	model.addObject("Continent", continentNames);
+    	model.addObject("Filename", filename);
+        return model;
+    }
+    
+    @RequestMapping("/EditMapUpdate")
+    public String UpdateMap(@RequestParam("Filename") String filename,@RequestParam("name") String name, @RequestParam("value") String value) {
+    	EditMap EditMap = new EditMap();
+    	System.out.println(name);
+    	System.out.println(filename);
+    	String a= EditMap.Update(filename,name,value);
+        return a;
+    }
+    
     @RequestMapping("/phaseResolver")
     public String phaseResolver() {
         PhaseResolver usecase = new PhaseResolver();
