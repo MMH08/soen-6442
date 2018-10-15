@@ -3,6 +3,8 @@
  */
 package com.app.main;
 
+import java.util.List;
+
 /**
  * @author fly
  *
@@ -11,6 +13,18 @@ public class Continent
 {
 	private String continentName;
 	private int controlValue;
+	private List<Country> countries;
+	
+	public List<Country> getCountries() {
+		return countries;
+	}
+
+	public void setCountries(List<Country> countries) {
+		this.countries = countries;
+	}
+	
+	
+	
 	/**
 	 * @return the continentName
 	 */

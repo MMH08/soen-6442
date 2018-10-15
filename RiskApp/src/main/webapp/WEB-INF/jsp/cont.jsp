@@ -11,24 +11,32 @@
 <title>you </title>
 </head>
 <body>
-<h2>Show Contacts</h2>
+<h2>ADD COUNTRIES</h2>
+<form:form method="post" action="saveCountries" modelAttribute="continentForm">
 <table width="50%">
 	<tr>
 		
 		<th>Continent Name</th>
 		
 	</tr>
-	<c:forEach items="${continentForm.continents}" var="continent" varStatus="status">
+	<c:forEach items="${continentForm.continents}"  var="continent" varStatus="status">
 		<tr>
-			<td>${continent.continentName}</td>
-			<td><form:input name="${continentForm.countryList}" type="tex" path="continentForm.countryList"/></td>
 			
+			<td><input name="continents[${status.index}].continentName" value="${continent.continentName}" /></td>
+			
+			<td><input name="countryList[${status.index}].countryName" path="countryList[${status.index}].countryName"/></td>
+			
+			<td><input name="countryList[${status.index}].countryName" path="countryList[${status.index}].countryName"/></td>
+			
+			<td><input name="countryList[${status.index}].countryName" path="countryList[${status.index}].countryName"/></td>
 		</tr>
+		
 	</c:forEach>
 	
 </table>	
 <br/>
 <input type="submit" value="Click Ok to add countries" />
+</form:form>
 <input type="button" value="Back" onclick="javascript:history.back()"/>
 </body>
 </html>
