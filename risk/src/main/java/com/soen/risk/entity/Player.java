@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ *<h2> Player Class</h2>
+ *<p>In this class, we can countries of a player, number of armies assigned during reinforcement phase, 
+ *Assign armies to country in startup phase</p>
+ *@author Amit Sachdeva
+ *@since 2018-10-10
+ *@version 1.0.0
  */
 public class Player {
     private String name;
@@ -12,15 +17,16 @@ public class Player {
     private List<Country> countries;
 
     /**
-     *
+     *Player(int nameSuffix): Initiating arraylist of countries for current player and assigning name to player
+     *@param nameSuffix name of player
      */
-    // -------------------------------------------------------------
     public Player(int nameSuffix) {
         this.name = "Player_" + String.valueOf(nameSuffix);
         this.countries = new ArrayList<>();
     }
 
     /**
+     * addCountry(Country c): Add new country to countries object
      * @param c
      */
     public void addCountry(Country c) {
@@ -32,7 +38,8 @@ public class Player {
     }
 
     /**
-     * @return
+     * nextCountryToAssignArmy()
+     * @return Object of country to which army is assign
      */
     public Country nextCountryToAssignArmy() {
         for (Country country : countries) {
@@ -58,7 +65,13 @@ public class Player {
     public void setArmyCapacity(int armyCapacity) {
         this.armyCapacity = armyCapacity;
     }
-
+    
+    /**
+     *getReinforceArmyCapacity(Map m): Checking if player has all countries of whole continent then give army according to 
+     *control value, otherwise give armies according to countries player own.
+     * @return Object of country to which army is assign
+     * @param m Reference of map class
+     */
     public int getReinforceArmyCapacity(Map m) {
         //Check if player has all country of a continent
         for (Continent ctt : m.getContinents()) {
@@ -81,7 +94,8 @@ public class Player {
         return (int) Math.ceil(number_of_countries / 3.0);
 
     }
-
+    
+    //Return All Countries Name of Player
     public List<String> getCountryNames() {
         ArrayList<String> names = new ArrayList<>();
         for (Country country : countries)

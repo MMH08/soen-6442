@@ -1,12 +1,21 @@
 package com.soen.risk.entity;
 
 import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.*;
 
 /**
- * @author :
+ * <h2>Map Class</h2>
+ * <p> Map class contains loading of map using load method, save map, add new Country and continents.
+ * Validation of map.</p>
+ *
+ * @author : Amit Sachdeva
+ * @author : Manmeet Singh
+ * @author : Nivetha
+ * @version : 1.0.0
  */
 public class Map {
     static Logger logger = Logger.getLogger(Map.class.getName());
@@ -16,9 +25,11 @@ public class Map {
     private ArrayList<Country> countries;
     private LinkedList<LinkedList> adjCountry;
     private LinkedList list_country;
+    private String fileName;
 
     /**
-     *
+     * Initiating continents, countries, 2D linkedlist of country
+     * @author Amit Sachdeva
      */
     public Map() {
         this.continents = new ArrayList<>();
@@ -28,7 +39,9 @@ public class Map {
     }
 
     /**
-     * @param continent
+     * Add new continent to continent object     * 
+     * @param continent new continent
+     * @author Amit Sachdeva
      */
     public void addContinent(Continent continent) {
         continents.add(continent);
@@ -44,14 +57,17 @@ public class Map {
     // -------------------------------------------------------------
 
     /**
-     * @param filename
-     * @author Amit Sachdev
+     * This method receive map from file and add to adjCountry object.
+     * @param filename Path of File with name of file
+     * @author Amit Sachdeva
      * @since 2018-10-06
      */
     public void load(String filename) {
-        logger.log(Level.INFO, "Reading filename " + filename);
+    	this.fileName = filename;
+        logger.log(Level.INFO, "Reading filename " + this.fileName);
+        
         try {
-            Scanner reading_file = new Scanner(new FileReader(filename));
+            Scanner reading_file = new Scanner(new FileReader(this.fileName));
             int flag_continent = 0, flag_country = 0;
 
             while (reading_file.hasNext()) {
@@ -71,7 +87,12 @@ public class Map {
             logger.log(Level.SEVERE, e.getMessage());
         }
     }
-
+    /**
+     * This method to add new continent
+     * @param temp Receive continent name with control value
+     * @author Amit Sachdeva
+     * @since 2018-10-06
+     */
     public void addNewContinent(String temp) {
         logger.log(Level.FINE,"Adding continent " + temp);
         String split_continent[] = temp.split("=");
@@ -79,11 +100,17 @@ public class Map {
         cont.setControlValue(Integer.valueOf(split_continent[1]));
         continents.add(cont);
     }
-
+    
+    /**
+     * This method to add new country and add new Country in their respective continent
+     * @param temp Receive country with location, continent in which belong and neighbouring countries
+     * @author Amit Sachdeva
+     * @since 2018-10-06
+     */
     public void addNewCountry(String temp) {
         logger.log(Level.FINE, "Adding new country " + temp);
         String split_country[] = temp.split(",");
-        Country coun = new Country(split_country[0]);
+        Country coun = new Country(countries.size(), split_country[0]);
         coun.setCoordinateX(split_country[1]);
         coun.setCoordinateY(split_country[2]);
         Iterator il = continents.iterator();
@@ -105,7 +132,8 @@ public class Map {
         }
         this.map_name_creation(arr);
     }
-
+    
+    //Creating map on basis of Country Name
     private void map_name_creation(String s[]) {
         LinkedList temp_list = new LinkedList<String>();
 
@@ -130,7 +158,12 @@ public class Map {
         }
         return null;
     }
-
+    
+    /**
+     * This method to create graph of whole map.
+     * @author Amit Sachdeva
+     * @since 2018-10-07
+     */
     void map_country_object_creation() {
 
         Iterator il = list_country.iterator();
@@ -156,20 +189,99 @@ public class Map {
     public LinkedList getMapCountryObject() {
         return adjCountry;
     }
-
+    
+    //Get number of countries
     public int getNumberOfCountries() {
         return countries.size();
     }
-
+    
+    //Get number of continents
     public int getNumberOfContinents() {
         return continents.size();
     }
-
+    
     /**
+     * This method get continent for specific country.
+     * @return Return Continent name.
+     * @param c Pass country object
      * @author Manmeet Singh
-     * @since 2018-10-06
+     * @since 2018-10-07
      */
-    public void save() {
+    public String getCountryFromContinents(Country c)
+    {
+    	for(Continent con: continents)
+    	{
+    		for(Country coun: con.getCountries())
+    		{
+    			if(coun.getName().equals(c.getName()))
+    			{
+    				return con.getName();
+    			}
+    		}
+    	}
+    	return "";
+    }
+    /**
+     * This method get continent for specific country.
+     * @return Return Neighbouring countries of current country.
+     * @param country current country string
+     * @author Manmeet Singh
+     * @since 2018-10-07
+     */
+    public String getNeighbouringCountries(String country)
+    {
+    	for(LinkedList<Country> ll: this.adjCountry)
+    	{
+    		if(ll.get(0).getName().equals(country))
+    		{
+    			int i=1;
+    			String temp = "";
+    			while(i<ll.size())
+    			{
+    				temp = temp + ll.get(i).getName();
+    				if(i!=ll.size() - 1)
+    				{
+    					temp = temp + ",";
+    				}
+    				i++;
+    			}
+    			return temp;
+    		}
+    	}
+    	return "";
+    }
+    /**
+     * This method save finally updated map in a file.
+     * @author Manmeet Singh
+     * @since 2018-10-07
+     */
+    public void save(){
+    	try {
+    		
+    		PrintWriter pw = new PrintWriter(new File(this.fileName));
+    		String temp[] = this.fileName.split("\\");
+    		pw.println("Map" + temp[temp.length - 1]);
+    		pw.println();
+    		pw.println("[Continents]");
+    		for(Continent cont: continents)
+    		{
+    			pw.println(cont.getName()+"="+cont.getControlValue());
+    		}
+    		pw.println();
+    		pw.println("[Territories]");
+    		for(Country coun: countries)
+    		{
+    			String tem = coun.getName() + "," + coun.getCoordinateX() + "," + coun.getCoordinateY() +"," + this.getCountryFromContinents(coun) +"," + this.getNeighbouringCountries(coun.getName());
+    			pw.println(tem);
+    		}
+    		pw.close();
+    	}
+    	catch(Exception e)
+    	{
+    		
+    	}
+    	
+    	
     }
 
     /**
@@ -212,6 +324,7 @@ public class Map {
 
 
     /**
+     * Add country to country object
      * @param country
      */
     private void addCountry(Country country) {
@@ -236,7 +349,7 @@ public class Map {
         this.countries = countries;
     }
 
-    public LinkedList getAdjCountry() {
+    public LinkedList<LinkedList> getAdjCountry() {
         return adjCountry;
     }
 

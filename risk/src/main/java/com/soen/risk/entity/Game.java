@@ -7,9 +7,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- *
- *
+ *<h2>Game Class</h2>
+ *<p>In this class, Can add new player to a game, assign random countries to players, armies to countries and drop
+ *players after lost of all countries. Also return map and players</p>
+ *@author Manmeet Singh
+ *@since 2018-10-11
+ *@version 1.0.0 
  */
 public class Game {
     static Logger logger = Logger.getLogger(Game.class.getName());
@@ -17,8 +20,9 @@ public class Game {
     private List<Player> players;
 
     /**
-     * @param map
-     * @param countOfPlayers
+     * Assign to map reference, new arraylist for players, and adding all players.
+     * @param map Having reference of map class
+     * @param countOfPlayers Number of players playing game
      */
     public Game(Map map, int countOfPlayers) {
         this.map = map;
@@ -28,13 +32,18 @@ public class Game {
 
 
     /**
-     * @param countOfPlayers
+     * @param countOfPlayers number of players playing game
      */
     private void addPlayers(int countOfPlayers) {
         System.out.println("Adding players " + String.valueOf(countOfPlayers));
         for (int i = 0; i < countOfPlayers; i++)
             this.players.add(new Player(i));
     }
+    
+    /**
+     * Drop player after lose all countries
+     * @param p Player needed to remove from game
+     */
     public void dropPlayer(Player p)
     {
     	int i=0;
@@ -57,7 +66,10 @@ public class Game {
         //return (map.fetchOwners().size() == 1) ? false: true;
         return false;
     }
-
+    
+    /**
+     *Randomly allocate initial countries to all players.
+     */
     public void allocateInitialCountries() {
         Random rand = new Random();
         for (Country country : map.getCountries()) {
@@ -66,8 +78,10 @@ public class Game {
             logger.log(Level.INFO,"Adding country " + country.getName() + " to player " + players.get(indexOfPlayer).getName());
         }
     }
-
-    //Army size = number of countries with each player * (2-4) times)
+    
+    /**
+     *Randomly allocate initial armies to all countries.
+     */
     public void allocateInitialArmy() {
         Random rand = new Random();
         for (Player player : players) {

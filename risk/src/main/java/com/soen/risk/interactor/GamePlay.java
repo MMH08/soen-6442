@@ -6,7 +6,17 @@ import com.soen.risk.entity.Player;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ * <h2>Game Play</h2>
+ * <ul>
+ * <li>Create Map class object to perform all functionality of map class i.e. allocating initial armies etc.
+ * <li>Change Current Phase
+ * <li>Change Current player after its turn 
+ * </ul>
+ * @author Varun Singhal
+ * @version 1.0.0
+ * @since 2018-10-10
+ */
 
 public class GamePlay {
     private static Logger logger = Logger.getLogger(GamePlay.class.getName());
@@ -26,7 +36,11 @@ public class GamePlay {
 
     private GamePlay() {
     }
-
+    /**
+     * Perform all functionality of map after creating map object.
+     * @param filename Path of file along with its file name
+     * @param countOfPlayers Number of players playing game
+     */
     public void build(String filename, int countOfPlayers) {
         // Builder pattern - startup phase 1
         Map map = new Map();
@@ -37,7 +51,10 @@ public class GamePlay {
         this.setCurrentPhase("startupPhase");
         this.setCurrentPlayer(this.game.getPlayers().get(0));
     }
-
+    
+    /**
+     * Changing current phase between reinforcement, attack, and fortify.
+     */
     public void updateCurrentPhase() {
         String[] phases = {"reinforcePhase", "attackPhase", "fortifyPhase"};
         for (int i = 0; i < phases.length; i++) {
@@ -51,7 +68,9 @@ public class GamePlay {
         }
         // change phase in circular fashion.
     }
-
+    /**
+     * Change current player after its turn is over.
+     */
     public void updateCurrentPlayer() {
 
         int count = 0;
@@ -76,7 +95,10 @@ public class GamePlay {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
-
+    /**
+     * Update Current Player to next player after completing player's turn.
+     * @param currentPlayer
+     */
     private void setCurrentPlayer(Player currentPlayer) {
         logger.log(Level.INFO, "Changing player to " + currentPlayer.getName());
         this.currentPlayer = currentPlayer;

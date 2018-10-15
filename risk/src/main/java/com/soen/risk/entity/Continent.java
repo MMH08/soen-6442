@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is the Continent class that adds country names ,their control values and
-   list of countries to the map.
- * 
+ * <h2>Continent Class</h2>
+ * <p>This is the Continent class that adds country names ,their control values and
+   list of countries to the map.</p>
+ * @author Amit Sachdeva
+ * @since 2018-10-08
+ * @version 1.0.0
  */
 public class Continent {
 
