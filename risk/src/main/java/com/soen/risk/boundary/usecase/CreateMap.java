@@ -20,7 +20,7 @@ public class CreateMap implements Usecase {
         MapBuilder mapBuilder = new MapBuilder(request.getName(), request.getContinents(), request.getControlValues(),
                 request.getCountries(), request.getCountryOwners(), request.getConnections());
         mapBuilder.build();
-        String generatedFilePath = mapBuilder.save();
+        String generatedFilePath = mapBuilder.save(request.getDownloadFolder());
         response.setFilePath(generatedFilePath);
         return response;
     }

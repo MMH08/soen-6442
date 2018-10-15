@@ -93,10 +93,9 @@ public class MapBuilder {
         }
     }
 
-    public String save() {
-        map.setFileName("/home/varun/Downloads/test/" + map.getName() + ".map");
-        //if (map.isValid())
-        map.save();
+    public String save(String downloadFolder) {
+        map.setFileName(downloadFolder + map.getName() + ".map");
+        if (map.isValid()) map.save();
         return map.getFileName();
     }
 }

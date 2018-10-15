@@ -26,11 +26,13 @@ public class ApiController {
     @RequestMapping(value = "/create02", method = RequestMethod.POST)
     public ModelAndView createContinent(@RequestParam("name") String name,
                                   @RequestParam("numberOfContinent") String numberOfContinent,
-                                  @RequestParam("numberOfCountry") String numberOfCountry) {
+                                  @RequestParam("numberOfCountry") String numberOfCountry,
+                                        @RequestParam("downloadFolder") String downloadFolder) {
         ModelAndView model = new ModelAndView("create02");
         model.addObject("name", name);
         model.addObject("numberOfContinent", numberOfContinent);
         model.addObject("numberOfCountry", numberOfCountry);
+        model.addObject("downloadFolder", downloadFolder);
         return model;
     }
 
@@ -38,12 +40,14 @@ public class ApiController {
     public ModelAndView createCountry(@RequestParam("name") String name,
                                 @RequestParam("numberOfContinent") String numberOfContinent,
                                 @RequestParam("numberOfCountry") String numberOfCountry,
+                                      @RequestParam("downloadFolder") String downloadFolder,
                                 @RequestParam("continentNames") String continentNames,
                                 @RequestParam("controlValues") String controlValues) {
         ModelAndView model = new ModelAndView("create03");
         model.addObject("name", name);
         model.addObject("numberOfContinent", numberOfContinent);
         model.addObject("numberOfCountry", numberOfCountry);
+        model.addObject("downloadFolder", downloadFolder);
         model.addObject("continentNames", continentNames);
         model.addObject("controlValues", controlValues);
         return model;
@@ -53,6 +57,7 @@ public class ApiController {
     public ModelAndView createConnection(@RequestParam("name") String name,
                                    @RequestParam("numberOfContinent") String numberOfContinent,
                                    @RequestParam("numberOfCountry") String numberOfCountry,
+                                         @RequestParam("downloadFolder") String downloadFolder,
                                    @RequestParam("continentNames") String continentNames,
                                    @RequestParam("controlValues") String controlValues,
                                    @RequestParam("countryNames") String countryNames,
@@ -61,6 +66,7 @@ public class ApiController {
         model.addObject("name", name);
         model.addObject("numberOfContinent", numberOfContinent);
         model.addObject("numberOfCountry", numberOfCountry);
+        model.addObject("downloadFolder", downloadFolder);
         model.addObject("continentNames", continentNames);
         model.addObject("controlValues", controlValues);
         model.addObject("countryNames", countryNames);
@@ -72,12 +78,13 @@ public class ApiController {
     public String createSubmit(@RequestParam("name") String name,
                                @RequestParam("numberOfContinent") String numberOfContinent,
                                @RequestParam("numberOfCountry") String numberOfCountry,
+                               @RequestParam("downloadFolder") String downloadFolder,
                                @RequestParam("continentNames") String continentNames,
                                @RequestParam("controlValues") String controlValues,
                                @RequestParam("countryNames") String countryNames,
                                @RequestParam("continentOfCountries") String continentOfCountries,
                                @RequestParam("connectionString") String connectionString){
-        CreateMap usecase = new CreateMap(name, continentNames, controlValues, countryNames, continentOfCountries, connectionString);
+        CreateMap usecase = new CreateMap(name, continentNames, controlValues, countryNames, continentOfCountries, connectionString, downloadFolder);
         usecase.execute();
         return "redirect:/";
     }

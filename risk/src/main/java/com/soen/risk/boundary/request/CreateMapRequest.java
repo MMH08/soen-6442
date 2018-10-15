@@ -16,6 +16,7 @@ public class CreateMapRequest implements Request {
     private List<Integer> controlValues;
     private List<String> countryOwners;
     private List<List<String>> connections;
+    private String downloadFolder;
 
     public CreateMapRequest(String... args) {
         setName(args[0]);
@@ -24,7 +25,7 @@ public class CreateMapRequest implements Request {
         setCountries(args[3]);
         setCountryOwners(args[4]);
         setConnections(args[5]);
-
+        setDownloadFolder(args[6]);
     }
 
     public String getName() {
@@ -95,5 +96,14 @@ public class CreateMapRequest implements Request {
             }
             connections.add(connection);
         }
+    }
+
+
+    public String getDownloadFolder() {
+        return downloadFolder;
+    }
+
+    public void setDownloadFolder(String downloadFolder) {
+        this.downloadFolder = downloadFolder;
     }
 }
