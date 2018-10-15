@@ -134,7 +134,7 @@ public class Map {
     }
     
     //Creating map on basis of Country Name
-    private void map_name_creation(String s[]) {
+    public void map_name_creation(String s[]) {
         LinkedList temp_list = new LinkedList<String>();
 
         int i = 0;
@@ -146,8 +146,8 @@ public class Map {
     }
 
     //Function to intialize map country object creation
-    private void create_map_object_function() {
-        //this.adjCountry = new LinkedList<LinkedList>();
+    public void create_map_object_function() {
+        this.adjCountry = new LinkedList<LinkedList>();
         this.map_country_object_creation();
     }
 
