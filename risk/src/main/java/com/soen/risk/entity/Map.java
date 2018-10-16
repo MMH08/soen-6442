@@ -20,12 +20,13 @@ import java.io.*;
 public class Map {
     static Logger logger = Logger.getLogger(Map.class.getName());
     private String name;
-
+    public int counter=1;
     private ArrayList<Continent> continents;
     private ArrayList<Country> countries;
     private LinkedList<LinkedList> adjCountry;
     private LinkedList list_country;
     private String fileName;
+    private LinkedList<Integer> adj[]; 
 
     /**
      * Initiating continents, countries, 2D linkedlist of country
@@ -286,21 +287,23 @@ public class Map {
 
     /**
      * Validates the continents and country objects for duplicate values.
+     * Traversed adjacent countries and verified all countries are linked.
      *
-     * @return true is no duplicates found
-     * false for duplicate occurrence
+     * @return true is no duplicates found and if all countries are connected.
+     * false for duplicate occurrence and if any country is isolated
      * @author Nivetha
      * @since 2018-10-06
      */
     public boolean isValid() {
 
+    	
         if (!continents.isEmpty()) {
             HashSet<String> hs = new HashSet<String>();
             for (Continent u : continents) {
-
-                if (hs.add(u.getName()) == false)
-                    logger.log(Level.FINE,"Continents" + u.getName());
-                return false;
+                if (hs.add(u.getName()) == false) {
+                	return false;
+                
+                }
             }
         } else {
             logger.log(Level.INFO,"Continents are empty");
@@ -309,20 +312,78 @@ public class Map {
         if (!countries.isEmpty()) {
             HashSet<String> hs1 = new HashSet<String>();
             for (Country u : countries) {
-
-                if (hs1.add(u.getName()) == false)
-                    logger.log(Level.FINE, "Countries" + u.getName());
+            	
+                if (hs1.add(u.getName()) == false) {
                 return false;
+                }
             }
         } else {
             logger.log(Level.INFO,"countries are empty");
             return false;
         }
-        return true;
+        
+        if(!adjCountry.isEmpty())
+        {
+        	
+        	int noOfItems = countries.size();
+            adj = new LinkedList[noOfItems]; 
+            
+        	for (int i=0; i<noOfItems; ++i) {
+    			adj[i] = new LinkedList(); 
+    			}
+    		for (Country c : countries) {
+    					
+    			LinkedList<String> adjSubList= (LinkedList<String>) adjCountry.get(countries.indexOf(c));
+        		Iterator adjSubIterator= adjSubList.iterator();
+        		while(adjSubIterator.hasNext()) {
+        		Country objCountry= (Country) adjSubIterator.next();
+           		int value = countries.indexOf(objCountry);
+        			if(value!=-1)
+        			{
+        				addEdge(countries.indexOf(c),value);
+        			}
+        			else {
+        				return false;
+        			}	
+        		}
+    				
+    			}
+        	boolean visited[] = new boolean[noOfItems]; 
+        	counter=1;
+        	dfsTraversal(0, visited); 
+        	if(counter== countries.size()) {
+               		return true;
+        	}
+        	else {
+        		
+        		return false;
+        	}
+        }
+        else {
+        	return false;
+        }   
 
     }
 
-
+    void dfsTraversal(int v,boolean visited[]) 
+	{ 
+		visited[v] = true;
+		counter++;
+		Iterator<Integer> i = adj[v].listIterator(); 
+		while (i.hasNext()) 
+		{  
+			int n = i.next(); 
+			if (!visited[n]) 
+			dfsTraversal(n, visited); 
+		} 
+	} 
+    
+    void addEdge(int v, int w) 
+	{ 
+		adj[v].add(w); 
+	} 
+    
+    
     /**
      * Add country to country object
      * @param country
