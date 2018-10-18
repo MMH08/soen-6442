@@ -1,13 +1,9 @@
 package com.soen.risk.entity;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class MapTest {
 
@@ -20,14 +16,13 @@ public class MapTest {
     }
 
     @Test
-    public void addCountry() 
-    {
-    	Map map=new Map();
-    	Country country=new Country(13,"Africa");
-    	map.addCountry(country);
-    	assertNotNull(map.getCountries());
-    	//assertEquals(map.get);
-    	
+    public void addCountry() {
+        Map map = new Map();
+        Country country = new Country(13, "Africa");
+        map.addCountry(country);
+        assertNotNull(map.getCountries());
+        //assertEquals(map.get);
+
     }
 
     @Test
@@ -39,9 +34,8 @@ public class MapTest {
     }
 
     @Test
-    public void save()
-    {
-        
+    public void save() {
+
 
     }
 }
