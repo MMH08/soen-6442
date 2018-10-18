@@ -49,11 +49,13 @@ public class GamePlay {
         // Builder pattern - startup phase 1
         Map map = new Map();
         map.load(filename);
-        this.game = new Game(map, countOfPlayers);
-        this.game.allocateInitialCountries();
-        this.game.allocateInitialArmy();
-        this.setCurrentPhase("startupPhase");
-        this.setCurrentPlayer(this.game.getPlayers().get(0));
+        if (map.isValid()) {
+            this.game = new Game(map, countOfPlayers);
+            this.game.allocateInitialCountries();
+            this.game.allocateInitialArmy();
+            this.setCurrentPhase("startupPhase");
+            this.setCurrentPlayer(this.game.getPlayers().get(0));
+        }
     }
 
     /**

@@ -95,10 +95,10 @@ public class MapBuilder {
 
     public String save(String downloadFolder) {
         map.setFileName(downloadFolder + map.getName() + ".map");
-        //if (map.isValid()){
-        logger.log(Level.INFO, "Map is valid ");
-        map.save();
-        //}
+        if (map.isValid()){
+            logger.log(Level.INFO, "Map is valid ");
+            map.save();
+        }
         return map.getFileName();
     }
 }

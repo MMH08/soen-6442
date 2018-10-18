@@ -3,7 +3,10 @@ package com.soen.risk.entity;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -292,94 +295,89 @@ public class Map {
      * @author Nivetha
      * @since 2018-10-06
      */
-    public boolean isValid() {
-        return true;
-//        if (!continents.isEmpty()) {
-//            HashSet<String> hs = new HashSet<String>();
-//            for (Continent u : continents) {
-//                if (hs.add(u.getName()) == false) {
-//                    return false;
-//
-//                }
-//
-//                for (Object aList_country : list_country) {
-//                    LinkedList l1 = (LinkedList) aList_country;
-//                    LinkedList<Country> links = new LinkedList<>();
-//                    for (Object aL1 : l1) {
-//                        String s = (String) aL1;
-//                        links.add(findByCountryName(s));
-//
-//                    }
-//                    adjCountry.add(links);
-//                }
-//
-//                if (!countries.isEmpty()) {
-//                    HashSet<String> hs1 = new HashSet<String>();
-//                    for (Country u : countries) {
-//
-//                        if (hs1.add(u.getName()) == false) {
-//                            return false;
-//                        }
-//                    }
-//                } else {
-//                    logger.log(Level.INFO, "countries are empty");
-//                    return false;
-//                }
-//
-//                if (!adjCountry.isEmpty()) {
-//
-//                    int noOfItems = countries.size();
-//                    adj = new LinkedList[noOfItems];
-//
-//                    for (int i = 0; i < noOfItems; ++i) {
-//                        adj[i] = new LinkedList();
-//                    }
-//                    for (Country c : countries) {
-//
-//                        LinkedList<String> adjSubList = (LinkedList<String>) adjCountry.get(countries.indexOf(c));
-//                        Iterator adjSubIterator = adjSubList.iterator();
-//                        while (adjSubIterator.hasNext()) {
-//                            Country objCountry = (Country) adjSubIterator.next();
-//                            int value = countries.indexOf(objCountry);
-//                            if (value != -1) {
-//                                addEdge(countries.indexOf(c), value);
-//                            } else {
-//                                return false;
-//                            }
-//                        }
-//
-//                    }
-//                    boolean visited[] = new boolean[noOfItems];
-//                    counter = 1;
-//                    dfsTraversal(0, visited);
-//                    if (counter == countries.size()) {
-//                        return true;
-//                    } else {
-//
-//                        return false;
-//                    }
-//                } else {
-//                    return false;
-//                }
-//
-//            }
-//        }
+    public boolean checkContinentDuplicacy() {
+        if (this.continents.size() == 0) {
+            logger.log(Level.INFO, "Continents not found.");
+            return true;
+        }
+        for (int i = 0; i < this.continents.size() - 1; i++) {
+            for (int j = i + 1; j < this.continents.size(); j++) {
+                if (this.continents.get(i).getName().equals(this.continents.get(j).getName())) {
+                    logger.log(Level.INFO,"Found duplicate continent " + this.continents.get(i).getName());
+                    return true;
+                }
+            }
+        }
+        logger.log(Level.INFO, "Check continent duplicacy passed");
+        return false;
     }
 
-//    void dfsTraversal(int v, boolean visited[]) {
-//        visited[v] = true;
-//        counter++;
-//        Iterator<Integer> i = adj[v].listIterator();
-//        while (i.hasNext()) {
-//            int n = i.next();
-//            if (!visited[n])
-//                dfsTraversal(n, visited);
-//        }
-//    }
-//
-//    void addEdge(int v, int w) {
-//        adj[v].add(w);
-//    }
+    public boolean checkCountryDuplicacy() {
+        if (this.countries.size() == 0) {
+            logger.log(Level.INFO, "Countries not found.");
+            return true;
+        }
+        for (int i = 0; i < this.countries.size() - 1; i++) {
+            for (int j = i + 1; j < this.countries.size(); j++) {
+                if (this.countries.get(i).getName().equals(this.countries.get(j).getName())) {
+                    logger.log(Level.INFO, "duplicate country found " + this.countries.get(i).getName());
+                    return true;
+                }
+            }
+        }
+        logger.log(Level.INFO, "Check country duplicacy passed");
+        return false;
+    }
+
+    //Implement Depth First Search Algorithm
+    void checkingContacting(LinkedList adj[], int CurrentCountry, boolean visited[], LinkedList<Integer> movingPath) {
+        visited[CurrentCountry] = true;
+        movingPath.add(CurrentCountry);
+        Iterator<Integer> i = adj[CurrentCountry].listIterator();
+        while (i.hasNext()) {
+            int n = i.next();
+            if (!visited[n])
+                checkingContacting(adj, n, visited, movingPath);
+        }
+    }
+
+    public boolean checkIsolatedCountry() {
+        int currentCoun = this.countries.get(0).getId();    //Convert Country name to their ids
+        LinkedList<LinkedList<Country>> ll = this.adjCountry;
+        LinkedList<Integer> adj[] = new LinkedList[ll.size()];
+        for (int i = 0; i < ll.size(); i++) {
+            adj[i] = new LinkedList();
+        }
+        for (LinkedList<Country> ll1 : ll) {
+            int index = ll1.get(0).getId();
+            int j = 0;
+            for (Country c : ll1) {
+                if (j != 0) {
+                    adj[index].add(c.getId());
+                }
+                j++;
+
+            }
+        }
+        boolean v[] = new boolean[adj.length];
+        LinkedList<Integer> movingPath = new LinkedList();
+        //Start searching for path between both countries
+        this.checkingContacting(adj, currentCoun, v, movingPath);
+        if (movingPath.size() == this.countries.size()) {
+            logger.log(Level.INFO, "Isolation test passed.");
+            return false;
+        } else {
+            logger.log(Level.INFO, "Isolation test failed.");
+            return true;
+        }
+    }
+
+    public boolean isValid() {
+        if (checkContinentDuplicacy()) return false;
+        else if (checkCountryDuplicacy()) return false;
+        else if (checkIsolatedCountry()) return false;
+        return true;
+    }
 
 
     // -------------------------------------------------------------
