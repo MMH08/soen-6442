@@ -7,18 +7,30 @@ import com.soen.risk.entity.Map;
 
 import java.util.logging.Level;
 
+/**
+ * The Class EditMap.
+ */
 public class EditMap implements Usecase {
+    
+    /** The request. */
     private EditMapRequest request;
+    
+    /** The response. */
     private EditMapResponse response;
 
+    /**
+     * Instantiates a new edits the map.
+     *
+     * @param args the args
+     */
     public EditMap(String... args) {
         request = new EditMapRequest(args);
         response = new EditMapResponse();
     }
 
 
-    /**
-     * @return
+    /* (non-Javadoc)
+     * @see com.soen.risk.boundary.Usecase#execute()
      */
     @Override
     public EditMapResponse execute() {

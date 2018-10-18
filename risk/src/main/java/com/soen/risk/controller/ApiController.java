@@ -12,10 +12,20 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The Class ApiController.
+ */
 @Controller
 public class ApiController {
+    
+    /** The logger. */
     public static Logger logger = Logger.getLogger(ApiController.class.getName());
 
+    /**
+     * Index.
+     *
+     * @return the string
+     */
     @RequestMapping("")
     public String index() {
         return "index";
@@ -23,11 +33,25 @@ public class ApiController {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Creates the map detail.
+     *
+     * @return the string
+     */
     @RequestMapping("/create01")
     public String createMapDetail() {
         return "create01";
     }
 
+    /**
+     * Creates the continent.
+     *
+     * @param name the name
+     * @param numberOfContinent the number of continent
+     * @param numberOfCountry the number of country
+     * @param downloadFolder the download folder
+     * @return the model and view
+     */
     @RequestMapping(value = "/create02", method = RequestMethod.POST)
     public ModelAndView createContinent(@RequestParam("name") String name,
                                         @RequestParam("numberOfContinent") String numberOfContinent,
@@ -41,6 +65,17 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Creates the country.
+     *
+     * @param name the name
+     * @param numberOfContinent the number of continent
+     * @param numberOfCountry the number of country
+     * @param downloadFolder the download folder
+     * @param continentNames the continent names
+     * @param controlValues the control values
+     * @return the model and view
+     */
     @RequestMapping(value = "/create03", method = RequestMethod.POST)
     public ModelAndView createCountry(@RequestParam("name") String name,
                                       @RequestParam("numberOfContinent") String numberOfContinent,
@@ -58,6 +93,19 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Creates the connection.
+     *
+     * @param name the name
+     * @param numberOfContinent the number of continent
+     * @param numberOfCountry the number of country
+     * @param downloadFolder the download folder
+     * @param continentNames the continent names
+     * @param controlValues the control values
+     * @param countryNames the country names
+     * @param continentOfCountries the continent of countries
+     * @return the model and view
+     */
     @RequestMapping(value = "/create04", method = RequestMethod.POST)
     public ModelAndView createConnection(@RequestParam("name") String name,
                                          @RequestParam("numberOfContinent") String numberOfContinent,
@@ -81,11 +129,22 @@ public class ApiController {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Load edit map detail.
+     *
+     * @return the string
+     */
     @RequestMapping("/edit00")
     public String loadEditMapDetail() {
         return "edit00";
     }
 
+    /**
+     * Edits the map detail.
+     *
+     * @param filename the filename
+     * @return the model and view
+     */
     @RequestMapping(value = "/edit01", method = RequestMethod.POST)
     public ModelAndView editMapDetail(@RequestParam("filename") String filename) {
         EditMap usecase = new EditMap(filename);
@@ -102,6 +161,20 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Edits the continent.
+     *
+     * @param name the name
+     * @param numberOfContinent the number of continent
+     * @param numberOfCountry the number of country
+     * @param downloadFolder the download folder
+     * @param continentNames the continent names
+     * @param controlValues the control values
+     * @param countryNames the country names
+     * @param continentOfCountries the continent of countries
+     * @param connectionString the connection string
+     * @return the model and view
+     */
     @RequestMapping(value = "/edit02", method = RequestMethod.POST)
     public ModelAndView editContinent(@RequestParam("name") String name,
                                       @RequestParam("numberOfContinent") String numberOfContinent,
@@ -125,6 +198,20 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Edits the country.
+     *
+     * @param name the name
+     * @param numberOfContinent the number of continent
+     * @param numberOfCountry the number of country
+     * @param downloadFolder the download folder
+     * @param continentNames the continent names
+     * @param controlValues the control values
+     * @param countryNames the country names
+     * @param continentOfCountries the continent of countries
+     * @param connectionString the connection string
+     * @return the model and view
+     */
     @RequestMapping(value = "/edit03", method = RequestMethod.POST)
     public ModelAndView editCountry(@RequestParam("name") String name,
                                     @RequestParam("numberOfContinent") String numberOfContinent,
@@ -148,6 +235,20 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Edits the connection.
+     *
+     * @param name the name
+     * @param numberOfContinent the number of continent
+     * @param numberOfCountry the number of country
+     * @param downloadFolder the download folder
+     * @param continentNames the continent names
+     * @param controlValues the control values
+     * @param countryNames the country names
+     * @param continentOfCountries the continent of countries
+     * @param connectionString the connection string
+     * @return the model and view
+     */
     @RequestMapping(value = "/edit04", method = RequestMethod.POST)
     public ModelAndView editConnection(@RequestParam("name") String name,
                                        @RequestParam("numberOfContinent") String numberOfContinent,
@@ -173,6 +274,20 @@ public class ApiController {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Creates the submit.
+     *
+     * @param name the name
+     * @param numberOfContinent the number of continent
+     * @param numberOfCountry the number of country
+     * @param downloadFolder the download folder
+     * @param continentNames the continent names
+     * @param controlValues the control values
+     * @param countryNames the country names
+     * @param continentOfCountries the continent of countries
+     * @param connectionString the connection string
+     * @return the string
+     */
     @RequestMapping(value = "/createSubmit", method = RequestMethod.POST)
     public String createSubmit(@RequestParam("name") String name,
                                @RequestParam("numberOfContinent") String numberOfContinent,
@@ -191,6 +306,13 @@ public class ApiController {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Start game.
+     *
+     * @param filename the filename
+     * @param countOfPlayers the count of players
+     * @return the string
+     */
     @RequestMapping("/GamePlay")
     public String startGame(@RequestParam("filename") String filename, @RequestParam("players") String countOfPlayers) {
         StartGame usecase = new StartGame(filename, countOfPlayers);
@@ -199,6 +321,11 @@ public class ApiController {
     }
 
 
+    /**
+     * Phase resolver.
+     *
+     * @return the string
+     */
     @RequestMapping("/phaseResolver")
     public String phaseResolver() {
         PhaseResolver usecase = new PhaseResolver();
@@ -207,6 +334,11 @@ public class ApiController {
         return "redirect:/" + response.getPhaseName();
     }
 
+    /**
+     * Startup phase.
+     *
+     * @return the model and view
+     */
     @RequestMapping("/startupPhase")
     public ModelAndView startupPhase() {
         ModelAndView model = new ModelAndView("startupphase");
@@ -220,6 +352,13 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Adds the army to own country.
+     *
+     * @param armyCount the army count
+     * @param countryName the country name
+     * @return the string
+     */
     @RequestMapping("/startupPhase/addArmy")
     public String addArmyToOwnCountry(@RequestParam("armyCount") String armyCount,
                                       @RequestParam("country") String countryName) {
@@ -229,6 +368,11 @@ public class ApiController {
         return "redirect:/phaseResolver";
     }
 
+    /**
+     * Reinforce phase.
+     *
+     * @return the model and view
+     */
     @RequestMapping("/reinforcePhase")
     public ModelAndView reinforcePhase() {
         ModelAndView model = new ModelAndView("reinforcephase");
@@ -241,6 +385,12 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Adds the reinforce army.
+     *
+     * @param armyCounts the army counts
+     * @return the string
+     */
     @RequestMapping("/reinforcePhase/addArmy")
     public String addReinforceArmy(@RequestParam("armyCounts") String armyCounts) {
         AddReinforceArmy usecase = new AddReinforceArmy(armyCounts);
@@ -248,6 +398,11 @@ public class ApiController {
         return "redirect:/phaseResolver";
     }
 
+    /**
+     * Attack phase.
+     *
+     * @return the string
+     */
     @RequestMapping("/attackPhase")
     public String attackPhase() {
         AttackInfo usecase = new AttackInfo();
@@ -255,6 +410,11 @@ public class ApiController {
     }
 
 
+    /**
+     * Fortify phase.
+     *
+     * @return the model and view
+     */
     @RequestMapping("/fortifyPhase")
     public ModelAndView fortifyPhase() {
         ModelAndView model = new ModelAndView("fortifyphase");
@@ -266,6 +426,14 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Move fortify army.
+     *
+     * @param startCountry the start country
+     * @param endCountry the end country
+     * @param armyCount the army count
+     * @return the string
+     */
     @RequestMapping("/fortifyPhase/moveArmy")
     public String moveFortifyArmy(@RequestParam("startCountry") String startCountry,
                                   @RequestParam("endCountry") String endCountry,
