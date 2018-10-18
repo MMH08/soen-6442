@@ -19,6 +19,7 @@ public class FortifyInfo implements Usecase {
     public FortifyInfoResponse execute() {
         Player player = GamePlay.getInstance().getCurrentPlayer();
         response.setPlayerName(player.getName());
+        response.setCountryNames(player.getCountryNames());
         return response;
     }
 }

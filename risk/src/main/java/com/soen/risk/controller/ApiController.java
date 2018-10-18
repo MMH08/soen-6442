@@ -2,14 +2,19 @@ package com.soen.risk.controller;
 
 import com.soen.risk.boundary.response.*;
 import com.soen.risk.boundary.usecase.*;
+import com.soen.risk.interactor.phase.AttackPhase;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Controller
 public class ApiController {
+    public static Logger logger = Logger.getLogger(ApiController.class.getName());
 
     @RequestMapping("")
     public String index() {
@@ -81,8 +86,8 @@ public class ApiController {
         return "edit00";
     }
 
-    @RequestMapping(value = "/edit01", method=RequestMethod.POST)
-    public ModelAndView editMapDetail(@RequestParam("filename") String filename){
+    @RequestMapping(value = "/edit01", method = RequestMethod.POST)
+    public ModelAndView editMapDetail(@RequestParam("filename") String filename) {
         EditMap usecase = new EditMap(filename);
         EditMapResponse response = usecase.execute();
         ModelAndView model = new ModelAndView("edit01");
@@ -198,6 +203,7 @@ public class ApiController {
     public String phaseResolver() {
         PhaseResolver usecase = new PhaseResolver();
         PhaseResolverResponse response = usecase.execute();
+        logger.log(Level.INFO,"redirecting to phase - " + response.getPhaseName());
         return "redirect:/" + response.getPhaseName();
     }
 
@@ -242,21 +248,30 @@ public class ApiController {
         return "redirect:/phaseResolver";
     }
 
+    @RequestMapping("/attackPhase")
+    public String attackPhase() {
+        AttackInfo usecase = new AttackInfo();
+       return "redirect:/phaseResolver";
+    }
+
+
     @RequestMapping("/fortifyPhase")
     public ModelAndView fortifyPhase() {
         ModelAndView model = new ModelAndView("fortifyphase");
         FortifyInfo usecase = new FortifyInfo();
         FortifyInfoResponse response = usecase.execute();
         model.addObject("playerName", response.getPlayerName());
+        model.addObject("countryNames", response.getCountryNames());
         return model;
     }
 
     @RequestMapping("/fortifyPhase/moveArmy")
-    public String moveFortifyArmy() {
-        MoveFortifyArmy usecase = new MoveFortifyArmy();
+    public String moveFortifyArmy(@RequestParam("startCountry") String startCountry,
+                                  @RequestParam("endCountry") String endCountry,
+                                  @RequestParam("armyCount") String armyCount) {
+        MoveFortifyArmy usecase = new MoveFortifyArmy(startCountry, endCountry, armyCount);
         FortifyPhaseResponse response = usecase.execute();
         return "redirect:/phaseResolver";
     }
-
 
 }

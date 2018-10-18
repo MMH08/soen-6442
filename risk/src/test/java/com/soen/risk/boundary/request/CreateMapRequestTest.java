@@ -15,7 +15,7 @@ public class CreateMapRequestTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        cmr = new CreateMapRequest("3dmap", "Continent1,Continent2", "10,20", "Country1,Country2", "Continent1,Continent2", "Country2|Country1");
+        cmr = new CreateMapRequest("3dmap", "Continent1,Continent2", "10,20", "Country1,Country2", "Continent1,Continent2", "Country2|Country1", "/home");
     }
 
 

@@ -16,7 +16,7 @@ public class MoveFortifyArmy implements Usecase {
 
     @Override
     public FortifyPhaseResponse execute() {
-        FortifyPhase phase = new FortifyPhase();
+        FortifyPhase phase = new FortifyPhase(request.getStartCountry(), request.getEndCountry(), request.getArmyCount());
         if (phase.isValid()) {
             phase.begin();
             phase.execute();
