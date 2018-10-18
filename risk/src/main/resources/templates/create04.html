@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="layout :: header"/>
+</head>
+<body>
+<div id="container" style="margin: 0px auto; width: 760px;">
+
+    <div th:replace="layout :: nav"/>
+
+    <div id="box">
+        <div id="content">
+            <div class="overflow">
+                <div id="textpadding">
+                    <h2>Risk - Game Play - 4 of 4</h2>
+                    <!--<div class="sticky">-->
+                    <!--<i class="fa fa-info-circle" aria-hidden="true"></i> <b>About</b>-->
+                    <!--</div>-->
+                    <br/>
+                    Add links ...
+                    <form th:action="@{/createSubmit}" method="post">
+                        <table>
+                            <tr>
+                                <td>Country name</td>
+                                <td>Connecting neighbours</td>
+                            </tr>
+                            <tr th:each="countryName : ${#strings.arraySplit(countryNames, ',')}">
+                                <td th:text="${countryName}">
+                                </td>
+                                <td>
+                                    <select class="connectionString" multiple>
+                                        <option th:each="country : ${#strings.arraySplit(countryNames, ',')}"
+                                                th:value="${country}" th:text="${country}">
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="connectionString" id="connectionString" />
+                                    <input type="hidden" name="countryNames" th:value="${countryNames}" />
+                                    <input type="hidden" name="continentOfCountries" th:value="${continentOfCountries}" />
+                                    <input type="hidden" name="numberOfContinent" th:value="${numberOfContinent}"/>
+                                    <input type="hidden" name="numberOfCountry" th:value="${numberOfCountry}"/>
+                                    <input type="hidden" name="downloadFolder" th:value="${downloadFolder}" />
+                                    <input type="hidden" name="name" th:value="${name}"/>
+                                    <input type="hidden" id="continentNames" th:value="${continentNames}" name="continentNames"/>
+                                    <input type="hidden" id="controlValues" th:value="${controlValues}" name="controlValues"/>
+                                </td>
+
+                                <td>
+                                    <button name="submit">Submit</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <script>
+        $("button").click(function(){
+            //
+            var connectionString = new Array();
+            $(".connectionString").each(function(){
+                connectionString.push($(this).val().join(","));
+            });
+            console.log(connectionString);
+            $("#connectionString").val(connectionString.join("|"));
+
+            //
+            $("form").submit();
+        });
+    </script>
+
+    <div th:replace="layout :: footer"/>
+</div>
+
+</body>
+</html>

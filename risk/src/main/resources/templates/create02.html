@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="layout :: header"/>
+</head>
+<body>
+<div id="container" style="margin: 0px auto; width: 760px;">
+
+    <div th:replace="layout :: nav"/>
+
+    <div id="box">
+        <div id="content">
+            <div class="overflow">
+                <div id="textpadding">
+                    <h2>Risk - Create Map - 2 of 4</h2>
+                    <!--<div class="sticky">-->
+                    <!--<i class="fa fa-info-circle" aria-hidden="true"></i> <b>About</b>-->
+                    <!--</div>-->
+                    <br/>
+                    Add continents ...
+                    <form th:action="@{/create03}" method="post">
+                        <table>
+                            <tr>
+                                <td>Continent name</td>
+                                <td>Control value</td>
+                            </tr>
+                            <tr th:each="counter : ${#numbers.sequence( 1, __${numberOfContinent}__)}">
+                                <td><input type="text" class="continentName" placeholder="Continent name" th:value="Continent + ${counter}"/></td>
+                                <td><input type="text" class="controlValue" placeholder="Control value" value="0" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="hidden" id="continentNames" value="" name="continentNames" />
+                                    <input type="hidden" id="controlValues" value="" name="controlValues" />
+                                    <input type="hidden" name="numberOfContinent" th:value="${numberOfContinent}" />
+                                    <input type="hidden" name="numberOfCountry" th:value="${numberOfCountry}" />
+                                    <input type="hidden" name="downloadFolder" th:value="${downloadFolder}" />
+                                    <input type="hidden" name="name" th:value="${name}" />
+                                </td>
+
+                                <td><button name="submit">Next</button></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("button").click(function(){
+            //
+            var controlValues = new Array();
+            $(".controlValue").each(function(){
+                controlValues.push($(this).val());
+            });
+            console.log(controlValues);
+            $("#controlValues").val(controlValues.join(","));
+
+            //
+            var continentNames = new Array();
+            $(".continentName").each(function(){
+                continentNames.push($(this).val());
+            });
+            console.log(continentNames);
+            $("#continentNames").val(continentNames.join(","));
+
+            //
+            $("form").submit();
+        });
+    </script>
+
+    <div th:replace="layout :: footer"/>
+</div>
+
+</body>
+</html>

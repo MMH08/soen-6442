@@ -42,7 +42,7 @@ public class ReinforcePhase implements Phase {
 
     @Override
     public void exit() {
-        logger.log(Level.INFO, "in exit phase... ");
+        logger.log(Level.INFO, "in exit reinforce phase... ");
         GamePlay.getInstance().updateCurrentPhase();
     }
 

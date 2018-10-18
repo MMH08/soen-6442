@@ -10,10 +10,11 @@ public class FortifyInfo implements Usecase {
     private FortifyInfoRequest request;
     private FortifyInfoResponse response;
 
-    public FortifyInfo(String... args){
+    public FortifyInfo(String... args) {
         this.request = new FortifyInfoRequest(args);
         this.response = new FortifyInfoResponse();
     }
+
     @Override
     public FortifyInfoResponse execute() {
         Player player = GamePlay.getInstance().getCurrentPlayer();

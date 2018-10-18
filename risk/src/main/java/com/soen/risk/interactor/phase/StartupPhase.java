@@ -32,17 +32,6 @@ public class StartupPhase implements Phase {
         return true;
     }
 
-    private boolean allPlayersHaveZeroArmy() {
-        for (Player p : this.gamePlay.getGame().getPlayers()) {
-            if (p.getArmyCapacity() != 0) return false;
-        }
-        return true;
-    }
-
-    private boolean currentPlayerHasZeroArmy() {
-        return this.gamePlay.getCurrentPlayer().getArmyCapacity() == 0;
-    }
-
     public void begin() {
     }
 
@@ -65,4 +54,16 @@ public class StartupPhase implements Phase {
     public String getName() {
         return this.name;
     }
+
+    private boolean allPlayersHaveZeroArmy() {
+        for (Player p : this.gamePlay.getGame().getPlayers()) {
+            if (p.getArmyCapacity() != 0) return false;
+        }
+        return true;
+    }
+
+    private boolean currentPlayerHasZeroArmy() {
+        return this.gamePlay.getCurrentPlayer().getArmyCapacity() == 0;
+    }
+
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="layout :: header"/>
+</head>
+<body>
+<div id="container" style="margin: 0px auto; width: 760px;">
+
+    <div th:replace="layout :: nav"/>
+
+    <div id="box">
+        <div id="content">
+            <div class="overflow">
+                <div id="textpadding">
+                    <h2>Risk - Edit Map - 1 of 5</h2>
+                    <!--<div class="sticky">-->
+                    <!--<i class="fa fa-info-circle" aria-hidden="true"></i> <b>About</b>-->
+                    <!--</div>-->
+                    <br/>
+                    <form th:action="@{/edit01}" method="post">
+                        <table>
+                            <tr>
+                                <td>Map file path</td>
+                                <td><input type="text" name="filename"/></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" name="submit" value="Next"></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="layout :: footer"/>
+</div>
+
+</body>
+</html>

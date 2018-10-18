@@ -6,13 +6,15 @@ import com.soen.risk.entity.Player;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  * <h2>Game Play</h2>
  * <ul>
  * <li>Create Map class object to perform all functionality of map class i.e. allocating initial armies etc.
  * <li>Change Current Phase
- * <li>Change Current player after its turn 
+ * <li>Change Current player after its turn
  * </ul>
+ *
  * @author Varun Singhal
  * @version 1.0.0
  * @since 2018-10-10
@@ -36,9 +38,11 @@ public class GamePlay {
 
     private GamePlay() {
     }
+
     /**
      * Perform all functionality of map after creating map object.
-     * @param filename Path of file along with its file name
+     *
+     * @param filename       Path of file along with its file name
      * @param countOfPlayers Number of players playing game
      */
     public void build(String filename, int countOfPlayers) {
@@ -51,7 +55,7 @@ public class GamePlay {
         this.setCurrentPhase("startupPhase");
         this.setCurrentPlayer(this.game.getPlayers().get(0));
     }
-    
+
     /**
      * Changing current phase between reinforcement, attack, and fortify.
      */
@@ -73,6 +77,7 @@ public class GamePlay {
             }
         }
     }
+
     /**
      * Change current player after its turn is over.
      */
@@ -100,8 +105,10 @@ public class GamePlay {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
     /**
      * Update Current Player to next player after completing player's turn.
+     *
      * @param currentPlayer
      */
     private void setCurrentPlayer(Player currentPlayer) {
