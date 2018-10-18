@@ -58,7 +58,7 @@ public class MapTest {
         map.addCountry(country1);
         map.addCountry(country2);
         assertNotNull(map.getCountries());
-    	assertNotNull(map.findByContinentName("India"));
+    	assertEquals(country1, map.findByCountryName("India"));
     }
 
     @Test
