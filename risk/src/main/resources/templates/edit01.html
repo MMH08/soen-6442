@@ -13,24 +13,24 @@
         <div id="content">
             <div class="overflow">
                 <div id="textpadding">
-                    <h2>Risk - Create Map - 1 of 4</h2>
+                    <h2>Risk - Edit Map - 2 of 5</h2>
                     <!--<div class="sticky">-->
                     <!--<i class="fa fa-info-circle" aria-hidden="true"></i> <b>About</b>-->
                     <!--</div>-->
                     <br/>
-                    <form th:action="@{/create02}" method="post">
+                    <form th:action="@{/edit02}" method="post">
                         <table>
                             <tr>
                                 <td>Map name</td>
-                                <td><input type="text" name="name"/></td>
+                                <td><input type="text" name="name" th:value="${name}"/></td>
                             </tr>
                             <tr>
                                 <td># continents</td>
-                                <td><input type="text" name="numberOfContinent"/></td>
+                                <td><input type="text" name="numberOfContinent" th:value="${numberOfContinent}"/></td>
                             </tr>
                             <tr>
                                 <td># countries</td>
-                                <td><input type="text" name="numberOfCountry"/></td>
+                                <td><input type="text" name="numberOfCountry" th:value="${numberOfCountry}"/></td>
                             </tr>
                             <tr>
                                 <td>Download folder</td>
@@ -38,6 +38,11 @@
                             </tr>
                             <tr>
                                 <td></td>
+                                <input type="hidden" name="connectionString" th:value="${connectionString}" />
+                                <input type="hidden" name="countryNames" th:value="${countryNames}" />
+                                <input type="hidden" name="continentOfCountries" th:value="${continentOfCountries}" />
+                                <input type="hidden" id="continentNames" th:value="${continentNames}" name="continentNames"/>
+                                <input type="hidden" id="controlValues" th:value="${controlValues}" name="controlValues"/>
                                 <td><input type="submit" name="submit" value="Next"></td>
                             </tr>
                         </table>

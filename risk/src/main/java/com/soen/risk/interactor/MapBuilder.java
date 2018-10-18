@@ -45,7 +45,7 @@ public class MapBuilder {
             s[0] = this.countries.get(i);
             int j = 1;
             for (String connectingCountry : connection) {
-                System.out.println("JAI MATA DI" + connectingCountry);
+                System.out.println(connectingCountry);
                 s[j] = connectingCountry;
                 j++;
             }
@@ -95,7 +95,10 @@ public class MapBuilder {
 
     public String save(String downloadFolder) {
         map.setFileName(downloadFolder + map.getName() + ".map");
-        if (map.isValid()) map.save();
+        //if (map.isValid()){
+        logger.log(Level.INFO, "Map is valid ");
+        map.save();
+        //}
         return map.getFileName();
     }
 }

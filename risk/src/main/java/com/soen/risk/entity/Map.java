@@ -90,11 +90,10 @@ public class Map {
     public void load(String filename) {
         this.fileName = filename;
         logger.log(Level.INFO, "Reading filename " + this.fileName);
-
         try {
             Scanner readingFile = new Scanner(new FileReader(this.fileName));
             int flagContinent = 0, flagCountry = 0;
-
+            //TODO: machine independent path separator to load name of the map.
             while (readingFile.hasNext()) {
                 String line = readingFile.nextLine();
 
@@ -362,6 +361,7 @@ public class Map {
     }
 
     public void setFileName(String fileName) {
+        logger.log(Level.INFO, "Setting filename " + fileName);
         this.fileName = fileName;
     }
 

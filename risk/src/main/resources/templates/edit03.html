@@ -13,39 +13,48 @@
         <div id="content">
             <div class="overflow">
                 <div id="textpadding">
-                    <h2>Risk - Game Play - 3 of 4</h2>
+                    <h2>Risk - Edit Map - 4 of 5</h2>
                     <!--<div class="sticky">-->
                     <!--<i class="fa fa-info-circle" aria-hidden="true"></i> <b>About</b>-->
                     <!--</div>-->
                     <br/>
                     Add countries ...
-                    <form th:action="@{/create04}" method="post">
+                    <form th:action="@{/edit04}" method="post">
                         <table>
                             <tr>
                                 <td>Country name</td>
                                 <td>Belong to continent</td>
                             </tr>
-                            <tr th:each="counter : ${#numbers.sequence( 1, __${numberOfCountry}__)}">
-                                <td><input type="text" class="countryName" placeholder="Country name"
-                                           th:value="Country + ${counter}"/></td>
-                                <td>
-                                    <select class="continentOfCountry">
-                                        <option th:each="continent : ${#strings.arraySplit(continentNames, ',')}"
-                                                th:value="${continent}" th:text="${continent}">
-                                        </option>
-                                    </select>
+                            <tr>
+                                <td  style="vertical-align: baseline">
+                                    <div th:each="country : ${#strings.arraySplit(countryNames, ',')}" style="padding:5px;">
+                                        <input type="text" class="countryName" placeholder="Country name"
+                                               th:value="${country}"/><br/>
+                                    </div>
+                                <td style="vertical-align: baseline">
+                                    <div th:each="continentOfCountry : ${#strings.arraySplit(continentOfCountries, ',')}" style="padding:6px;">
+                                        <select class="continentOfCountry">
+                                            <option th:each="continent : ${#strings.arraySplit(continentNames, ',')}"
+                                                    th:value="${continent}" th:text="${continent}"
+                                                    th:selected="${continent} == ${continentOfCountry}">
+                                            </option>
+                                        </select>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="hidden" name="countryNames" id="countryNames" />
-                                    <input type="hidden" name="continentOfCountries" id="continentOfCountries" />
+                                    <input type="hidden" name="countryNames" id="countryNames"/>
+                                    <input type="hidden" name="continentOfCountries" id="continentOfCountries"/>
+
+                                    <input type="hidden" name="connectionString" th:value="${connectionString}" />
                                     <input type="hidden" name="numberOfContinent" th:value="${numberOfContinent}"/>
                                     <input type="hidden" name="numberOfCountry" th:value="${numberOfCountry}"/>
                                     <input type="hidden" name="downloadFolder" th:value="${downloadFolder}" />
                                     <input type="hidden" name="name" th:value="${name}"/>
-                                    <input type="hidden" id="continentNames" th:value="${continentNames}" name="continentNames"/>
-                                    <input type="hidden" id="controlValues" th:value="${controlValues}" name="controlValues"/>
+                                    <input type="hidden" name="continentNames" th:value="${continentNames}" />
+                                    <input type="hidden" name="controlValues" th:value="${controlValues}" />
+
                                 </td>
 
                                 <td>
@@ -82,6 +91,12 @@
             //
             $("form").submit();
         });
+
+
+
+
+
+
     </script>
 
     <div th:replace="layout :: footer"/>

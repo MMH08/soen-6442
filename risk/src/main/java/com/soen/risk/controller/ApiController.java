@@ -25,8 +25,8 @@ public class ApiController {
 
     @RequestMapping(value = "/create02", method = RequestMethod.POST)
     public ModelAndView createContinent(@RequestParam("name") String name,
-                                  @RequestParam("numberOfContinent") String numberOfContinent,
-                                  @RequestParam("numberOfCountry") String numberOfCountry,
+                                        @RequestParam("numberOfContinent") String numberOfContinent,
+                                        @RequestParam("numberOfCountry") String numberOfCountry,
                                         @RequestParam("downloadFolder") String downloadFolder) {
         ModelAndView model = new ModelAndView("create02");
         model.addObject("name", name);
@@ -36,13 +36,13 @@ public class ApiController {
         return model;
     }
 
-    @RequestMapping(value="/create03", method = RequestMethod.POST)
+    @RequestMapping(value = "/create03", method = RequestMethod.POST)
     public ModelAndView createCountry(@RequestParam("name") String name,
-                                @RequestParam("numberOfContinent") String numberOfContinent,
-                                @RequestParam("numberOfCountry") String numberOfCountry,
+                                      @RequestParam("numberOfContinent") String numberOfContinent,
+                                      @RequestParam("numberOfCountry") String numberOfCountry,
                                       @RequestParam("downloadFolder") String downloadFolder,
-                                @RequestParam("continentNames") String continentNames,
-                                @RequestParam("controlValues") String controlValues) {
+                                      @RequestParam("continentNames") String continentNames,
+                                      @RequestParam("controlValues") String controlValues) {
         ModelAndView model = new ModelAndView("create03");
         model.addObject("name", name);
         model.addObject("numberOfContinent", numberOfContinent);
@@ -53,15 +53,15 @@ public class ApiController {
         return model;
     }
 
-    @RequestMapping(value="/create04", method = RequestMethod.POST)
+    @RequestMapping(value = "/create04", method = RequestMethod.POST)
     public ModelAndView createConnection(@RequestParam("name") String name,
-                                   @RequestParam("numberOfContinent") String numberOfContinent,
-                                   @RequestParam("numberOfCountry") String numberOfCountry,
+                                         @RequestParam("numberOfContinent") String numberOfContinent,
+                                         @RequestParam("numberOfCountry") String numberOfCountry,
                                          @RequestParam("downloadFolder") String downloadFolder,
-                                   @RequestParam("continentNames") String continentNames,
-                                   @RequestParam("controlValues") String controlValues,
-                                   @RequestParam("countryNames") String countryNames,
-                                   @RequestParam("continentOfCountries") String continentOfCountries) {
+                                         @RequestParam("continentNames") String continentNames,
+                                         @RequestParam("controlValues") String controlValues,
+                                         @RequestParam("countryNames") String countryNames,
+                                         @RequestParam("continentOfCountries") String continentOfCountries) {
         ModelAndView model = new ModelAndView("create04");
         model.addObject("name", name);
         model.addObject("numberOfContinent", numberOfContinent);
@@ -74,6 +74,100 @@ public class ApiController {
         return model;
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @RequestMapping("/edit00")
+    public String loadEditMapDetail() {
+        return "edit00";
+    }
+
+    @RequestMapping(value = "/edit01", method=RequestMethod.POST)
+    public ModelAndView editMapDetail(@RequestParam("filename") String filename){
+        EditMap usecase = new EditMap(filename);
+        EditMapResponse response = usecase.execute();
+        ModelAndView model = new ModelAndView("edit01");
+        model.addObject("name", response.getName());
+        model.addObject("numberOfContinent", response.getNumberOfContinent());
+        model.addObject("numberOfCountry", response.getNumberOfCountry());
+        model.addObject("continentNames", response.getContinentNames());
+        model.addObject("controlValues", response.getControlValues());
+        model.addObject("countryNames", response.getCountryNames());
+        model.addObject("continentOfCountries", response.getContinentOfCountries());
+        model.addObject("connectionString", response.getConnectionString());
+        return model;
+    }
+
+    @RequestMapping(value = "/edit02", method = RequestMethod.POST)
+    public ModelAndView editContinent(@RequestParam("name") String name,
+                                      @RequestParam("numberOfContinent") String numberOfContinent,
+                                      @RequestParam("numberOfCountry") String numberOfCountry,
+                                      @RequestParam("downloadFolder") String downloadFolder,
+                                      @RequestParam("continentNames") String continentNames,
+                                      @RequestParam("controlValues") String controlValues,
+                                      @RequestParam("countryNames") String countryNames,
+                                      @RequestParam("continentOfCountries") String continentOfCountries,
+                                      @RequestParam("connectionString") String connectionString) {
+        ModelAndView model = new ModelAndView("edit02");
+        model.addObject("name", name);
+        model.addObject("numberOfContinent", numberOfContinent);
+        model.addObject("numberOfCountry", numberOfCountry);
+        model.addObject("downloadFolder", downloadFolder);
+        model.addObject("continentNames", continentNames);
+        model.addObject("controlValues", controlValues);
+        model.addObject("countryNames", countryNames);
+        model.addObject("continentOfCountries", continentOfCountries);
+        model.addObject("connectionString", connectionString);
+        return model;
+    }
+
+    @RequestMapping(value = "/edit03", method = RequestMethod.POST)
+    public ModelAndView editCountry(@RequestParam("name") String name,
+                                    @RequestParam("numberOfContinent") String numberOfContinent,
+                                    @RequestParam("numberOfCountry") String numberOfCountry,
+                                    @RequestParam("downloadFolder") String downloadFolder,
+                                    @RequestParam("continentNames") String continentNames,
+                                    @RequestParam("controlValues") String controlValues,
+                                    @RequestParam("countryNames") String countryNames,
+                                    @RequestParam("continentOfCountries") String continentOfCountries,
+                                    @RequestParam("connectionString") String connectionString) {
+        ModelAndView model = new ModelAndView("edit03");
+        model.addObject("name", name);
+        model.addObject("numberOfContinent", numberOfContinent);
+        model.addObject("numberOfCountry", numberOfCountry);
+        model.addObject("downloadFolder", downloadFolder);
+        model.addObject("continentNames", continentNames);
+        model.addObject("controlValues", controlValues);
+        model.addObject("countryNames", countryNames);
+        model.addObject("continentOfCountries", continentOfCountries);
+        model.addObject("connectionString", connectionString);
+        return model;
+    }
+
+    @RequestMapping(value = "/edit04", method = RequestMethod.POST)
+    public ModelAndView editConnection(@RequestParam("name") String name,
+                                       @RequestParam("numberOfContinent") String numberOfContinent,
+                                       @RequestParam("numberOfCountry") String numberOfCountry,
+                                       @RequestParam("downloadFolder") String downloadFolder,
+                                       @RequestParam("continentNames") String continentNames,
+                                       @RequestParam("controlValues") String controlValues,
+                                       @RequestParam("countryNames") String countryNames,
+                                       @RequestParam("continentOfCountries") String continentOfCountries,
+                                       @RequestParam("connectionString") String connectionString) {
+        ModelAndView model = new ModelAndView("edit04");
+        model.addObject("name", name);
+        model.addObject("numberOfContinent", numberOfContinent);
+        model.addObject("numberOfCountry", numberOfCountry);
+        model.addObject("downloadFolder", downloadFolder);
+        model.addObject("continentNames", continentNames);
+        model.addObject("controlValues", controlValues);
+        model.addObject("countryNames", countryNames);
+        model.addObject("continentOfCountries", continentOfCountries);
+        model.addObject("connectionString", connectionString);
+        return model;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+
     @RequestMapping(value = "/createSubmit", method = RequestMethod.POST)
     public String createSubmit(@RequestParam("name") String name,
                                @RequestParam("numberOfContinent") String numberOfContinent,
@@ -83,15 +177,11 @@ public class ApiController {
                                @RequestParam("controlValues") String controlValues,
                                @RequestParam("countryNames") String countryNames,
                                @RequestParam("continentOfCountries") String continentOfCountries,
-                               @RequestParam("connectionString") String connectionString){
+                               @RequestParam("connectionString") String connectionString) {
         CreateMap usecase = new CreateMap(name, continentNames, controlValues, countryNames, continentOfCountries, connectionString, downloadFolder);
         usecase.execute();
         return "redirect:/";
     }
-
-
-    // -----------------------------------------------------------------------------------------------------------------
-
 
 
     // -----------------------------------------------------------------------------------------------------------------
