@@ -8,9 +8,8 @@ import org.junit.Test;
 public class GamePlayTest {
 
     /**
-     * Gets the single instance of GamePlayTest.
+     * Validate the single instance of GamePlayTest.
      *
-     * @return single instance of GamePlayTest
      */
     @Test
     public void getInstance() {
@@ -21,22 +20,6 @@ public class GamePlayTest {
      */
     @Test
     public void build() {
-    }
-
-    /**
-     * Gets the instance 1.
-     *
-     * @return the instance 1
-     */
-    @Test
-    public void getInstance1() {
-    }
-
-    /**
-     * Builds the 1.
-     */
-    @Test
-    public void build1() {
     }
 
     /**
@@ -56,7 +39,6 @@ public class GamePlayTest {
     /**
      * Gets the game.
      *
-     * @return the game
      */
     @Test
     public void getGame() {
@@ -65,7 +47,6 @@ public class GamePlayTest {
     /**
      * Gets the current player.
      *
-     * @return the current player
      */
     @Test
     public void getCurrentPlayer() {
@@ -73,8 +54,6 @@ public class GamePlayTest {
 
     /**
      * Gets the current phase.
-     *
-     * @return the current phase
      */
     @Test
     public void getCurrentPhase() {

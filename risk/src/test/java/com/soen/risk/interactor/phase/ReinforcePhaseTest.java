@@ -61,7 +61,6 @@ public class ReinforcePhaseTest {
     /**
      * Gets the name.
      *
-     * @return the name
      */
     @Test
     public void getName() {

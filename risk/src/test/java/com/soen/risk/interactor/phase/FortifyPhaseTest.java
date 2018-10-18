@@ -38,9 +38,8 @@ public class FortifyPhaseTest {
     }
 
     /**
-     * Gets the name.
+     * Validate the name.
      *
-     * @return the name
      */
     @Test
     public void getName() {

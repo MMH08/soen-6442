@@ -46,7 +46,6 @@ public class PlayerTest {
     /**
      * Gets the country names.
      *
-     * @return the country names
      */
     @Test
     public void getCountryNames() {

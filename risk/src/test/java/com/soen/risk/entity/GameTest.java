@@ -52,7 +52,6 @@ public class GameTest {
     /**
      * Gets the map.
      *
-     * @return the map
      */
     @Test
     public void getMap() {
@@ -66,9 +65,8 @@ public class GameTest {
     }
 
     /**
-     * Gets the players.
+     * Validate the players.
      *
-     * @return the players
      */
     @Test
     public void getPlayers() 

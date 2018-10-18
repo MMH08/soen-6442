@@ -39,8 +39,6 @@ public class CreateMapRequestTest {
 
     /**
      * Validates the name.
-     *
-     * @return the name
      */
     @Test
     public void getName() {
@@ -50,7 +48,6 @@ public class CreateMapRequestTest {
     /**
      * Validates the continents.
      *
-     * @return the continents
      */
     @Test
     public void getContinents() {
@@ -61,7 +58,6 @@ public class CreateMapRequestTest {
     /**
      * Validates the countries.
      *
-     * @return the countries
      */
     @Test
     public void getCountries() {
@@ -72,7 +68,6 @@ public class CreateMapRequestTest {
     /**
      * Validate the control values.
      *
-     * @return the control values
      */
     @Test
     public void getControlValues() {
@@ -83,7 +78,6 @@ public class CreateMapRequestTest {
     /**
      * Gets the country owners.
      *
-     * @return the country owners
      */
     @Test
     public void getCountryOwners() {
@@ -93,8 +87,6 @@ public class CreateMapRequestTest {
 
     /**
      * Validate the connection stirng.
-     *
-     * @return the connections
      */
     @Test
     public void getConnections() {

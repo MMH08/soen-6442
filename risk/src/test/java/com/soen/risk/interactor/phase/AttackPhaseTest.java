@@ -38,9 +38,7 @@ public class AttackPhaseTest {
     }
 
     /**
-     * Gets the name.
-     *
-     * @return the name
+     * Validate the name.
      */
     @Test
     public void getName() {

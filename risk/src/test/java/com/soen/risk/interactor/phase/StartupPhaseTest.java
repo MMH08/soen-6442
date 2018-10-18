@@ -58,7 +58,6 @@ public class StartupPhaseTest {
     /**
      * Gets the name.
      *
-     * @return the name
      */
     @Test
     public void getName() {
