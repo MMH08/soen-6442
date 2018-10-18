@@ -133,7 +133,8 @@ public class Map {
             for (Country country : countries) {
                 String tem = country.getName() + "," + country.getCoordinateX() + "," + country.getCoordinateY() + "," +
                         this.getCountryFromContinents(country) + "," + this.getNeighbouringCountries(country.getName());
-                logger.log(Level.FINE, tem);
+                logger.log(Level.INFO, this.getNeighbouringCountries(country.getName()));
+                logger.log(Level.INFO, tem);
                 pw.println(tem);
             }
             pw.close();
@@ -221,12 +222,16 @@ public class Map {
      * @since 2018-10-07
      */
     public void map_country_object_creation() {
-        for (Object a : list_country) {
-            LinkedList ee = (LinkedList) a;
-            for (Object s : ee) {
-                System.out.print((String) s);
+        Iterator il = list_country.iterator();
+        while (il.hasNext()) {
+            LinkedList l1 = (LinkedList) il.next();
+            LinkedList temp = new LinkedList<Country>();
+            Iterator il2 = l1.iterator();
+            while (il2.hasNext()) {
+                String s = (String) il2.next();
+                temp.add(findByCountryName(s));
             }
-            System.out.println();
+            adjCountry.add(temp);
         }
 
     }

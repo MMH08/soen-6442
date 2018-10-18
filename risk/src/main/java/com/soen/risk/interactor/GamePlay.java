@@ -71,8 +71,10 @@ public class GamePlay {
             if (currentPhase.equals(phases[i])) {
                 if (i == phases.length - 1) {
                     this.setCurrentPhase(phases[0]);
+                    break;
                 } else {
                     this.setCurrentPhase(phases[i + 1]);
+                    break;
                 }
             }
         }
@@ -126,4 +128,7 @@ public class GamePlay {
     }
 
 
+    public void endGame() {
+        this.currentPhase = "";
+    }
 }

@@ -33,7 +33,7 @@ public class ReinforcePhase implements Phase {
         Player p = GamePlay.getInstance().getCurrentPlayer();
         int i = 0;
         for (Country c : p.getCountries()) {
-            logger.log(Level.INFO, "Adding reinforce army to country " + c.getName() + " " + this.armyCounts.get(i));
+            logger.log(Level.INFO, "Adding reinforce army to country " + c.getName() + ", army count " + this.armyCounts.get(i));
             c.setArmy(c.getArmy() + this.armyCounts.get(i));
             i++;
         }

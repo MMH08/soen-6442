@@ -21,6 +21,12 @@ public class StartupPhase implements Phase {
         this.gamePlay = GamePlay.getInstance();
     }
 
+    /**
+     * While executing startup phase in robin hood fashion, we have to exit the start up phase in case
+     * all players are done with allocating the armies to their continents.
+     *
+     * @return
+     */
     public boolean isValid() {
         if (allPlayersHaveZeroArmy()) {
             this.gamePlay.updateCurrentPhase();

@@ -46,7 +46,7 @@ public class Player {
             if (country.isEmpty())
                 return country;
         }
-        return null;
+        return countries.get(countries.size()-1);
     }
 
     // -------------------------------------------------------------
@@ -91,7 +91,7 @@ public class Player {
         }
         //If Player do not have all country of a continent
         int number_of_countries = this.getCountries().size();
-        return (int) Math.ceil(number_of_countries / 3.0);
+        return Math.max(3, (int) Math.ceil(number_of_countries / 3.0));
 
     }
     
