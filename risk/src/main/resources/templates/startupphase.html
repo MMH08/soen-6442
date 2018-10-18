@@ -37,7 +37,15 @@
                             </tr>
                             <tr>
                                 <td>Allocate army:</td>
-                                <td><input type="text" name="armyCount"></td>
+                                <td>
+                                    <div th:if="${armyCapacity == 0}">
+                                        <input type="text" name="armyCount" th:value="${armyCapacity}">
+                                    </div>
+                                    <div th:if="${armyCapacity != 0}">
+                                        <input type="text" name="armyCount">
+                                    </div>
+
+                                </td>
                             </tr>
                             <tr>
                                 <td></td>
