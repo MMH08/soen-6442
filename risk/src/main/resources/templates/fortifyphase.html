@@ -56,12 +56,28 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <input type="submit" name="submit" value="Submit" />
+                                    <input type="submit" name="submit" value="Submit"/>
                                 </td>
                             </tr>
                         </table>
 
                         <table class="left-table">
+                            <tr>
+                                <td>Country name</td>
+                                <td>Army count</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div th:each="country : ${countryNames}">
+                                        <span th:text="${country}"></span><br/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div th:each="armyCount : ${armyCounts}">
+                                        <span th:text="${armyCount}"></span><br/>
+                                    </div>
+                                </td>
+                            </tr>
 
                         </table>
                     </form>

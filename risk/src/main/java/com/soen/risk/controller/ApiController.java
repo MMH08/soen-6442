@@ -262,6 +262,7 @@ public class ApiController {
         FortifyInfoResponse response = usecase.execute();
         model.addObject("playerName", response.getPlayerName());
         model.addObject("countryNames", response.getCountryNames());
+        model.addObject("armyCounts", response.getArmyCounts());
         return model;
     }
 
