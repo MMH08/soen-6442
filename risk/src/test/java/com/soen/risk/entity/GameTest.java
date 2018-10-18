@@ -4,10 +4,14 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 public class GameTest {
 
     @Test
-    public void addPlayer() {
+    public void dropPlayer() 
+    {
+    	
     }
 
     @Test
@@ -23,7 +27,8 @@ public class GameTest {
     }
 
     @Test
-    public void allocateInitialArmy() {
+    public void allocateInitialArmy() 
+    {
     }
 
     @Test
@@ -35,10 +40,26 @@ public class GameTest {
     }
 
     @Test
-    public void getPlayers() {
+    public void getPlayers() 
+    {
+    	ArrayList<Player> playerList=new ArrayList<Player>();
+    	Map map=new Map();
+    	Game game=new Game(map,1);
+    	Player player=new Player(1);
+    	player.setName("manmeet");
+    	player.setArmyCapacity(2);
+    	playerList.add(player);
+    	game.setPlayers(playerList);
+    	assertNotNull(game.getPlayers());
+    	
     }
 
-    @Test
-    public void setPlayers() {
+   /* @Test
+    public void setPlayers() 
+    {
+    
+    	
     }
+*/
+    
 }

@@ -5,6 +5,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 public class MapTest {
 
     @Test
@@ -16,7 +20,14 @@ public class MapTest {
     }
 
     @Test
-    public void addCountry() {
+    public void addCountry() 
+    {
+    	Map map=new Map();
+    	Country country=new Country(13,"Africa");
+    	map.addCountry(country);
+    	assertNotNull(map.getCountries());
+    	//assertEquals(map.get);
+    	
     }
 
     @Test
@@ -28,6 +39,9 @@ public class MapTest {
     }
 
     @Test
-    public void save() {
+    public void save()
+    {
+        
+
     }
 }
