@@ -401,6 +401,11 @@ public class Map {
     public LinkedList<LinkedList<Country>> getAdjCountry() {
         return adjCountry;
     }
+    
+    public LinkedList<Object> getListCountry()
+    {
+    	return list_country;
+    }
 
     public void setAdjCountry(LinkedList<LinkedList<Country>> adjCountry) {
         this.adjCountry = adjCountry;
