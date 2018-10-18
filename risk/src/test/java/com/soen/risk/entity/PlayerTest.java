@@ -9,4 +9,12 @@ public class PlayerTest {
     @Test
     public void addCountry() {
     }
+
+    @Test
+    public void nextCountryToAssignArmy() {
+    }
+
+    @Test
+    public void getCountryNames() {
+    }
 }

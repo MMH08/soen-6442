@@ -1,5 +1,7 @@
 package com.soen.risk.entity;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -7,13 +9,6 @@ import static org.junit.Assert.assertNotNull;
 
 public class MapTest {
 
-    @Test
-    public void addContinent() {
-    }
-
-    @Test
-    public void connect() {
-    }
 
     @Test
     public void addCountry() {
@@ -33,9 +28,44 @@ public class MapTest {
         assertEquals(99, map.getCountries().size());
     }
 
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @After
+    public void tearDown() throws Exception {
+    }
+
+    @Test
+    public void addContinent() {
+    }
+
+
+    @Test
+    public void connect() {
+    }
+
+    @Test
+    public void findByCountryName() {
+    }
+
+    @Test
+    public void findByContinentName() {
+    }
+
     @Test
     public void save() {
+    }
 
+    @Test
+    public void map_name_creation() {
+    }
 
+    @Test
+    public void map_country_object_creation() {
+    }
+
+    @Test
+    public void isValid() {
     }
 }
