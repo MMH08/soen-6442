@@ -4,6 +4,12 @@ import java.util.logging.Logger;
 
 /**
  * The Interface Usecase.
+ * 
+ * All use cases are high level user functionalities which are implemented using the following 
+ * layers:
+ *  1. Request
+ *  2. Response
+ *  3. Interactor
  *
  * @param <T> the generic type
  */

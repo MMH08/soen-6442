@@ -6,32 +6,62 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * The Class ReinforcePhaseTest.
+ */
 public class ReinforcePhaseTest {
 
+    /**
+     * Sets the up.
+     *
+     * @throws Exception the exception
+     */
     @Before
     public void setUp() throws Exception {
     }
 
+    /**
+     * Tear down.
+     *
+     * @throws Exception the exception
+     */
     @After
     public void tearDown() throws Exception {
     }
 
+    /**
+     * Checks if is valid.
+     */
     @Test
     public void isValid() {
     }
 
+    /**
+     * Begin.
+     */
     @Test
     public void begin() {
     }
 
+    /**
+     * Execute.
+     */
     @Test
     public void execute() {
     }
 
+    /**
+     * Exit.
+     */
     @Test
     public void exit() {
     }
 
+    /**
+     * Gets the name.
+     *
+     * @return the name
+     */
     @Test
     public void getName() {
     }

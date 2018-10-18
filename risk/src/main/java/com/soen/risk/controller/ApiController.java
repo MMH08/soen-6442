@@ -1,16 +1,32 @@
 package com.soen.risk.controller;
 
-import com.soen.risk.boundary.response.*;
-import com.soen.risk.boundary.usecase.*;
-import com.soen.risk.interactor.phase.AttackPhase;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.soen.risk.boundary.response.EditMapResponse;
+import com.soen.risk.boundary.response.FortifyInfoResponse;
+import com.soen.risk.boundary.response.FortifyPhaseResponse;
+import com.soen.risk.boundary.response.PhaseResolverResponse;
+import com.soen.risk.boundary.response.ReinforceInfoResponse;
+import com.soen.risk.boundary.response.StartupInfoResponse;
+import com.soen.risk.boundary.response.StartupPhaseResponse;
+import com.soen.risk.boundary.usecase.AddReinforceArmy;
+import com.soen.risk.boundary.usecase.AddStartupArmy;
+import com.soen.risk.boundary.usecase.AttackInfo;
+import com.soen.risk.boundary.usecase.CreateMap;
+import com.soen.risk.boundary.usecase.EditMap;
+import com.soen.risk.boundary.usecase.FortifyInfo;
+import com.soen.risk.boundary.usecase.MoveFortifyArmy;
+import com.soen.risk.boundary.usecase.PhaseResolver;
+import com.soen.risk.boundary.usecase.ReinforceInfo;
+import com.soen.risk.boundary.usecase.StartGame;
+import com.soen.risk.boundary.usecase.StartupInfo;
 
 /**
  * The Class ApiController.

@@ -1,3 +1,6 @@
+/*
+ * SOEN - 6441 - Risk game
+ */
 package com.soen.risk;
 
 import org.springframework.boot.SpringApplication;
