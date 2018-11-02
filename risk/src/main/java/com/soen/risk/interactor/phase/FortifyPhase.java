@@ -14,7 +14,7 @@ import java.util.logging.Level;
 
 public class FortifyPhase implements Phase {
     private String name;
-    private int check;
+    //private int check;
 
     private String startCountry;
     private String endCountry;
@@ -68,7 +68,7 @@ public class FortifyPhase implements Phase {
         return this.name;
     }
 
-    boolean CheckPathValid(Player p, LinkedList<Integer> movingPath) {
+    boolean CheckPathValid(Player p, ArrayList<Integer> movingPath) {
         for (int countryId : movingPath) {
             int flag = 0;
             for (Country c : p.getCountries()) {
@@ -87,7 +87,57 @@ public class FortifyPhase implements Phase {
     }
 
     //Implement Depth First Search Algorithm
-    void checkingContacting(LinkedList adj[], int CurrentCountry, boolean visited[], LinkedList<Integer> movingPath, int shift) {
+    void addPath(LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths)
+	{
+		ArrayList<Integer> temp = new ArrayList<>();
+		for(int a: path)
+		{
+			temp.add(a);
+		}
+		allPaths.add(temp);
+	}
+    int countNumberOfPath(LinkedList adj[], int start, int dest, int PathCount, boolean visited[], LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths)
+	{
+		visited[start] = true;
+		path.add(start);
+		if(start == dest)
+		{
+			PathCount++;			
+			this.addPath(path, allPaths);
+		}
+		else
+		{
+			Iterator<Integer> il = adj[start].listIterator();
+			while(il.hasNext())
+			{
+				int n = il.next();
+				if(!visited[n])
+				{
+					PathCount = countNumberOfPath(adj, n, dest, PathCount, visited,path, allPaths);
+				}
+			}
+		}
+		int i=0;
+		int flag = 0;
+		for(int a: path)
+		{
+			if(a==start)
+			{
+				flag =1;
+				break;
+			}
+			i++;
+		}
+		if(flag == 1)
+		{
+			path.remove(i);
+		}
+		visited[start] = false;
+		return PathCount;
+	}
+    /*
+      //this.checkingContacting(adj, currentCountry, v, movingPath, shift);
+      void checkingContacting(LinkedList adj[], int CurrentCountry, boolean visited[], LinkedList<Integer> movingPath, int shift) {
         visited[CurrentCountry] = true;
         if (this.check == 0) {
             movingPath.add(CurrentCountry);
@@ -108,34 +158,44 @@ public class FortifyPhase implements Phase {
                 checkingContacting(adj, n, visited, movingPath, shift);
         }
     }
-
+     */
     //Start searching the path between Countries.
     public void searchPathBetweenCountries(LinkedList adj[], int currentCountry, int shift, int army) {
         boolean v[] = new boolean[adj.length];
         Player p = GamePlay.getInstance().getCurrentPlayer();
         LinkedList<Integer> movingPath = new LinkedList();
         ArrayList<Country> coun = GamePlay.getInstance().getGame().getMap().getCountries();
-        this.check = 0; //To check whether it will get its destination country
+        //this.check = 0; //To check whether it will get its destination country
+        
+        ArrayList<ArrayList<Integer>> allPaths = new ArrayList<ArrayList<Integer>>();
 
-        //Start searching for path between both countries
-        this.checkingContacting(adj, currentCountry, v, movingPath, shift);
+        //Start searching for path between both countries        
+        int PathCount = 0;
+        PathCount = this.countNumberOfPath(adj, currentCountry, shift, PathCount, v, movingPath, allPaths);
 
-        if (this.check != 0) {
-            //Finally Testing whether player able to move army
-            logger.log(Level.INFO, "Path Followed");
-            for (int countryId : movingPath) {
-                logger.log(Level.INFO, "Country index - " + countryId);
+        if (PathCount != 0) {
+            //Finally Testing whether player able to move army 
+            logger.log(Level.INFO, "All Possible Path Followed");
+            for (ArrayList<Integer> path : allPaths) {
+            	logger.log(Level.INFO, "Path Followed");
+            	for(int countryId: path) {
+                   logger.log(Level.INFO, "Country index - " + countryId);
+            	}
             }
-            boolean test = this.CheckPathValid(p, movingPath);
-            if (test) {
-                for (Country c : coun) {
-                    if (c.getId() == currentCountry) {
-                        c.setArmy(c.getArmy() - army);
-                    }
-                    if (c.getId() == shift) {
-                        c.setArmy(c.getArmy() + army);
-                    }
-                }
+            for(ArrayList<Integer> path: allPaths)
+            {
+            	boolean test = this.CheckPathValid(p, path);
+	            if (test) {
+	                for (Country c : coun) {
+	                    if (c.getId() == currentCountry) {
+	                        c.setArmy(c.getArmy() - army);
+	                    }
+	                    if (c.getId() == shift) {
+	                        c.setArmy(c.getArmy() + army);
+	                    }
+	                }
+	                break;
+	            }
             }
         }
     }
