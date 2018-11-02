@@ -1,19 +1,27 @@
 package com.soen.risk.entity;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import org.springframework.util.Assert;
 
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+/**
+ * The Class MapTest.
+ */
 public class MapTest {
 
+	/** The map. */
 	Map map;
+	
+	/** The Filename. */
 	String Filename = "/home/varun/Downloads/001_I72_Ghtroc 720/001_I72_Ghtroc 720.map";
+    
+    /**
+     * Adds the country.
+     */
     @Test
     public void addCountry() {
         Country country = new Country(13, "Africa");
@@ -23,6 +31,9 @@ public class MapTest {
 
     }
 
+    /**
+     * Load.
+     */
     @Test
     public void load() {
         map.load(Filename);
@@ -30,16 +41,29 @@ public class MapTest {
         assertEquals(99, map.getCountries().size());
     }
 
+    /**
+     * Sets the up.
+     *
+     * @throws Exception the exception
+     */
     @Before
     public void setUp() throws Exception {
     	map = new Map();
     }
 
+    /**
+     * Tear down.
+     *
+     * @throws Exception the exception
+     */
     @After
     public void tearDown() throws Exception {
     	
     }
 
+    /**
+     * Adds the continent.
+     */
     @Test
     public void addContinent() {
     	Continent c = new Continent("Cont-Cont");
@@ -49,6 +73,9 @@ public class MapTest {
     }
 
 
+    /**
+     * Find by country name.
+     */
     @Test
     public void findByCountryName() {
     	Country country = new Country(0, "Africa");
@@ -61,6 +88,9 @@ public class MapTest {
     	assertEquals(country1, map.findByCountryName("India"));
     }
 
+    /**
+     * Find by continent name.
+     */
     @Test
     public void findByContinentName() {
     	Continent c = new Continent("Cont-Cont");
@@ -76,6 +106,9 @@ public class MapTest {
     }
 
 
+    /**
+     * Map name creation.
+     */
     @Test
     public void map_name_creation() {
     	map.load(Filename);
@@ -83,6 +116,9 @@ public class MapTest {
     }
     
 
+    /**
+     * Map country object creation.
+     */
     @Test
     public void map_country_object_creation() {
     	map.load(Filename);
@@ -90,6 +126,9 @@ public class MapTest {
     	assertNotNull(map.getAdjCountry());
     }
 
+    /**
+     * Checks if is valid country duplicacy.
+     */
     @Test
     public void isValidCountryDuplicacy() {
     	Country c1= new Country(0,"A");
@@ -105,6 +144,9 @@ public class MapTest {
     	assertTrue(map.checkCountryDuplicacy());
     }
     
+    /**
+     * Checks if is valid continent duplicacy.
+     */
     @Test
     public void isValidContinentDuplicacy() {
     	Continent c1= new Continent("A");
@@ -125,6 +167,9 @@ public class MapTest {
     	assertTrue(map.checkContinentDuplicacy());
     }
     
+    /**
+     * Checks if is valid isolated country.
+     */
     @Test
     public void isValidIsolatedCountry()
     {

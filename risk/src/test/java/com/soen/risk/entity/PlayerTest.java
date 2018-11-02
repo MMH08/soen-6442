@@ -1,34 +1,59 @@
 package com.soen.risk.entity;
 
-import org.junit.*;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+/**
+ * The Class PlayerTest.
+ */
 public class PlayerTest {
 
+	/** The map. */
 	private static Map map; 
+	
+	/** The game. */
 	private static Game game;
+    
+    /**
+     * Sets the up.
+     */
     @BeforeClass
     public static void setUp()
     {
     	map = new Map();
     	game = new Game(map,2);
     }
+	
+	/**
+	 * Adds the country.
+	 */
 	@Test
     public void addCountry() {
     }
 
+    /**
+     * Next country to assign army.
+     */
     @Test
     public void nextCountryToAssignArmy() {
     }
 
+    /**
+     * Gets the country names.
+     *
+     */
     @Test
     public void getCountryNames() {
     }
     
+    /**
+     * Test reinforcement army.
+     */
     @Test
     public void testReinforcementArmy()
     {

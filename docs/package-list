@@ -1,0 +1,9 @@
+com.soen.risk
+com.soen.risk.boundary
+com.soen.risk.boundary.request
+com.soen.risk.boundary.response
+com.soen.risk.boundary.usecase
+com.soen.risk.controller
+com.soen.risk.entity
+com.soen.risk.interactor
+com.soen.risk.interactor.phase

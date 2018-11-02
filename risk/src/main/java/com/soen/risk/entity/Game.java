@@ -60,7 +60,7 @@ public class Game {
     // -------------------------------------------------------------
 
     /**
-     * @return
+     * @return boolean
      */
     public boolean isNotOver() {
         //return (map.fetchOwners().size() == 1) ? false: true;

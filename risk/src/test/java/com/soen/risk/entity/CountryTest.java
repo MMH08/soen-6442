@@ -4,9 +4,15 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * The Class CountryTest.
+ */
 public class CountryTest 
 {
 
+    /**
+     * Checks if is empty.
+     */
     @Test
     public void isEmpty() {
     }
