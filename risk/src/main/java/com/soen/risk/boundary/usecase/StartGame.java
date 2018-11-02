@@ -33,6 +33,9 @@ public class StartGame implements Usecase {
     public StartGameResponse execute() {
         GamePlay gamePlay = GamePlay.getInstance();
         gamePlay.build(request.getFilename(), request.getCountOfPlayers());
+        // Register the observer here
+        // Game play with the phaseView as it has all the current scenario statements.
+        // Domination view with the List<Players> derived from game.
         return response;
     }
 }

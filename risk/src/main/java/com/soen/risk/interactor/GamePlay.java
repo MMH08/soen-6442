@@ -4,6 +4,7 @@ import com.soen.risk.entity.Game;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.Player;
 
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
  * @since 2018-10-10
  */
 
-public class GamePlay {
+public class GamePlay extends Observable {
     private static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
     private static GamePlay gamePlayInstance = null;
@@ -41,12 +42,13 @@ public class GamePlay {
 
     /**
      * Perform all functionality of map after creating map object.
+     * TODO: instantiate the dominationView in the Gameplay instance to observe the players' instances.
+     * Gameplay will store the view object which will get updated as and when any player takes action.
      *
      * @param filename       Path of file along with its file name
      * @param countOfPlayers Number of players playing game
      */
     public void build(String filename, int countOfPlayers) {
-        // Builder pattern - startup phase 1
         Map map = new Map();
         map.load(filename);
         if (map.isValid()) {
@@ -110,6 +112,10 @@ public class GamePlay {
         return currentPlayer;
     }
 
+    public String getCurrentPhase() {
+        return currentPhase;
+    }
+
     /**
      * Update Current Player to next player after completing player's turn.
      *
@@ -118,17 +124,16 @@ public class GamePlay {
     private void setCurrentPlayer(Player currentPlayer) {
         logger.log(Level.INFO, "Changing player to " + currentPlayer.getName());
         this.currentPlayer = currentPlayer;
-    }
-
-    public String getCurrentPhase() {
-        return currentPhase;
+        this.setChanged();
+        this.notifyObservers();
     }
 
     private void setCurrentPhase(String currentPhase) {
         logger.log(Level.INFO, "Changing phase to " + currentPhase);
         this.currentPhase = currentPhase;
+        this.setChanged();
+        this.notifyObservers();
     }
-
 
     public void endGame() {
         this.currentPhase = "";

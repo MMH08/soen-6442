@@ -7,21 +7,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *<h2>Game Class</h2>
- *<p>In this class, Can add new player to a game, assign random countries to players, armies to countries and drop
- *players after lost of all countries. Also return map and players</p>
- *@author Manmeet Singh
- *@since 2018-10-11
- *@version 1.0.0 
+ * <h2>Game Class</h2>
+ * <p>In this class, Can add new player to a game, assign random countries to players, armies to countries and drop
+ * players after lost of all countries. Also return map and players</p>
+ *
+ * @author Manmeet Singh
+ * @version 1.0.0
+ * @since 2018-10-11
  */
 public class Game {
-    static Logger logger = Logger.getLogger(Game.class.getName());
+    private static Logger logger = Logger.getLogger(Game.class.getName());
     private Map map;
     private List<Player> players;
 
     /**
      * Assign to map reference, new arraylist for players, and adding all players.
-     * @param map Having reference of map class
+     *
+     * @param map            Having reference of map class
      * @param countOfPlayers Number of players playing game
      */
     public Game(Map map, int countOfPlayers) {
@@ -39,48 +41,40 @@ public class Game {
         for (int i = 0; i < countOfPlayers; i++)
             this.players.add(new Player(i));
     }
-    
+
     /**
      * Drop player after lose all countries
+     *
      * @param p Player needed to remove from game
      */
-    public void dropPlayer(Player p)
-    {
-    	int i=0;
-		for(Player p1: players)
-		{
-			if(p.equals(p1))
-			{
-				players.remove(i);
-				break;
-			}
-			i++;
-		}
+    public void dropPlayer(Player p) {
+        int i = 0;
+        for (Player p1 : players) {
+            if (p.equals(p1)) {
+                players.remove(i);
+                break;
+            }
+            i++;
+        }
     }
     // -------------------------------------------------------------
 
     /**
-     * @return boolean
-     */
-    public boolean isNotOver() {
-        //return (map.fetchOwners().size() == 1) ? false: true;
-        return false;
-    }
-    
-    /**
-     *Randomly allocate initial countries to all players.
+     * Randomly allocate initial countries to all players.
+     * TODO: Move this function to the players as to implement Strategy pattern in the next cycle.
      */
     public void allocateInitialCountries() {
         Random rand = new Random();
         for (Country country : map.getCountries()) {
             int indexOfPlayer = rand.nextInt(players.size());
             players.get(indexOfPlayer).addCountry(country);
-            logger.log(Level.INFO,"Adding country " + country.getName() + " to player " + players.get(indexOfPlayer).getName());
+            logger.log(Level.INFO, "Adding country " + country.getName() + " to player " + players.get(indexOfPlayer).getName());
         }
     }
-    
+
     /**
-     *Randomly allocate initial armies to all countries.
+     * Randomly allocate initial armies to all countries.
+     * TODO: Move this function to the players as to implement Strategy pattern in the next sprint.
      */
     public void allocateInitialArmy() {
         Random rand = new Random();

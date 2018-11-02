@@ -2,6 +2,7 @@ package com.soen.risk.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  *<h2> Player Class</h2>
@@ -11,7 +12,7 @@ import java.util.List;
  *@since 2018-10-10
  *@version 1.0.0
  */
-public class Player {
+public class Player extends Observable {
     private String name;
     private int armyCapacity;
     private List<Country> countries;
@@ -31,6 +32,17 @@ public class Player {
      */
     public void addCountry(Country c) {
         this.countries.add(c);
+        this.setChanged();
+        this.notifyObservers();
+    }
+
+    /**
+     * When a match will be lost then remove country will be called
+     */
+    public void removeCountry(Country c){
+        // code to remove country
+        this.setChanged();
+        this.notifyObservers();
     }
 
     public List<Country> getCountries() {
@@ -103,4 +115,7 @@ public class Player {
         return names;
     }
 
+    public String toString() {
+        return this.name;
+    }
 }
