@@ -15,14 +15,14 @@
                 <div id="textpadding">
                     <h2>Risk - Game Play</h2>
                     <div class="sticky">
-                        <i class="fa fa-info-circle" aria-hidden="true"></i> <b>Reinforce Phase</b>
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> <b th:text="${phaseView.phaseName}"></b>
                     </div>
                     <br/>
                     <form method="get" th:action="@{/reinforcePhase/addArmy}">
                         <table class="left-table">
                             <tr>
                                 <td>Player name:</td>
-                                <td><span th:text="${playerName}">Player name</span></td>
+                                <td><span th:text="${phaseView.playerName}">Player name</span></td>
                             </tr>
                             <tr>
                                 <td>Reinforce army capacity:</td>
@@ -42,8 +42,9 @@
                             </tr>
                         </table>
 
-                        <table class="left-table">
-
+                        <table class="right-table">
+                            <div th:replace="layout :: phaseView" />
+                            <div th:replace="layout :: dominationView" />
                         </table>
                     </form>
                 </div>

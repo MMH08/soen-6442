@@ -15,17 +15,37 @@
                 <div id="textpadding">
                     <h2>Risk - Game Play</h2>
                     <div class="sticky">
-                        <i class="fa fa-info-circle" aria-hidden="true"></i> <b>Fortify Phase</b>
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> <b th:text="${phaseView.phaseName}"></b>
                     </div>
                     <br/>
                     <form method="get" th:action="@{/fortifyPhase/moveArmy}">
                         <table class="left-table">
                             <tr>
                                 <td>Player name:</td>
-                                <td><span th:text="${playerName}">Player name</span></td>
+                                <td><span th:text="${phaseView.playerName}">Player name</span></td>
                             </tr>
                             <tr>
-                                <td>Move army from:</td>
+                           <div>
+                            <table>
+                                <tr>
+                                    <td>Country name</td>
+                                    <td>Army count</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div th:each="country : ${countryNames}">
+                                            <span th:text="${country}"></span><br/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div th:each="armyCount : ${armyCounts}">
+                                            <span th:text="${armyCount}"></span><br/>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>      <td>Move army from:</td>
                                 <td>
                                     <select name="startCountry">
                                         <option th:each="country : ${countryNames}" th:value="${country}"
@@ -60,8 +80,12 @@
                                 </td>
                             </tr>
                         </table>
+                    </form>
 
-                        <table class="left-table">
+                    <div class="right-table">
+                        <div th:replace="layout :: phaseView" />
+                        <div th:replace="layout :: dominationView" />
+                        <table>
                             <tr>
                                 <td>Country name</td>
                                 <td>Army count</td>
@@ -80,7 +104,7 @@
                             </tr>
 
                         </table>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -15,14 +15,14 @@
                 <div id="textpadding">
                     <h2>Risk - Game Play</h2>
                     <div class="sticky">
-                        <i class="fa fa-info-circle" aria-hidden="true"></i> <b>Startup Phase</b>
+                    <i class="fa fa-info-circle" aria-hidden="true"></i> <b th:text="${phaseView.phaseName}"></b>
                     </div>
                     <br/>
                     <form method="get" th:action="@{/startupPhase/addArmy}">
                         <table class="left-table">
                             <tr>
                                 <td>Player name:</td>
-                                <td><span th:text="${playerName}">Player name</span></td>
+                                <td><span th:text="${phaseView.playerName}">Player name</span></td>
                             </tr>
                             <tr>
                                 <td>Remaining army capacity:</td>
@@ -52,19 +52,11 @@
                                 <td><input type="submit" name="submit" value="Add"/></td>
                             </tr>
                         </table>
+                        <div class="right-table">
+                            <div th:replace="layout :: phaseView" />
+                            <div th:replace="layout :: dominationView" />
+                        </div>
 
-                        <table class="left-table">
-                            <tr>
-                                <th>&ensp;&ensp;</th>
-                                <th><i class="fas fa-globe-americas" aria-hidden="true"></i></th>
-                                <th>Allocated countries</th>
-                            </tr>
-                            <tr th:each="country : ${countries}">
-                                <td>&ensp;&ensp;</td>
-                                <td>&ensp;&ensp;</td>
-                                <td th:text="${country}">country name</td>
-                            </tr>
-                        </table>
                     </form>
                 </div>
             </div>
