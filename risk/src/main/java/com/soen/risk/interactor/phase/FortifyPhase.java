@@ -39,7 +39,7 @@ public class FortifyPhase implements Phase {
 //    }
 
     @Override
-    public void begin() {
+  /*  public void begin() {
         Player p = GamePlay.getInstance().getCurrentPlayer();
         if (p.getCountries().size() == 0) {
             logger.log(Level.INFO, "Dropping the player " + p.getName());
@@ -50,7 +50,7 @@ public class FortifyPhase implements Phase {
             }
         }
 
-    }
+    }*/
 
     @Override
     public void execute() {
@@ -68,7 +68,7 @@ public class FortifyPhase implements Phase {
         return this.name;
     }
 
-    boolean CheckPathValid(Player p, ArrayList<Integer> movingPath) {
+    /*boolean CheckPathValid(Player p, ArrayList<Integer> movingPath) {
         for (int countryId : movingPath) {
             int flag = 0;
             for (Country c : p.getCountries()) {
@@ -135,7 +135,7 @@ public class FortifyPhase implements Phase {
 		visited[start] = false;
 		return PathCount;
 	}
-    /*
+    
       //this.checkingContacting(adj, currentCountry, v, movingPath, shift);
       void checkingContacting(LinkedList adj[], int CurrentCountry, boolean visited[], LinkedList<Integer> movingPath, int shift) {
         visited[CurrentCountry] = true;
@@ -158,7 +158,7 @@ public class FortifyPhase implements Phase {
                 checkingContacting(adj, n, visited, movingPath, shift);
         }
     }
-     */
+     
     //Start searching the path between Countries.
     public void searchPathBetweenCountries(LinkedList adj[], int currentCountry, int shift, int army) {
         boolean v[] = new boolean[adj.length];
@@ -239,5 +239,5 @@ public class FortifyPhase implements Phase {
             System.out.println();
         }
         this.searchPathBetweenCountries(adj, currentCoun, ShiftCoun, army);
-    }
+    }*/
 }
