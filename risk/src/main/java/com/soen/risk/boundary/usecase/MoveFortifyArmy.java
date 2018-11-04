@@ -4,7 +4,6 @@ import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.FortifyPhaseRequest;
 import com.soen.risk.boundary.response.FortifyPhaseResponse;
 import com.soen.risk.interactor.GamePlay;
-import com.soen.risk.interactor.phase.FortifyPhase;
 
 /**
  * The Class MoveFortifyArmy.

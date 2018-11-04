@@ -46,13 +46,16 @@ public class GamePlay {
         game.addObserver(phaseView);
 
         // register the observer - dominationView
-        DominationView dominationView = DominationView.getInstance();
+        dominationView = new DominationView();
         for (Player player : game.getPlayers()) {
             player.addObserver(dominationView);
         }
 
         // record the changes in views
         game.initialize();
+    }
+
+    private void end() {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -87,10 +90,20 @@ public class GamePlay {
     }
 
     public void executeAttackPhase(){
+
         game.updateCurrentPhase();
+        // who ever lost the match - check below condition
+//        if (lostPlayer.getCountries().size() == 0) {
+//            logger.log(Level.INFO, "Dropping the player " + p.getName());
+//            game.dropPlayer(lostPlayer);
+//        }
+        if(game.getPlayers().size() == 1){
+            end();
+        }
     }
 
     public void executeFortificationPhase(String startCountry, String endCountry, int armyCount) {
+
         game.updateCurrentPhase();
         game.updateCurrentPlayer();
     }

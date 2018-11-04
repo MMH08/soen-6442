@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 public class DominationView implements Observer {
 
     private static Logger logger = Logger.getLogger(DominationView.class.getName());
-    private static DominationView dominationViewInstance = null;
     private HashMap<String, List<String>> playerInfo;
     private final String DEFAULT_PERCENTAGE = " - %";
 
@@ -25,13 +24,7 @@ public class DominationView implements Observer {
      *
      * @return Instantiated domination view object.
      */
-    public static DominationView getInstance() {
-        if (dominationViewInstance == null)
-            dominationViewInstance = new DominationView();
-        return dominationViewInstance;
-    }
-
-    private DominationView() {
+    public DominationView() {
         playerInfo = new HashMap<>();
     }
 

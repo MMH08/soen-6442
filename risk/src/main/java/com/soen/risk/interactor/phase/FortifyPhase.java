@@ -28,15 +28,15 @@ public class FortifyPhase implements Phase {
     }
 
     @Override
-    public boolean isValid() {
-        if (GamePlay.getInstance().getGame().getPlayers().size() == 1) {
-            String currentPlayer = GamePlay.getInstance().getCurrentPlayer().getName();
-            logger.log(Level.INFO, "Player won the game !!! " + currentPlayer);
-            GamePlay.getInstance().endGame();
-            return false;
-        }
-        return true;
-    }
+//    public boolean isValid() {
+//        if (GamePlay.getInstance().getGame().getPlayers().size() == 1) {
+//            String currentPlayer = GamePlay.getInstance().getCurrentPlayer().getName();
+//            logger.log(Level.INFO, "Player won the game !!! " + currentPlayer);
+//            GamePlay.getInstance().endGame();
+//            return false;
+//        }
+//        return true;
+//    }
 
     @Override
     public void begin() {
@@ -102,7 +102,7 @@ public class FortifyPhase implements Phase {
 		path.add(start);
 		if(start == dest)
 		{
-			PathCount++;			
+			PathCount++;
 			this.addPath(path, allPaths);
 		}
 		else
@@ -166,15 +166,15 @@ public class FortifyPhase implements Phase {
         LinkedList<Integer> movingPath = new LinkedList();
         ArrayList<Country> coun = GamePlay.getInstance().getGame().getMap().getCountries();
         //this.check = 0; //To check whether it will get its destination country
-        
+
         ArrayList<ArrayList<Integer>> allPaths = new ArrayList<ArrayList<Integer>>();
 
-        //Start searching for path between both countries        
+        //Start searching for path between both countries
         int PathCount = 0;
         PathCount = this.countNumberOfPath(adj, currentCountry, shift, PathCount, v, movingPath, allPaths);
 
         if (PathCount != 0) {
-            //Finally Testing whether player able to move army 
+            //Finally Testing whether player able to move army
             logger.log(Level.INFO, "All Possible Path Followed");
             for (ArrayList<Integer> path : allPaths) {
             	logger.log(Level.INFO, "Path Followed");
@@ -205,14 +205,14 @@ public class FortifyPhase implements Phase {
         ArrayList<Country> coun = GamePlay.getInstance().getGame().getMap().getCountries();
         int currentCoun = 0;
         int ShiftCoun = 0;
-        //Convert Country name to their ids
-        for (Country c : coun) {
-            if (c.getName().equals(currentCountry)) {
-                currentCoun = c.getId();
-            } else if (c.getName().equals(Shift)) {
-                ShiftCoun = c.getId();
-            }
-        }
+//        //Convert Country name to their ids
+//        for (Country c : coun) {
+//            if (c.getName().equals(currentCountry)) {
+//                currentCoun = c.getId();
+//            } else if (c.getName().equals(Shift)) {
+//                ShiftCoun = c.getId();
+//            }
+//        }
 
         LinkedList<LinkedList<Country>> ll = GamePlay.getInstance().getGame().getMap().getAdjCountry();
 

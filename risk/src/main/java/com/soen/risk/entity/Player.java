@@ -67,7 +67,7 @@ public class Player extends Observable {
     /**
      * To allocate initial army we should know about the countries owned.
      */
-    public void allocateInitialArmy() {
+    void allocateInitialArmy() {
         Random rand = new Random();
         this.setArmyCapacity(this.getCountries().size() * (2 + rand.nextInt(2)));
         logger.log(Level.INFO, "Adding army capacity to " + this.getName() + " " + this.getArmyCapacity());

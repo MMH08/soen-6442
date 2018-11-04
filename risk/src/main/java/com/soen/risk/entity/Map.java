@@ -148,6 +148,15 @@ public class Map {
 
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+
+    public boolean pathExists(String startCountry, String endCountry) {
+        int startId = findByCountryName(startCountry).getId();
+        int endId = findByCountryName(endCountry).getId();
+        return false;
+
+    }
+
 
     // --------------------------------------------------------------------------------------
 
@@ -303,7 +312,7 @@ public class Map {
         for (int i = 0; i < this.continents.size() - 1; i++) {
             for (int j = i + 1; j < this.continents.size(); j++) {
                 if (this.continents.get(i).getName().equals(this.continents.get(j).getName())) {
-                    logger.log(Level.INFO,"Found duplicate continent " + this.continents.get(i).getName());
+                    logger.log(Level.INFO, "Found duplicate continent " + this.continents.get(i).getName());
                     return true;
                 }
             }
@@ -401,10 +410,9 @@ public class Map {
     public LinkedList<LinkedList<Country>> getAdjCountry() {
         return adjCountry;
     }
-    
-    public LinkedList<Object> getListCountry()
-    {
-    	return list_country;
+
+    public LinkedList<Object> getListCountry() {
+        return list_country;
     }
 
     public void setAdjCountry(LinkedList<LinkedList<Country>> adjCountry) {

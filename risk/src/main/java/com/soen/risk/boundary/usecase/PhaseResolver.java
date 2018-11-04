@@ -32,7 +32,7 @@ public class PhaseResolver implements Usecase {
     @Override
     public PhaseResolverResponse execute() {
         GamePlay gamePlay = GamePlay.getInstance();
-        response.setPhaseName(gamePlay.getCurrentPhase());
+        response.setPhaseName(gamePlay.getGame().getCurrentPhase().toString());
         return response;
     }
 }

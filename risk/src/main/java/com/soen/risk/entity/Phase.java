@@ -1,7 +1,7 @@
 package com.soen.risk.entity;
 
 public enum Phase {
-    STARTUP("Startup Phase"), REINFORCE("Reinforce Phase"), ATTACK("Attack Phase"), FORTIFY("Foritification Phase");
+    STARTUP("startupPhase"), REINFORCE("reinforcePhase"), ATTACK("attackPhase"), FORTIFY("fortifyPhase");
     private final String name;
 
     private Phase(String name) {

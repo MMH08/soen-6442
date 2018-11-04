@@ -18,8 +18,10 @@ import java.util.logging.Logger;
  */
 public class Game extends Observable {
     private static Logger logger = Logger.getLogger(Game.class.getName());
+
     private Map map;
     private List<Player> players;
+
     private Player currentPlayer;
     private Phase currentPhase = Phase.STARTUP;
 
