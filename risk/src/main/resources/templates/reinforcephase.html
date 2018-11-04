@@ -36,35 +36,148 @@
                                 <td th:text="${country}">Country name</td>
                                 <td><input type="text" value="0" class="reinforce-count"></td>
                             </tr>
+                            <tr th:each="card: ${cards}">
+                           		<td><input type="hidden" value="yes" name="showpopup" id="showpopup"></td>  
                             <tr>
                                 <td><input type="hidden" value="" name="armyCounts" id="armyCounts"></td>
-                                <td><button name="submit">Add</button></td>
+                                <td><button id="submit" name="submit">Add</button></td>
                             </tr>
                         </table>
-
+                        
                         <table class="left-table">
-
                         </table>
                     </form>
                 </div>
             </div>
         </div>
+        
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+		<!-- Modal content -->
+	  	<div class="modal-content">
+			<div class="modal-header">
+				<span class="close">X</span>
+				<p>Cards Earned</p>
+			</div>
+			<div class="modal-body">
+			<fieldset>
+				<legend>Select cards for exchange : </legend>
+				<table border="1" cellpadding="5" cellspacing="5" style="text-align: center;" align="center">
+					<tr th:each="card: ${cards}">
+						<input class="single-checkbox" th:name="cardselected" type="checkbox" th:text="${card}" th:value="${card}">
+					</tr>
+					<tr>	
+						<input type="hidden" id="cardscount" th:value="${#lists.size(cards)}">
+					</tr>
+				</table>	
+			</fieldset>
+			</div>
+			<div class="modal-footer">
+				<button id="exchange">Exchange</button>
+			</div>
+		</div>
     </div>
-
-    <script>
-        $("button").click(function(){
-            var armyCounts = new Array();
-            $(".reinforce-count").each(function(){
-                armyCounts.push($(this).val());
+ 
+ <script>
+    var count=0;
+    $(document).ready(function() {
+     	var valuecard = $("#showpopup").attr("value");
+	  	if(valuecard == null){
+	  	}
+	  	else{
+	  		count++;
+	 	 	displaymodal();
+   		}
+   	});
+   		
+   /* Limit card checkbox selection to 3 */
+	var limit = 3;
+	$('input.single-checkbox').on('change', function(evt) {
+   		if($(this).siblings(':checked').length >= limit) {
+      	 	this.checked = false;
+   		}
+	});
+	
+	/* Displays the modal for card exchange view */
+	function displaymodal () {
+		var modal = document.getElementById('myModal');
+    	modal.style.display = "block";
+		modal.style.display = "block";
+	}
+	
+	/* To exit the card exchange view and restricting exit if >5 cards */
+	var span = document.getElementsByClassName("close")[0];
+	span.onclick = function() {
+		if($("#cardscount").val() <5) { 
+		var modal = document.getElementById('myModal');
+   	 	modal.style.display = "none";
+ 		}
+ 		else {
+ 		alert("please exchange cards to proceed further!");
+ 		}  
+	}
+        
+    /* Validation of number or cards selected for exchange */
+    /* Validation to check only all same or all different cards selected. */
+    /* Ajax call to update cards and reinforcement armies when cards exchanged */
+    
+	/*<![CDATA[*/
+	$('#exchange').on('click', function(e){
+		e.preventDefault();
+		var excards = []; 
+       		$.each($("input[name='cardselected']:checked"), function(){            
+         		excards.push($(this).val());
             });
-            console.log(armyCounts);
-            $("#armyCounts").val(armyCounts.join(","));
-            $("form").submit();
-        });
-    </script>
+			if(excards === undefined || excards.length==0) {
+				alert("Please select cards for exchange");
+			}
+			else if(excards.length<3) {
+				alert("Please select three cards to make an exchange!")
+			}
+			else if (getOccurrence(excards, "Calvary")==2 || getOccurrence(excards, "Infant")==2 || getOccurrence(excards, "Artillery")==2 ){
+				alert("Please select all same or all distinct cards for exchange");
+			}
+			else{
+				$.ajax({
+					url : '/CardExchange',
+					method : 'POST',
+					data : "cards="+excards,
+					success : function() {
+						var modal = document.getElementById('myModal');
+    					modal.style.display = "none";
+    					window.location.hash = 'reload';
+    					location.reload(true);
+					}
+				});	
+			}
+	});
+	/*]]>*/
+			
+	/* Differentiate javascript reload from new page load */
+	document.addEventListener("DOMContentLoaded", function(event) { 
+    if(window.location.hash == "#reload"){
+    	var modal = document.getElementById('myModal');
+    	modal.style.display = "none";
+    }
+    });
 
+	function getOccurrence(array, value) {
+    	var count = 0;
+    	array.forEach((v) => (v === value && count++));
+    	return count;
+	}
+
+	$("#submit").click(function(){
+    	var armyCounts = new Array();
+        $(".reinforce-count").each(function(){
+        	armyCounts.push($(this).val());
+        });
+        console.log(armyCounts);
+        $("#armyCounts").val(armyCounts.join(","));
+        $("form").submit();
+     });
+</script>
     <div th:replace="layout :: footer"/>
 </div>
-
 </body>
 </html>

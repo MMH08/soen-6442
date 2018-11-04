@@ -17,6 +17,9 @@ public class ReinforceInfoResponse implements Response {
     
     /** The countries. */
     private List<String> countries;
+    
+    /** The cards. */
+    private List<String> cards;
 
     /**
      * Gets the reinforce army capacity.
@@ -70,5 +73,23 @@ public class ReinforceInfoResponse implements Response {
      */
     public void setCountries(List<String> countries) {
         this.countries = countries;
+    }
+    
+    /**
+     * Gets the list of cards player earned.
+     *
+     * @return the player's cards
+     */
+    public List<String> getPlayerCards() {
+        return cards;
+    }
+
+    /**
+     * Sets the list of cards player earned.
+     *
+     * @param cards the cards earned
+     */
+    public void setPlayerCards(List<String> cards) {
+        this.cards = cards;
     }
 }

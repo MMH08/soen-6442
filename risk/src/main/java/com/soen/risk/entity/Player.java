@@ -14,7 +14,11 @@ import java.util.List;
 public class Player {
     private String name;
     private int armyCapacity;
+    private int extraArmies;
+    private int exchangeCount = 0 ;
     private List<Country> countries;
+    private List<String> cards;
+    private int finalarmies;
 
     /**
      *Player(int nameSuffix): Initiating arraylist of countries for current player and assigning name to player
@@ -23,6 +27,7 @@ public class Player {
     public Player(int nameSuffix) {
         this.name = "Player_" + String.valueOf(nameSuffix);
         this.countries = new ArrayList<>();
+        this.cards = new ArrayList<>();
     }
 
     /**
@@ -65,7 +70,29 @@ public class Player {
     public void setArmyCapacity(int armyCapacity) {
         this.armyCapacity = armyCapacity;
     }
+    public int getExchangecount() {
+        return exchangeCount;
+    }
+
+    public void setExchangecount() {
+    		this.exchangeCount++;
+    }
     
+    public int getExtraArmies() {
+        return extraArmies;
+    }
+
+    public void setExtraArmies(int extraArmies) {
+        this.extraArmies = extraArmies;
+    }
+    
+    public int getCardExchangeArmies() {
+        return finalarmies;
+    }
+
+    public void setCardExchangeArmies() {
+    	this.finalarmies=getExtraArmies() * getExchangecount();
+    }
     /**
      *getReinforceArmyCapacity(Map m): Checking if player has all countries of whole continent then give army according to 
      *control value, otherwise give armies according to countries player own.
@@ -85,14 +112,24 @@ public class Player {
                 }
             }
             if (size == count) {
+            	int armies=getCardExchangeArmies();
+            	if(armies !=0 && armies>0 ) {
+            		return ctt.getControlValue()+armies;
+            	}
+            	else {
                 return ctt.getControlValue();
+            	}
             }
-
         }
         //If Player do not have all country of a continent
-        int number_of_countries = this.getCountries().size();
+        int number_of_countries = this.getCountries().size();  
+        int armies=getCardExchangeArmies();       
+    	if(armies !=0 && armies>0 ) {
+    		return Math.max(3, (int) Math.ceil(number_of_countries / 3.0))+armies;
+    	}
+    	else {
         return Math.max(3, (int) Math.ceil(number_of_countries / 3.0));
-
+    	}
     }
     
     //Return All Countries Name of Player
@@ -101,6 +138,18 @@ public class Player {
         for (Country country : countries)
             names.add(country.getName());
         return names;
+    }
+
+    /**
+     * (addCard card): Adds risk cards to players
+     * @param q
+     */
+    public void addCard(String card) {
+        this.cards.add(card);
+    }
+
+    public List<String> getCards() {
+        return this.cards;
     }
 
 }

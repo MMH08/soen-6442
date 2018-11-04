@@ -1,5 +1,6 @@
 package com.soen.risk.boundary.usecase;
 
+import com.soen.risk.boundary.CardObserver;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.entity.Player;
 import com.soen.risk.interactor.GamePlay;
@@ -9,7 +10,7 @@ import com.soen.risk.boundary.response.ReinforceInfoResponse;
 /**
  * The Class ReinforceInfo.
  */
-public class ReinforceInfo implements Usecase {
+public class ReinforceInfo extends CardObserver implements Usecase  {
     
     /** The request. */
     private ReinforceInfoRequest request;
@@ -27,6 +28,16 @@ public class ReinforceInfo implements Usecase {
         response = new ReinforceInfoResponse();
     }
     
+    /**
+     * Instantiates a new reinforce info for acting as Observer.
+     *
+     * @param subject the subject that notifies observers.
+     */
+    public ReinforceInfo(CardExchange subject){
+        this.cardExchangeObject = subject;
+        this.cardExchangeObject.attach(this);
+     }
+    
     /* (non-Javadoc)
      * @see com.soen.risk.boundary.Usecase#execute()
      */
@@ -37,6 +48,15 @@ public class ReinforceInfo implements Usecase {
         response.setReinforceArmyCapacity(player.getReinforceArmyCapacity(gamePlay.getGame().getMap()));
         response.setPlayerName(player.getName());
         response.setCountries(player.getCountryNames());
+        response.setPlayerCards(player.getCards());
         return response;
     }
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		GamePlay gamePlay = GamePlay.getInstance();
+        Player player = gamePlay.getCurrentPlayer();
+		player.setCardExchangeArmies();
+	}
 }

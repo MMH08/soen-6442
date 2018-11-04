@@ -1,5 +1,8 @@
 package com.soen.risk.boundary.usecase;
 
+import java.util.Random;
+import java.util.logging.Level;
+
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.FortifyInfoRequest;
 import com.soen.risk.boundary.response.FortifyInfoResponse;
@@ -34,13 +37,24 @@ public class FortifyInfo implements Usecase {
     @Override
     public FortifyInfoResponse execute() {
         Player player = GamePlay.getInstance().getCurrentPlayer();
+        try {   	
+        	 Random rand = new Random();
+             String[] cardTypes = {"Infant", "Calvary", "Artillery"};
+             String cardType = cardTypes[rand.nextInt(3)];
+             player.addCard(cardType);
+             player.setExtraArmies(0);
+             player.setCardExchangeArmies();     
+        }
+        catch(Exception e) {
+        	e.printStackTrace();
+        }
         response.setPlayerName(player.getName());
         response.setCountryNames(player.getCountryNames());
 
         for(Country country: player.getCountries()){
             response.addArmyCount(country.getArmy());
         }
-
+        
         return response;
     }
 }

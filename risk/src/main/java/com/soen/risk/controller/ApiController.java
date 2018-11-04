@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.soen.risk.boundary.response.CardExchangeResponse;
 import com.soen.risk.boundary.response.EditMapResponse;
 import com.soen.risk.boundary.response.FortifyInfoResponse;
 import com.soen.risk.boundary.response.FortifyPhaseResponse;
@@ -19,6 +20,7 @@ import com.soen.risk.boundary.response.StartupPhaseResponse;
 import com.soen.risk.boundary.usecase.AddReinforceArmy;
 import com.soen.risk.boundary.usecase.AddStartupArmy;
 import com.soen.risk.boundary.usecase.AttackInfo;
+import com.soen.risk.boundary.usecase.CardExchange;
 import com.soen.risk.boundary.usecase.CreateMap;
 import com.soen.risk.boundary.usecase.EditMap;
 import com.soen.risk.boundary.usecase.FortifyInfo;
@@ -398,6 +400,7 @@ public class ApiController {
         model.addObject("reinforceArmyCount", response.getReinforceArmyCapacity());
         model.addObject("playerName", response.getPlayerName());
         model.addObject("countries", response.getCountries());
+        model.addObject("cards", response.getPlayerCards());
         return model;
     }
 
@@ -414,6 +417,22 @@ public class ApiController {
         return "redirect:/phaseResolver";
     }
 
+    
+    /**
+     * Card exchange view.
+     *
+     * @param cards the cards to be exchanged
+     * @return the string
+     */
+    @RequestMapping("/CardExchange")
+    public String ExchangeCards(@RequestParam("cards") String cards) {
+    	CardExchange usecase = new CardExchange(cards);
+    	new ReinforceInfo(usecase);
+        usecase.execute();
+    	return "redirect:/reinforcePhase";
+    }
+
+    
     /**
      * Attack phase.
      *
@@ -439,6 +458,7 @@ public class ApiController {
         model.addObject("playerName", response.getPlayerName());
         model.addObject("countryNames", response.getCountryNames());
         model.addObject("armyCounts", response.getArmyCounts());
+     //   model.addObject("cards", response.getCards());
         return model;
     }
 
