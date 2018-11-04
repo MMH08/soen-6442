@@ -1,6 +1,8 @@
 package com.soen.risk.boundary.response;
 
 import com.soen.risk.boundary.Response;
+import com.soen.risk.interactor.DominationView;
+import com.soen.risk.interactor.PhaseView;
 
 import java.util.List;
 
@@ -8,9 +10,6 @@ import java.util.List;
  * The Class StartupInfoResponse.
  */
 public class StartupInfoResponse implements Response {
-    
-    /** The player name. */
-    private String playerName;
     
     /** The country name. */
     private String countryName;
@@ -21,23 +20,9 @@ public class StartupInfoResponse implements Response {
     /** The countries. */
     private List<String> countries;
 
-    /**
-     * Gets the player name.
-     *
-     * @return the player name
-     */
-    public String getPlayerName() {
-        return playerName;
-    }
+    private PhaseView phaseView;
 
-    /**
-     * Sets the player name.
-     *
-     * @param playerName the new player name
-     */
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
+    private DominationView dominationView;
 
     /**
      * Gets the country name.
@@ -91,5 +76,21 @@ public class StartupInfoResponse implements Response {
      */
     public void setCountries(List<String> countries) {
         this.countries = countries;
+    }
+
+    public PhaseView getPhaseView() {
+        return phaseView;
+    }
+
+    public void setPhaseView(PhaseView phaseView) {
+        this.phaseView = phaseView;
+    }
+
+    public DominationView getDominationView() {
+        return dominationView;
+    }
+
+    public void setDominationView(DominationView dominationView) {
+        this.dominationView = dominationView;
     }
 }

@@ -1,6 +1,8 @@
 package com.soen.risk.boundary.response;
 
 import com.soen.risk.boundary.Response;
+import com.soen.risk.interactor.DominationView;
+import com.soen.risk.interactor.PhaseView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,10 @@ public class FortifyInfoResponse implements Response {
     
     /** The army counts. */
     private List<Integer> armyCounts;
+
+    private PhaseView phaseView;
+
+    private DominationView dominationView;
 
     /**
      * Instantiates a new fortify info response.
@@ -89,5 +95,21 @@ public class FortifyInfoResponse implements Response {
      */
     public void setArmyCounts(List<Integer> armyCounts) {
         this.armyCounts = armyCounts;
+    }
+
+    public PhaseView getPhaseView() {
+        return phaseView;
+    }
+
+    public void setPhaseView(PhaseView phaseView) {
+        this.phaseView = phaseView;
+    }
+
+    public DominationView getDominationView() {
+        return dominationView;
+    }
+
+    public void setDominationView(DominationView dominationView) {
+        this.dominationView = dominationView;
     }
 }
