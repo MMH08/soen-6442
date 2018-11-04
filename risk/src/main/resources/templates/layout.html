@@ -39,24 +39,6 @@
 </div>
 
 <div th:fragment="phaseView">
-
-
-    <fieldset>
-        <legend>Phase View:</legend>
-        <table>
-            <tr>
-                <td>Phase name</td>
-                <td th:text="${phaseView.phaseName}"></td>
-            </tr>
-            <tr>
-                <td>Player name</td>
-                <td th:text="${phaseView.playerName}"></td>
-            </tr>
-        </table>
-    </fieldset>
-</div>
-
-<div th:fragment="phaseView">
     <div>
         <ul>
             <li th:each="actionItem : ${phaseView.action}" th:text="${actionItem}"></li>
