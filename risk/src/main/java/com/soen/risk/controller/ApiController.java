@@ -409,6 +409,8 @@ public class ApiController {
 
         AttackInfo usecase = new AttackInfo();
         AttackInfoResponse response = usecase.execute();
+        model.addObject("phaseView", response.getPhaseView());
+        model.addObject("dominationView", response.getDominationView());
 
         return model;
     }
