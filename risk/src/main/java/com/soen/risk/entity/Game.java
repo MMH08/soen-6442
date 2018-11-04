@@ -2,6 +2,7 @@ package com.soen.risk.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,21 +16,77 @@ import java.util.logging.Logger;
  * @version 1.0.0
  * @since 2018-10-11
  */
-public class Game {
+public class Game extends Observable {
     private static Logger logger = Logger.getLogger(Game.class.getName());
     private Map map;
     private List<Player> players;
+    private Player currentPlayer;
+    private Phase currentPhase = Phase.STARTUP;
 
     /**
      * Assign to map reference, new arraylist for players, and adding all players.
      *
-     * @param map            Having reference of map class
+     * @param filename       Having reference of map class
      * @param countOfPlayers Number of players playing game
      */
-    public Game(Map map, int countOfPlayers) {
-        this.map = map;
-        this.players = new ArrayList<>();
-        this.addPlayers(countOfPlayers);
+    public Game(String filename, int countOfPlayers) {
+        this.map = new Map();
+        this.map.load(filename);
+
+        if (map.isValid()) {
+            this.players = new ArrayList<>();
+            this.addPlayers(countOfPlayers);
+        }
+    }
+
+    public void initialize() {
+        this.setCurrentPlayer(this.getPlayers().get(0));
+        allocateInitialCountries();
+        for (Player player : this.players)
+            player.allocateInitialArmy();
+    }
+
+    /**
+     * Change current player after its turn is over.
+     */
+    public void updateCurrentPlayer() {
+        int count = 0;
+        for (Player p : getPlayers()) {
+            if (p.getName().equals(currentPlayer.getName())) {
+                if (count == getPlayers().size() - 1) {
+                    this.setCurrentPlayer(getPlayers().get(0));
+                } else {
+                    this.setCurrentPlayer(getPlayers().get(count + 1));
+                }
+                break;
+            }
+            count++;
+        }
+    }
+
+
+    /**
+     * Changing current phase between reinforcement, attack, and fortify.
+     */
+    public void updateCurrentPhase() {
+        if (this.getCurrentPhase().equals(Phase.STARTUP)) {
+            this.setCurrentPhase(Phase.REINFORCE);
+            return;
+        }
+
+        Phase[] phases = {Phase.REINFORCE, Phase.ATTACK, Phase.FORTIFY};
+
+        for (int i = 0; i < phases.length; i++) {
+            if (currentPhase.equals(phases[i])) {
+                if (i == phases.length - 1) {
+                    this.setCurrentPhase(phases[0]);
+                    break;
+                } else {
+                    this.setCurrentPhase(phases[i + 1]);
+                    break;
+                }
+            }
+        }
     }
 
 
@@ -47,7 +104,7 @@ public class Game {
      *
      * @param p Player needed to remove from game
      */
-    public void dropPlayer(Player p) {
+    private void dropPlayer(Player p) {
         int i = 0;
         for (Player p1 : players) {
             if (p.equals(p1)) {
@@ -57,13 +114,11 @@ public class Game {
             i++;
         }
     }
-    // -------------------------------------------------------------
 
     /**
      * Randomly allocate initial countries to all players.
-     * TODO: Move this function to the players as to implement Strategy pattern in the next cycle.
      */
-    public void allocateInitialCountries() {
+    private void allocateInitialCountries() {
         Random rand = new Random();
         for (Country country : map.getCountries()) {
             int indexOfPlayer = rand.nextInt(players.size());
@@ -72,17 +127,6 @@ public class Game {
         }
     }
 
-    /**
-     * Randomly allocate initial armies to all countries.
-     * TODO: Move this function to the players as to implement Strategy pattern in the next sprint.
-     */
-    public void allocateInitialArmy() {
-        Random rand = new Random();
-        for (Player player : players) {
-            player.setArmyCapacity(player.getCountries().size() * (2 + rand.nextInt(2)));
-            logger.log(Level.INFO, "Adding army capacity to " + player.getName() + " " + String.valueOf(player.getArmyCapacity()));
-        }
-    }
 
     // -------------------------------------------------------------
 
@@ -102,4 +146,24 @@ public class Game {
         this.players = players;
     }
 
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+        this.setChanged();
+        this.notifyObservers(this);
+    }
+
+    public Phase getCurrentPhase() {
+        return currentPhase;
+    }
+
+    public void setCurrentPhase(Phase currentPhase) {
+        this.currentPhase = currentPhase;
+        this.setChanged();
+        this.notifyObservers(this);
+    }
 }
