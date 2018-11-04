@@ -4,6 +4,8 @@ import com.soen.risk.entity.Game;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,13 +25,11 @@ import java.util.logging.Logger;
 
 public class GamePlay extends Observable {
     private static Logger logger = Logger.getLogger(GamePlay.class.getName());
-
     private static GamePlay gamePlayInstance = null;
     private Game game;
-
-    // status
     private Player currentPlayer;
-    private String currentPhase;
+    private String currentPhase = "startupPhase";
+    private List<String> action = new ArrayList<>();
 
     public static GamePlay getInstance() {
         if (gamePlayInstance == null)
@@ -42,22 +42,20 @@ public class GamePlay extends Observable {
 
     /**
      * Perform all functionality of map after creating map object.
-     * TODO: instantiate the dominationView in the Gameplay instance to observe the players' instances.
      * Gameplay will store the view object which will get updated as and when any player takes action.
-     *
-     * @param filename       Path of file along with its file name
-     * @param countOfPlayers Number of players playing game
      */
-    public void build(String filename, int countOfPlayers) {
+    public void buildGame(String filename, int countOfPlayers) {
         Map map = new Map();
         map.load(filename);
         if (map.isValid()) {
             this.game = new Game(map, countOfPlayers);
-            this.game.allocateInitialCountries();
-            this.game.allocateInitialArmy();
-            this.setCurrentPhase("startupPhase");
-            this.setCurrentPlayer(this.game.getPlayers().get(0));
         }
+    }
+
+    public void initializeGame() {
+        this.game.allocateInitialCountries();
+        this.game.allocateInitialArmy();
+        this.setCurrentPlayer(this.game.getPlayers().get(0));
     }
 
     /**
@@ -88,7 +86,6 @@ public class GamePlay extends Observable {
      * Change current player after its turn is over.
      */
     public void updateCurrentPlayer() {
-
         int count = 0;
         for (Player p : game.getPlayers()) {
             if (p.getName().equals(currentPlayer.getName())) {
@@ -101,9 +98,49 @@ public class GamePlay extends Observable {
             }
             count++;
         }
-
     }
 
+    public void execute(){
+        // output received from the phase execution on the current player.
+        String outputString = "";
+        this.updateAction(outputString);
+    }
+
+
+    private void setCurrentPlayer(Player currentPlayer) {
+        logger.log(Level.INFO, "Changing player to " + currentPlayer.getName());
+        this.currentPlayer = currentPlayer;
+        this.setChanged();
+        this.notifyObservers(this);
+    }
+
+    private void setCurrentPhase(String currentPhase) {
+        logger.log(Level.INFO, "Changing phase to " + currentPhase);
+        this.currentPhase = currentPhase;
+        this.resetAction();
+        this.setChanged();
+        this.notifyObservers(this);
+    }
+
+    private void updateAction(String actionItem){
+        this.action.add(actionItem);
+        this.setChanged();
+        this.notifyObservers(this);
+    }
+
+    private void resetAction(){
+        this.action = new ArrayList<>();
+        this.setChanged();
+        this.notifyObservers(this);
+    }
+
+    public void endGame() {
+        this.currentPhase = "";
+    }
+
+    public List<String> getAction() {
+        return action;
+    }
     public Game getGame() {
         return game;
     }
@@ -114,28 +151,5 @@ public class GamePlay extends Observable {
 
     public String getCurrentPhase() {
         return currentPhase;
-    }
-
-    /**
-     * Update Current Player to next player after completing player's turn.
-     *
-     * @param currentPlayer
-     */
-    private void setCurrentPlayer(Player currentPlayer) {
-        logger.log(Level.INFO, "Changing player to " + currentPlayer.getName());
-        this.currentPlayer = currentPlayer;
-        this.setChanged();
-        this.notifyObservers();
-    }
-
-    private void setCurrentPhase(String currentPhase) {
-        logger.log(Level.INFO, "Changing phase to " + currentPhase);
-        this.currentPhase = currentPhase;
-        this.setChanged();
-        this.notifyObservers();
-    }
-
-    public void endGame() {
-        this.currentPhase = "";
     }
 }
