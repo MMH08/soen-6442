@@ -5,19 +5,21 @@ import com.soen.risk.boundary.request.FortifyInfoRequest;
 import com.soen.risk.boundary.response.FortifyInfoResponse;
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Player;
-import com.soen.risk.interactor.DominationView;
 import com.soen.risk.interactor.GamePlay;
-import com.soen.risk.interactor.PhaseView;
 
 /**
  * The Class FortifyInfo.
  */
 public class FortifyInfo implements Usecase {
-    
-    /** The request. */
+
+    /**
+     * The request.
+     */
     private FortifyInfoRequest request;
-    
-    /** The response. */
+
+    /**
+     * The response.
+     */
     private FortifyInfoResponse response;
 
     /**
@@ -35,15 +37,17 @@ public class FortifyInfo implements Usecase {
      */
     @Override
     public FortifyInfoResponse execute() {
-        Player player = GamePlay.getInstance().getCurrentPlayer();
+        GamePlay gamePlay = GamePlay.getInstance();
+        Player player = gamePlay.getGame().getCurrentPlayer();
+
         response.setCountryNames(player.getCountryNames());
 
-        for(Country country: player.getCountries()){
+        for (Country country : player.getCountries()) {
             response.addArmyCount(country.getArmy());
         }
 
-        response.setPhaseView(PhaseView.getInstance());
-        response.setDominationView(DominationView.getInstance());
+        response.setPhaseView(GamePlay.getInstance().getPhaseView());
+        response.setDominationView(GamePlay.getInstance().getDominationView());
 
         return response;
     }

@@ -3,6 +3,7 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.FortifyPhaseRequest;
 import com.soen.risk.boundary.response.FortifyPhaseResponse;
+import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.interactor.phase.FortifyPhase;
 
 /**
@@ -31,12 +32,9 @@ public class MoveFortifyArmy implements Usecase {
      */
     @Override
     public FortifyPhaseResponse execute() {
-        FortifyPhase phase = new FortifyPhase(request.getStartCountry(), request.getEndCountry(), request.getArmyCount());
-        if (phase.isValid()) {
-            phase.begin();
-            phase.execute();
-            phase.exit();
-        }
+        GamePlay gamePlay = GamePlay.getInstance();
+        gamePlay.executeFortificationPhase(request.getStartCountry(), request.getEndCountry(), request.getArmyCount());
+
         return response;
     }
 }

@@ -35,11 +35,14 @@ public class StartupInfo implements Usecase {
 
     @Override
     public StartupInfoResponse execute() {
-        Player player = GamePlay.getInstance().getCurrentPlayer();
+        GamePlay gamePlay = GamePlay.getInstance();
+        Player player = gamePlay.getGame().getCurrentPlayer();
+
         response.setCountryName(player.nextCountryToAssignArmy().getName());
         response.setArmyCapacity(player.getArmyCapacity());
-        response.setPhaseView(PhaseView.getInstance());
-        response.setDominationView(DominationView.getInstance());
+        response.setPhaseView(gamePlay.getPhaseView());
+        response.setDominationView(gamePlay.getDominationView());
+
         return response;
     }
 }

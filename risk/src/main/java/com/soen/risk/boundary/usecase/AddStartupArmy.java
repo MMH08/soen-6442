@@ -3,17 +3,21 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.StartupPhaseRequest;
 import com.soen.risk.boundary.response.StartupPhaseResponse;
-import com.soen.risk.interactor.phase.StartupPhase;
+import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class AddStartupArmy.
  */
 public class AddStartupArmy implements Usecase {
-    
-    /** The request. */
+
+    /**
+     * The request.
+     */
     private StartupPhaseRequest request;
-    
-    /** The response. */
+
+    /**
+     * The response.
+     */
     private StartupPhaseResponse response;
 
     /**
@@ -31,12 +35,9 @@ public class AddStartupArmy implements Usecase {
      */
     @Override
     public StartupPhaseResponse execute() {
-        StartupPhase phase = new StartupPhase(request.getCountryName(), request.getArmyCount());
-        if (phase.isValid()) {
-            phase.begin();
-            phase.execute();
-            phase.exit();
-        }
+        GamePlay gamePlay = GamePlay.getInstance();
+        gamePlay.executeStartupPhase(request.getCountryName(), request.getArmyCount());
+
         return response;
     }
 }

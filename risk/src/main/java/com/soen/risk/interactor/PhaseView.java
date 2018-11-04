@@ -1,5 +1,8 @@
 package com.soen.risk.interactor;
 
+import com.soen.risk.entity.Game;
+import com.soen.risk.entity.Phase;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -20,18 +23,6 @@ public class PhaseView implements Observer {
     private String playerName = "";
     private List<String> action = new ArrayList<>();
     private static Logger logger = Logger.getLogger(PhaseView.class.getName());
-    private static PhaseView phaseViewInstance = null;
-
-    /**
-     * Singleton implementation of phase view to re-use the attached observer instance.
-     *
-     * @return Instantiated phase view object.
-     */
-    public static PhaseView getInstance() {
-        if (phaseViewInstance == null)
-            phaseViewInstance = new PhaseView();
-        return phaseViewInstance;
-    }
 
     /**
      * Update the phaseName and playerName on each set statement of GamePlay.
@@ -41,9 +32,9 @@ public class PhaseView implements Observer {
      */
     @Override
     public void update(Observable obs, Object o) {
-        playerName = ((GamePlay) obs).getCurrentPlayer().toString();
-        phaseName = ((GamePlay) obs).getCurrentPhase();
-        action = ((GamePlay) obs).getAction();
+        playerName = ((Game) obs).getCurrentPlayer().toString();
+        phaseName = ((Game) obs).getCurrentPhase().toString();
+        //action = ((Game) obs).getAction();
         logger.log(Level.INFO, "player name" + playerName);
         logger.log(Level.INFO, "current phase" + phaseName);
     }

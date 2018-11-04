@@ -39,19 +39,7 @@ public class StartGame implements Usecase {
     @Override
     public StartGameResponse execute() {
         GamePlay gamePlay = GamePlay.getInstance();
-        // phase view
-        PhaseView phaseView = PhaseView.getInstance();
-        gamePlay.addObserver(phaseView);
-
-        gamePlay.buildGame(request.getFilename(), request.getCountOfPlayers());
-
-        // register the observer - dominationView
-        DominationView dominationView = DominationView.getInstance();
-        for(Player player : gamePlay.getGame().getPlayers()){
-            player.addObserver(dominationView);
-        }
-
-        gamePlay.initializeGame();
+        gamePlay.start(request.getFilename(), request.getCountOfPlayers());
         return response;
     }
 }

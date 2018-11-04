@@ -102,8 +102,8 @@ public class PlayerTest {
     	p2.addCountry(c4);
     	p2.addCountry(c5);
     	
-    	assertEquals(13, p2.getReinforceArmyCapacity(map));
-    	assertEquals(3,p1.getReinforceArmyCapacity(map));
+    	assertEquals(13, p2.calculateReinforceCount(map));
+    	assertEquals(3,p1.calculateReinforceCount(map));
     	
     }
 

@@ -2,11 +2,9 @@ package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.entity.Player;
-import com.soen.risk.interactor.DominationView;
 import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.boundary.request.ReinforceInfoRequest;
 import com.soen.risk.boundary.response.ReinforceInfoResponse;
-import com.soen.risk.interactor.PhaseView;
 
 /**
  * The Class ReinforceInfo.
@@ -34,12 +32,14 @@ public class ReinforceInfo implements Usecase {
      */
     @Override
     public ReinforceInfoResponse execute() {
-        GamePlay gamePlay = GamePlay.getInstance();
-        Player player = gamePlay.getCurrentPlayer();
-        response.setReinforceArmyCapacity(player.getReinforceArmyCapacity(gamePlay.getGame().getMap()));
+        Player player = GamePlay.getInstance().getGame().getCurrentPlayer();
+        player.calculateReinforceCount(GamePlay.getInstance().getGame().getMap());
+
+        response.setReinforceArmyCapacity(player.getArmyCapacity());
         response.setCountries(player.getCountryNames());
-        response.setPhaseView(PhaseView.getInstance());
-        response.setDominationView(DominationView.getInstance());
+
+        response.setPhaseView(GamePlay.getInstance().getPhaseView());
+        response.setDominationView(GamePlay.getInstance().getDominationView());
         return response;
     }
 }

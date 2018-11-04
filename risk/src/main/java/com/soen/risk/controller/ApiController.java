@@ -3,20 +3,13 @@ package com.soen.risk.controller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.soen.risk.boundary.response.*;
 import com.soen.risk.boundary.usecase.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.soen.risk.boundary.response.EditMapResponse;
-import com.soen.risk.boundary.response.FortifyInfoResponse;
-import com.soen.risk.boundary.response.FortifyPhaseResponse;
-import com.soen.risk.boundary.response.PhaseResolverResponse;
-import com.soen.risk.boundary.response.ReinforceInfoResponse;
-import com.soen.risk.boundary.response.StartupInfoResponse;
-import com.soen.risk.boundary.response.StartupPhaseResponse;
 
 /**
  * The Class ApiController.
@@ -411,10 +404,13 @@ public class ApiController {
      * @return the string
      */
     @RequestMapping("/attackPhase")
-    public String attackPhase() {
+    public ModelAndView attackPhase() {
+        ModelAndView model = new ModelAndView("attackphase");
+
         AttackInfo usecase = new AttackInfo();
-        usecase.execute();
-       return "redirect:/phaseResolver";
+        AttackInfoResponse response = usecase.execute();
+
+        return model;
     }
 
     @RequestMapping("/attackPhase/attack")
