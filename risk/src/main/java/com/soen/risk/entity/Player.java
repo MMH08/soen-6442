@@ -76,6 +76,8 @@ public class Player extends Observable {
 
     public void setArmyCapacity(int armyCapacity) {
         this.armyCapacity = armyCapacity;
+        this.setChanged();
+        this.notifyObservers();
     }
     
     /**
@@ -113,6 +115,14 @@ public class Player extends Observable {
         for (Country country : countries)
             names.add(country.getName());
         return names;
+    }
+
+    public int getTotalArmyCount(){
+        int armyCount = 0;
+        for(Country country: this.countries){
+            armyCount += country.getArmy();
+        }
+        return armyCount;
     }
 
     public String toString() {

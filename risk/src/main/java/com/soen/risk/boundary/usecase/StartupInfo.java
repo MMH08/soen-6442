@@ -38,7 +38,6 @@ public class StartupInfo implements Usecase {
         Player player = GamePlay.getInstance().getCurrentPlayer();
         response.setCountryName(player.nextCountryToAssignArmy().getName());
         response.setArmyCapacity(player.getArmyCapacity());
-        response.setCountries(player.getCountryNames());
         response.setPhaseView(PhaseView.getInstance());
         response.setDominationView(DominationView.getInstance());
         return response;

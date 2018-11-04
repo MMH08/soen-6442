@@ -16,9 +16,6 @@ public class StartupInfoResponse implements Response {
     
     /** The army capacity. */
     private int armyCapacity;
-    
-    /** The countries. */
-    private List<String> countries;
 
     private PhaseView phaseView;
 
@@ -58,24 +55,6 @@ public class StartupInfoResponse implements Response {
      */
     public void setArmyCapacity(int armyCapacity) {
         this.armyCapacity = armyCapacity;
-    }
-
-    /**
-     * Gets the countries.
-     *
-     * @return the countries
-     */
-    public List<String> getCountries() {
-        return countries;
-    }
-
-    /**
-     * Sets the countries.
-     *
-     * @param countries the new countries
-     */
-    public void setCountries(List<String> countries) {
-        this.countries = countries;
     }
 
     public PhaseView getPhaseView() {

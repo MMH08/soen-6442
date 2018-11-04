@@ -3,6 +3,7 @@ package com.soen.risk.controller;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.soen.risk.boundary.usecase.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,17 +17,6 @@ import com.soen.risk.boundary.response.PhaseResolverResponse;
 import com.soen.risk.boundary.response.ReinforceInfoResponse;
 import com.soen.risk.boundary.response.StartupInfoResponse;
 import com.soen.risk.boundary.response.StartupPhaseResponse;
-import com.soen.risk.boundary.usecase.AddReinforceArmy;
-import com.soen.risk.boundary.usecase.AddStartupArmy;
-import com.soen.risk.boundary.usecase.AttackInfo;
-import com.soen.risk.boundary.usecase.CreateMap;
-import com.soen.risk.boundary.usecase.EditMap;
-import com.soen.risk.boundary.usecase.FortifyInfo;
-import com.soen.risk.boundary.usecase.MoveFortifyArmy;
-import com.soen.risk.boundary.usecase.PhaseResolver;
-import com.soen.risk.boundary.usecase.ReinforceInfo;
-import com.soen.risk.boundary.usecase.StartGame;
-import com.soen.risk.boundary.usecase.StartupInfo;
 
 /**
  * The Class ApiController.
@@ -361,10 +351,10 @@ public class ApiController {
 
         StartupInfo usecase = new StartupInfo();
         StartupInfoResponse response = usecase.execute();
+        model.addObject("phaseView", response.getPhaseView());
+        model.addObject("dominationView", response.getDominationView());
         model.addObject("armyCapacity", response.getArmyCapacity());
-        model.addObject("playerName", response.getPlayerName());
         model.addObject("countryName", response.getCountryName());
-        model.addObject("countries", response.getCountries());
         return model;
     }
 
@@ -395,8 +385,9 @@ public class ApiController {
 
         ReinforceInfo usecase = new ReinforceInfo();
         ReinforceInfoResponse response = usecase.execute();
+        model.addObject("phaseView", response.getPhaseView());
+        model.addObject("dominationView", response.getDominationView());
         model.addObject("reinforceArmyCount", response.getReinforceArmyCapacity());
-        model.addObject("playerName", response.getPlayerName());
         model.addObject("countries", response.getCountries());
         return model;
     }
@@ -422,7 +413,15 @@ public class ApiController {
     @RequestMapping("/attackPhase")
     public String attackPhase() {
         AttackInfo usecase = new AttackInfo();
+        usecase.execute();
        return "redirect:/phaseResolver";
+    }
+
+    @RequestMapping("/attackPhase/attack")
+    public String attachPhaseExecute(){
+        ExecuteAttackPhase usecase = new ExecuteAttackPhase();
+        usecase.execute();
+        return "redirect:/phaseResolver";
     }
 
 
@@ -436,7 +435,8 @@ public class ApiController {
         ModelAndView model = new ModelAndView("fortifyphase");
         FortifyInfo usecase = new FortifyInfo();
         FortifyInfoResponse response = usecase.execute();
-        model.addObject("playerName", response.getPlayerName());
+        model.addObject("phaseView", response.getPhaseView());
+        model.addObject("dominationView", response.getDominationView());
         model.addObject("countryNames", response.getCountryNames());
         model.addObject("armyCounts", response.getArmyCounts());
         return model;
