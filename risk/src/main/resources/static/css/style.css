@@ -132,3 +132,7 @@ h2{
 .left-table{
     float: left;
 }
+
+#dominationView tr{
+    border-bottom: 1px dashed #808080;
+}
