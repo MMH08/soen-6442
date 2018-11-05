@@ -38,14 +38,7 @@ public class FortifyInfo implements Usecase {
     @Override
     public FortifyInfoResponse execute() {
         GamePlay gamePlay = GamePlay.getInstance();
-        Player player = gamePlay.getGame().getCurrentPlayer();
-
-        response.setCountryNames(player.getCountryNames());
-
-        for (Country country : player.getCountries()) {
-            response.addArmyCount(country.getArmy());
-        }
-
+        response = (FortifyInfoResponse) gamePlay.getPhaseInfo(response);
         response.setPhaseView(GamePlay.getInstance().getPhaseView());
         response.setDominationView(GamePlay.getInstance().getDominationView());
 

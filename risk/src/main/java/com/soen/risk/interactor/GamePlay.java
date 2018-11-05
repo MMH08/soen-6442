@@ -1,11 +1,15 @@
 package com.soen.risk.interactor;
 
+import com.soen.risk.boundary.Response;
+import com.soen.risk.boundary.response.FortifyInfoResponse;
+import com.soen.risk.boundary.response.ReinforceInfoResponse;
+import com.soen.risk.boundary.response.StartupInfoResponse;
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Game;
+import com.soen.risk.entity.Phase;
 import com.soen.risk.entity.Player;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -39,7 +43,7 @@ public class GamePlay {
     private GamePlay() {
     }
 
-    public void start(String filename, int countOfPlayers) {
+    public Response start(Response response, String filename, int countOfPlayers) {
         game = new Game(filename, countOfPlayers);
 
         phaseView = new PhaseView();
@@ -53,6 +57,7 @@ public class GamePlay {
 
         // record the changes in views
         game.initialize();
+        return response;
     }
 
     private void end() {
@@ -60,37 +65,44 @@ public class GamePlay {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    public Response getPhaseInfo(Response response) {
+        if (game.getCurrentPhase().equals(Phase.STARTUP)) {
+            ((StartupInfoResponse) response).setCountryName(game.getCurrentPlayer().nextCountryToAssignArmy());
+            ((StartupInfoResponse) response).setArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
+        } else if (game.getCurrentPhase().equals(Phase.REINFORCE)) {
+            game.getCurrentPlayer().calculateReinforceCount(game.getMap());
+            ((ReinforceInfoResponse) response).setReinforceArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
+            ((ReinforceInfoResponse) response).setCountries(game.getCurrentPlayer().getCountryNames());
+        } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
+
+        } else if (game.getCurrentPhase().equals(Phase.FORTIFY)) {
+            ((FortifyInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
+            for (Country country : game.getCurrentPlayer().getCountries()) {
+                ((FortifyInfoResponse) response).addArmyCount(country.getArmy());
+            }
+        }
+        return response;
+    }
+
     public void executeStartupPhase(String countryName, int armyCount) {
-        // implementation
-        Player player = game.getCurrentPlayer();
         Country country = game.getMap().findByCountryName(countryName);
-        country.setArmy(armyCount); // todo
-        player.setArmyCapacity(player.getArmyCapacity() - armyCount);
-
-        // update the player
+        game.getCurrentPlayer().executeStartupPhase(country, armyCount);
+        // updates
         game.updateCurrentPlayer();
-
         if (allPlayersHaveZeroArmy()) {
             game.updateCurrentPhase();
         }
     }
 
     public void executeReinforcePhase(ArrayList<Integer> armyCounts) {
-        //implementation
-        Player player = game.getCurrentPlayer();
-        int i = 0;
-        for (Country c : player.getCountries()) {
-            logger.log(Level.INFO, "Adding reinforce army to country " + c.getName() + ", army count " + armyCounts.get(i));
-            c.setArmy(c.getArmy() + armyCounts.get(i)); // new army count of the country
-            player.setArmyCapacity(player.getArmyCapacity() - armyCounts.get(i)); // new army capacity left with player
-            i++;
-        }
-        // update the phase
+        game.getCurrentPlayer().executeReinforcePhase(armyCounts);
+        // updates
         game.updateCurrentPhase();
     }
 
     public void executeAttackPhase() {
-
+        game.getCurrentPlayer().executeAttackPhase();
+        // updates
         game.updateCurrentPhase();
         // who ever lost the match - check below condition
 //        if (lostPlayer.getCountries().size() == 0) {
@@ -104,14 +116,11 @@ public class GamePlay {
 
     public void executeFortificationPhase(String startCountry, String endCountry, int armyCount) {
         if (game.getMap().pathExists(startCountry, endCountry, game.getCurrentPlayer().getCountries())) {
-            Country country1 = game.getMap().findByCountryName(startCountry);
-            Country country2 = game.getMap().findByCountryName(endCountry);
-            if (country1.getArmy() <= armyCount) armyCount = country1.getArmy() - 1;
-            country1.setArmy(country1.getArmy() - armyCount);
-            country2.setArmy(country2.getArmy() + armyCount);
+            game.getCurrentPlayer().executeFortifyPhase(startCountry, endCountry, armyCount);
+            // updates
+            game.updateCurrentPhase();
+            game.updateCurrentPlayer();
         }
-        game.updateCurrentPhase();
-        game.updateCurrentPlayer();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -148,56 +157,4 @@ public class GamePlay {
         this.dominationView = dominationView;
     }
 
-
-//    public void execute(){
-//        // output received from the phase execution on the current player.
-//        String outputString = "";
-//        this.updateAction(outputString);
-//    }
-//
-//
-//    private void setCurrentPlayer(Player currentPlayer) {
-//        logger.log(Level.INFO, "Changing player to " + currentPlayer.getName());
-//        this.currentPlayer = currentPlayer;
-//        this.setChanged();
-//        this.notifyObservers(this);
-//    }
-//
-//    private void setCurrentPhase(String currentPhase) {
-//        logger.log(Level.INFO, "Changing phase to " + currentPhase);
-//        this.currentPhase = currentPhase;
-//        this.resetAction();
-//
-//    }
-
-//    private void updateAction(String actionItem){
-//        this.action.add(actionItem);
-//        this.setChanged();
-//        this.notifyObservers(this);
-//    }
-//
-//    private void resetAction(){
-//        this.action = new ArrayList<>();
-//        this.setChanged();
-//        this.notifyObservers(this);
-//    }
-
-//    public void endGame() {
-//        this.currentPhase = "";
-//    }
-//
-//    public List<String> getAction() {
-//        return action;
-//    }
-//    public Game getGame() {
-//        return game;
-//    }
-//
-//    public Player getCurrentPlayer() {
-//        return currentPlayer;
-//    }
-//
-//    public String getCurrentPhase() {
-//        return currentPhase;
-//    }
 }

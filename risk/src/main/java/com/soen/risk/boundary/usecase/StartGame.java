@@ -39,7 +39,7 @@ public class StartGame implements Usecase {
     @Override
     public StartGameResponse execute() {
         GamePlay gamePlay = GamePlay.getInstance();
-        gamePlay.start(request.getFilename(), request.getCountOfPlayers());
+        gamePlay.start(response, request.getFilename(), request.getCountOfPlayers());
         return response;
     }
 }

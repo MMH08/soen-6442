@@ -1,5 +1,7 @@
 package com.soen.risk.entity;
 
+import com.soen.risk.interactor.GamePlay;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -56,13 +58,44 @@ public class Player extends Observable {
      *
      * @return Object of country to which army is assign
      */
-    public Country nextCountryToAssignArmy() {
+    public String nextCountryToAssignArmy() {
         for (Country country : countries) {
             if (country.isEmpty())
-                return country;
+                return country.getName();
         }
-        return countries.get(countries.size() - 1);
+        return countries.get(countries.size() - 1).getName();
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    public void executeStartupPhase(Country country, int armyCount){
+        country.setArmy(armyCount);
+        setArmyCapacity(getArmyCapacity() - armyCount);
+    }
+
+    public void executeReinforcePhase(ArrayList<Integer> armyCounts) {
+        int i = 0;
+        for (Country c : countries) {
+            logger.log(Level.INFO, "Adding reinforce army to country " + c.getName() + ", army count " + armyCounts.get(i));
+            c.setArmy(c.getArmy() + armyCounts.get(i)); // new army count of the country
+            setArmyCapacity(armyCapacity - armyCounts.get(i)); // new army capacity left with player
+            i++;
+        }
+    }
+
+    public void executeAttackPhase() {
+
+    }
+
+    public void executeFortifyPhase(String startCountry, String endCountry, int armyCount){
+        Country country1 = findByCountryName(startCountry);
+        Country country2 = findByCountryName(endCountry);
+        if (country1.getArmy() <= armyCount) armyCount = country1.getArmy() - 1;
+        country1.setArmy(country1.getArmy() - armyCount);
+        country2.setArmy(country2.getArmy() + armyCount);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
 
     /**
      * To allocate initial army we should know about the countries owned.
@@ -71,7 +104,6 @@ public class Player extends Observable {
         Random rand = new Random();
         this.setArmyCapacity(this.getCountries().size() * (2 + rand.nextInt(2)));
         logger.log(Level.INFO, "Adding army capacity to " + this.getName() + " " + this.getArmyCapacity());
-
     }
 
     // -------------------------------------------------------------
@@ -104,6 +136,12 @@ public class Player extends Observable {
         armyCapacity = Math.max(3, (int) Math.ceil(number_of_countries / 3.0));
 
     }
+
+    private Country findByCountryName(String s) {
+        for (Country c : countries) if (c.getName().equals(s)) return c;
+        return null;
+    }
+
 
     //Return All Countries Name of Player
     public List<String> getCountryNames() {
@@ -146,5 +184,4 @@ public class Player extends Observable {
         this.setChanged();
         this.notifyObservers();
     }
-
 }

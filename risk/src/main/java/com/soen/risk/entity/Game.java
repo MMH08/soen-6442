@@ -153,7 +153,7 @@ public class Game extends Observable {
         return currentPlayer;
     }
 
-    public void setCurrentPlayer(Player currentPlayer) {
+    private void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
         this.setChanged();
         this.notifyObservers(this);
@@ -163,7 +163,7 @@ public class Game extends Observable {
         return currentPhase;
     }
 
-    public void setCurrentPhase(Phase currentPhase) {
+    private void setCurrentPhase(Phase currentPhase) {
         this.currentPhase = currentPhase;
         this.setChanged();
         this.notifyObservers(this);

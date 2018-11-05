@@ -32,12 +32,8 @@ public class ReinforceInfo implements Usecase {
      */
     @Override
     public ReinforceInfoResponse execute() {
-        Player player = GamePlay.getInstance().getGame().getCurrentPlayer();
-        player.calculateReinforceCount(GamePlay.getInstance().getGame().getMap());
-
-        response.setReinforceArmyCapacity(player.getArmyCapacity());
-        response.setCountries(player.getCountryNames());
-
+        GamePlay gamePlay = GamePlay.getInstance();
+        response = (ReinforceInfoResponse) gamePlay.getPhaseInfo(response);
         response.setPhaseView(GamePlay.getInstance().getPhaseView());
         response.setDominationView(GamePlay.getInstance().getDominationView());
         return response;
