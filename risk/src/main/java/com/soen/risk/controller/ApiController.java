@@ -378,6 +378,7 @@ public class ApiController {
 
         ReinforceInfo usecase = new ReinforceInfo();
         ReinforceInfoResponse response = usecase.execute();
+
         model.addObject("phaseView", response.getPhaseView());
         model.addObject("dominationView", response.getDominationView());
         model.addObject("reinforceArmyCount", response.getReinforceArmyCapacity());
