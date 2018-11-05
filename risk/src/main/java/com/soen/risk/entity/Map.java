@@ -1,16 +1,13 @@
 package com.soen.risk.entity;
 
+import com.soen.risk.interactor.GamePlay;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.soen.risk.interactor.GamePlay;
 
 /**
  * <h2>Map Class</h2>
@@ -151,7 +148,7 @@ public class Map {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    boolean CheckPathValid(ArrayList<Country> allowedCountries, ArrayList<Integer> movingPath) {
+    boolean CheckPathValid(List<Country> allowedCountries, List<Integer> movingPath) {
         for (int countryId : movingPath) {
             int flag = 0;
             for (Country c : allowedCountries) {
@@ -216,7 +213,7 @@ public class Map {
 		visited[start] = false;
 		return PathCount;
 	}
-    public boolean searchPathBetweenCountries(LinkedList adj[], int currentCountry, int shift, ArrayList<Country> countries) {
+    public boolean searchPathBetweenCountries(LinkedList adj[], int currentCountry, int shift, List<Country> countries) {
         boolean v[] = new boolean[adj.length];
         LinkedList<Integer> movingPath = new LinkedList();
         ArrayList<Country> coun = GamePlay.getInstance().getGame().getMap().getCountries();
@@ -245,7 +242,7 @@ public class Map {
         }
         return false;
     }
-    public boolean pathExists(String startCountry, String endCountry, ArrayList<Country> countries) {
+    public boolean pathExists(String startCountry, String endCountry, List<Country> countries) {
         int startId = findByCountryName(startCountry).getId();
         int endId = findByCountryName(endCountry).getId();
         

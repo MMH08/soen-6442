@@ -89,7 +89,7 @@ public class GamePlay {
         game.updateCurrentPhase();
     }
 
-    public void executeAttackPhase(){
+    public void executeAttackPhase() {
 
         game.updateCurrentPhase();
         // who ever lost the match - check below condition
@@ -97,45 +97,19 @@ public class GamePlay {
 //            logger.log(Level.INFO, "Dropping the player " + p.getName());
 //            game.dropPlayer(lostPlayer);
 //        }
-        if(game.getPlayers().size() == 1){
+        if (game.getPlayers().size() == 1) {
             end();
         }
     }
 
     public void executeFortificationPhase(String startCountry, String endCountry, int armyCount) {
-    	if(game.getMap().pathExists(startCountry, endCountry,(ArrayList) game.getCurrentPlayer().getCountries()))
-    	{
-    		int flag = 0;
-    		Country start=null;
-    		Country end=null;
-    		for(Country c: game.getCurrentPlayer().getCountries())
-    		{
-    			if (c.getName().equals(startCountry)) {
-    				if(c.getArmy() <= armyCount)
-    				{
-    					c.setArmy(1);
-    					flag = 1;
-    					start=c;
-    				}
-    				else
-    				{
-    					c.setArmy(c.getArmy() - armyCount);
-    				}
-                    
-                }
-                if (c.getName().equals(endCountry)) {
-                	end = c;
-                }
-    		}
-    		if(flag == 1)
-    		{
-    			end.setArmy(end.getArmy() + start.getArmy() - 1);
-    		}
-    		else 
-    		{
-    			end.setArmy(end.getArmy() + armyCount);
-    		}
-    	}
+        if (game.getMap().pathExists(startCountry, endCountry, game.getCurrentPlayer().getCountries())) {
+            Country country1 = game.getMap().findByCountryName(startCountry);
+            Country country2 = game.getMap().findByCountryName(endCountry);
+            if (country1.getArmy() <= armyCount) armyCount = country1.getArmy() - 1;
+            country1.setArmy(country1.getArmy() - armyCount);
+            country2.setArmy(country2.getArmy() + armyCount);
+        }
         game.updateCurrentPhase();
         game.updateCurrentPlayer();
     }
