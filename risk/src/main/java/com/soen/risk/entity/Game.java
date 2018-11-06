@@ -65,7 +65,21 @@ public class Game extends Observable {
             count++;
         }
     }
-
+    
+    public Player getPlayerFromCountry(String countryName)
+    {
+    	for(Player p: players)
+    	{
+    		for(Country c: p.getCountries())
+    		{
+    			if(c.getName().equals(countryName))
+    			{
+    				return p;
+    			}
+    		}
+    	}
+    	return null;
+    }
 
     /**
      * Changing current phase between reinforcement, attack, and fortify.

@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Arrays;
 
 /**
  * This class is responsible to hold the name, army capacity remaining and list of countries owned by the
@@ -17,11 +18,13 @@ import java.util.logging.Logger;
  * @version 2.0.0
  * @since 2018-10-10
  */
+
 public class Player extends Observable {
     private String name;
     private int armyCapacity;
     private List<Country> countries;
     private static Logger logger = Logger.getLogger(Player.class.getName());
+    private int Attackercounter = 0;
 
     /**
      * Initialise the player with given suffix and empty list of owned countries.
@@ -38,7 +41,7 @@ public class Player extends Observable {
      *
      * @param c country
      */
-    void addCountry(Country c) {
+    public void addCountry(Country c) {
         this.countries.add(c);
         this.setChanged();
         this.notifyObservers();
@@ -82,9 +85,121 @@ public class Player extends Observable {
             i++;
         }
     }
-
-    public void executeAttackPhase() {
-
+    void changeCountry(Country c1, Country c2)
+	{
+		c1.setArmy(c1.getArmy()+1);
+		c2.setArmy(c2.getArmy()-1);
+	}
+    void attackPlay(Country c1, Country c2, int attackingDice, int attackedDice)
+	{
+		int dicI1[] = new int[attackingDice];
+		
+		int dicI2[] = new int[attackedDice];
+		for(int i=0;i<dicI1.length;i++)
+		{
+			dicI1[i] = 1 + (int)(9.0*Math.random());
+		}		
+		
+		for(int i=0;i<dicI2.length;i++)
+		{
+			dicI2[i] = 1 + (int)(9.0*Math.random());
+		}
+		Arrays.sort(dicI1);
+		Arrays.sort(dicI2);
+		if(dicI1.length == 1)
+		{
+			if(dicI1[0]>dicI2[0])
+			{
+				this.changeCountry(c1,c2);
+			}
+			else
+			{
+				this.changeCountry(c2,c1);
+			}
+		}
+		else if(dicI1.length == 2)
+		{
+			if(dicI2.length == 1)
+			{
+				if(dicI1[1] > dicI2[0])
+				{
+					this.changeCountry(c1,c2);
+				}
+				else
+				{
+					this.changeCountry(c2,c1);
+				}
+			}
+			else if(dicI2.length == 2)
+			{
+				if(dicI1[1] > dicI2[1])
+				{
+					this.changeCountry(c1,c2);
+				}
+				else
+				{
+					this.changeCountry(c2,c1);
+				}
+				if(dicI1[0] > dicI2[0])
+				{
+					this.changeCountry(c1,c2);
+				}
+				else
+				{
+					this.changeCountry(c2,c1);
+				}
+			}
+		}
+		else if(dicI1.length == 3)
+		{
+			if(dicI2.length == 1)
+			{
+				if(dicI1[1] > dicI2[0])
+				{
+					this.changeCountry(c1,c2);
+				}
+				else
+				{
+					this.changeCountry(c2,c1);
+				}
+			}
+			else if(dicI2.length == 2)
+			{
+				if(dicI1[2] > dicI2[1])
+				{
+					this.changeCountry(c1,c2);
+				}
+				else
+				{
+					this.changeCountry(c2,c1);
+				}
+				if(dicI1[1] > dicI2[0])
+				{
+					this.changeCountry(c1,c2);
+				}
+				else
+				{
+					this.changeCountry(c2,c1);
+				}
+			}
+		}
+		
+		
+	}
+    public void setAttackCounter(int count)
+    {
+    	this.Attackercounter = count;
+    }
+    public int getAttackCounter()
+    {
+    	return this.Attackercounter;
+    }
+    public void executeAttackPhase(String attackingCountry, String attackedCountry, int attackingDiceCount, int attackedDiceCount) {
+    	Country attackingCon =  findByCountryName(attackingCountry);
+		Country attackedCon =  findByCountryName(attackedCountry);
+		this.attackPlay(attackingCon, attackedCon,attackingDiceCount,attackedDiceCount);
+		this.setAttackCounter(this.getAttackCounter() + attackedDiceCount);
+		
     }
 
     public void executeFortifyPhase(String startCountry, String endCountry, int armyCount){
