@@ -1,6 +1,7 @@
 package com.soen.risk.interactor;
 
 import com.soen.risk.boundary.Response;
+import com.soen.risk.boundary.response.AttackInfoResponse;
 import com.soen.risk.boundary.response.FortifyInfoResponse;
 import com.soen.risk.boundary.response.ReinforceInfoResponse;
 import com.soen.risk.boundary.response.StartupInfoResponse;
@@ -74,7 +75,11 @@ public class GamePlay {
             ((ReinforceInfoResponse) response).setReinforceArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
             ((ReinforceInfoResponse) response).setCountries(game.getCurrentPlayer().getCountryNames());
         } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
-
+            ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
+            ((AttackInfoResponse) response).setAllCountryNames(game.getMap().getCountryNames());
+            for(Country country: game.getMap().getCountries()){
+                ((AttackInfoResponse) response).addArmyCount(country.getArmy());
+            }
         } else if (game.getCurrentPhase().equals(Phase.FORTIFY)) {
             ((FortifyInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
             for (Country country : game.getCurrentPlayer().getCountries()) {
@@ -100,60 +105,42 @@ public class GamePlay {
         game.updateCurrentPhase();
     }
 
-    public void executeAttackPhase(String attackingCountry, String attackedCountry, int attackingDice, int attackedDice, int decision) {
-        //ADD all out method
-    	//Add players random issue one player get no army
-    	//Exception handling
-    	if(decision == 1)
-        	{
-        		game.getCurrentPlayer().executeAttackPhase(attackingCountry, attackedCountry, attackingDice, attackedDice);
-        		Country attackingCon = GamePlay.getInstance().getGame().getMap().findByCountryName(attackingCountry);
-        		Country attackedCon = GamePlay.getInstance().getGame().getMap().findByCountryName(attackedCountry);
-        		int flag = 0;
-        		if(attackingCon.getArmy() == 0)
-        		{
-        			//LOST
-        			flag = 1;
-        			Player attackingPl = GamePlay.getInstance().getGame().getPlayerFromCountry(attackingCountry);
-        			Player attackedPl = GamePlay.getInstance().getGame().getPlayerFromCountry(attackedCountry);
-        			attackingPl.removeCountry(attackingCon);
-        			attackedPl.addCountry(attackingCon);
-        			GamePlay.getInstance().getGame().getCurrentPlayer().setAttackCounter(0);
-        		}
-        		else if(attackedCon.getArmy() == 0)
-        		{
-        			//WIN
-        			flag = 1;
-        			Player attackingPl = GamePlay.getInstance().getGame().getPlayerFromCountry(attackingCountry);
-        			Player attackedPl = GamePlay.getInstance().getGame().getPlayerFromCountry(attackedCountry);
-        			attackingPl.addCountry(attackedCon);
-        			attackedPl.removeCountry(attackedCon);
-        			attackedCon.setArmy(GamePlay.getInstance().getGame().getCurrentPlayer().getAttackCounter());
-        			GamePlay.getInstance().getGame().getCurrentPlayer().setAttackCounter(0);
-        			
-        			
-        		}
-        		if(flag == 1)
-        		{
-        			game.updateCurrentPhase();
-        		}
-        	}
-        else
-        {
-        	if (game.getPlayers().size() == 1) {
-                end();
-            }
-        	game.getCurrentPlayer().setAttackCounter(0);
-        	game.updateCurrentPhase();
+    public void executeAttackPhase(String attackingCountry, String defendingCountry, int attackingDiceCount,
+                                   int defendingDiceCount, int skipAttack, int allOutMode) {
+        //Add players random issue one player get no army
+        //Exception handling
+        if (skipAttack == 1) {
+            game.getCurrentPlayer().setAttackCounter(0);
+            game.updateCurrentPhase();
+            return;
         }
-        // updates
-        
-        // who ever lost the match - check below condition
-//        if (lostPlayer.getCountries().size() == 0) {
-//            logger.log(Level.INFO, "Dropping the player " + p.getName());
-//            game.dropPlayer(lostPlayer);
-//        }
-        
+        Country attackingCon = game.getMap().findByCountryName(attackingCountry);
+        Country defendingCon = game.getMap().findByCountryName(defendingCountry);
+        Player defendingPlayer = game.getPlayerFromCountry(defendingCountry);
+
+        game.getCurrentPlayer().executeAttackPhase(defendingPlayer, attackingCon, defendingCon, attackingDiceCount,
+                defendingDiceCount, allOutMode);
+
+        if (attackingCon.getArmy() == 0) {
+            game.getCurrentPlayer().removeCountry(attackingCon);
+            defendingPlayer.addCountry(attackingCon);
+            //updates
+            game.getCurrentPlayer().setAttackCounter(0);
+            game.updateCurrentPhase();
+        } else if (defendingCon.getArmy() == 0) {
+            game.getCurrentPlayer().addCountry(defendingCon);
+            defendingPlayer.removeCountry(defendingCon);
+            defendingCon.setArmy(game.getCurrentPlayer().getAttackCounter());
+            attackingCon.setArmy(attackingCon.getArmy() - game.getCurrentPlayer().getAttackCounter());
+            //updates
+            game.getCurrentPlayer().setAttackCounter(0);
+            game.updateCurrentPhase();
+        }
+
+        if (game.getPlayers().size() == 1) {
+            end();
+        }
+
     }
 
     public void executeFortificationPhase(String startCountry, String endCountry, int armyCount) {

@@ -1,14 +1,8 @@
 package com.soen.risk.entity;
 
-import com.soen.risk.interactor.GamePlay;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Random;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Arrays;
 
 /**
  * This class is responsible to hold the name, army capacity remaining and list of countries owned by the
@@ -44,16 +38,16 @@ public class Player extends Observable {
     public void addCountry(Country c) {
         this.countries.add(c);
         this.setChanged();
-        this.notifyObservers();
+        this.notifyObservers(this);
     }
 
     /**
      * When a match will be lost then remove country will be called
      */
     public void removeCountry(Country c) {
-        // TODO: code to remove country
+        this.countries.remove(c);
         this.setChanged();
-        this.notifyObservers();
+        this.notifyObservers(this);
     }
 
     /**
@@ -71,8 +65,8 @@ public class Player extends Observable {
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    public void executeStartupPhase(Country country, int armyCount){
-        country.setArmy(armyCount);
+    public void executeStartupPhase(Country country, int armyCount) {
+        country.setArmy(country.getArmy() + armyCount);
         setArmyCapacity(getArmyCapacity() - armyCount);
     }
 
@@ -85,124 +79,124 @@ public class Player extends Observable {
             i++;
         }
     }
-    void changeCountry(Country c1, Country c2)
-	{
-		c1.setArmy(c1.getArmy()+1);
-		c2.setArmy(c2.getArmy()-1);
-	}
-    void attackPlay(Country c1, Country c2, int attackingDice, int attackedDice)
-	{
-		int dicI1[] = new int[attackingDice];
-		
-		int dicI2[] = new int[attackedDice];
-		for(int i=0;i<dicI1.length;i++)
-		{
-			dicI1[i] = 1 + (int)(9.0*Math.random());
-		}		
-		
-		for(int i=0;i<dicI2.length;i++)
-		{
-			dicI2[i] = 1 + (int)(9.0*Math.random());
-		}
-		Arrays.sort(dicI1);
-		Arrays.sort(dicI2);
-		if(dicI1.length == 1)
-		{
-			if(dicI1[0]>dicI2[0])
-			{
-				this.changeCountry(c1,c2);
-			}
-			else
-			{
-				this.changeCountry(c2,c1);
-			}
-		}
-		else if(dicI1.length == 2)
-		{
-			if(dicI2.length == 1)
-			{
-				if(dicI1[1] > dicI2[0])
-				{
-					this.changeCountry(c1,c2);
-				}
-				else
-				{
-					this.changeCountry(c2,c1);
-				}
-			}
-			else if(dicI2.length == 2)
-			{
-				if(dicI1[1] > dicI2[1])
-				{
-					this.changeCountry(c1,c2);
-				}
-				else
-				{
-					this.changeCountry(c2,c1);
-				}
-				if(dicI1[0] > dicI2[0])
-				{
-					this.changeCountry(c1,c2);
-				}
-				else
-				{
-					this.changeCountry(c2,c1);
-				}
-			}
-		}
-		else if(dicI1.length == 3)
-		{
-			if(dicI2.length == 1)
-			{
-				if(dicI1[1] > dicI2[0])
-				{
-					this.changeCountry(c1,c2);
-				}
-				else
-				{
-					this.changeCountry(c2,c1);
-				}
-			}
-			else if(dicI2.length == 2)
-			{
-				if(dicI1[2] > dicI2[1])
-				{
-					this.changeCountry(c1,c2);
-				}
-				else
-				{
-					this.changeCountry(c2,c1);
-				}
-				if(dicI1[1] > dicI2[0])
-				{
-					this.changeCountry(c1,c2);
-				}
-				else
-				{
-					this.changeCountry(c2,c1);
-				}
-			}
-		}
-		
-		
-	}
-    public void setAttackCounter(int count)
-    {
-    	this.Attackercounter = count;
-    }
-    public int getAttackCounter()
-    {
-    	return this.Attackercounter;
-    }
-    public void executeAttackPhase(String attackingCountry, String attackedCountry, int attackingDiceCount, int attackedDiceCount) {
-    	Country attackingCon =  findByCountryName(attackingCountry);
-		Country attackedCon =  findByCountryName(attackedCountry);
-		this.attackPlay(attackingCon, attackedCon,attackingDiceCount,attackedDiceCount);
-		this.setAttackCounter(this.getAttackCounter() + attackedDiceCount);
-		
+
+    private ArrayList<Boolean> attackPlay(int attackingDice, int attackedDice) {
+        int dicI1[] = new int[attackingDice];
+        int dicI2[] = new int[attackedDice];
+        ArrayList<Boolean> win = new ArrayList<>();
+
+        for (int i = 0; i < dicI1.length; i++) {
+            dicI1[i] = 1 + (int) (9.0 * Math.random());
+        }
+
+        for (int i = 0; i < dicI2.length; i++) {
+            dicI2[i] = 1 + (int) (9.0 * Math.random());
+        }
+        Arrays.sort(dicI1);
+        Arrays.sort(dicI2);
+
+        if (dicI1.length == 1) {
+            if (dicI1[0] >= dicI2[0]) {
+                win.add(true);
+            } else {
+                win.add(false);
+            }
+        } else if (dicI1.length == 2) {
+            if (dicI2.length == 1) {
+                if (dicI1[1] >= dicI2[0]) {
+                    win.add(true);
+                } else {
+                    win.add(false);
+                }
+            } else if (dicI2.length == 2) {
+                if (dicI1[1] >= dicI2[1]) {
+                    win.add(true);
+                } else {
+                    win.add(false);
+                }
+                if (dicI1[0] >= dicI2[0]) {
+                    win.add(true);
+                } else {
+                    win.add(false);
+                }
+            }
+        } else if (dicI1.length == 3) {
+            if (dicI2.length == 1) {
+                if (dicI1[2] >= dicI2[0]) {
+                    win.add(true);
+                } else {
+                    win.add(false);
+                }
+            } else if (dicI2.length == 2) {
+                if (dicI1[2] >= dicI2[1]) {
+                    win.add(true);
+                } else {
+                    win.add(false);
+                }
+                if (dicI1[1] >= dicI2[0]) {
+                    win.add(true);
+                } else {
+                    win.add(false);
+                }
+            }
+        }
+        return win;
+
     }
 
-    public void executeFortifyPhase(String startCountry, String endCountry, int armyCount){
+    public void executeAttackPhase(Player defendingPlayer, Country attackingCountry, Country defendingCountry, int attackingDiceCount, int defendingDiceCount, int allOutMode) {
+        if (allOutMode == 1) {
+            logger.log(Level.INFO, "Entered all out mode ... ");
+            while (!(attackingCountry.getArmy() == 0 || defendingCountry.getArmy() == 0)) {
+                if (attackingCountry.getArmy() >= 3) {
+                    attackingDiceCount = 3;
+                    if (defendingCountry.getArmy() >= 2) {
+                        defendingDiceCount = 2;
+                    } else if (defendingCountry.getArmy() == 1) {
+                        defendingDiceCount = 1;
+                    }
+                } else if (attackingCountry.getArmy() == 2) {
+                    attackingDiceCount = 2;
+                    if (defendingCountry.getArmy() >= 2) {
+                        defendingDiceCount = 2;
+                    } else if (defendingCountry.getArmy() == 1) {
+                        defendingDiceCount = 1;
+                    }
+                } else if (attackingCountry.getArmy() == 1) {
+                    attackingDiceCount = 1;
+                    defendingDiceCount = 1;
+                }
+
+                executeOneAttackPhase(defendingPlayer, attackingCountry, defendingCountry, attackingDiceCount, defendingDiceCount);
+            }
+        } else {
+            executeOneAttackPhase(defendingPlayer, attackingCountry, defendingCountry, attackingDiceCount, defendingDiceCount);
+        }
+    }
+
+    private void executeOneAttackPhase(Player defendingPlayer, Country attackingCountry, Country defendingCountry, int attackingDiceCount, int attackedDiceCount) {
+        logger.log(Level.INFO, "Entered one attack phase ...");
+        ArrayList<Boolean> wins = this.attackPlay(attackingDiceCount, attackedDiceCount);
+        this.setAttackCounter(this.getAttackCounter() + attackedDiceCount);
+        logger.log(Level.INFO, "set attack counter : " + this.getAttackCounter());
+        for (boolean win : wins) {
+            if (win) {
+                logger.log(Level.INFO, "Attacker won 1 army.");
+                attackingCountry.setArmy(attackingCountry.getArmy() + 1);
+                defendingCountry.setArmy(defendingCountry.getArmy() - 1);
+            } else {
+                logger.log(Level.INFO, "Defender won 1 army.");
+                attackingCountry.setArmy(attackingCountry.getArmy() - 1);
+                defendingCountry.setArmy(defendingCountry.getArmy() + 1);
+            }
+        }
+        // refresh view
+        logger.log(Level.INFO, "Refreshing the views ... ");
+        this.setArmyCapacity(this.getArmyCapacity());
+        defendingPlayer.setArmyCapacity(defendingPlayer.getArmyCapacity());
+    }
+
+    public void executeFortifyPhase(String startCountry, String endCountry, int armyCount) {
         Country country1 = findByCountryName(startCountry);
         Country country2 = findByCountryName(endCountry);
         if (country1.getArmy() <= armyCount) armyCount = country1.getArmy() - 1;
@@ -299,4 +293,13 @@ public class Player extends Observable {
         this.setChanged();
         this.notifyObservers();
     }
+
+    public void setAttackCounter(int count) {
+        this.Attackercounter = count;
+    }
+
+    public int getAttackCounter() {
+        return this.Attackercounter;
+    }
+
 }
