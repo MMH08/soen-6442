@@ -3,7 +3,6 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.StartupInfoRequest;
 import com.soen.risk.boundary.response.StartupInfoResponse;
-import com.soen.risk.entity.Player;
 import com.soen.risk.interactor.GamePlay;
 
 /**

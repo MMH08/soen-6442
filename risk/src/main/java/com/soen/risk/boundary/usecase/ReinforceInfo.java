@@ -1,10 +1,9 @@
 package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
-import com.soen.risk.entity.Player;
-import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.boundary.request.ReinforceInfoRequest;
 import com.soen.risk.boundary.response.ReinforceInfoResponse;
+import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class ReinforceInfo.

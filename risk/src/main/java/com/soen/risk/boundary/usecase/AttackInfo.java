@@ -19,7 +19,6 @@ public class AttackInfo implements Usecase {
     public AttackInfo(String... args){
         request = new AttackInfoRequest();
         response = new AttackInfoResponse();
-        logger.log(Level.INFO, "Exit by default");
     }
 
     @Override
