@@ -75,8 +75,11 @@ public class GamePlay {
             ((ReinforceInfoResponse) response).setReinforceArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
             ((ReinforceInfoResponse) response).setCountries(game.getCurrentPlayer().getCountryNames());
         } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
-            ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
+            ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());for(Country country: game.getMap().getCountries()){
+                ((AttackInfoResponse) response).addArmyCount(country.getArmy());
+            }
             ((AttackInfoResponse) response).setAllCountryNames(game.getMap().getCountryNames());
+            // change this to hashmap
             for(Country country: game.getMap().getCountries()){
                 ((AttackInfoResponse) response).addArmyCount(country.getArmy());
             }
@@ -128,8 +131,17 @@ public class GamePlay {
             game.getCurrentPlayer().setAttackCounter(0);
             game.updateCurrentPhase();
         } else if (defendingCon.getArmy() == 0) {
-            defendingCon.setArmy(game.getCurrentPlayer().getAttackCounter());
-            attackingCon.setArmy(attackingCon.getArmy() - game.getCurrentPlayer().getAttackCounter());
+            if(attackingCon.getArmy()<=game.getCurrentPlayer().getAttackCounter())
+            {
+                defendingCon.setArmy(attackingCon.getArmy()-1);
+                attackingCon.setArmy(1);
+            }
+            else
+            {
+                defendingCon.setArmy(game.getCurrentPlayer().getAttackCounter());
+                attackingCon.setArmy(attackingCon.getArmy() - game.getCurrentPlayer().getAttackCounter());
+            }
+
             game.getCurrentPlayer().addCountry(defendingCon);
             defendingPlayer.removeCountry(defendingCon);
             //updates
