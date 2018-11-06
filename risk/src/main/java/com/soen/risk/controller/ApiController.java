@@ -410,6 +410,9 @@ public class ApiController {
 
         AttackInfo usecase = new AttackInfo();
         AttackInfoResponse response = usecase.execute();
+        model.addObject("countryNames", response.getCountryNames());
+        model.addObject("allCountryNames", response.getAllCountryNames());
+        model.addObject("armyCounts", response.getArmyCounts());
         model.addObject("phaseView", response.getPhaseView());
         model.addObject("dominationView", response.getDominationView());
 
@@ -417,8 +420,14 @@ public class ApiController {
     }
 
     @RequestMapping("/attackPhase/attack")
-    public String attachPhaseExecute(){
-        ExecuteAttackPhase usecase = new ExecuteAttackPhase();
+    public String attachPhaseExecute(@RequestParam("attackingCountry") String attackingCountry,
+                                     @RequestParam("attackingDiceCount") String attackingDiceCount,
+                                     @RequestParam("defendingCountry") String defendingCountry,
+                                     @RequestParam("defendingDiceCount") String defendingDiceCount,
+                                     @RequestParam(value = "skipAttack", defaultValue = "0") String skipAttack,
+                                     @RequestParam(value = "allOutMode", defaultValue = "0") String allOutMode){
+        ExecuteAttackPhase usecase = new ExecuteAttackPhase(attackingCountry, attackingDiceCount, defendingCountry,
+                defendingDiceCount, skipAttack, allOutMode);
         usecase.execute();
         return "redirect:/phaseResolver";
     }
