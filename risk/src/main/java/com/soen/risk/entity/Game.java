@@ -65,20 +65,16 @@ public class Game extends Observable {
             count++;
         }
     }
-    
-    public Player getPlayerFromCountry(String countryName)
-    {
-    	for(Player p: players)
-    	{
-    		for(Country c: p.getCountries())
-    		{
-    			if(c.getName().equals(countryName))
-    			{
-    				return p;
-    			}
-    		}
-    	}
-    	return null;
+    // visit this function again
+    public Player getPlayerFromCountry(String countryName) {
+        for (Player p : players) {
+            for (Country c : p.getCountries()) {
+                if (c.getName().equals(countryName)) {
+                    return p;
+                }
+            }
+        }
+        return null;
     }
 
     /**

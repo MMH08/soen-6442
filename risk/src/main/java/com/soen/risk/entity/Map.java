@@ -499,6 +499,13 @@ public class Map {
         return true;
     }
 
+    public List<String> getCountryNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for (Country country : countries)
+            names.add(country.getName());
+        return names;
+    }
+
 
     // -------------------------------------------------------------
 

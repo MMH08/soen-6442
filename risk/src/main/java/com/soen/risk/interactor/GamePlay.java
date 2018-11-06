@@ -128,10 +128,10 @@ public class GamePlay {
             game.getCurrentPlayer().setAttackCounter(0);
             game.updateCurrentPhase();
         } else if (defendingCon.getArmy() == 0) {
-            game.getCurrentPlayer().addCountry(defendingCon);
-            defendingPlayer.removeCountry(defendingCon);
             defendingCon.setArmy(game.getCurrentPlayer().getAttackCounter());
             attackingCon.setArmy(attackingCon.getArmy() - game.getCurrentPlayer().getAttackCounter());
+            game.getCurrentPlayer().addCountry(defendingCon);
+            defendingPlayer.removeCountry(defendingCon);
             //updates
             game.getCurrentPlayer().setAttackCounter(0);
             game.updateCurrentPhase();
