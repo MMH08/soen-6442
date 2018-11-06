@@ -38,5 +38,37 @@
     <div id="footer">All rights reserved. copyrights &copy; 2018.</div>
 </div>
 
+<div th:fragment="phaseView">
+    <div>
+        <ul>
+            <li th:each="actionItem : ${phaseView.action}" th:text="${actionItem}"></li>
+        </ul>
+    </div>
+</div>
+
+<div th:fragment="dominationView">
+    <fieldset>
+        <legend>Domination view</legend>
+        <table id="dominationView">
+            <tr>
+                <th><i class="fas fa-user"></i> Player</th>
+                <th><i class="fas fa-globe-americas"></i> Countries</th>
+                <th>Army</th>
+                <th><i class="fas fa-percent"></i> Share</th>
+            </tr>
+            <tr th:each="player : ${dominationView.playerInfo}">
+                <td th:text="${player.key}"></td>
+                <td th:utext="${player.value[1]}"></td>
+                <td th:text="${player.value[0]}"></td>
+                <td th:text="${player.value[3]}"></td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+
+<div th:fragment="cardExchangeView">
+
+</div>
+
 </body>
 </html>

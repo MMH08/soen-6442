@@ -2,10 +2,9 @@ package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.CardObserver;
 import com.soen.risk.boundary.Usecase;
-import com.soen.risk.entity.Player;
-import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.boundary.request.ReinforceInfoRequest;
 import com.soen.risk.boundary.response.ReinforceInfoResponse;
+import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class ReinforceInfo.
@@ -44,11 +43,17 @@ public class ReinforceInfo extends CardObserver implements Usecase  {
     @Override
     public ReinforceInfoResponse execute() {
         GamePlay gamePlay = GamePlay.getInstance();
+<<<<<<< HEAD
         Player player = gamePlay.getCurrentPlayer();
         response.setReinforceArmyCapacity(player.getReinforceArmyCapacity(gamePlay.getGame().getMap()));
         response.setPlayerName(player.getName());
         response.setCountries(player.getCountryNames());
         response.setPlayerCards(player.getCards());
+=======
+        response = (ReinforceInfoResponse) gamePlay.getPhaseInfo(response);
+        response.setPhaseView(GamePlay.getInstance().getPhaseView());
+        response.setDominationView(GamePlay.getInstance().getDominationView());
+>>>>>>> build2
         return response;
     }
 

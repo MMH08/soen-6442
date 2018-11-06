@@ -1,10 +1,16 @@
 package com.soen.risk.interactor;
 
+import com.soen.risk.boundary.Response;
+import com.soen.risk.boundary.response.AttackInfoResponse;
+import com.soen.risk.boundary.response.FortifyInfoResponse;
+import com.soen.risk.boundary.response.ReinforceInfoResponse;
+import com.soen.risk.boundary.response.StartupInfoResponse;
+import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Game;
-import com.soen.risk.entity.Map;
+import com.soen.risk.entity.Phase;
 import com.soen.risk.entity.Player;
 
-import java.util.logging.Level;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -24,11 +30,10 @@ public class GamePlay {
     private static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
     private static GamePlay gamePlayInstance = null;
-    private Game game;
 
-    // status
-    private Player currentPlayer;
-    private String currentPhase;
+    private Game game;
+    private PhaseView phaseView;
+    private DominationView dominationView;
 
     public static GamePlay getInstance() {
         if (gamePlayInstance == null)
@@ -39,98 +44,158 @@ public class GamePlay {
     private GamePlay() {
     }
 
-    /**
-     * Perform all functionality of map after creating map object.
-     *
-     * @param filename       Path of file along with its file name
-     * @param countOfPlayers Number of players playing game
-     */
-    public void build(String filename, int countOfPlayers) {
-        // Builder pattern - startup phase 1
-        Map map = new Map();
-        map.load(filename);
-        if (map.isValid()) {
-            this.game = new Game(map, countOfPlayers);
-            this.game.allocateInitialCountries();
-            this.game.allocateInitialArmy();
-            this.setCurrentPhase("startupPhase");
-            this.setCurrentPlayer(this.game.getPlayers().get(0));
+    public Response start(Response response, String filename, int countOfPlayers) {
+        game = new Game(filename, countOfPlayers);
+
+        phaseView = new PhaseView();
+        game.addObserver(phaseView);
+
+        // register the observer - dominationView
+        dominationView = new DominationView();
+        for (Player player : game.getPlayers()) {
+            player.addObserver(dominationView);
+        }
+
+        // record the changes in views
+        game.initialize();
+        return response;
+    }
+
+    private void end() {
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    public Response getPhaseInfo(Response response) {
+        if (game.getCurrentPhase().equals(Phase.STARTUP)) {
+            ((StartupInfoResponse) response).setCountryName(game.getCurrentPlayer().nextCountryToAssignArmy());
+            ((StartupInfoResponse) response).setArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
+        } else if (game.getCurrentPhase().equals(Phase.REINFORCE)) {
+            game.getCurrentPlayer().calculateReinforceCount(game.getMap());
+            ((ReinforceInfoResponse) response).setReinforceArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
+            ((ReinforceInfoResponse) response).setCountries(game.getCurrentPlayer().getCountryNames());
+        } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
+            ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());for(Country country: game.getMap().getCountries()){
+                ((AttackInfoResponse) response).addArmyCount(country.getArmy());
+            }
+            ((AttackInfoResponse) response).setAllCountryNames(game.getMap().getCountryNames());
+            // change this to hashmap
+            for(Country country: game.getMap().getCountries()){
+                ((AttackInfoResponse) response).addArmyCount(country.getArmy());
+            }
+        } else if (game.getCurrentPhase().equals(Phase.FORTIFY)) {
+            ((FortifyInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
+            for (Country country : game.getCurrentPlayer().getCountries()) {
+                ((FortifyInfoResponse) response).addArmyCount(country.getArmy());
+            }
+        }
+        return response;
+    }
+
+    public void executeStartupPhase(String countryName, int armyCount) {
+        Country country = game.getMap().findByCountryName(countryName);
+        game.getCurrentPlayer().executeStartupPhase(country, armyCount);
+        // updates
+        game.updateCurrentPlayer();
+        if (allPlayersHaveZeroArmy()) {
+            game.updateCurrentPhase();
         }
     }
 
-    /**
-     * Changing current phase between reinforcement, attack, and fortify.
-     */
-    public void updateCurrentPhase() {
-        if (this.getCurrentPhase().equals("startupPhase")) {
-            this.setCurrentPhase("reinforcePhase");
+    public void executeReinforcePhase(ArrayList<Integer> armyCounts) {
+        game.getCurrentPlayer().executeReinforcePhase(armyCounts);
+        // updates
+        game.updateCurrentPhase();
+    }
+
+    public void executeAttackPhase(String attackingCountry, String defendingCountry, int attackingDiceCount,
+                                   int defendingDiceCount, int skipAttack, int allOutMode) {
+        //Add players random issue one player get no army
+        //Exception handling
+        if (skipAttack == 1) {
+            game.getCurrentPlayer().setAttackCounter(0);
+            game.updateCurrentPhase();
             return;
         }
+        Country attackingCon = game.getMap().findByCountryName(attackingCountry);
+        Country defendingCon = game.getMap().findByCountryName(defendingCountry);
+        Player defendingPlayer = game.getPlayerFromCountry(defendingCountry);
 
-        String[] phases = {"reinforcePhase", "attackPhase", "fortifyPhase"};
+        game.getCurrentPlayer().executeAttackPhase(defendingPlayer, attackingCon, defendingCon, attackingDiceCount,
+                defendingDiceCount, allOutMode);
 
-        for (int i = 0; i < phases.length; i++) {
-            if (currentPhase.equals(phases[i])) {
-                if (i == phases.length - 1) {
-                    this.setCurrentPhase(phases[0]);
-                    break;
-                } else {
-                    this.setCurrentPhase(phases[i + 1]);
-                    break;
-                }
+        if (attackingCon.getArmy() == 0) {
+            game.getCurrentPlayer().removeCountry(attackingCon);
+            defendingPlayer.addCountry(attackingCon);
+            //updates
+            game.getCurrentPlayer().setAttackCounter(0);
+            game.updateCurrentPhase();
+        } else if (defendingCon.getArmy() == 0) {
+            if(attackingCon.getArmy()<=game.getCurrentPlayer().getAttackCounter())
+            {
+                defendingCon.setArmy(attackingCon.getArmy()-1);
+                attackingCon.setArmy(1);
             }
+            else
+            {
+                defendingCon.setArmy(game.getCurrentPlayer().getAttackCounter());
+                attackingCon.setArmy(attackingCon.getArmy() - game.getCurrentPlayer().getAttackCounter());
+            }
+
+            game.getCurrentPlayer().addCountry(defendingCon);
+            defendingPlayer.removeCountry(defendingCon);
+            //updates
+            game.getCurrentPlayer().setAttackCounter(0);
+            game.updateCurrentPhase();
+        }
+
+        if (game.getPlayers().size() == 1) {
+            end();
+        }
+
+    }
+
+    public void executeFortificationPhase(String startCountry, String endCountry, int armyCount) {
+        if (game.getMap().pathExists(startCountry, endCountry, game.getCurrentPlayer().getCountries())) {
+            game.getCurrentPlayer().executeFortifyPhase(startCountry, endCountry, armyCount);
+            // updates
+            game.updateCurrentPhase();
+            game.updateCurrentPlayer();
         }
     }
 
-    /**
-     * Change current player after its turn is over.
-     */
-    public void updateCurrentPlayer() {
+    // -----------------------------------------------------------------------------------------------------------------
 
-        int count = 0;
+
+    private boolean allPlayersHaveZeroArmy() {
         for (Player p : game.getPlayers()) {
-            if (p.getName().equals(currentPlayer.getName())) {
-                if (count == game.getPlayers().size() - 1) {
-                    this.setCurrentPlayer(game.getPlayers().get(0));
-                } else {
-                    this.setCurrentPlayer(game.getPlayers().get(count + 1));
-                }
-                break;
-            }
-            count++;
+            if (p.getArmyCapacity() != 0) return false;
         }
-
+        return true;
     }
 
     public Game getGame() {
         return game;
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
-    /**
-     * Update Current Player to next player after completing player's turn.
-     *
-     * @param currentPlayer
-     */
-    private void setCurrentPlayer(Player currentPlayer) {
-        logger.log(Level.INFO, "Changing player to " + currentPlayer.getName());
-        this.currentPlayer = currentPlayer;
+    public PhaseView getPhaseView() {
+        return phaseView;
     }
 
-    public String getCurrentPhase() {
-        return currentPhase;
+    public void setPhaseView(PhaseView phaseView) {
+        this.phaseView = phaseView;
     }
 
-    private void setCurrentPhase(String currentPhase) {
-        logger.log(Level.INFO, "Changing phase to " + currentPhase);
-        this.currentPhase = currentPhase;
+    public DominationView getDominationView() {
+        return dominationView;
     }
 
-
-    public void endGame() {
-        this.currentPhase = "";
+    public void setDominationView(DominationView dominationView) {
+        this.dominationView = dominationView;
     }
+
 }

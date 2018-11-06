@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="layout :: header"/>
+</head>
+<body>
+<div id="container" style="margin: 0px auto; width: 760px;">
+
+    <div th:replace="layout :: nav"/>
+
+    <div id="box">
+        <div id="content">
+            <div class="overflow">
+                <div id="textpadding">
+                    <h2>Risk - Game Play</h2>
+                    <div class="sticky">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i> <b th:text="${phaseView.phaseName}"></b>
+                    </div>
+                    <br/>
+                    <form method="get" th:action="@{/attackPhase/attack}">
+                        <table class="left-table">
+                            <tr>
+                                <td>Player name:</td>
+                                <td><span th:text="${phaseView.playerName}">Player name</span></td>
+                            </tr>
+                            <tr>
+                                <td>Attacking country: </td>
+                                <td>
+                                    <select name="attackingCountry">
+                                        <option th:each="countryName : ${countryNames}" th:value="${countryName}"
+                                        th:text="${countryName}"></option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Attacker # dice roll: </td>
+                                <td><input type="text" name="attackingDiceCount"></td>
+                            </tr>
+                            <tr>
+                                <td>Defending country: </td>
+                                <td>
+                                    <select name="defendingCountry">
+                                        <option th:each="countryName : ${allCountryNames}" th:value="${countryName}" th:text="${countryName}"></option>
+                                    </select>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>Defending # dice roll: </td>
+                                <td><input type="text" name="defendingDiceCount"></td>
+                            </tr>
+                            <tr>
+                                <td>Skip attack</td>
+                                <td>
+                                    <input type="checkbox" name="skipAttack" value="1">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>All out mode</td>
+                                <td>
+                                    <input type="checkbox" name="allOutMode" value="1">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" name="submit" value="Attack"/></td>
+                            </tr>
+                        </table>
+                        <div class="right-table">
+                            <div th:replace="layout :: phaseView" />
+                            <div th:replace="layout :: dominationView" />
+                            <table>
+                                <tr>
+                                    <td>Country name</td>
+                                    <td>Army count</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div th:each="country : ${allCountryNames}">
+                                            <span th:text="${country}"></span><br/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div th:each="armyCount : ${armyCounts}">
+                                            <span th:text="${armyCount}"></span><br/>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="layout :: footer"/>
+</div>
+
+</body>
+</html>

@@ -1,9 +1,9 @@
 package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
-import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.boundary.request.StartGameRequest;
 import com.soen.risk.boundary.response.StartGameResponse;
+import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class StartGame.
@@ -26,13 +26,15 @@ public class StartGame implements Usecase {
         response = new StartGameResponse();
     }
 
-    /* (non-Javadoc)
-     * @see com.soen.risk.boundary.Usecase#execute()
+    /**
+     * Game play with the phaseView as it has both current phase and current player info.
+     * Domination view with the List<Players> derived from game.
+     * @return response object
      */
     @Override
     public StartGameResponse execute() {
         GamePlay gamePlay = GamePlay.getInstance();
-        gamePlay.build(request.getFilename(), request.getCountOfPlayers());
+        gamePlay.start(response, request.getFilename(), request.getCountOfPlayers());
         return response;
     }
 }

@@ -1,20 +1,23 @@
 package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
-import com.soen.risk.entity.Player;
-import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.boundary.request.StartupInfoRequest;
 import com.soen.risk.boundary.response.StartupInfoResponse;
+import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class StartupInfo.
  */
 public class StartupInfo implements Usecase {
-    
-    /** The request. */
+
+    /**
+     * The request.
+     */
     private StartupInfoRequest request;
-    
-    /** The response. */
+
+    /**
+     * The response.
+     */
     private StartupInfoResponse response;
 
     /**
@@ -27,17 +30,14 @@ public class StartupInfo implements Usecase {
         response = new StartupInfoResponse();
     }
 
-    /* (non-Javadoc)
-     * @see com.soen.risk.boundary.Usecase#execute()
-     */
     @Override
     public StartupInfoResponse execute() {
-        Player player = GamePlay.getInstance().getCurrentPlayer();
+        GamePlay gamePlay = GamePlay.getInstance();
+        response = (StartupInfoResponse) gamePlay.getPhaseInfo(response);
 
-        response.setCountryName(player.nextCountryToAssignArmy().getName());
-        response.setArmyCapacity(player.getArmyCapacity());
-        response.setPlayerName(player.getName());
-        response.setCountries(player.getCountryNames());
+        response.setPhaseView(gamePlay.getPhaseView());
+        response.setDominationView(gamePlay.getDominationView());
+
         return response;
     }
 }

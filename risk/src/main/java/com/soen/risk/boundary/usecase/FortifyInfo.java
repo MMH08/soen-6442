@@ -14,11 +14,15 @@ import com.soen.risk.interactor.GamePlay;
  * The Class FortifyInfo.
  */
 public class FortifyInfo implements Usecase {
-    
-    /** The request. */
+
+    /**
+     * The request.
+     */
     private FortifyInfoRequest request;
-    
-    /** The response. */
+
+    /**
+     * The response.
+     */
     private FortifyInfoResponse response;
 
     /**
@@ -36,6 +40,7 @@ public class FortifyInfo implements Usecase {
      */
     @Override
     public FortifyInfoResponse execute() {
+<<<<<<< HEAD
         Player player = GamePlay.getInstance().getCurrentPlayer();
         try {   	
         	 Random rand = new Random();
@@ -55,6 +60,13 @@ public class FortifyInfo implements Usecase {
             response.addArmyCount(country.getArmy());
         }
         
+=======
+        GamePlay gamePlay = GamePlay.getInstance();
+        response = (FortifyInfoResponse) gamePlay.getPhaseInfo(response);
+        response.setPhaseView(GamePlay.getInstance().getPhaseView());
+        response.setDominationView(GamePlay.getInstance().getDominationView());
+
+>>>>>>> build2
         return response;
     }
 }

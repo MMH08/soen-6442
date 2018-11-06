@@ -202,3 +202,7 @@ h2{
 	text-align: center;
     color: white;
 }
+
+#dominationView tr{
+    border-bottom: 1px dashed #808080;
+}

@@ -1,6 +1,8 @@
 package com.soen.risk.boundary.response;
 
 import com.soen.risk.boundary.Response;
+import com.soen.risk.interactor.DominationView;
+import com.soen.risk.interactor.PhaseView;
 
 import java.util.List;
 
@@ -12,14 +14,14 @@ public class ReinforceInfoResponse implements Response {
     /** The reinforce army capacity. */
     private int reinforceArmyCapacity;
     
-    /** The player name. */
-    private String playerName;
-    
     /** The countries. */
     private List<String> countries;
     
     /** The cards. */
     private List<String> cards;
+
+    private PhaseView phaseView;
+    private DominationView dominationView;
 
     /**
      * Gets the reinforce army capacity.
@@ -37,24 +39,6 @@ public class ReinforceInfoResponse implements Response {
      */
     public void setReinforceArmyCapacity(int reinforceArmyCapacity) {
         this.reinforceArmyCapacity = reinforceArmyCapacity;
-    }
-
-    /**
-     * Gets the player name.
-     *
-     * @return the player name
-     */
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    /**
-     * Sets the player name.
-     *
-     * @param playerName the new player name
-     */
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
     }
 
     /**
@@ -91,5 +75,21 @@ public class ReinforceInfoResponse implements Response {
      */
     public void setPlayerCards(List<String> cards) {
         this.cards = cards;
+    }
+
+    public PhaseView getPhaseView(){
+        return phaseView;
+    }
+
+    public void setPhaseView(PhaseView phaseView) {
+        this.phaseView = phaseView;
+    }
+
+    public DominationView getDominationView() {
+        return dominationView;
+    }
+
+    public void setDominationView(DominationView dominationView) {
+        this.dominationView = dominationView;
     }
 }

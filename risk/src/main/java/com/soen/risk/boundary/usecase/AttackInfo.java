@@ -1,8 +1,10 @@
 package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
+import com.soen.risk.boundary.request.AttackInfoRequest;
+import com.soen.risk.boundary.response.AttackInfoResponse;
+import com.soen.risk.entity.Player;
 import com.soen.risk.interactor.GamePlay;
-import com.soen.risk.interactor.phase.AttackPhase;
 
 import java.util.logging.Level;
 
@@ -11,21 +13,20 @@ import java.util.logging.Level;
  */
 public class AttackInfo implements Usecase {
 
-    /**
-     * Instantiates a new attack info.
-     *
-     * @param args the args
-     */
+    private AttackInfoRequest request;
+    private AttackInfoResponse response;
+
     public AttackInfo(String... args){
-        logger.log(Level.INFO, "Exit by default");
-        GamePlay.getInstance().updateCurrentPhase();
+        request = new AttackInfoRequest();
+        response = new AttackInfoResponse();
     }
 
-    /* (non-Javadoc)
-     * @see com.soen.risk.boundary.Usecase#execute()
-     */
     @Override
-    public Object execute() {
-        return null;
+    public AttackInfoResponse execute() {
+        GamePlay gameplay = GamePlay.getInstance();
+        response = (AttackInfoResponse) gameplay.getPhaseInfo(response);
+        response.setPhaseView(gameplay.getPhaseView());
+        response.setDominationView(gameplay.getDominationView());
+        return response;
     }
 }

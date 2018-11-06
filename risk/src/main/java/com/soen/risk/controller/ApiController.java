@@ -1,42 +1,26 @@
 package com.soen.risk.controller;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.soen.risk.boundary.response.*;
+import com.soen.risk.boundary.usecase.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.soen.risk.boundary.response.CardExchangeResponse;
-import com.soen.risk.boundary.response.EditMapResponse;
-import com.soen.risk.boundary.response.FortifyInfoResponse;
-import com.soen.risk.boundary.response.FortifyPhaseResponse;
-import com.soen.risk.boundary.response.PhaseResolverResponse;
-import com.soen.risk.boundary.response.ReinforceInfoResponse;
-import com.soen.risk.boundary.response.StartupInfoResponse;
-import com.soen.risk.boundary.response.StartupPhaseResponse;
-import com.soen.risk.boundary.usecase.AddReinforceArmy;
-import com.soen.risk.boundary.usecase.AddStartupArmy;
-import com.soen.risk.boundary.usecase.AttackInfo;
-import com.soen.risk.boundary.usecase.CardExchange;
-import com.soen.risk.boundary.usecase.CreateMap;
-import com.soen.risk.boundary.usecase.EditMap;
-import com.soen.risk.boundary.usecase.FortifyInfo;
-import com.soen.risk.boundary.usecase.MoveFortifyArmy;
-import com.soen.risk.boundary.usecase.PhaseResolver;
-import com.soen.risk.boundary.usecase.ReinforceInfo;
-import com.soen.risk.boundary.usecase.StartGame;
-import com.soen.risk.boundary.usecase.StartupInfo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  * The Class ApiController.
  */
 @Controller
 public class ApiController {
-    
-    /** The logger. */
+
+    /**
+     * The logger.
+     */
     public static Logger logger = Logger.getLogger(ApiController.class.getName());
 
     /**
@@ -64,10 +48,10 @@ public class ApiController {
     /**
      * Creates the continent.
      *
-     * @param name the name
+     * @param name              the name
      * @param numberOfContinent the number of continent
-     * @param numberOfCountry the number of country
-     * @param downloadFolder the download folder
+     * @param numberOfCountry   the number of country
+     * @param downloadFolder    the download folder
      * @return the model and view
      */
     @RequestMapping(value = "/create02", method = RequestMethod.POST)
@@ -86,12 +70,12 @@ public class ApiController {
     /**
      * Creates the country.
      *
-     * @param name the name
+     * @param name              the name
      * @param numberOfContinent the number of continent
-     * @param numberOfCountry the number of country
-     * @param downloadFolder the download folder
-     * @param continentNames the continent names
-     * @param controlValues the control values
+     * @param numberOfCountry   the number of country
+     * @param downloadFolder    the download folder
+     * @param continentNames    the continent names
+     * @param controlValues     the control values
      * @return the model and view
      */
     @RequestMapping(value = "/create03", method = RequestMethod.POST)
@@ -114,13 +98,13 @@ public class ApiController {
     /**
      * Creates the connection.
      *
-     * @param name the name
-     * @param numberOfContinent the number of continent
-     * @param numberOfCountry the number of country
-     * @param downloadFolder the download folder
-     * @param continentNames the continent names
-     * @param controlValues the control values
-     * @param countryNames the country names
+     * @param name                 the name
+     * @param numberOfContinent    the number of continent
+     * @param numberOfCountry      the number of country
+     * @param downloadFolder       the download folder
+     * @param continentNames       the continent names
+     * @param controlValues        the control values
+     * @param countryNames         the country names
      * @param continentOfCountries the continent of countries
      * @return the model and view
      */
@@ -182,15 +166,15 @@ public class ApiController {
     /**
      * Edits the continent.
      *
-     * @param name the name
-     * @param numberOfContinent the number of continent
-     * @param numberOfCountry the number of country
-     * @param downloadFolder the download folder
-     * @param continentNames the continent names
-     * @param controlValues the control values
-     * @param countryNames the country names
+     * @param name                 the name
+     * @param numberOfContinent    the number of continent
+     * @param numberOfCountry      the number of country
+     * @param downloadFolder       the download folder
+     * @param continentNames       the continent names
+     * @param controlValues        the control values
+     * @param countryNames         the country names
      * @param continentOfCountries the continent of countries
-     * @param connectionString the connection string
+     * @param connectionString     the connection string
      * @return the model and view
      */
     @RequestMapping(value = "/edit02", method = RequestMethod.POST)
@@ -219,15 +203,15 @@ public class ApiController {
     /**
      * Edits the country.
      *
-     * @param name the name
-     * @param numberOfContinent the number of continent
-     * @param numberOfCountry the number of country
-     * @param downloadFolder the download folder
-     * @param continentNames the continent names
-     * @param controlValues the control values
-     * @param countryNames the country names
+     * @param name                 the name
+     * @param numberOfContinent    the number of continent
+     * @param numberOfCountry      the number of country
+     * @param downloadFolder       the download folder
+     * @param continentNames       the continent names
+     * @param controlValues        the control values
+     * @param countryNames         the country names
      * @param continentOfCountries the continent of countries
-     * @param connectionString the connection string
+     * @param connectionString     the connection string
      * @return the model and view
      */
     @RequestMapping(value = "/edit03", method = RequestMethod.POST)
@@ -256,15 +240,15 @@ public class ApiController {
     /**
      * Edits the connection.
      *
-     * @param name the name
-     * @param numberOfContinent the number of continent
-     * @param numberOfCountry the number of country
-     * @param downloadFolder the download folder
-     * @param continentNames the continent names
-     * @param controlValues the control values
-     * @param countryNames the country names
+     * @param name                 the name
+     * @param numberOfContinent    the number of continent
+     * @param numberOfCountry      the number of country
+     * @param downloadFolder       the download folder
+     * @param continentNames       the continent names
+     * @param controlValues        the control values
+     * @param countryNames         the country names
      * @param continentOfCountries the continent of countries
-     * @param connectionString the connection string
+     * @param connectionString     the connection string
      * @return the model and view
      */
     @RequestMapping(value = "/edit04", method = RequestMethod.POST)
@@ -295,15 +279,15 @@ public class ApiController {
     /**
      * Creates the submit.
      *
-     * @param name the name
-     * @param numberOfContinent the number of continent
-     * @param numberOfCountry the number of country
-     * @param downloadFolder the download folder
-     * @param continentNames the continent names
-     * @param controlValues the control values
-     * @param countryNames the country names
+     * @param name                 the name
+     * @param numberOfContinent    the number of continent
+     * @param numberOfCountry      the number of country
+     * @param downloadFolder       the download folder
+     * @param continentNames       the continent names
+     * @param controlValues        the control values
+     * @param countryNames         the country names
      * @param continentOfCountries the continent of countries
-     * @param connectionString the connection string
+     * @param connectionString     the connection string
      * @return the string
      */
     @RequestMapping(value = "/createSubmit", method = RequestMethod.POST)
@@ -327,7 +311,7 @@ public class ApiController {
     /**
      * Start game.
      *
-     * @param filename the filename
+     * @param filename       the filename
      * @param countOfPlayers the count of players
      * @return the string
      */
@@ -348,7 +332,7 @@ public class ApiController {
     public String phaseResolver() {
         PhaseResolver usecase = new PhaseResolver();
         PhaseResolverResponse response = usecase.execute();
-        logger.log(Level.INFO,"redirecting to phase - " + response.getPhaseName());
+        logger.log(Level.INFO, "redirecting to phase - " + response.getPhaseName());
         return "redirect:/" + response.getPhaseName();
     }
 
@@ -363,17 +347,17 @@ public class ApiController {
 
         StartupInfo usecase = new StartupInfo();
         StartupInfoResponse response = usecase.execute();
+        model.addObject("phaseView", response.getPhaseView());
+        model.addObject("dominationView", response.getDominationView());
         model.addObject("armyCapacity", response.getArmyCapacity());
-        model.addObject("playerName", response.getPlayerName());
         model.addObject("countryName", response.getCountryName());
-        model.addObject("countries", response.getCountries());
         return model;
     }
 
     /**
      * Adds the army to own country.
      *
-     * @param armyCount the army count
+     * @param armyCount   the army count
      * @param countryName the country name
      * @return the string
      */
@@ -397,8 +381,10 @@ public class ApiController {
 
         ReinforceInfo usecase = new ReinforceInfo();
         ReinforceInfoResponse response = usecase.execute();
+
+        model.addObject("phaseView", response.getPhaseView());
+        model.addObject("dominationView", response.getDominationView());
         model.addObject("reinforceArmyCount", response.getReinforceArmyCapacity());
-        model.addObject("playerName", response.getPlayerName());
         model.addObject("countries", response.getCountries());
         model.addObject("cards", response.getPlayerCards());
         return model;
@@ -417,7 +403,7 @@ public class ApiController {
         return "redirect:/phaseResolver";
     }
 
-    
+
     /**
      * Card exchange view.
      *
@@ -426,22 +412,44 @@ public class ApiController {
      */
     @RequestMapping("/CardExchange")
     public String ExchangeCards(@RequestParam("cards") String cards) {
-    	CardExchange usecase = new CardExchange(cards);
-    	new ReinforceInfo(usecase);
+        CardExchange usecase = new CardExchange(cards);
+        new ReinforceInfo(usecase);
         usecase.execute();
-    	return "redirect:/reinforcePhase";
+        return "redirect:/reinforcePhase";
     }
 
-    
+
     /**
      * Attack phase.
      *
      * @return the string
      */
     @RequestMapping("/attackPhase")
-    public String attackPhase() {
+    public ModelAndView attackPhase() {
+        ModelAndView model = new ModelAndView("attackphase");
+
         AttackInfo usecase = new AttackInfo();
-       return "redirect:/phaseResolver";
+        AttackInfoResponse response = usecase.execute();
+        model.addObject("countryNames", response.getCountryNames());
+        model.addObject("allCountryNames", response.getAllCountryNames());
+        model.addObject("armyCounts", response.getArmyCounts());
+        model.addObject("phaseView", response.getPhaseView());
+        model.addObject("dominationView", response.getDominationView());
+
+        return model;
+    }
+
+    @RequestMapping("/attackPhase/attack")
+    public String attachPhaseExecute(@RequestParam("attackingCountry") String attackingCountry,
+                                     @RequestParam("attackingDiceCount") String attackingDiceCount,
+                                     @RequestParam("defendingCountry") String defendingCountry,
+                                     @RequestParam("defendingDiceCount") String defendingDiceCount,
+                                     @RequestParam(value = "skipAttack", defaultValue = "0") String skipAttack,
+                                     @RequestParam(value = "allOutMode", defaultValue = "0") String allOutMode) {
+        ExecuteAttackPhase usecase = new ExecuteAttackPhase(attackingCountry, attackingDiceCount, defendingCountry,
+                defendingDiceCount, skipAttack, allOutMode);
+        usecase.execute();
+        return "redirect:/phaseResolver";
     }
 
 
@@ -455,10 +463,11 @@ public class ApiController {
         ModelAndView model = new ModelAndView("fortifyphase");
         FortifyInfo usecase = new FortifyInfo();
         FortifyInfoResponse response = usecase.execute();
-        model.addObject("playerName", response.getPlayerName());
+        model.addObject("phaseView", response.getPhaseView());
+        model.addObject("dominationView", response.getDominationView());
         model.addObject("countryNames", response.getCountryNames());
         model.addObject("armyCounts", response.getArmyCounts());
-     //   model.addObject("cards", response.getCards());
+        //   model.addObject("cards", response.getCards());
         return model;
     }
 
@@ -466,8 +475,8 @@ public class ApiController {
      * Move fortify army.
      *
      * @param startCountry the start country
-     * @param endCountry the end country
-     * @param armyCount the army count
+     * @param endCountry   the end country
+     * @param armyCount    the army count
      * @return the string
      */
     @RequestMapping("/fortifyPhase/moveArmy")
