@@ -75,9 +75,7 @@ public class GamePlay {
             ((ReinforceInfoResponse) response).setReinforceArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
             ((ReinforceInfoResponse) response).setCountries(game.getCurrentPlayer().getCountryNames());
         } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
-            ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());for(Country country: game.getMap().getCountries()){
-                ((AttackInfoResponse) response).addArmyCount(country.getArmy());
-            }
+            ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
             ((AttackInfoResponse) response).setAllCountryNames(game.getMap().getCountryNames());
             // change this to hashmap
             for(Country country: game.getMap().getCountries()){

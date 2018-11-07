@@ -222,6 +222,7 @@ public class Map {
         //Start searching for path between both countries
         int PathCount = 0;
         PathCount = this.countNumberOfPath(adj, currentCountry, shift, PathCount, v, movingPath, allPaths);
+        logger.log(Level.INFO, "Path count : " + PathCount);
 
         if (PathCount != 0) {
             //Finally Testing whether player able to move army
