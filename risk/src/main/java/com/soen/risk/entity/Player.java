@@ -86,9 +86,49 @@ public class Player extends Observable {
     }
 
     private ArrayList<Boolean> attackPlay(int attackingDice, int attackedDice) {
+        ArrayList<Boolean> win = new ArrayList<>();
+        if(attackedDice <= 0 || attackingDice <= 0)
+        {
+            return win;
+        }
+        if(attackingDice >=3)
+        {
+            attackingDice = 3;
+            if(attackedDice>=2)
+            {
+                attackedDice = 2;
+            }
+            else if(attackedDice == 1)
+            {
+                attackedDice = 1;
+            }
+        }
+        else if(attackingDice==2)
+        {
+            attackingDice=2;
+            if(attackedDice>=2)
+            {
+                attackedDice=2;
+            }
+            else if(attackedDice == 1)
+            {
+                attackedDice=1;
+            }
+        }
+
+        else if(attackingDice==1)
+        {
+            attackedDice = 1;
+            if(attackedDice>=1)
+            {
+                attackedDice = 1;
+            }
+        }
+
         int dicI1[] = new int[attackingDice];
         int dicI2[] = new int[attackedDice];
-        ArrayList<Boolean> win = new ArrayList<>();
+        this.setAttackCounter(this.getAttackCounter() + attackedDice);
+
 
         for (int i = 0; i < dicI1.length; i++) {
             dicI1[i] = 1 + (int) (9.0 * Math.random());
@@ -182,7 +222,7 @@ public class Player extends Observable {
     private void executeOneAttackPhase(Player defendingPlayer, Country attackingCountry, Country defendingCountry, int attackingDiceCount, int attackedDiceCount) {
         logger.log(Level.INFO, "Entered one attack phase ...");
         ArrayList<Boolean> wins = this.attackPlay(attackingDiceCount, attackedDiceCount);
-        this.setAttackCounter(this.getAttackCounter() + attackedDiceCount);
+        //this.setAttackCounter(this.getAttackCounter() + attackedDiceCount);
         logger.log(Level.INFO, "set attack counter : " + this.getAttackCounter());
         for (boolean win : wins) {
             if (win) {
