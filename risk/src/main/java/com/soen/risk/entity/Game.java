@@ -1,6 +1,8 @@
 package com.soen.risk.entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
@@ -24,7 +26,7 @@ public class Game extends Observable {
 
     private Player currentPlayer;
     private Phase currentPhase = Phase.STARTUP;
-
+    private HashMap<String, ArrayList<String>> neighbouring = new HashMap<>();
     /**
      * Assign to map reference, new arraylist for players, and adding all players.
      *
@@ -76,7 +78,46 @@ public class Game extends Observable {
         }
         return null;
     }
-
+    /**
+     * Return HashMap with countries and its neighbouring countries not belong to player
+     */
+    ArrayList<String> checkPlayerSpecificNeigbhouringCountries(Player p, LinkedList<Country> lc)
+    {
+    	ArrayList<String> ar = new ArrayList<>();
+    	for(Country c1: lc)
+		{
+    		int flag = 0;
+	    	for(Country c: p.getCountries())
+	    	{    		
+    			if(c1.getName().equals(c.getName()))
+    			{
+    				flag = 1;
+    				break;
+    			}
+    		}
+	    	if(flag==0)
+	    	{
+	    		ar.add(c1.getName());
+	    	}
+    	}
+    	return ar;
+    }
+    public HashMap<String, ArrayList<String>> playerNeighbouringCountries(Player p)
+    {
+    	LinkedList<LinkedList<Country>> ll = map.getAdjCountry();
+    	neighbouring = new HashMap<String, ArrayList<String>>();
+    	for(Country c: p.getCountries())
+    	{
+    		for(LinkedList<Country> lc: ll)
+    		{
+    			if(c.getName().equals(lc.get(0).getName()))
+    			{
+    				neighbouring.put(c.getName(), checkPlayerSpecificNeigbhouringCountries(p,lc));
+    			}
+    		}
+    	}
+    	return neighbouring;
+    }
     /**
      * Changing current phase between reinforcement, attack, and fortify.
      */
@@ -132,11 +173,23 @@ public class Game extends Observable {
      */
     private void allocateInitialCountries() {
         Random rand = new Random();
-        for (Country country : map.getCountries()) {
+        int index = 0;
+        for(Player p: players)
+        {
+        	p.addCountry(map.getCountries().get(index));
+        	index++;
+        }        
+        for(int i=index;i<map.getCountries().size();i++)
+        {
+        	int indexOfPlayer = rand.nextInt(players.size());
+            players.get(indexOfPlayer).addCountry(map.getCountries().get(i));
+            logger.log(Level.INFO, "Adding country " + map.getCountries().get(i).getName() + " to player " + players.get(indexOfPlayer).getName());
+        }
+        /*for (Country country : map.getCountries()) {
             int indexOfPlayer = rand.nextInt(players.size());
             players.get(indexOfPlayer).addCountry(country);
             logger.log(Level.INFO, "Adding country " + country.getName() + " to player " + players.get(indexOfPlayer).getName());
-        }
+        }*/
     }
 
 
