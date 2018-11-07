@@ -440,9 +440,9 @@ public class ApiController {
 
     @RequestMapping("/attackPhase/attack")
     public String attachPhaseExecute(@RequestParam("attackingCountry") String attackingCountry,
-                                     @RequestParam("attackingDiceCount") String attackingDiceCount,
+                                     @RequestParam(value = "attackingDiceCount", defaultValue = "0") String attackingDiceCount,
                                      @RequestParam("defendingCountry") String defendingCountry,
-                                     @RequestParam("defendingDiceCount") String defendingDiceCount,
+                                     @RequestParam(value = "defendingDiceCount", defaultValue = "0") String defendingDiceCount,
                                      @RequestParam(value = "skipAttack", defaultValue = "0") String skipAttack,
                                      @RequestParam(value = "allOutMode", defaultValue = "0") String allOutMode) {
         ExecuteAttackPhase usecase = new ExecuteAttackPhase(attackingCountry, attackingDiceCount, defendingCountry,
