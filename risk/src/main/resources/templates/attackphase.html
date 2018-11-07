@@ -20,33 +20,48 @@
                     <br/>
                     <form method="get" th:action="@{/attackPhase/attack}">
                         <table class="left-table">
-                            <!--<tr>-->
-                                <!--<td>Player name:</td>-->
-                                <!--<td><span th:text="${phaseView.playerName}">Player name</span></td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td>Remaining army capacity:</td>-->
-                                <!--<td><span th:text="${armyCapacity}">Army capacity</span></td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td>Country name:</td>-->
-                                <!--<td>-->
-                                    <!--<input type="text" disabled th:value="${countryName}" name="country"/>-->
-                                    <!--<input type="hidden" th:value="${countryName}" name="country"/>-->
-                                <!--</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td>Allocate army:</td>-->
-                                <!--<td>-->
-                                    <!--<div th:if="${armyCapacity == 0}">-->
-                                        <!--<input type="text" name="armyCount" th:value="${armyCapacity}">-->
-                                    <!--</div>-->
-                                    <!--<div th:if="${armyCapacity != 0}">-->
-                                        <!--<input type="text" name="armyCount">-->
-                                    <!--</div>-->
+                            <tr>
+                                <td>Player name:</td>
+                                <td><span th:text="${phaseView.playerName}">Player name</span></td>
+                            </tr>
+                            <tr>
+                                <td>Attacking country: </td>
+                                <td>
+                                    <select name="attackingCountry">
+                                        <option th:each="countryName : ${countryNames}" th:value="${countryName}"
+                                        th:text="${countryName}"></option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Attacker # dice roll: </td>
+                                <td><input type="text" name="attackingDiceCount"></td>
+                            </tr>
+                            <tr>
+                                <td>Defending country: </td>
+                                <td>
+                                    <select name="defendingCountry">
+                                        <option th:each="countryName : ${allCountryNames}" th:value="${countryName}" th:text="${countryName}"></option>
+                                    </select>
+                                </td>
 
-                                <!--</td>-->
-                            <!--</tr>-->
+                            </tr>
+                            <tr>
+                                <td>Defending # dice roll: </td>
+                                <td><input type="text" name="defendingDiceCount"></td>
+                            </tr>
+                            <tr>
+                                <td>Skip attack</td>
+                                <td>
+                                    <input type="checkbox" name="skipAttack" value="1">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>All out mode</td>
+                                <td>
+                                    <input type="checkbox" name="allOutMode" value="1">
+                                </td>
+                            </tr>
                             <tr>
                                 <td></td>
                                 <td><input type="submit" name="submit" value="Attack"/></td>
@@ -55,6 +70,25 @@
                         <div class="right-table">
                             <div th:replace="layout :: phaseView" />
                             <div th:replace="layout :: dominationView" />
+                            <table>
+                                <tr>
+                                    <td>Country name</td>
+                                    <td>Army count</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div th:each="country : ${allCountryNames}">
+                                            <span th:text="${country}"></span><br/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div th:each="armyCount : ${armyCounts}">
+                                            <span th:text="${armyCount}"></span><br/>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
                         </div>
 
                     </form>
