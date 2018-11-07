@@ -40,33 +40,10 @@ public class FortifyInfo implements Usecase {
      */
     @Override
     public FortifyInfoResponse execute() {
-<<<<<<< HEAD
-        Player player = GamePlay.getInstance().getCurrentPlayer();
-        try {   	
-        	 Random rand = new Random();
-             String[] cardTypes = {"Infant", "Calvary", "Artillery"};
-             String cardType = cardTypes[rand.nextInt(3)];
-             player.addCard(cardType);
-             player.setExtraArmies(0);
-             player.setCardExchangeArmies();     
-        }
-        catch(Exception e) {
-        	e.printStackTrace();
-        }
-        response.setPlayerName(player.getName());
-        response.setCountryNames(player.getCountryNames());
-
-        for(Country country: player.getCountries()){
-            response.addArmyCount(country.getArmy());
-        }
-        
-=======
         GamePlay gamePlay = GamePlay.getInstance();
         response = (FortifyInfoResponse) gamePlay.getPhaseInfo(response);
         response.setPhaseView(GamePlay.getInstance().getPhaseView());
         response.setDominationView(GamePlay.getInstance().getDominationView());
-
->>>>>>> build2
         return response;
     }
 }

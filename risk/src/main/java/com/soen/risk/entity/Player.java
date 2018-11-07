@@ -243,13 +243,25 @@ public class Player extends Observable {
                 }
             }
             if (size == count) {
-                armyCapacity = ctt.getControlValue();
+            	int armies=getCardExchangeArmies();
+            	if(armies !=0 && armies>0 ) {
+            		armyCapacity = ctt.getControlValue()+armies;
+            	}
+            	else {
+            		armyCapacity = ctt.getControlValue();
+                }
             }
 
         }
         //If Player do not have all country of a continent
         int number_of_countries = this.getCountries().size();
-        armyCapacity = Math.max(3, (int) Math.ceil(number_of_countries / 3.0));
+        int armies=getCardExchangeArmies();       
+    	if(armies !=0 && armies>0 ) {
+    		armyCapacity = Math.max(3, (int) Math.ceil(number_of_countries / 3.0)) +armies;
+    	}
+    	else {
+    		armyCapacity = Math.max(3, (int) Math.ceil(number_of_countries / 3.0));
+    	}
 
     }
 

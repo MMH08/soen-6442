@@ -11,6 +11,8 @@ import com.soen.risk.entity.Phase;
 import com.soen.risk.entity.Player;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 /**
@@ -74,6 +76,7 @@ public class GamePlay {
             game.getCurrentPlayer().calculateReinforceCount(game.getMap());
             ((ReinforceInfoResponse) response).setReinforceArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
             ((ReinforceInfoResponse) response).setCountries(game.getCurrentPlayer().getCountryNames());
+            ((ReinforceInfoResponse) response).setPlayerCards((game.getCurrentPlayer().getCards()));
         } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
             ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());for(Country country: game.getMap().getCountries()){
                 ((AttackInfoResponse) response).addArmyCount(country.getArmy());
@@ -146,6 +149,12 @@ public class GamePlay {
             defendingPlayer.removeCountry(defendingCon);
             //updates
             game.getCurrentPlayer().setAttackCounter(0);
+            Random rand = new Random();
+            String[] cardTypes = {"Infant", "Calvary", "Artillery"};
+            String cardType = cardTypes[rand.nextInt(3)];
+            game.getCurrentPlayer().addCard(cardType);
+            game.getCurrentPlayer().setExtraArmies(0);
+            game.getCurrentPlayer().setCardExchangeArmies(); 
             game.updateCurrentPhase();
         }
 
@@ -164,6 +173,25 @@ public class GamePlay {
         }
     }
 
+    public boolean executeExchange(List<String> cards)
+    {
+    	if(!cards.isEmpty()) {
+        	for(String card: cards) {
+        		game.getCurrentPlayer().getCards().remove(card);	
+        	}
+        	game.getCurrentPlayer().setExchangecount();
+        	game.getCurrentPlayer().setExtraArmies(5);
+        	return true;
+        	}
+        	else {
+        	return false;
+        	}
+    }
+    
+    public void addNewArmies() {
+    	game.getCurrentPlayer().setCardExchangeArmies();
+    	
+    }
     // -----------------------------------------------------------------------------------------------------------------
 
 

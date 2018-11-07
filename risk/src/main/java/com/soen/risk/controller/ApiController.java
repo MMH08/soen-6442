@@ -435,7 +435,6 @@ public class ApiController {
         model.addObject("armyCounts", response.getArmyCounts());
         model.addObject("phaseView", response.getPhaseView());
         model.addObject("dominationView", response.getDominationView());
-
         return model;
     }
 
@@ -467,7 +466,6 @@ public class ApiController {
         model.addObject("dominationView", response.getDominationView());
         model.addObject("countryNames", response.getCountryNames());
         model.addObject("armyCounts", response.getArmyCounts());
-        //   model.addObject("cards", response.getCards());
         return model;
     }
 

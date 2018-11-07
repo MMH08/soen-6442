@@ -42,26 +42,18 @@ public class ReinforceInfo extends CardObserver implements Usecase  {
      */
     @Override
     public ReinforceInfoResponse execute() {
-        GamePlay gamePlay = GamePlay.getInstance();
-<<<<<<< HEAD
-        Player player = gamePlay.getCurrentPlayer();
-        response.setReinforceArmyCapacity(player.getReinforceArmyCapacity(gamePlay.getGame().getMap()));
-        response.setPlayerName(player.getName());
-        response.setCountries(player.getCountryNames());
-        response.setPlayerCards(player.getCards());
-=======
+       GamePlay gamePlay = GamePlay.getInstance();
+
         response = (ReinforceInfoResponse) gamePlay.getPhaseInfo(response);
         response.setPhaseView(GamePlay.getInstance().getPhaseView());
         response.setDominationView(GamePlay.getInstance().getDominationView());
->>>>>>> build2
+
         return response;
     }
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		GamePlay gamePlay = GamePlay.getInstance();
-        Player player = gamePlay.getCurrentPlayer();
-		player.setCardExchangeArmies();
+		gamePlay.addNewArmies();
 	}
 }

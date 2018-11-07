@@ -41,25 +41,15 @@ public class CardExchange implements Usecase{
      */
     @Override
     public CardExchangeResponse execute() {
-    	 Player p = GamePlay.getInstance().getCurrentPlayer();
-         if(exchangeSuccess(p,request.getCardsExchanged())) {	 
-         p.setExchangecount();
-         p.setExtraArmies(5);
+    	GamePlay gamePlay = GamePlay.getInstance();
+    	boolean bExchanged = gamePlay.executeExchange(request.getCardsExchanged());
+         if(bExchanged) {
          response.setObservers(observers);
          response.setState(1);
          }
+         
     	return response;   	
     }
     
-    public boolean exchangeSuccess(Player p,List<String> cards) {
-    	if(!cards.isEmpty()) {
-    	for(String card: cards) {
-    		p.getCards().remove(card);	
-    	}
-    	return true;
-    	}
-    	else {
-    	return false;
-    	}
-    }
+   
 }
