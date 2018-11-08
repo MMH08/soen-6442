@@ -4,7 +4,6 @@ import com.soen.risk.boundary.Response;
 import com.soen.risk.interactor.DominationView;
 import com.soen.risk.interactor.PhaseView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AttackInfoResponse implements Response {
@@ -14,15 +13,9 @@ public class AttackInfoResponse implements Response {
 
     private PhaseView phaseView;
     private DominationView dominationView;
-    //private List<Integer> armyCounts;
 
     public AttackInfoResponse() {
-       // this.armyCounts = new ArrayList<>();
     }
-
-//    public void addArmyCount(int count) {
-//        armyCounts.add(count);
-//    }
 
     public List<String> getCountryNames() {
         return countryNames;
@@ -56,11 +49,4 @@ public class AttackInfoResponse implements Response {
         this.dominationView = dominationView;
     }
 
-//    public List<Integer> getArmyCounts() {
-//        return armyCounts;
-//    }
-//
-//    public void setArmyCounts(List<Integer> armyCounts) {
-//        this.armyCounts = armyCounts;
-//    }
 }

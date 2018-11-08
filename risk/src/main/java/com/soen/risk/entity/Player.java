@@ -222,7 +222,6 @@ public class Player extends Observable {
     private void executeOneAttackPhase(Player defendingPlayer, Country attackingCountry, Country defendingCountry, int attackingDiceCount, int attackedDiceCount) {
         logger.log(Level.INFO, "Entered one attack phase ...");
         ArrayList<Boolean> wins = this.attackPlay(attackingDiceCount, attackedDiceCount);
-        //this.setAttackCounter(this.getAttackCounter() + attackedDiceCount);
         logger.log(Level.INFO, "set attack counter : " + this.getAttackCounter());
         for (boolean win : wins) {
             if (win) {
@@ -235,10 +234,6 @@ public class Player extends Observable {
                 defendingCountry.setArmy(defendingCountry.getArmy() + 1);
             }
         }
-        // refresh view
-        //logger.log(Level.INFO, "Refreshing the views ... ");
-        //this.setArmyCapacity(this.getArmyCapacity());
-        //defendingPlayer.setArmyCapacity(defendingPlayer.getArmyCapacity());
     }
 
     public void executeFortifyPhase(String startCountry, String endCountry, int armyCount) {
@@ -397,6 +392,5 @@ public class Player extends Observable {
     public void setCardExchangeArmies() {
         this.finalarmies = getExtraArmies() * getExchangecount();
     }
-
 
 }

@@ -84,15 +84,8 @@ public class GamePlay {
         } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
             ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
             ((AttackInfoResponse) response).setAllCountryNames(game.getMap().getCountryNames());
-            // change this to hashmap
-//            for (Country country : game.getMap().getCountries()) {
-//                ((AttackInfoResponse) response).addArmyCount(country.getArmy());
-//            }
         } else if (game.getCurrentPhase().equals(Phase.FORTIFY)) {
             ((FortifyInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
-//            for (Country country : game.getCurrentPlayer().getCountries()) {
-//                ((FortifyInfoResponse) response).addArmyCount(country.getArmy());
-//            }
         }
         return response;
     }
