@@ -41,7 +41,7 @@
 <div th:fragment="phaseView">
     <div>
         <ul>
-            <li th:each="actionItem : ${phaseView.action}" th:text="${actionItem}"></li>
+            <li th:each="actionItem : ${phaseView.actions}" th:text="${actionItem}"></li>
         </ul>
     </div>
 </div>
@@ -56,11 +56,15 @@
                 <th>Army</th>
                 <th><i class="fas fa-percent"></i> Share</th>
             </tr>
-            <tr th:each="player : ${dominationView.playerInfo}">
+            <tr th:each="player : ${dominationView.playersInfo}">
                 <td th:text="${player.key}"></td>
-                <td th:utext="${player.value[1]}"></td>
-                <td th:text="${player.value[0]}"></td>
-                <td th:text="${player.value[3]}"></td>
+                <td>
+                    <span th:each="country : ${player.value.countries}">
+                        <span th:text="${country.key}"></span> &ensp; <span th:text="${country.value}"></span><br/>
+                    </span>
+                </td>
+                <td th:text="${player.value.totalArmyCount}"></td>
+                <td th:text="${player.value.share}"></td>
             </tr>
         </table>
     </fieldset>

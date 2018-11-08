@@ -21,7 +21,7 @@ public class PhaseView implements Observer {
 
     private String phaseName = "";
     private String playerName = "";
-    private List<String> action = new ArrayList<>();
+    private List<String> actions = new ArrayList<>();
     private static Logger logger = Logger.getLogger(PhaseView.class.getName());
 
     /**
@@ -34,7 +34,6 @@ public class PhaseView implements Observer {
     public void update(Observable obs, Object o) {
         playerName = ((Game) obs).getCurrentPlayer().toString();
         phaseName = ((Game) obs).getCurrentPhase().toString();
-        //action = ((Game) obs).getAction();
         logger.log(Level.INFO, "player name" + playerName);
         logger.log(Level.INFO, "current phase" + phaseName);
     }
@@ -47,7 +46,7 @@ public class PhaseView implements Observer {
         return playerName;
     }
 
-    public List<String> getAction() {
-        return action;
+    public List<String> getActions() {
+        return actions;
     }
 }

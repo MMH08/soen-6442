@@ -14,15 +14,15 @@ public class AttackInfoResponse implements Response {
 
     private PhaseView phaseView;
     private DominationView dominationView;
-    private List<Integer> armyCounts;
+    //private List<Integer> armyCounts;
 
     public AttackInfoResponse() {
-        this.armyCounts = new ArrayList<>();
+       // this.armyCounts = new ArrayList<>();
     }
 
-    public void addArmyCount(int count) {
-        armyCounts.add(count);
-    }
+//    public void addArmyCount(int count) {
+//        armyCounts.add(count);
+//    }
 
     public List<String> getCountryNames() {
         return countryNames;
@@ -56,11 +56,11 @@ public class AttackInfoResponse implements Response {
         this.dominationView = dominationView;
     }
 
-    public List<Integer> getArmyCounts() {
-        return armyCounts;
-    }
-
-    public void setArmyCounts(List<Integer> armyCounts) {
-        this.armyCounts = armyCounts;
-    }
+//    public List<Integer> getArmyCounts() {
+//        return armyCounts;
+//    }
+//
+//    public void setArmyCounts(List<Integer> armyCounts) {
+//        this.armyCounts = armyCounts;
+//    }
 }

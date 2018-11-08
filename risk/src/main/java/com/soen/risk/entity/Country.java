@@ -1,5 +1,7 @@
 package com.soen.risk.entity;
 
+import java.util.Observable;
+
 /**
  *<h2>Country Class</h2>
  *<p>This class contains all details of a country i.e. Number of armies of countries, name, x and y axis, id.</p>
@@ -7,7 +9,7 @@ package com.soen.risk.entity;
  *@since 2018-10-07
  *@version 1.0.0
  */
-public class Country {
+public class Country extends Observable {
 	private String name;
 	private String coordinateX;
 	private String coordinateY;
@@ -34,7 +36,9 @@ public class Country {
 	}
 
 	public void setArmy(int army) {
-		this.army = army;
+	    this.army = army;
+	    this.setChanged();
+	    this.notifyObservers(this);
 	}
 
 	public String getName() {

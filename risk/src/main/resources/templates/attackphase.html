@@ -70,25 +70,25 @@
                         <div class="right-table">
                             <div th:replace="layout :: phaseView" />
                             <div th:replace="layout :: dominationView" />
-                            <table>
-                                <tr>
-                                    <td>Country name</td>
-                                    <td>Army count</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div th:each="country : ${allCountryNames}">
-                                            <span th:text="${country}"></span><br/>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div th:each="armyCount : ${armyCounts}">
-                                            <span th:text="${armyCount}"></span><br/>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <!--<table>-->
+                                <!--<tr>-->
+                                    <!--<td>Country name</td>-->
+                                    <!--<td>Army count</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>-->
+                                        <!--<div th:each="country : ${allCountryNames}">-->
+                                            <!--<span th:text="${country}"></span><br/>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                    <!--<td>-->
+                                        <!--<div th:each="armyCount : ${armyCounts}">-->
+                                            <!--<span th:text="${armyCount}"></span><br/>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
 
-                            </table>
+                            <!--</table>-->
                         </div>
 
                     </form>

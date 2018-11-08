@@ -22,13 +22,13 @@ import java.util.logging.Logger;
 public class Map {
     private static Logger logger = Logger.getLogger(Map.class.getName());
     private String name;
-    public int counter = 1;
+    //public int counter = 1;
     private ArrayList<Continent> continents;
     private ArrayList<Country> countries;
     private LinkedList<LinkedList<Country>> adjCountry;
     private LinkedList<Object> list_country;
     private String fileName;
-    private LinkedList<Integer> adj[];
+    //private LinkedList<Integer> adj[];
 
     /**
      * Initiating continents, countries, 2D linkedlist of country
@@ -58,13 +58,6 @@ public class Map {
     public void addCountry(Country country) {
         logger.log(Level.INFO, "Adding country " + country.getName());
         countries.add(country);
-    }
-
-    /**
-     * @param country1
-     * @param country2
-     */
-    public void connect(Country country1, Country country2) {
     }
 
     public Country findByCountryName(String s) {
@@ -123,7 +116,6 @@ public class Map {
         try {
             logger.log(Level.INFO, "Saving map to " + fileName);
             PrintWriter pw = new PrintWriter(new File(this.fileName));
-//            String temp[] = this.fileName.split("//");
             pw.println("Map=" + this.name);
             pw.println();
             pw.println("[Continents]");
@@ -147,106 +139,35 @@ public class Map {
 
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-    boolean CheckPathValid(List<Country> allowedCountries, List<Integer> movingPath) {
-        for (int countryId : movingPath) {
-            int flag = 0;
-            for (Country c : allowedCountries) {
-                if (c.getId() == countryId) {
-                    flag = 1;
-                    break;
-                }
-            }
-            if (flag != 1) {
-                logger.log(Level.INFO, "Invalid path.");
-                return false;
-            }
-        }
-        logger.log(Level.INFO, "Valid path.");
+    /**
+     * Validates the continents and country objects for duplicate values.
+     * Traversed adjacent countries and verified all countries are linked.
+     *
+     * @return true is no duplicates found and if all countries are connected.
+     * false for duplicate occurrence and if any country is isolated
+     * @author Nivetha
+     * @since 2018-10-06
+     */
+
+    public boolean isValid() {
+        if (checkContinentDuplicacy()) return false;
+        else if (checkCountryDuplicacy()) return false;
+        else if (checkIsolatedCountry()) return false;
         return true;
     }
-    void addPath(LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths)
-	{
-		ArrayList<Integer> temp = new ArrayList<>();
-		for(int a: path)
-		{
-			temp.add(a);
-		}
-		allPaths.add(temp);
-	}
-    int countNumberOfPath(LinkedList adj[], int start, int dest, int PathCount, boolean visited[], LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths)
-	{
-		visited[start] = true;
-		path.add(start);
-		if(start == dest)
-		{
-			PathCount++;
-			this.addPath(path, allPaths);
-		}
-		else
-		{
-			Iterator<Integer> il = adj[start].listIterator();
-			while(il.hasNext())
-			{
-				int n = il.next();
-				if(!visited[n])
-				{
-					PathCount = countNumberOfPath(adj, n, dest, PathCount, visited,path, allPaths);
-				}
-			}
-		}
-		int i=0;
-		int flag = 0;
-		for(int a: path)
-		{
-			if(a==start)
-			{
-				flag =1;
-				break;
-			}
-			i++;
-		}
-		if(flag == 1)
-		{
-			path.remove(i);
-		}
-		visited[start] = false;
-		return PathCount;
-	}
-    public boolean searchPathBetweenCountries(LinkedList adj[], int currentCountry, int shift, List<Country> countries) {
-        boolean v[] = new boolean[adj.length];
-        LinkedList<Integer> movingPath = new LinkedList();
-        ArrayList<Country> coun = GamePlay.getInstance().getGame().getMap().getCountries();
-        ArrayList<ArrayList<Integer>> allPaths = new ArrayList<ArrayList<Integer>>();
 
-        //Start searching for path between both countries
-        int PathCount = 0;
-        PathCount = this.countNumberOfPath(adj, currentCountry, shift, PathCount, v, movingPath, allPaths);
-        logger.log(Level.INFO, "Path count : " + PathCount);
-
-        if (PathCount != 0) {
-            //Finally Testing whether player able to move army
-            logger.log(Level.INFO, "All Possible Path Followed");
-            for (ArrayList<Integer> path : allPaths) {
-            	logger.log(Level.INFO, "Path Followed");
-            	for(int countryId: path) {
-                   logger.log(Level.INFO, "Country index - " + countryId);
-            	}
-            }
-            for(ArrayList<Integer> path: allPaths)
-            {
-            	boolean test = this.CheckPathValid(countries, path);
-	            if (test) {
-	                return true;
-	            }
-            }
-        }
-        return false;
+    public List<String> getCountryNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for (Country country : countries)
+            names.add(country.getName());
+        return names;
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
     public boolean pathExists(String startCountry, String endCountry, List<Country> countries) {
         int startId = findByCountryName(startCountry).getId();
         int endId = findByCountryName(endCountry).getId();
-        
+
         LinkedList<LinkedList<Country>> ll = GamePlay.getInstance().getGame().getMap().getAdjCountry();
 
         LinkedList<Integer> adj[] = new LinkedList[ll.size()];
@@ -265,12 +186,12 @@ public class Map {
             }
         }
         return this.searchPathBetweenCountries(adj, startId, endId, countries);
-     
+
 
     }
 
-
-    // --------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------------
 
     /**
      * This method to add new continent
@@ -332,13 +253,6 @@ public class Map {
         this.list_country.add(temp_list);
     }
 
-    //Function to intialize map country object creation
-//    public void create_map_object_function() {
-//        this.adjCountry = new LinkedList<LinkedList>();
-//        this.map_country_object_creation();
-//    }
-
-
     /**
      * This method to create graph of whole map.
      *
@@ -388,7 +302,7 @@ public class Map {
      * @author Manmeet Singh
      * @since 2018-10-07
      */
-    public String getNeighbouringCountries(String country) {
+    private String getNeighbouringCountries(String country) {
         for (LinkedList<Country> ll : this.adjCountry) {
             if (ll.get(0).getName().equals(country)) {
                 int i = 1;
@@ -407,16 +321,98 @@ public class Map {
     }
 
 
-    /**
-     * Validates the continents and country objects for duplicate values.
-     * Traversed adjacent countries and verified all countries are linked.
-     *
-     * @return true is no duplicates found and if all countries are connected.
-     * false for duplicate occurrence and if any country is isolated
-     * @author Nivetha
-     * @since 2018-10-06
-     */
-    public boolean checkContinentDuplicacy() {
+    // -----------------------------------------------------------------------------------------------------------------
+
+    private boolean checkPathValid(List<Country> allowedCountries, List<Integer> movingPath) {
+        for (int countryId : movingPath) {
+            int flag = 0;
+            for (Country c : allowedCountries) {
+                if (c.getId() == countryId) {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag != 1) {
+                logger.log(Level.INFO, "Invalid path.");
+                return false;
+            }
+        }
+        logger.log(Level.INFO, "Valid path.");
+        return true;
+    }
+
+    private void addPath(LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths) {
+        ArrayList<Integer> temp = new ArrayList<>();
+        for (int a : path) {
+            temp.add(a);
+        }
+        allPaths.add(temp);
+    }
+
+    private int countNumberOfPath(LinkedList adj[], int start, int dest, int PathCount, boolean visited[], LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths) {
+        visited[start] = true;
+        path.add(start);
+        if (start == dest) {
+            PathCount++;
+            this.addPath(path, allPaths);
+        } else {
+            Iterator<Integer> il = adj[start].listIterator();
+            while (il.hasNext()) {
+                int n = il.next();
+                if (!visited[n]) {
+                    PathCount = countNumberOfPath(adj, n, dest, PathCount, visited, path, allPaths);
+                }
+            }
+        }
+        int i = 0;
+        int flag = 0;
+        for (int a : path) {
+            if (a == start) {
+                flag = 1;
+                break;
+            }
+            i++;
+        }
+        if (flag == 1) {
+            path.remove(i);
+        }
+        visited[start] = false;
+        return PathCount;
+    }
+
+    private boolean searchPathBetweenCountries(LinkedList adj[], int currentCountry, int shift, List<Country> countries) {
+        boolean v[] = new boolean[adj.length];
+        LinkedList<Integer> movingPath = new LinkedList();
+        ArrayList<Country> coun = GamePlay.getInstance().getGame().getMap().getCountries();
+        ArrayList<ArrayList<Integer>> allPaths = new ArrayList<ArrayList<Integer>>();
+
+        //Start searching for path between both countries
+        int PathCount = 0;
+        PathCount = this.countNumberOfPath(adj, currentCountry, shift, PathCount, v, movingPath, allPaths);
+        logger.log(Level.INFO, "Path count : " + PathCount);
+
+        if (PathCount != 0) {
+            //Finally Testing whether player able to move army
+            logger.log(Level.INFO, "All Possible Path Followed");
+            for (ArrayList<Integer> path : allPaths) {
+                logger.log(Level.INFO, "Path Followed");
+                for (int countryId : path) {
+                    logger.log(Level.INFO, "Country index - " + countryId);
+                }
+            }
+            for (ArrayList<Integer> path : allPaths) {
+                if (this.checkPathValid(countries, path)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    private boolean checkContinentDuplicacy() {
         if (this.continents.size() == 0) {
             logger.log(Level.INFO, "Continents not found.");
             return true;
@@ -433,7 +429,7 @@ public class Map {
         return false;
     }
 
-    public boolean checkCountryDuplicacy() {
+    private boolean checkCountryDuplicacy() {
         if (this.countries.size() == 0) {
             logger.log(Level.INFO, "Countries not found.");
             return true;
@@ -451,7 +447,7 @@ public class Map {
     }
 
     //Implement Depth First Search Algorithm
-    void checkingContacting(LinkedList adj[], int CurrentCountry, boolean visited[], LinkedList<Integer> movingPath) {
+    private void checkingContacting(LinkedList adj[], int CurrentCountry, boolean visited[], LinkedList<Integer> movingPath) {
         visited[CurrentCountry] = true;
         movingPath.add(CurrentCountry);
         Iterator<Integer> i = adj[CurrentCountry].listIterator();
@@ -462,7 +458,7 @@ public class Map {
         }
     }
 
-    public boolean checkIsolatedCountry() {
+    private boolean checkIsolatedCountry() {
         int currentCoun = this.countries.get(0).getId();    //Convert Country name to their ids
         LinkedList<LinkedList<Country>> ll = this.adjCountry;
         LinkedList<Integer> adj[] = new LinkedList[ll.size()];
@@ -493,23 +489,7 @@ public class Map {
         }
     }
 
-    public boolean isValid() {
-        if (checkContinentDuplicacy()) return false;
-        else if (checkCountryDuplicacy()) return false;
-        else if (checkIsolatedCountry()) return false;
-        return true;
-    }
-
-    public List<String> getCountryNames() {
-        ArrayList<String> names = new ArrayList<>();
-        for (Country country : countries)
-            names.add(country.getName());
-        return names;
-    }
-
-
-    // -------------------------------------------------------------
-
+    //------------------------------------------------------------------------------------------------------------------
     public String getName() {
         return name;
     }
@@ -550,11 +530,6 @@ public class Map {
         logger.log(Level.INFO, "Setting filename " + fileName);
         this.fileName = fileName;
     }
-
-//    //Get map on basis of name
-//    public LinkedList<Object> getMap() {
-//        return list_country;
-//    }
 
     //Get map on basis of country object
     public LinkedList<LinkedList<Country>> getMapCountryObject() {

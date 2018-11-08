@@ -129,72 +129,72 @@ public class MapTest {
     /**
      * Checks if is valid country duplicacy.
      */
-    @Test
-    public void isValidCountryDuplicacy() {
-    	Country c1= new Country(0,"A");
-    	Country c2 = new Country(1,"B");
-    	Country c3 = new Country(2,"C");
-    	Country c4 = new Country(3,"D");
-    	Country c5= new Country(4,"B");
-    	map.addCountry(c1);
-    	map.addCountry(c2);
-    	map.addCountry(c3);
-    	map.addCountry(c4);
-    	map.addCountry(c5);
-    	assertTrue(map.checkCountryDuplicacy());
-    }
+//    @Test
+//    public void isValidCountryDuplicacy() {
+//    	Country c1= new Country(0,"A");
+//    	Country c2 = new Country(1,"B");
+//    	Country c3 = new Country(2,"C");
+//    	Country c4 = new Country(3,"D");
+//    	Country c5= new Country(4,"B");
+//    	map.addCountry(c1);
+//    	map.addCountry(c2);
+//    	map.addCountry(c3);
+//    	map.addCountry(c4);
+//    	map.addCountry(c5);
+//    	assertTrue(map.checkCountryDuplicacy());
+//    }
     
     /**
      * Checks if is valid continent duplicacy.
      */
-    @Test
-    public void isValidContinentDuplicacy() {
-    	Continent c1= new Continent("A");
-    	c1.setControlValue(11);
-    	Continent c2= new Continent("B");
-    	c2.setControlValue(13);
-    	Continent c3= new Continent("C");
-    	c3.setControlValue(15);
-    	Continent c4= new Continent("D");
-    	c4.setControlValue(17);
-    	Continent c5= new Continent("B");
-    	c5.setControlValue(18);
-    	map.addContinent(c1);
-    	map.addContinent(c2);
-    	map.addContinent(c3);
-    	map.addContinent(c4);
-    	map.addContinent(c5);
-    	assertTrue(map.checkContinentDuplicacy());
-    }
-    
+//    @Test
+//    public void isValidContinentDuplicacy() {
+//    	Continent c1= new Continent("A");
+//    	c1.setControlValue(11);
+//    	Continent c2= new Continent("B");
+//    	c2.setControlValue(13);
+//    	Continent c3= new Continent("C");
+//    	c3.setControlValue(15);
+//    	Continent c4= new Continent("D");
+//    	c4.setControlValue(17);
+//    	Continent c5= new Continent("B");
+//    	c5.setControlValue(18);
+//    	map.addContinent(c1);
+//    	map.addContinent(c2);
+//    	map.addContinent(c3);
+//    	map.addContinent(c4);
+//    	map.addContinent(c5);
+//    	assertTrue(map.checkContinentDuplicacy());
+//    }
+//
     /**
      * Checks if is valid isolated country.
      */
-    @Test
-    public void isValidIsolatedCountry()
-    {
-    	Country c1 = new Country(0,"A");
-    	Country c2 = new Country(1,"B");
-    	Country c3 = new Country(2,"C");
-    	Country c4 = new Country(3,"D");
-    	Country c5 = new Country(4,"E");
-    	map.addCountry(c1);
-    	map.addCountry(c2);
-    	map.addCountry(c3);
-    	map.addCountry(c4);
-    	map.addCountry(c5);
-    	String s[] = {c1.getName(),c2.getName(),c3.getName(),c4.getName()};
-    	map.map_name_creation(s);
-    	String s1[] = {c2.getName(),c3.getName(),c4.getName(),c1.getName()};
-    	String s2[] = {c3.getName(),c4.getName(),c1.getName(),c2.getName()};
-    	String s3[] = {c4.getName(),c3.getName(),c2.getName(),c1.getName()};
-    	String s4[] = {c5.getName()};
-    	map.map_name_creation(s1);
-    	map.map_name_creation(s2);
-    	map.map_name_creation(s3);
-    	map.map_name_creation(s4);
-    	map.map_country_object_creation();
-    	assertTrue(map.checkIsolatedCountry());
-    	
-    }
+//    @Test
+//    public void isValidIsolatedCountry()
+//    {
+//    	Country c1 = new Country(0,"A");
+//    	Country c2 = new Country(1,"B");
+//    	Country c3 = new Country(2,"C");
+//    	Country c4 = new Country(3,"D");
+//    	Country c5 = new Country(4,"E");
+//    	map.addCountry(c1);
+//    	map.addCountry(c2);
+//    	map.addCountry(c3);
+//    	map.addCountry(c4);
+//    	map.addCountry(c5);
+//    	String s[] = {c1.getName(),c2.getName(),c3.getName(),c4.getName()};
+//    	map.map_name_creation(s);
+//    	String s1[] = {c2.getName(),c3.getName(),c4.getName(),c1.getName()};
+//    	String s2[] = {c3.getName(),c4.getName(),c1.getName(),c2.getName()};
+//    	String s3[] = {c4.getName(),c3.getName(),c2.getName(),c1.getName()};
+//    	String s4[] = {c5.getName()};
+//    	map.map_name_creation(s1);
+//    	map.map_name_creation(s2);
+//    	map.map_name_creation(s3);
+//    	map.map_name_creation(s4);
+//    	map.map_country_object_creation();
+//    	assertTrue(map.checkIsolatedCountry());
+//
+//    }
 }

@@ -53,13 +53,18 @@ public class GamePlay {
         game.addObserver(phaseView);
 
         // register the observer - dominationView
-        dominationView = new DominationView();
+        dominationView = new DominationView(game.getMap().getNumberOfCountries());
         for (Player player : game.getPlayers()) {
             player.addObserver(dominationView);
         }
 
         // record the changes in views
         game.initialize();
+        for (Player player : game.getPlayers()) {
+            for (Country country : player.getCountries()) {
+                country.addObserver(dominationView);
+            }
+        }
         return response;
     }
 
@@ -73,22 +78,21 @@ public class GamePlay {
             ((StartupInfoResponse) response).setCountryName(game.getCurrentPlayer().nextCountryToAssignArmy());
             ((StartupInfoResponse) response).setArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
         } else if (game.getCurrentPhase().equals(Phase.REINFORCE)) {
-            game.getCurrentPlayer().calculateReinforceCount(game.getMap());
-            ((ReinforceInfoResponse) response).setReinforceArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
+            ((ReinforceInfoResponse) response).setReinforceArmyCapacity(game.getCurrentPlayer().calculateReinforceCount(game.getMap()));
             ((ReinforceInfoResponse) response).setCountries(game.getCurrentPlayer().getCountryNames());
             ((ReinforceInfoResponse) response).setPlayerCards((game.getCurrentPlayer().getCards()));
         } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
             ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
             ((AttackInfoResponse) response).setAllCountryNames(game.getMap().getCountryNames());
             // change this to hashmap
-            for(Country country: game.getMap().getCountries()){
-                ((AttackInfoResponse) response).addArmyCount(country.getArmy());
-            }
+//            for (Country country : game.getMap().getCountries()) {
+//                ((AttackInfoResponse) response).addArmyCount(country.getArmy());
+//            }
         } else if (game.getCurrentPhase().equals(Phase.FORTIFY)) {
             ((FortifyInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
-            for (Country country : game.getCurrentPlayer().getCountries()) {
-                ((FortifyInfoResponse) response).addArmyCount(country.getArmy());
-            }
+//            for (Country country : game.getCurrentPlayer().getCountries()) {
+//                ((FortifyInfoResponse) response).addArmyCount(country.getArmy());
+//            }
         }
         return response;
     }
@@ -132,13 +136,10 @@ public class GamePlay {
             game.getCurrentPlayer().setAttackCounter(0);
             game.updateCurrentPhase();
         } else if (defendingCon.getArmy() == 0) {
-            if(attackingCon.getArmy()<=game.getCurrentPlayer().getAttackCounter())
-            {
-                defendingCon.setArmy(attackingCon.getArmy()-1);
+            if (attackingCon.getArmy() <= game.getCurrentPlayer().getAttackCounter()) {
+                defendingCon.setArmy(attackingCon.getArmy() - 1);
                 attackingCon.setArmy(1);
-            }
-            else
-            {
+            } else {
                 defendingCon.setArmy(game.getCurrentPlayer().getAttackCounter());
                 attackingCon.setArmy(attackingCon.getArmy() - game.getCurrentPlayer().getAttackCounter());
             }
@@ -152,7 +153,7 @@ public class GamePlay {
             String cardType = cardTypes[rand.nextInt(3)];
             game.getCurrentPlayer().addCard(cardType);
             game.getCurrentPlayer().setExtraArmies(0);
-            game.getCurrentPlayer().setCardExchangeArmies(); 
+            game.getCurrentPlayer().setCardExchangeArmies();
             game.updateCurrentPhase();
         }
 
@@ -171,24 +172,22 @@ public class GamePlay {
         }
     }
 
-    public boolean executeExchange(List<String> cards)
-    {
-    	if(!cards.isEmpty()) {
-        	for(String card: cards) {
-        		game.getCurrentPlayer().getCards().remove(card);	
-        	}
-        	game.getCurrentPlayer().setExchangecount();
-        	game.getCurrentPlayer().setExtraArmies(5);
-        	return true;
-        	}
-        	else {
-        	return false;
-        	}
+    public boolean executeExchange(List<String> cards) {
+        if (!cards.isEmpty()) {
+            for (String card : cards) {
+                game.getCurrentPlayer().getCards().remove(card);
+            }
+            game.getCurrentPlayer().setExchangecount();
+            game.getCurrentPlayer().setExtraArmies(5);
+            return true;
+        } else {
+            return false;
+        }
     }
-    
+
     public void addNewArmies() {
-    	game.getCurrentPlayer().setCardExchangeArmies();
-    	
+        game.getCurrentPlayer().setCardExchangeArmies();
+
     }
     // -----------------------------------------------------------------------------------------------------------------
 

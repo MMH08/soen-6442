@@ -19,7 +19,7 @@ public class FortifyInfoResponse implements Response {
     private List<String> countryNames;
     
     /** The army counts. */
-    private List<Integer> armyCounts;
+    //private List<Integer> armyCounts;
 
     private PhaseView phaseView;
 
@@ -29,18 +29,14 @@ public class FortifyInfoResponse implements Response {
      * Instantiates a new fortify info response.
      */
     public FortifyInfoResponse() {
-        this.armyCounts = new ArrayList<>();
+        //this.armyCounts = new ArrayList<>();
         this.countryNames = new ArrayList<>();
     }
 
-    /**
-     * Adds the army count.
-     *
-     * @param count the count
-     */
-    public void addArmyCount(int count) {
-        armyCounts.add(count);
-    }
+
+//    public void addArmyCount(int count) {
+//        armyCounts.add(count);
+//    }
 
     /**
      * Gets the player name.
@@ -84,18 +80,13 @@ public class FortifyInfoResponse implements Response {
      *
      * @return the army counts
      */
-    public List<Integer> getArmyCounts() {
-        return armyCounts;
-    }
+//    public List<Integer> getArmyCounts() {
+//        return armyCounts;
+//    }
 
-    /**
-     * Sets the army counts.
-     *
-     * @param armyCounts the new army counts
-     */
-    public void setArmyCounts(List<Integer> armyCounts) {
-        this.armyCounts = armyCounts;
-    }
+//    public void setArmyCounts(List<Integer> armyCounts) {
+//        this.armyCounts = armyCounts;
+//    }
 
     public PhaseView getPhaseView() {
         return phaseView;

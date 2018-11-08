@@ -432,7 +432,7 @@ public class ApiController {
         AttackInfoResponse response = usecase.execute();
         model.addObject("countryNames", response.getCountryNames());
         model.addObject("allCountryNames", response.getAllCountryNames());
-        model.addObject("armyCounts", response.getArmyCounts());
+        //model.addObject("armyCounts", response.getArmyCounts());
         model.addObject("phaseView", response.getPhaseView());
         model.addObject("dominationView", response.getDominationView());
         return model;
@@ -465,7 +465,7 @@ public class ApiController {
         model.addObject("phaseView", response.getPhaseView());
         model.addObject("dominationView", response.getDominationView());
         model.addObject("countryNames", response.getCountryNames());
-        model.addObject("armyCounts", response.getArmyCounts());
+        //model.addObject("armyCounts", response.getArmyCounts());
         return model;
     }
 

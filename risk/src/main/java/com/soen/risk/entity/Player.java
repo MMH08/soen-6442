@@ -80,7 +80,7 @@ public class Player extends Observable {
         for (Country c : countries) {
             logger.log(Level.INFO, "Adding reinforce army to country " + c.getName() + ", army count " + armyCounts.get(i));
             c.setArmy(c.getArmy() + armyCounts.get(i)); // new army count of the country
-            setArmyCapacity(armyCapacity - armyCounts.get(i)); // new army capacity left with player
+            //setArmyCapacity(armyCapacity - armyCounts.get(i)); // new army capacity left with player
             i++;
         }
     }
@@ -236,9 +236,9 @@ public class Player extends Observable {
             }
         }
         // refresh view
-        logger.log(Level.INFO, "Refreshing the views ... ");
-        this.setArmyCapacity(this.getArmyCapacity());
-        defendingPlayer.setArmyCapacity(defendingPlayer.getArmyCapacity());
+        //logger.log(Level.INFO, "Refreshing the views ... ");
+        //this.setArmyCapacity(this.getArmyCapacity());
+        //defendingPlayer.setArmyCapacity(defendingPlayer.getArmyCapacity());
     }
 
     public void executeFortifyPhase(String startCountry, String endCountry, int armyCount) {
@@ -270,7 +270,7 @@ public class Player extends Observable {
      * @param m Reference of map class
      */
 
-    public void calculateReinforceCount(Map m) {
+    public int calculateReinforceCount(Map m) {
         //Check if player has all country of a continent
         for (Continent ctt : m.getContinents()) {
             int size = ctt.getCountries().size();
@@ -285,10 +285,10 @@ public class Player extends Observable {
             if (size == count) {
             	int armies=getCardExchangeArmies();
             	if(armies !=0 && armies>0 ) {
-            		armyCapacity = ctt.getControlValue()+armies;
+            		return ctt.getControlValue()+armies;
             	}
             	else {
-            		armyCapacity = ctt.getControlValue();
+            		return ctt.getControlValue();
                 }
             }
 
@@ -297,12 +297,11 @@ public class Player extends Observable {
         int number_of_countries = this.getCountries().size();
         int armies=getCardExchangeArmies();       
     	if(armies !=0 && armies>0 ) {
-    		armyCapacity = Math.max(3, (int) Math.ceil(number_of_countries / 3.0)) +armies;
+    		return Math.max(3, (int) Math.ceil(number_of_countries / 3.0)) +armies;
     	}
     	else {
-    		armyCapacity = Math.max(3, (int) Math.ceil(number_of_countries / 3.0));
+    		return Math.max(3, (int) Math.ceil(number_of_countries / 3.0));
     	}
-
     }
 
     private Country findByCountryName(String s) {
@@ -323,7 +322,7 @@ public class Player extends Observable {
     /**
      * (addCard card): Adds risk cards to players
      *
-     * @param q
+     * @param
      */
     public void addCard(String card) {
         this.cards.add(card);
@@ -363,8 +362,8 @@ public class Player extends Observable {
 
     public void setArmyCapacity(int armyCapacity) {
         this.armyCapacity = armyCapacity;
-        this.setChanged();
-        this.notifyObservers();
+        //this.setChanged();
+        //this.notifyObservers();
     }
 
     public void setAttackCounter(int count) {
