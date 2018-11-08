@@ -83,7 +83,7 @@ public class GamePlay {
             ((ReinforceInfoResponse) response).setPlayerCards((game.getCurrentPlayer().getCards()));
         } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
             ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
-            ((AttackInfoResponse) response).setAllCountryNames(game.getMap().getCountryNames());
+            ((AttackInfoResponse) response).setAllCountryNames(game.getPlayerNeighbouringCountries());
         } else if (game.getCurrentPhase().equals(Phase.FORTIFY)) {
             ((FortifyInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
         }

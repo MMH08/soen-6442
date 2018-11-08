@@ -15,7 +15,7 @@
                 <div id="textpadding">
                     <h2>Risk - Game Play</h2>
                     <div class="sticky">
-                    <i class="fa fa-info-circle" aria-hidden="true"></i> <b th:text="${phaseView.phaseName}"></b>
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> <b th:text="${phaseView.phaseName}"></b>
                     </div>
                     <br/>
                     <form method="get" th:action="@{/attackPhase/attack}">
@@ -25,29 +25,28 @@
                                 <td><span th:text="${phaseView.playerName}">Player name</span></td>
                             </tr>
                             <tr>
-                                <td>Attacking country: </td>
+                                <td>Attacking country:</td>
                                 <td>
-                                    <select name="attackingCountry">
+                                    <select name="attackingCountry" id="attackingCountry">
                                         <option th:each="countryName : ${countryNames}" th:value="${countryName}"
-                                        th:text="${countryName}"></option>
+                                                th:text="${countryName}"></option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Attacker # dice roll: </td>
+                                <td>Attacker # dice roll:</td>
                                 <td><input type="text" name="attackingDiceCount"></td>
                             </tr>
                             <tr>
-                                <td>Defending country: </td>
+                                <td>Defending country:</td>
                                 <td>
-                                    <select name="defendingCountry">
-                                        <option th:each="countryName : ${allCountryNames}" th:value="${countryName}" th:text="${countryName}"></option>
+                                    <select name="defendingCountry" id="defendingCountry">
                                     </select>
                                 </td>
 
                             </tr>
                             <tr>
-                                <td>Defending # dice roll: </td>
+                                <td>Defending # dice roll:</td>
                                 <td><input type="text" name="defendingDiceCount"></td>
                             </tr>
                             <tr>
@@ -68,27 +67,8 @@
                             </tr>
                         </table>
                         <div class="right-table">
-                            <div th:replace="layout :: phaseView" />
-                            <div th:replace="layout :: dominationView" />
-                            <!--<table>-->
-                                <!--<tr>-->
-                                    <!--<td>Country name</td>-->
-                                    <!--<td>Army count</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td>-->
-                                        <!--<div th:each="country : ${allCountryNames}">-->
-                                            <!--<span th:text="${country}"></span><br/>-->
-                                        <!--</div>-->
-                                    <!--</td>-->
-                                    <!--<td>-->
-                                        <!--<div th:each="armyCount : ${armyCounts}">-->
-                                            <!--<span th:text="${armyCount}"></span><br/>-->
-                                        <!--</div>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-
-                            <!--</table>-->
+                            <div th:replace="layout :: phaseView"/>
+                            <div th:replace="layout :: dominationView"/>
                         </div>
 
                     </form>
@@ -99,6 +79,27 @@
 
     <div th:replace="layout :: footer"/>
 </div>
+
+<ul th:each="country : ${allCountryNames}" th:id="${country.key}">
+    <option th:each="opponentCountry : ${country.value}" th:value="${opponentCountry}" th:text="${opponentCountry}"></option>
+</ul>
+
+<script>
+$(function () {
+    $("#attackingCountry").change();
+});
+    $("#attackingCountry").change(function(){
+        $("#defendingCountry").html("");
+        var currentCountry = $(this).val();
+        console.log(currentCountry);
+        $("#" + currentCountry + " option").each(function(index, value){
+            console.log(value);
+            $("#defendingCountry").append(value);
+        });
+    });
+
+
+</script>
 
 </body>
 </html>

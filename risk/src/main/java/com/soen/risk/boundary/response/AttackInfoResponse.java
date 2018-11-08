@@ -4,12 +4,14 @@ import com.soen.risk.boundary.Response;
 import com.soen.risk.interactor.DominationView;
 import com.soen.risk.interactor.PhaseView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AttackInfoResponse implements Response {
 
     private List<String> countryNames;
-    private List<String> allCountryNames;
+    private HashMap<String, ArrayList<String>> allCountryNames;
 
     private PhaseView phaseView;
     private DominationView dominationView;
@@ -25,11 +27,11 @@ public class AttackInfoResponse implements Response {
         this.countryNames = countryNames;
     }
 
-    public List<String> getAllCountryNames() {
+    public HashMap<String, ArrayList<String>> getAllCountryNames() {
         return allCountryNames;
     }
 
-    public void setAllCountryNames(List<String> allCountryNames) {
+    public void setAllCountryNames(HashMap<String, ArrayList<String>> allCountryNames) {
         this.allCountryNames = allCountryNames;
     }
 
