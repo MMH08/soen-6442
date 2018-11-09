@@ -1,5 +1,6 @@
 package com.soen.risk.interactor;
 
+import com.soen.risk.boundary.Request;
 import com.soen.risk.boundary.Response;
 import com.soen.risk.boundary.response.AttackInfoResponse;
 import com.soen.risk.boundary.response.FortifyInfoResponse;
@@ -36,6 +37,7 @@ public class GamePlay {
     private Game game;
     private PhaseView phaseView;
     private DominationView dominationView;
+    private CardExchangeView cardExchangeView;
 
     public static GamePlay getInstance() {
         if (gamePlayInstance == null)
@@ -54,8 +56,10 @@ public class GamePlay {
 
         // register the observer - dominationView
         dominationView = new DominationView(game.getMap().getNumberOfCountries());
+        cardExchangeView = new CardExchangeView();
         for (Player player : game.getPlayers()) {
             player.addObserver(dominationView);
+            player.addObserver(cardExchangeView);
         }
 
         // record the changes in views
@@ -68,9 +72,6 @@ public class GamePlay {
         return response;
     }
 
-    private void end() {
-    }
-
     // -----------------------------------------------------------------------------------------------------------------
 
     public Response getPhaseInfo(Response response) {
@@ -80,12 +81,13 @@ public class GamePlay {
         } else if (game.getCurrentPhase().equals(Phase.REINFORCE)) {
             ((ReinforceInfoResponse) response).setReinforceArmyCapacity(game.getCurrentPlayer().calculateReinforceCount(game.getMap()));
             ((ReinforceInfoResponse) response).setCountries(game.getCurrentPlayer().getCountryNames());
-            ((ReinforceInfoResponse) response).setPlayerCards((game.getCurrentPlayer().getCards()));
+            ((ReinforceInfoResponse) response).setCardExchangeEnabled(game.getCurrentPlayer().isCardExchangeEnabled());
         } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
             ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
             ((AttackInfoResponse) response).setAllCountryNames(game.getPlayerNeighbouringCountries());
         } else if (game.getCurrentPhase().equals(Phase.FORTIFY)) {
             ((FortifyInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
+            ((FortifyInfoResponse) response).setEndGame(game.isEndNear());
         }
         return response;
     }
@@ -103,6 +105,7 @@ public class GamePlay {
     public void executeReinforcePhase(ArrayList<Integer> armyCounts) {
         game.getCurrentPlayer().executeReinforcePhase(armyCounts);
         // updates
+        game.getCurrentPlayer().resetExchangeArmy();
         game.updateCurrentPhase();
     }
 
@@ -111,6 +114,11 @@ public class GamePlay {
         //Add players random issue one player get no army
         //Exception handling
         if (skipAttack == 1) {
+            // add one random card and reset the win counter
+            if(game.getCurrentPlayer().getWinCounter() > 0) {
+                game.getCurrentPlayer().addRandomCard();
+                game.getCurrentPlayer().setWinCounter(0);
+            }
             game.getCurrentPlayer().setAttackCounter(0);
             game.updateCurrentPhase();
             return;
@@ -127,11 +135,12 @@ public class GamePlay {
             defendingPlayer.addCountry(attackingCon);
             //updates
             game.getCurrentPlayer().setAttackCounter(0);
-            game.updateCurrentPhase();
+            //game.updateCurrentPhase();
         } else if (defendingCon.getArmy() == 0) {
             if (attackingCon.getArmy() <= game.getCurrentPlayer().getAttackCounter()) {
                 defendingCon.setArmy(attackingCon.getArmy() - 1);
                 attackingCon.setArmy(1);
+                game.getCurrentPlayer().setWinCounter(1);
             } else {
                 defendingCon.setArmy(game.getCurrentPlayer().getAttackCounter());
                 attackingCon.setArmy(attackingCon.getArmy() - game.getCurrentPlayer().getAttackCounter());
@@ -141,19 +150,18 @@ public class GamePlay {
             defendingPlayer.removeCountry(defendingCon);
             //updates
             game.getCurrentPlayer().setAttackCounter(0);
-            Random rand = new Random();
-            String[] cardTypes = {"Infant", "Calvary", "Artillery"};
-            String cardType = cardTypes[rand.nextInt(3)];
-            game.getCurrentPlayer().addCard(cardType);
-            game.getCurrentPlayer().setExtraArmies(0);
-            game.getCurrentPlayer().setCardExchangeArmies();
+        }
+        // exchange cards if all countries are lost
+        if(game.getCurrentPlayer().getCountries().size() == 0) {
+            game.getCurrentPlayer().sendCardsTo(defendingPlayer);
+            game.dropPlayer(game.getCurrentPlayer());
             game.updateCurrentPhase();
         }
-
-        if (game.getPlayers().size() == 1) {
-            end();
+        else if (defendingPlayer.getCountries().size() == 0) {
+            defendingPlayer.sendCardsTo(game.getCurrentPlayer());
+            game.dropPlayer(defendingPlayer);
+            game.updateCurrentPhase();
         }
-
     }
 
     public void executeFortificationPhase(String startCountry, String endCountry, int armyCount) {
@@ -165,23 +173,6 @@ public class GamePlay {
         }
     }
 
-    public boolean executeExchange(List<String> cards) {
-        if (!cards.isEmpty()) {
-            for (String card : cards) {
-                game.getCurrentPlayer().getCards().remove(card);
-            }
-            game.getCurrentPlayer().setExchangecount();
-            game.getCurrentPlayer().setExtraArmies(5);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void addNewArmies() {
-        game.getCurrentPlayer().setCardExchangeArmies();
-
-    }
     // -----------------------------------------------------------------------------------------------------------------
 
 
@@ -216,4 +207,11 @@ public class GamePlay {
         this.dominationView = dominationView;
     }
 
+    public CardExchangeView getCardExchangeView() {
+        return cardExchangeView;
+    }
+
+    public void setCardExchangeView(CardExchangeView cardExchangeView) {
+        this.cardExchangeView = cardExchangeView;
+    }
 }

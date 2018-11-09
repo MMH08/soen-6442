@@ -1,13 +1,11 @@
 package com.soen.risk.interactor;
 
 import com.soen.risk.entity.Game;
-import com.soen.risk.entity.Phase;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -32,10 +30,11 @@ public class PhaseView implements Observer {
      */
     @Override
     public void update(Observable obs, Object o) {
-        playerName = ((Game) obs).getCurrentPlayer().toString();
-        phaseName = ((Game) obs).getCurrentPhase().toString();
-        logger.log(Level.INFO, "player name" + playerName);
-        logger.log(Level.INFO, "current phase" + phaseName);
+        Game game = (Game) obs;
+        playerName = game.getCurrentPlayer().toString();
+        phaseName = game.getCurrentPhase().toString();
+
+
     }
 
     public String getPhaseName() {

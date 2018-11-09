@@ -21,7 +21,6 @@ public class Game extends Observable {
 
     private Player currentPlayer;
     private Phase currentPhase = Phase.STARTUP;
-    //private HashMap<String, ArrayList<String>> neighbouring = new HashMap<>();
 
     /**
      * Assign to map reference, new arraylist for players, and adding all players.
@@ -148,7 +147,7 @@ public class Game extends Observable {
      *
      * @param p Player needed to remove from game
      */
-    private void dropPlayer(Player p) {
+    public void dropPlayer(Player p) {
         int i = 0;
         for (Player p1 : players) {
             if (p.equals(p1)) {
@@ -219,5 +218,9 @@ public class Game extends Observable {
         this.currentPhase = currentPhase;
         this.setChanged();
         this.notifyObservers(this);
+    }
+
+    public boolean isEndNear() {
+       return getPlayers().size() == 1;
     }
 }
