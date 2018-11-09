@@ -1,10 +1,5 @@
 package com.soen.risk.boundary.response;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observer;
-
-import com.soen.risk.boundary.CardObserver;
 import com.soen.risk.boundary.Response;
 
 /**
@@ -12,27 +7,27 @@ import com.soen.risk.boundary.Response;
  */
 public class CardExchangeResponse implements Response {
 
-	   private int state;
-	   private List<CardObserver> observers = new ArrayList<CardObserver>();
-	   
-	   public int getState() {
-	      return state;
-	   }
+//	   private int state;
+//	   //private List<CardObserver> observers = new ArrayList<CardObserver>();
+//
+//	   public int getState() {
+//	      return state;
+//	   }
+//
+//	   public void setState(int state) {
+//	      this.state = state;
+//	      notifyAllObservers();
+//	   }
 
-	   public void setState(int state) {
-	      this.state = state;
-	      notifyAllObservers();
-	   }
-
-	   public void setObservers(List<CardObserver> observers)
-	   {
-		   this.observers=observers;
-	   }
-	   
-	   public void notifyAllObservers(){
-		      for (CardObserver observer : observers) {
-		         observer.update();
-		      }
-		   } 	
+//	   public void setObservers(List<CardObserver> observers)
+//	   {
+//		   this.observers=observers;
+//	   }
+//
+//	   public void notifyAllObservers(){
+//		      for (CardObserver observer : observers) {
+//		         observer.update();
+//		      }
+//		   }
 	   
 }

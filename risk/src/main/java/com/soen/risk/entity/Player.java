@@ -14,15 +14,18 @@ import java.util.logging.Logger;
  */
 
 public class Player extends Observable {
+    private static Logger logger = Logger.getLogger(Player.class.getName());
+
     private String name;
     private int armyCapacity;
-    private int extraArmies;
+    private int exchangeArmy = 0;
     private int exchangeCount = 0;
     private List<Country> countries;
-    private List<String> cards;
-    private int finalarmies;
-    private static Logger logger = Logger.getLogger(Player.class.getName());
+    private List<Card> cards;
+    //private int finalarmies;
+
     private int Attackercounter = 0;
+    private int winCounter = 0;
 
     /**
      * Initialise the player with given suffix and empty list of owned countries.
@@ -32,7 +35,8 @@ public class Player extends Observable {
     public Player(int nameSuffix) {
         this.name = "Player_" + String.valueOf(nameSuffix);
         this.countries = new ArrayList<>();
-        this.cards = new ArrayList<>();
+        this.cards = new ArrayList<>(Arrays.asList(Card.ARTILLERY, Card.INFANT, Card.INFANT, Card.CAVALRY, Card.CAVALRY, Card.CAVALRY, Card.CAVALRY));
+        //new ArrayList<>();
     }
 
     /**
@@ -80,47 +84,32 @@ public class Player extends Observable {
         for (Country c : countries) {
             logger.log(Level.INFO, "Adding reinforce army to country " + c.getName() + ", army count " + armyCounts.get(i));
             c.setArmy(c.getArmy() + armyCounts.get(i)); // new army count of the country
-            //setArmyCapacity(armyCapacity - armyCounts.get(i)); // new army capacity left with player
             i++;
         }
     }
 
     private ArrayList<Boolean> attackPlay(int attackingDice, int attackedDice) {
         ArrayList<Boolean> win = new ArrayList<>();
-        if(attackedDice <= 0 || attackingDice <= 0)
-        {
+        if (attackedDice <= 0 || attackingDice <= 0) {
             return win;
         }
-        if(attackingDice >=3)
-        {
+        if (attackingDice >= 3) {
             attackingDice = 3;
-            if(attackedDice>=2)
-            {
+            if (attackedDice >= 2) {
                 attackedDice = 2;
-            }
-            else if(attackedDice == 1)
-            {
+            } else if (attackedDice == 1) {
                 attackedDice = 1;
             }
-        }
-        else if(attackingDice==2)
-        {
-            attackingDice=2;
-            if(attackedDice>=2)
-            {
-                attackedDice=2;
+        } else if (attackingDice == 2) {
+            attackingDice = 2;
+            if (attackedDice >= 2) {
+                attackedDice = 2;
+            } else if (attackedDice == 1) {
+                attackedDice = 1;
             }
-            else if(attackedDice == 1)
-            {
-                attackedDice=1;
-            }
-        }
-
-        else if(attackingDice==1)
-        {
+        } else if (attackingDice == 1) {
             attackedDice = 1;
-            if(attackedDice>=1)
-            {
+            if (attackedDice >= 1) {
                 attackedDice = 1;
             }
         }
@@ -278,25 +267,23 @@ public class Player extends Observable {
                 }
             }
             if (size == count) {
-            	int armies=getCardExchangeArmies();
-            	if(armies !=0 && armies>0 ) {
-            		return ctt.getControlValue()+armies;
-            	}
-            	else {
-            		return ctt.getControlValue();
-                }
+                //int armies = getCardExchangeArmies();
+//                if (armies != 0 && armies > 0) {
+//                    return ctt.getControlValue() + armies;
+//                } else {
+                return ctt.getControlValue() + getExchangeArmy();
+                // }
             }
 
         }
         //If Player do not have all country of a continent
         int number_of_countries = this.getCountries().size();
-        int armies=getCardExchangeArmies();       
-    	if(armies !=0 && armies>0 ) {
-    		return Math.max(3, (int) Math.ceil(number_of_countries / 3.0)) +armies;
-    	}
-    	else {
-    		return Math.max(3, (int) Math.ceil(number_of_countries / 3.0));
-    	}
+        //int armies = getCardExchangeArmies();
+//        if (armies != 0 && armies > 0) {
+//            return Math.max(3, (int) Math.ceil(number_of_countries / 3.0)) + armies;
+//        } else {
+        return Math.max(3, (int) Math.ceil(number_of_countries / 3.0)) + getExchangeArmy();
+        //}
     }
 
     private Country findByCountryName(String s) {
@@ -304,6 +291,23 @@ public class Player extends Observable {
         return null;
     }
 
+    public void removeCard(String temp[]) {
+        logger.log(Level.INFO, "Removing card " + temp);
+        for (String aTemp : temp) {
+            int count = 0;
+            for (Card c : cards) {
+                if (c.toString().equals(aTemp)) {
+                    logger.log(Level.INFO,"Remove= "+c.toString());
+                    cards.remove(c);
+                    break;
+                }
+                count++;
+            }
+        }
+        setChanged();
+        notifyObservers(this);
+
+    }
 
     //Return All Countries Name of Player
     public List<String> getCountryNames() {
@@ -314,25 +318,84 @@ public class Player extends Observable {
     }
 
 
-    /**
-     * (addCard card): Adds risk cards to players
-     *
-     * @param
-     */
-    public void addCard(String card) {
+    private void addCard(Card card) {
         this.cards.add(card);
+        setChanged();
+        notifyObservers(this);
     }
 
-    public List<String> getCards() {
-        return this.cards;
+//    public int getTotalArmyCount() {
+//        int armyCount = 0;
+//        for (Country country : this.countries) {
+//            armyCount += country.getArmy();
+//        }
+//        return armyCount;
+//    }
+
+    public void addRandomCard() {
+        Random rand = new Random();
+        List<Card> cardTypes = Arrays.asList(Card.values());
+        addCard(cardTypes.get(rand.nextInt(3)));
     }
 
-    public int getTotalArmyCount() {
-        int armyCount = 0;
-        for (Country country : this.countries) {
-            armyCount += country.getArmy();
+    public List<String> getCardNames() {
+        List<String> cardNames = new ArrayList<>();
+        for (Card card : cards)
+            cardNames.add(card.toString());
+        return cardNames;
+    }
+
+    public void assignExchangeArmies() {
+        setExchangeArmy(exchangeArmy + (exchangeCount+1) * 5);
+        setExchangeCount(getExchangeCount() + 1);
+    }
+
+    public void resetExchangeArmy() {
+        setExchangeArmy(0);
+    }
+
+    public void sendCardsTo(Player currentPlayer) {
+        for (Card card : cards) {
+            currentPlayer.addCard(card);
         }
-        return armyCount;
+        setCards(new ArrayList<>());
+    }
+
+    public boolean isCardExchangeEnabled() {
+        HashMap<String, Integer> hp = new HashMap<>();
+        if(cards.size() < 5)
+            return false;
+        for (Card c : cards) {
+            if (!hp.isEmpty()) {
+                if (hp.containsKey(c.toString())) {
+                    hp.put(c.toString(), hp.get(c.toString()) + 1);
+
+                } else {
+                    hp.put(c.toString(), 1);
+                }
+            } else {
+                hp.put(c.toString(), 1);
+            }
+        }
+        //One of them have 3
+        for (String key : hp.keySet()) {
+            if (hp.get(key) >= 3) {
+                return true;
+            }
+        }
+        if (hp.size() < 3) {
+            return false;
+        }
+        int flag = 0;
+        for (String key : hp.keySet()) {
+            if (!(hp.get(key) >= 1)) {
+                flag = 1;
+            }
+        }
+        if (flag == 0)
+            return true;
+        else
+            return false;
     }
 
     public String toString() {
@@ -357,8 +420,6 @@ public class Player extends Observable {
 
     public void setArmyCapacity(int armyCapacity) {
         this.armyCapacity = armyCapacity;
-        //this.setChanged();
-        //this.notifyObservers();
     }
 
     public void setAttackCounter(int count) {
@@ -369,28 +430,56 @@ public class Player extends Observable {
         return this.Attackercounter;
     }
 
-    public int getExchangecount() {
+    public int getExchangeCount() {
         return exchangeCount;
     }
 
-    public void setExchangecount() {
-        this.exchangeCount++;
+    public void setExchangeCount(int exchangeCount) {
+        logger.log(Level.INFO, "exchange count updated : " + exchangeCount);
+        this.exchangeCount = exchangeCount;
     }
 
-    public int getExtraArmies() {
-        return extraArmies;
+    public int getExchangeArmy() {
+        return exchangeArmy;
     }
 
-    public void setExtraArmies(int extraArmies) {
-        this.extraArmies = extraArmies;
+    public void setExchangeArmy(int exchangeArmy) {
+        logger.log(Level.INFO, "Updating exchange army count : " + exchangeArmy);
+        this.exchangeArmy = exchangeArmy;
     }
 
-    public int getCardExchangeArmies() {
-        return finalarmies;
+    public List<Card> getCards() {
+        return cards;
     }
 
-    public void setCardExchangeArmies() {
-        this.finalarmies = getExtraArmies() * getExchangecount();
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+        setChanged();
+        notifyObservers(this);
     }
+
+    public int getWinCounter() {
+        return winCounter;
+    }
+
+    public void setWinCounter(int winCounter) {
+        this.winCounter = winCounter;
+    }
+
+    //    public int getExtraArmies() {
+//        return extraArmies;
+//    }
+//
+//    public void setExtraArmies(int extraArmies) {
+//        this.extraArmies = extraArmies;
+//    }
+//
+//    public int getCardExchangeArmies() {
+//        return finalarmies;
+//    }
+//
+//    public void setCardExchangeArmies() {
+//        this.finalarmies = getExtraArmies() * getExchangecount();
+//    }
 
 }
