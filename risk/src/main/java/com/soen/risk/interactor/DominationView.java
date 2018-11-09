@@ -13,8 +13,9 @@ import java.util.logging.Logger;
  * Use case to buildGame the game play will be responsible to attach the domination view to all the players that are
  * playing the game. The observer should be attached after the players have been spawned, i.e.,
  * in the buildGame method of GamePlay.
- * <p>
- *
+ * @author Varun Singhal
+ * @since 04-11-2018
+ * @version 1.0.0
  */
 public class DominationView implements Observer {
 
@@ -22,17 +23,22 @@ public class DominationView implements Observer {
     private HashMap<String, PlayerInfo> playersInfo;
     private int totalCountries;
 
+  
     /**
-     * Implementation of Domination view to re-use the attached observer instance.
-     *
-     * @return Instantiated domination view object.
+     * Constructor for Domination View
+     * @param totalCountries- Count of Total Number of Countries required to display in Domination View
      */
     DominationView(int totalCountries) {
         this.totalCountries = totalCountries;
         playersInfo = new HashMap<>();
     }
 
-
+    /**
+     * Update the Player and his assigned countries with army count
+     *
+     * @param obs PLayer instance to find the player information
+     * @param o
+     */
     @Override
     public void update(Observable obs, Object o) {
         try {
@@ -49,6 +55,12 @@ public class DominationView implements Observer {
     }
 
     // country has been added or dropped -- recalculate the share.
+    /**
+     * Update the DominationView object with his name and share of armies
+     *
+     * @param obs Player instance to be updated
+     *
+     */
     private void updatePlayer(Player p) {
         PlayerInfo playerinfo = playersInfo.getOrDefault(p.getName(), new PlayerInfo());
         playerinfo.setCountries(new HashMap<>()); //reset the countries
@@ -72,6 +84,11 @@ public class DominationView implements Observer {
     }
 
     // army count has been updated for the country. -- update total army count
+    /**
+     * Update the Country with updated total armyCount needed for view
+     *
+     * @param Country object to be modified with army count
+     */
     private void updateCountry(Country c) {
         for (String playerName : playersInfo.keySet()) {
             PlayerInfo currentPlayerInfo = playersInfo.getOrDefault(playerName, new PlayerInfo());
@@ -86,6 +103,12 @@ public class DominationView implements Observer {
         }
     }
 
+    /**
+     * Update the Player with updated total armyCount needed for view
+     *
+     * @param PlayerObject
+     * @return Country count of a Player
+     */
     private int calculateTotalCount(PlayerInfo playerInfo) {
         int counter = 0;
         for (String countryName : playerInfo.getCountries().keySet()) {

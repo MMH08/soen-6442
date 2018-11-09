@@ -22,10 +22,11 @@ import java.util.logging.Logger;
  * <li>Create Map class object to perform all functionality of map class i.e. allocating initial armies etc.
  * <li>Change Current Phase
  * <li>Change Current player after its turn
+ * 
  * </ul>
  *
  * @author Varun Singhal
- * @version 1.0.0
+ * @version 2.0.0
  * @since 2018-10-10
  */
 
@@ -48,6 +49,13 @@ public class GamePlay {
     private GamePlay() {
     }
 
+    /**
+     * Response build for the Game Play object with necessary views
+     * @param Response object to build 
+     * @param fileName for initiating  Game
+     * @param countOfPlayers for initiating Game 
+     * @return response object
+     */
     public Response start(Response response, String filename, int countOfPlayers) {
         game = new Game(filename, countOfPlayers);
 
@@ -73,7 +81,11 @@ public class GamePlay {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-
+    /**
+     * Setting necessary phase information accordingly to phase name
+     * @param Response object with phase info 
+     * @return Response object with required info for each phase
+     */
     public Response getPhaseInfo(Response response) {
         if (game.getCurrentPhase().equals(Phase.STARTUP)) {
             ((StartupInfoResponse) response).setCountryName(game.getCurrentPlayer().nextCountryToAssignArmy());
@@ -92,6 +104,12 @@ public class GamePlay {
         return response;
     }
 
+   
+    /**
+     * To initiate startup Phase with necessary country and armies
+     * @param countryName for the startup
+     * @param armyCount to assign for each Country
+     */
     public void executeStartupPhase(String countryName, int armyCount) {
         Country country = game.getMap().findByCountryName(countryName);
         game.getCurrentPlayer().executeStartupPhase(country, armyCount);
@@ -102,6 +120,10 @@ public class GamePlay {
         }
     }
 
+    /**
+     * To initiate Reinforce Phase with necessary armyCounts
+     * @param List of armyCounts of a given player
+     */
     public void executeReinforcePhase(ArrayList<Integer> armyCounts) {
         game.getCurrentPlayer().executeReinforcePhase(armyCounts);
         // updates
@@ -109,6 +131,16 @@ public class GamePlay {
         game.updateCurrentPhase();
     }
 
+    
+    /**
+     * To initiate Attack Phase with necessary data include options for Skip attack and All Out Mode
+     * @param Attacking country-countryName
+     * @param Defending country-countryName
+     * @param attackingDiceCount- Dice Count of the Attacking country
+     * @param defendingDiceCount- Dice Count of the Defending country
+     * @param skipAttack-option for skipping atack by user
+     * @param allOutMode- to set value for All out Mode 
+     */
     public void executeAttackPhase(String attackingCountry, String defendingCountry, int attackingDiceCount,
                                    int defendingDiceCount, int skipAttack, int allOutMode) {
         //Add players random issue one player get no army
@@ -164,6 +196,12 @@ public class GamePlay {
         }
     }
 
+    /**
+     * To initiate Fortification Phase with respective county and armies required
+     * @param startcountry for army transfer
+     * @param endCountry for army transfer
+     * @param armyCount-number of armies to be trnasfered
+     */
     public void executeFortificationPhase(String startCountry, String endCountry, int armyCount) {
         if (game.getMap().pathExists(startCountry, endCountry, game.getCurrentPlayer().getCountries())) {
             game.getCurrentPlayer().executeFortifyPhase(startCountry, endCountry, armyCount);
