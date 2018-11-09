@@ -10,10 +10,4 @@ import static org.junit.Assert.*;
 public class CountryTest 
 {
 
-    /**
-     * Checks if is empty.
-     */
-    @Test
-    public void isEmpty() {
-    }
 }

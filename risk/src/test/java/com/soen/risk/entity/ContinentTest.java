@@ -8,16 +8,6 @@ import static org.junit.Assert.*;
 
 public class ContinentTest {
 
-    @Test
-    public void addCountry() {
-    }
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
+    
 
 }
