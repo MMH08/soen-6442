@@ -9,35 +9,5 @@ import org.junit.Test;
  */
 public class MapBuilderTest {
 
-    /**
-     * Sets the up.
-     *
-     * @throws Exception the exception
-     */
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    /**
-     * Tear down.
-     *
-     * @throws Exception the exception
-     */
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    /**
-     * Builds the.
-     */
-    @Test
-    public void build() {
-    }
-
-    /**
-     * Save.
-     */
-    @Test
-    public void save() {
-    }
+   
 }
