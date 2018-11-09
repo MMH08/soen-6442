@@ -164,6 +164,13 @@ public class Map {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * 
+     * @param startCountry Starting country name
+     * @param endCountry Checking Ending country name
+     * @param countries List of countries to check for path
+     * @return boolean value to denote if path exists
+     */
     public boolean pathExists(String startCountry, String endCountry, List<Country> countries) {
         int startId = findByCountryName(startCountry).getId();
         int endId = findByCountryName(endCountry).getId();
@@ -193,13 +200,7 @@ public class Map {
     // --------------------------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------------------------
 
-    /**
-     * This method to add new continent
-     *
-     * @param temp Receive continent name with control value
-     * @author Amit Sachdeva
-     * @since 2018-10-06
-     */
+  
     private void addNewContinent(String temp) {
         logger.log(Level.FINE, "Adding continent " + temp);
         String split_continent[] = temp.split("=");
@@ -208,13 +209,7 @@ public class Map {
         continents.add(cont);
     }
 
-    /**
-     * This method to add new country and add new Country in their respective continent
-     *
-     * @param temp Receive country with location, continent in which belong and neighbouring countries
-     * @author Amit Sachdeva
-     * @since 2018-10-06
-     */
+    
     private void addNewCountry(String temp) {
         logger.log(Level.FINE, "Adding new country " + temp);
         String split_country[] = temp.split(",");
@@ -294,14 +289,7 @@ public class Map {
         return "";
     }
 
-    /**
-     * This method get continent for specific country.
-     *
-     * @param country current country string
-     * @return Return Neighbouring countries of current country.
-     * @author Manmeet Singh
-     * @since 2018-10-07
-     */
+   
     private String getNeighbouringCountries(String country) {
         for (LinkedList<Country> ll : this.adjCountry) {
             if (ll.get(0).getName().equals(country)) {
@@ -323,6 +311,13 @@ public class Map {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    
+    /**
+     * 
+     * @param allowedCountries List of countries to be assigned as adjacent
+     * @param movingPath Path of a country
+     * @return to denote whether path is valid or not
+     */
     private boolean checkPathValid(List<Country> allowedCountries, List<Integer> movingPath) {
         for (int countryId : movingPath) {
             int flag = 0;
@@ -341,6 +336,11 @@ public class Map {
         return true;
     }
 
+    /**
+     * 
+     * @param path
+     * @param allPaths
+     */
     private void addPath(LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths) {
         ArrayList<Integer> temp = new ArrayList<>();
         for (int a : path) {
@@ -349,6 +349,7 @@ public class Map {
         allPaths.add(temp);
     }
 
+    
     private int countNumberOfPath(LinkedList adj[], int start, int dest, int PathCount, boolean visited[], LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths) {
         visited[start] = true;
         path.add(start);
@@ -380,6 +381,7 @@ public class Map {
         return PathCount;
     }
 
+  
     private boolean searchPathBetweenCountries(LinkedList adj[], int currentCountry, int shift, List<Country> countries) {
         boolean v[] = new boolean[adj.length];
         LinkedList<Integer> movingPath = new LinkedList();
@@ -429,7 +431,9 @@ public class Map {
         return false;
     }
 
+
     public boolean checkCountryDuplicacy() {
+
         if (this.countries.size() == 0) {
             logger.log(Level.INFO, "Countries not found.");
             return true;
@@ -446,7 +450,8 @@ public class Map {
         return false;
     }
 
-    //Implement Depth First Search Algorithm
+    
+   
     private void checkingContacting(LinkedList adj[], int CurrentCountry, boolean visited[], LinkedList<Integer> movingPath) {
         visited[CurrentCountry] = true;
         movingPath.add(CurrentCountry);
