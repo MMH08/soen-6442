@@ -320,6 +320,7 @@ public class Player extends Observable {
 
     private void addCard(Card card) {
         this.cards.add(card);
+        logger.log(Level.INFO, "Adding card : " + card.toString());
         setChanged();
         notifyObservers(this);
     }

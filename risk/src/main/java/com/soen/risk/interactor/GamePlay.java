@@ -1,6 +1,5 @@
 package com.soen.risk.interactor;
 
-import com.soen.risk.boundary.Request;
 import com.soen.risk.boundary.Response;
 import com.soen.risk.boundary.response.AttackInfoResponse;
 import com.soen.risk.boundary.response.FortifyInfoResponse;
@@ -12,8 +11,7 @@ import com.soen.risk.entity.Phase;
 import com.soen.risk.entity.Player;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -114,6 +112,7 @@ public class GamePlay {
         //Add players random issue one player get no army
         //Exception handling
         if (skipAttack == 1) {
+            logger.log(Level.INFO, "Skipping attack...");
             // add one random card and reset the win counter
             if(game.getCurrentPlayer().getWinCounter() > 0) {
                 game.getCurrentPlayer().addRandomCard();
@@ -131,21 +130,22 @@ public class GamePlay {
                 defendingDiceCount, allOutMode);
 
         if (attackingCon.getArmy() == 0) {
+            logger.log(Level.INFO, "Attacking country lost all the army");
             game.getCurrentPlayer().removeCountry(attackingCon);
             defendingPlayer.addCountry(attackingCon);
             //updates
             game.getCurrentPlayer().setAttackCounter(0);
             //game.updateCurrentPhase();
         } else if (defendingCon.getArmy() == 0) {
+            logger.log(Level.INFO, "Defending country lost all the army");
             if (attackingCon.getArmy() <= game.getCurrentPlayer().getAttackCounter()) {
                 defendingCon.setArmy(attackingCon.getArmy() - 1);
                 attackingCon.setArmy(1);
-                game.getCurrentPlayer().setWinCounter(1);
             } else {
                 defendingCon.setArmy(game.getCurrentPlayer().getAttackCounter());
                 attackingCon.setArmy(attackingCon.getArmy() - game.getCurrentPlayer().getAttackCounter());
             }
-
+            game.getCurrentPlayer().setWinCounter(1);
             game.getCurrentPlayer().addCountry(defendingCon);
             defendingPlayer.removeCountry(defendingCon);
             //updates
@@ -153,11 +153,13 @@ public class GamePlay {
         }
         // exchange cards if all countries are lost
         if(game.getCurrentPlayer().getCountries().size() == 0) {
+            logger.log(Level.INFO, "all countries lost by attacker");
             game.getCurrentPlayer().sendCardsTo(defendingPlayer);
             game.dropPlayer(game.getCurrentPlayer());
             game.updateCurrentPhase();
         }
         else if (defendingPlayer.getCountries().size() == 0) {
+            logger.log(Level.INFO, "all countries lost by defender");
             defendingPlayer.sendCardsTo(game.getCurrentPlayer());
             game.dropPlayer(defendingPlayer);
             game.updateCurrentPhase();
