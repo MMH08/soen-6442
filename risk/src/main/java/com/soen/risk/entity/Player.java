@@ -74,13 +74,22 @@ public class Player extends Observable {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    /**
+     * To begin startup Phase
+     * @param country Country object for startup
+     * @param armyCount for startup
+     */
     public void executeStartupPhase(Country country, int armyCount) {
         country.setArmy(country.getArmy() + armyCount);
         setArmyCapacity(getArmyCapacity() - armyCount);
     }
 
+    /**
+     * To begin Reinforce Phase
+     * @param armyCounts value to Reinforce Phase
+     */
     public void executeReinforcePhase(ArrayList<Integer> armyCounts) {
-        int i = 0;
+        int i = 0; 
         for (Country c : countries) {
             logger.log(Level.INFO, "Adding reinforce army to country " + c.getName() + ", army count " + armyCounts.get(i));
             c.setArmy(c.getArmy() + armyCounts.get(i)); // new army count of the country
@@ -178,6 +187,15 @@ public class Player extends Observable {
 
     }
 
+    /**
+     * Executing Attack Phase
+     * @param defendingPlayer Player 1 for defends
+     * @param attackingCountry Player 1 who attacks
+     * @param defendingCountry The country being attacked
+     * @param attackingDiceCount Dice count of Attacking Player
+     * @param defendingDiceCount Dice count of Defending Player
+     * @param allOutMode Option flag
+     */
     public void executeAttackPhase(Player defendingPlayer, Country attackingCountry, Country defendingCountry, int attackingDiceCount, int defendingDiceCount, int allOutMode) {
         if (allOutMode == 1) {
             logger.log(Level.INFO, "Entered all out mode ... ");
@@ -208,6 +226,14 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * TO execute One Attack 
+     * @param defendingPlayer Defending Player
+     * @param attackingCountry Attacking Player
+     * @param defendingCountry Country being attacked
+     * @param attackingDiceCount Dice count of Attacker
+     * @param attackedDiceCount Dice count of Defender
+     */
     private void executeOneAttackPhase(Player defendingPlayer, Country attackingCountry, Country defendingCountry, int attackingDiceCount, int attackedDiceCount) {
         logger.log(Level.INFO, "Entered one attack phase ...");
         ArrayList<Boolean> wins = this.attackPlay(attackingDiceCount, attackedDiceCount);
@@ -225,6 +251,12 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * Initiate Fortification Phase
+     * @param startCountry Country to begin fortification
+     * @param endCountry Country to get fortification
+     * @param armyCount Army to be fortified
+     */
     public void executeFortifyPhase(String startCountry, String endCountry, int armyCount) {
         Country country1 = findByCountryName(startCountry);
         Country country2 = findByCountryName(endCountry);
@@ -291,6 +323,10 @@ public class Player extends Observable {
         return null;
     }
 
+    /**
+     * To remove cards once used by Player. Observed by CardExchangeView
+     * @param temp Array of Card Names
+     */
     public void removeCard(String temp[]) {
         logger.log(Level.INFO, "Removing card " + temp);
         for (String aTemp : temp) {
@@ -318,6 +354,10 @@ public class Player extends Observable {
     }
 
 
+    /**
+     * Adding Card Objects to Player. Notified to CardExchangeView
+     * @param card
+     */
     private void addCard(Card card) {
         this.cards.add(card);
         setChanged();
@@ -332,12 +372,19 @@ public class Player extends Observable {
 //        return armyCount;
 //    }
 
+    /**
+     * Adding RandomCard
+     */
     public void addRandomCard() {
         Random rand = new Random();
         List<Card> cardTypes = Arrays.asList(Card.values());
         addCard(cardTypes.get(rand.nextInt(3)));
     }
 
+    /**
+     * To get all Card Names
+     * @return CardNames as List
+     */
     public List<String> getCardNames() {
         List<String> cardNames = new ArrayList<>();
         for (Card card : cards)
