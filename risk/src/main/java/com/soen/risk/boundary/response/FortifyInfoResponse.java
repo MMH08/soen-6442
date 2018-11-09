@@ -16,6 +16,8 @@ public class FortifyInfoResponse implements Response {
 
     private List<String> countryNames;
 
+    private boolean endGame;
+
     private PhaseView phaseView;
 
     private DominationView dominationView;
@@ -55,5 +57,13 @@ public class FortifyInfoResponse implements Response {
 
     public void setDominationView(DominationView dominationView) {
         this.dominationView = dominationView;
+    }
+
+    public boolean isEndGame() {
+        return endGame;
+    }
+
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
     }
 }

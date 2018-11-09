@@ -22,13 +22,13 @@
 <div th:fragment="nav">
 
     <div id="header" style="background-image: url('/img/header.jpg');">
-
     </div>
 
     <div id="menu">
         <a title="home" th:href="@{/}">home</a>&nbsp;&nbsp; |&nbsp;&nbsp;
         <a title="new map" th:href="@{/create01}">new map</a>&nbsp;&nbsp; |&nbsp;&nbsp;
-        <a title="edit map" th:href="@{/edit00}">edit map</a>
+        <a title="edit map" th:href="@{/edit00}">edit map</a>&nbsp;&nbsp; |&nbsp;&nbsp;
+        <a title="end game" th:href="@{/endGame}">end game</a>
     </div>
 
 </div>
@@ -71,7 +71,28 @@
 </div>
 
 <div th:fragment="cardExchangeView">
-
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <p>Select cards for exchange</p>
+            </div>
+            <form method="get" th:action="@{/cardExchange}" id="exchangeForm">
+                <div class="modal-body">
+                    <div th:each="cards : ${cardExchangeView.cards}">
+                        <select th:if="${phaseView.playerName} == ${cards.key}" id="cards" multiple>
+                            <option th:each="card : ${cards.value}" th:text="${card}" th:value="${card}"></option>
+                        </select>
+                        <input type="hidden" name="cards" id="cardString" value="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="exchangeButton">Exchange</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 </body>

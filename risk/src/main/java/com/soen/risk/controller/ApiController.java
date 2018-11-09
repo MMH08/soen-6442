@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -386,7 +387,9 @@ public class ApiController {
         model.addObject("dominationView", response.getDominationView());
         model.addObject("reinforceArmyCount", response.getReinforceArmyCapacity());
         model.addObject("countries", response.getCountries());
-        model.addObject("cards", response.getPlayerCards());
+        model.addObject("cards", response.getCards());
+        model.addObject("cardExchangeEnabled", response.isCardExchangeEnabled());
+        model.addObject("cardExchangeView", response.getCardExchangeView());
         return model;
     }
 
@@ -410,14 +413,12 @@ public class ApiController {
      * @param cards the cards to be exchanged
      * @return the string
      */
-    @RequestMapping("/CardExchange")
+    @RequestMapping("/cardExchange")
     public String ExchangeCards(@RequestParam("cards") String cards) {
         CardExchange usecase = new CardExchange(cards);
-        new ReinforceInfo(usecase);
         usecase.execute();
-        return "redirect:/reinforcePhase";
+        return "redirect:/phaseResolver";
     }
-
 
     /**
      * Attack phase.
@@ -438,9 +439,9 @@ public class ApiController {
     }
 
     @RequestMapping("/attackPhase/attack")
-    public String attachPhaseExecute(@RequestParam("attackingCountry") String attackingCountry,
+    public String attachPhaseExecute(@RequestParam(value = "attackingCountry", defaultValue = "null") String attackingCountry,
                                      @RequestParam(value = "attackingDiceCount", defaultValue = "0") String attackingDiceCount,
-                                     @RequestParam("defendingCountry") String defendingCountry,
+                                     @RequestParam(value = "defendingCountry", defaultValue = "null") String defendingCountry,
                                      @RequestParam(value = "defendingDiceCount", defaultValue = "0") String defendingDiceCount,
                                      @RequestParam(value = "skipAttack", defaultValue = "0") String skipAttack,
                                      @RequestParam(value = "allOutMode", defaultValue = "0") String allOutMode) {
@@ -464,6 +465,7 @@ public class ApiController {
         model.addObject("phaseView", response.getPhaseView());
         model.addObject("dominationView", response.getDominationView());
         model.addObject("countryNames", response.getCountryNames());
+        model.addObject("isEnd", response.isEndGame());
         return model;
     }
 
@@ -482,6 +484,13 @@ public class ApiController {
         MoveFortifyArmy usecase = new MoveFortifyArmy(startCountry, endCountry, armyCount);
         FortifyPhaseResponse response = usecase.execute();
         return "redirect:/phaseResolver";
+    }
+
+    @RequestMapping("/endGame")
+    public String endGame(){
+        EndGame usecase = new EndGame();
+        usecase.execute();
+        return "redirect:/";
     }
 
 }
