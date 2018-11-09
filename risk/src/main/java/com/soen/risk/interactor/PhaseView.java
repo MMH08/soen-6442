@@ -14,6 +14,7 @@ import java.util.logging.Logger;
  *
  * @author Varun Singhal
  * @since 02/11/2018
+ * @version 1.0.0
  */
 public class PhaseView implements Observer {
 
@@ -36,7 +37,10 @@ public class PhaseView implements Observer {
 
 
     }
-
+    //------------------------------------------------------
+   
+    
+    
     public String getPhaseName() {
         return phaseName;
     }

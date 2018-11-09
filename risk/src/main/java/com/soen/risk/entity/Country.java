@@ -17,6 +17,11 @@ public class Country extends Observable {
 	private int id;
 
 	// -------------------------------------------------------------
+	/*
+	 * Constructor of Country with Country id and name
+	 * @param id-ID of a country
+	 * @param name-Name of a country
+	 */
 	public Country(int id, String name) {
 		this.setName(name);
 		this.setId(id);

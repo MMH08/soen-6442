@@ -8,6 +8,18 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * <h3>MapBuilder</h3>
+ * Map Builder to create the Map with given name, continents, countries and their control values. <br/>
+ * Adjacency between the maps is also built<br/>
+ * Map is saved as text file to a external folder<br/>
+ *
+ * @author Amit
+ * @since 08/10/2018
+ * @version 1.0.0
+ */
+
+
 public class MapBuilder {
     private static Logger logger = Logger.getLogger(MapBuilder.class.getName());
 
@@ -29,7 +41,11 @@ public class MapBuilder {
         this.countryOwners = countryOwners;
         this.connections = connections;
     }
-
+    
+    
+    /**
+     * Building the Map object by calling the respective methods.
+     */
     public void build() {
         this.map.setName(this.mapName);
         addContinentObjects();
@@ -54,7 +70,10 @@ public class MapBuilder {
         }
         map.map_country_object_creation();
     }
-
+    
+    /**
+     * Getting continent objects and adding to Map
+     */
     private void addContinentObjects() {
         int i = 0;
         for (String s : this.continents) {
@@ -64,7 +83,10 @@ public class MapBuilder {
             i++;
         }
     }
-
+    
+    /**
+     * Getting country objects and adding to Map
+     */
     private void addCountryObjects() {
         //Countries
 //        ArrayList<Country> temp = new ArrayList<>();
@@ -84,7 +106,11 @@ public class MapBuilder {
             i++;
         }
     }
-
+    
+    
+    /**
+     * Mapping country to Continents
+     */
     private void addCountryToContinents() {
         int i = 0;
         for (String continent : countryOwners) {
@@ -93,6 +119,10 @@ public class MapBuilder {
         }
     }
 
+    /**
+     * Saving the map to an external folder
+     * @param User given folder location
+     */
     public String save(String downloadFolder) {
         map.setFileName(downloadFolder + map.getName() + ".map");
         if (map.isValid()){
