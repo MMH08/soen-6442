@@ -412,7 +412,7 @@ public class Map {
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    private boolean checkContinentDuplicacy() {
+    public boolean checkContinentDuplicacy() {
         if (this.continents.size() == 0) {
             logger.log(Level.INFO, "Continents not found.");
             return true;
@@ -429,7 +429,7 @@ public class Map {
         return false;
     }
 
-    private boolean checkCountryDuplicacy() {
+    public boolean checkCountryDuplicacy() {
         if (this.countries.size() == 0) {
             logger.log(Level.INFO, "Countries not found.");
             return true;
@@ -458,13 +458,15 @@ public class Map {
         }
     }
 
-    private boolean checkIsolatedCountry() {
+    public boolean checkIsolatedCountry() {
         int currentCoun = this.countries.get(0).getId();    //Convert Country name to their ids
         LinkedList<LinkedList<Country>> ll = this.adjCountry;
+       
         LinkedList<Integer> adj[] = new LinkedList[ll.size()];
         for (int i = 0; i < ll.size(); i++) {
             adj[i] = new LinkedList();
         }
+       
         for (LinkedList<Country> ll1 : ll) {
             int index = ll1.get(0).getId();
             int j = 0;
@@ -476,6 +478,7 @@ public class Map {
 
             }
         }
+        
         boolean v[] = new boolean[adj.length];
         LinkedList<Integer> movingPath = new LinkedList();
         //Start searching for path between both countries

@@ -1,6 +1,9 @@
 package com.soen.risk.entity;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import com.soen.risk.interactor.GamePlay;
 
 import static org.junit.Assert.*;
 
@@ -11,76 +14,44 @@ import java.util.ArrayList;
  */
 public class GameTest {
 
-    /**
-     * Drop player.
-     */
-    @Test
-    public void dropPlayer() 
-    {
-    	
-    }
+    
 
-    /**
-     * Checks if is not over.
-     */
-    @Test
-    public void isNotOver() {
-    }
+   
 
-    /**
-     * Assign army.
-     */
-    @Test
-    public void assignArmy() {
-    }
+   
 
-    /**
-     * Allocate initial countries.
-     */
-    @Test
-    public void allocateInitialCountries() {
-    }
+    
 
+    private Game game;
+    private GamePlay p;
+    static String path = "\\W:\\Java\\";
+    static String Filename = path + "playerTesting.map";
+    @Before
+	public void setUp()
+	{
+		Game game= new Game(Filename,2);
+		p = GamePlay.getInstance();
+		p.setGame(game);
+	}
     /**
-     * Allocate initial army.
-     */
-    @Test
-    public void allocateInitialArmy() 
-    {
-    }
-
-    /**
-     * Gets the map.
+     * Check Phase.
      *
      */
     @Test
-    public void getMap() {
+    public void checkPhasePlayers() 
+    {    	
+    	p.getGame().setCurrentPhase(Phase.REINFORCE);
+    	p.getGame().updateCurrentPhase();
+    	assertEquals("attackPhase",p.getGame().getCurrentPhase().toString());
     }
-
-    /**
-     * Sets the map.
-     */
     @Test
-    public void setMap() {
-    }
-
-    /**
-     * Validate the players.
-     *
-     */
-    @Test
-    public void getPlayers() 
+    public void intialCountries()
     {
-//    	ArrayList<Player> playerList=new ArrayList<Player>();
-//    	Map map=new Map();
-//    	Game game=new Game(map,1);
-//    	Player player=new Player(1);
-//    	player.setName("manmeet");
-//    	player.setArmyCapacity(2);
-//    	playerList.add(player);
-//    	game.setPlayers(playerList);
-//    	assertNotNull(game.getPlayers());
-    	
+    	p.getGame().allocateInitialCountries();
+    	for(Player p1: p.getGame().getPlayers())
+    	{
+    		assertNotEquals(p1.getCountries().size(),0);
+    	}
     }
     
 }

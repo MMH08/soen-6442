@@ -167,8 +167,12 @@ public class GamePlay {
     }
 
     public void executeFortificationPhase(String startCountry, String endCountry, int armyCount) {
+    	 Country start = game.getMap().findByCountryName(startCountry);
+         Country end = game.getMap().findByCountryName(endCountry);
+         logger.log(Level.INFO,String.valueOf(start.getArmy()) +" "+String.valueOf(end.getArmy()));
         if (game.getMap().pathExists(startCountry, endCountry, game.getCurrentPlayer().getCountries())) {
             game.getCurrentPlayer().executeFortifyPhase(startCountry, endCountry, armyCount);
+            logger.log(Level.INFO,String.valueOf(start.getArmy()) +" "+String.valueOf(end.getArmy()));
             // updates
             game.updateCurrentPhase();
             game.updateCurrentPlayer();

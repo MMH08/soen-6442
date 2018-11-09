@@ -1,4 +1,4 @@
-package com.soen.risk;
+/*package com.soen.risk;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,4 +13,4 @@ public class RiskApplicationTests {
 	public void contextLoads() {
 	}
 
-}
+}*/

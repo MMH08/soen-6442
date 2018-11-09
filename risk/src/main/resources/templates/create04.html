@@ -50,7 +50,7 @@
                                 </td>
 
                                 <td>
-                                    <button name="submit">Submit</button>
+                                     <button name="submit" >Submit</button> 
                                 </td>
                             </tr>
                         </table>
@@ -66,12 +66,13 @@
             //
             var connectionString = new Array();
             $(".connectionString").each(function(){
-                connectionString.push($(this).val().join(","));
+            	if($(this).val()){
+                connectionString.push($(this).val().join(","));}
             });
             console.log(connectionString);
             $("#connectionString").val(connectionString.join("|"));
-
-            //
+			console.log($("#connectionString").val(connectionString.join("|")));
+            
             $("form").submit();
         });
     </script>

@@ -226,6 +226,7 @@ public class Player extends Observable {
     }
 
     public void executeFortifyPhase(String startCountry, String endCountry, int armyCount) {
+    	
         Country country1 = findByCountryName(startCountry);
         Country country2 = findByCountryName(endCountry);
         if (country1.getArmy() <= armyCount) armyCount = country1.getArmy() - 1;

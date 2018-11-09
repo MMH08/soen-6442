@@ -161,7 +161,7 @@ public class Game extends Observable {
     /**
      * Randomly allocate initial countries to all players.
      */
-    private void allocateInitialCountries() {
+    public void allocateInitialCountries() {
         Random rand = new Random();
         int index = 0;
         for (Player p : players) {
@@ -204,17 +204,18 @@ public class Game extends Observable {
         return currentPlayer;
     }
 
-    private void setCurrentPlayer(Player currentPlayer) {
+   
+    public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
         this.setChanged();
         this.notifyObservers(this);
     }
-
+    
     public Phase getCurrentPhase() {
         return currentPhase;
     }
 
-    private void setCurrentPhase(Phase currentPhase) {
+    public void setCurrentPhase(Phase currentPhase) {
         this.currentPhase = currentPhase;
         this.setChanged();
         this.notifyObservers(this);

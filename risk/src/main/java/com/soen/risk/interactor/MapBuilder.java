@@ -28,6 +28,7 @@ public class MapBuilder {
         this.controlValues = controlValues;
         this.countryOwners = countryOwners;
         this.connections = connections;
+        
     }
 
     public void build() {
@@ -35,12 +36,13 @@ public class MapBuilder {
         addContinentObjects();
         addCountryObjects();
         addCountryToContinents();
-
+        logger.log(Level.INFO,"CONNECTIONS"+this.connections.size());
+               
 
         //Making map
         int i = 0;
         for (List<String> connection : this.connections) {
-            logger.log(Level.INFO, "Building connection :" + this.countries.get(i));
+            logger.log(Level.INFO, "Building connection :" + this.countries.get(i)+" "+connection.size()+1);
             String s[] = new String[connection.size() + 1];
             s[0] = this.countries.get(i);
             int j = 1;

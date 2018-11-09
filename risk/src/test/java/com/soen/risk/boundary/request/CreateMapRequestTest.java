@@ -28,15 +28,7 @@ public class CreateMapRequestTest {
     }
 
 
-    /**
-     * Tear down.
-     *
-     * @throws Exception the exception
-     */
-    @After
-    public void tearDown() throws Exception {
-    }
-
+    
     /**
      * Validates the name.
      */
