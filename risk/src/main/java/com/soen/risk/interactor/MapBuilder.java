@@ -15,8 +15,8 @@ import java.util.logging.Logger;
  * Map is saved as text file to a external folder<br/>
  *
  * @author Amit
- * @since 08/10/2018
- * @version 1.0.0
+ * @since 03/11/2018
+ * @version 1.0.2
  */
 
 

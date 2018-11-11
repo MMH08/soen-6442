@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * in the buildGame method of GamePlay.
  * @author Varun Singhal
  * @since 04-11-2018
- * @version 1.0.0
+ * @version 1.0.2
  */
 public class DominationView implements Observer {
 

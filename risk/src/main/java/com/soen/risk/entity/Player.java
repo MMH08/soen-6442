@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  *
  * @author Amit Sachdeva, Varun Singhal
  * @version 2.0.0
- * @since 2018-10-10
+ * @since 2018-10-31
  */
 
 public class Player extends Observable {

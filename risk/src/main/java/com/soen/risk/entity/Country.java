@@ -6,8 +6,8 @@ import java.util.Observable;
  *<h2>Country Class</h2>
  *<p>This class contains all details of a country i.e. Number of armies of countries, name, x and y axis, id.</p>
  *@author Amit Sachdeva
- *@since 2018-10-07
- *@version 1.0.0
+ *@since 2018-10-30
+ *@version 1.0.2
  */
 public class Country extends Observable {
 	private String name;

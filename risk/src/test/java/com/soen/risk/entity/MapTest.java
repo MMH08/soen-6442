@@ -19,7 +19,7 @@ public class MapTest {
 	
 	/** The Filename. */
 	//String path = "/home/varun/Downloads/001_I72_Ghtroc 720/";
-	String path = "\\W:\\Java\\";
+	String path = "/home/varun/Downloads/";
     String Filename = path + "001_I72_Ghtroc 720.map";
 	String invalidFile = path + "invalid.map";
     /**

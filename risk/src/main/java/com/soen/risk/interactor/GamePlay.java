@@ -24,8 +24,8 @@ import java.util.logging.Logger;
  * </ul>
  *
  * @author Varun Singhal
- * @version 2.0.0
- * @since 2018-10-10
+ * @version 1.0.2
+ * @since 2018-11-1
  */
 
 public class GamePlay {

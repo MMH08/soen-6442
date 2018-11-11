@@ -24,7 +24,7 @@ public class GameTest {
 
     private Game game;
     private GamePlay p;
-    static String path = "\\W:\\Java\\";
+    static String path = "/home/varun/Downloads/";
     static String Filename = path + "playerTesting.map";
     @Before
 	public void setUp()

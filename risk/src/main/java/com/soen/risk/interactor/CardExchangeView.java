@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  *
  * @author Nivedha
  * @since 05/11/2018
+ * @version 1.0.2
  */
 public class CardExchangeView implements Observer {
     private HashMap<String, List<String>> cards;

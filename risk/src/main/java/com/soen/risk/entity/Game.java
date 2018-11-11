@@ -10,8 +10,8 @@ import java.util.logging.Logger;
  * players after lost of all countries. Also return map and players</p>
  *
  * @author Manmeet Singh
- * @version 1.0.0
- * @since 2018-10-11
+ * @version 1.0.2
+ * @since 2018-11-05
  */
 public class Game extends Observable {
     private static Logger logger = Logger.getLogger(Game.class.getName());

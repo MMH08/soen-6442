@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author Varun Singhal
  * @since 02/11/2018
- * @version 1.0.0
+ * @version 1.0.2
  */
 public class PhaseView implements Observer {
 

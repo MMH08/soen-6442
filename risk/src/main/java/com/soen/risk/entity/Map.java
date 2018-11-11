@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * @author : Amit Sachdeva
  * @author : Manmeet Singh
  * @author : Nivetha
- * @version : 1.0.0
+ * @version 1.0.2
  */
 public class Map {
     private static Logger logger = Logger.getLogger(Map.class.getName());
