@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -309,16 +308,29 @@ public class ApiController {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    @RequestMapping("/singleGame01")
+    public String singleGame01() {
+        return "singlegame01";
+    }
+
+    @RequestMapping("/singleGame02")
+    public ModelAndView singleGame02(@RequestParam("players") String countOfPlayers) {
+        ModelAndView model = new ModelAndView("/singlegame02");
+        model.addObject("countOfPlayers", countOfPlayers);
+        return model;
+    }
+
+
     /**
      * Start game.
      *
      * @param filename       the filename
-     * @param countOfPlayers the count of players
+//     * @param countOfPlayers the count of players
      * @return the string
      */
-    @RequestMapping("/GamePlay")
-    public String startGame(@RequestParam("filename") String filename, @RequestParam("players") String countOfPlayers) {
-        StartGame usecase = new StartGame(filename, countOfPlayers);
+    @RequestMapping("/singleGamePlay")
+    public String startGame(@RequestParam("filename") String filename, @RequestParam("names") String playerNames, @RequestParam("behaviors") String behaviors) {
+        StartGame usecase = new StartGame(filename, playerNames, behaviors);
         usecase.execute();
         return "redirect:/phaseResolver";
     }
@@ -487,7 +499,7 @@ public class ApiController {
     }
 
     @RequestMapping("/endGame")
-    public String endGame(){
+    public String endGame() {
         EndGame usecase = new EndGame();
         usecase.execute();
         return "redirect:/";

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="layout :: header"/>
+</head>
+<body>
+<div id="container" style="margin: 0px auto; width: 760px;">
+
+    <div th:replace="layout :: nav"/>
+
+    <div id="box">
+        <div id="content">
+            <div class="overflow">
+                <div id="textpadding">
+                    <h2>Risk - Game Play</h2>
+                    <!--<div class="sticky">-->
+                    <!--<i class="fa fa-info-circle" aria-hidden="true"></i> <b>About</b>-->
+                    <!--</div>-->
+                    <br/>
+                    <form th:action="@{/singleGamePlay}" method="get">
+                        <table>
+                            <tr>
+                                <td>Map file path</td>
+                                <td><input type="text" name="filename"/></td>
+                            </tr>
+                            <tr th:each="counter : ${#numbers.sequence( 1, __${countOfPlayers}__)}">
+                                <td class="name" th:text="Player_ + ${counter}"></td>
+                                <td>
+                                    <select class="behavior">
+                                        <option value="HUMAN">HUMAN</option>
+                                        <option value="AGGRESSIVE">AGGRESSIVE</option>
+                                        <option value="CHEATER">CHEATER</option>
+                                        <option value="RANDOM">RANDOM</option>
+                                        <option value="BENEVOLENT">BENEVOLENT</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="behaviors" id="behaviors" value="">
+                                    <input type="hidden" name="names" id="names" value="">
+                                </td>
+                                <td><button>Play</button></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="layout :: footer"/>
+</div>
+
+<script>
+    $("button").click(function(){
+            //
+            var behaviors = new Array();
+            $(".behavior").each(function(){
+                behaviors.push($(this).val());
+            });
+            console.log(behaviors);
+            $("#behaviors").val(behaviors.join(","));
+
+            //
+            var names = new Array();
+            $(".name").each(function(){
+                names.push($(this).text());
+            });
+            console.log(names);
+            $("#names").val(names.join(","));
+
+            //
+            $("form").submit();
+        });
+</script>
+
+</body>
+</html>

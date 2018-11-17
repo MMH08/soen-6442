@@ -17,11 +17,19 @@
                     <!--<div class="sticky">-->
                     <!--<i class="fa fa-info-circle" aria-hidden="true"></i> <b>About</b>-->
                     <!--</div>-->
-                    Select the game mode<br>
-                    <ul>
-                        <li><a th:href="@{/singleGame01}">Single Game Mode</a></li>
-                        <li><a th:href="@{/tounament01}">Tournament Mode</a></li>
-                    </ul>
+                    <br/>
+                    <form th:action="@{/singleGame02}" method="get">
+                        <table>
+                            <tr>
+                                <td># players</td>
+                                <td><input type="text" name="players"/></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" name="submit" value="Continue"></td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
 
 
