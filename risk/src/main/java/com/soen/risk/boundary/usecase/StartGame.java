@@ -3,8 +3,14 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.StartGameRequest;
 import com.soen.risk.boundary.response.StartGameResponse;
+import com.soen.risk.entity.Game;
+import com.soen.risk.entity.Map;
+import com.soen.risk.entity.Player;
 import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.interactor.SingleMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Class StartGame.
@@ -35,7 +41,20 @@ public class StartGame implements Usecase {
     @Override
     public StartGameResponse execute() {
         GamePlay gamePlay = GamePlay.getInstance();
-        gamePlay.startGame(request.getFilename(), request.getCountOfPlayers());
+
+        //initialise map
+        Map map = new Map();
+        map.load(request.getFilename());
+        if(!map.isValid()) return response;
+
+        //initialise players
+        List<Player> players = new ArrayList<>();
+        for (int i = 0; i < request.getPlayerNames().size(); i++)
+            players.add(new Player(request.getPlayerNames().get(i), request.getPlayerBehaviors().get(i)));
+
+        // initialise game
+        gamePlay.newGame(map, players);
+
         return response;
     }
 }

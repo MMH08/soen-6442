@@ -2,43 +2,32 @@ package com.soen.risk.boundary.request;
 
 import com.soen.risk.boundary.Request;
 
-/**
- * The Class StartGameRequest.
- */
-public class StartGameRequest implements Request {
-    
-    /** The filename. */
-    private String filename;
-    
-    /** The count of players. */
-    private int countOfPlayers;
+import java.util.Arrays;
+import java.util.List;
 
-    /**
-     * Instantiates a new start game request.
-     *
-     * @param args the args
-     */
+public class StartGameRequest implements Request {
+
+    private String filename;
+    private List<String> playerNames;
+    private List<String> playerBehaviors;
+
     public StartGameRequest(String... args) {
         this.filename = args[0];
-        this.countOfPlayers = Integer.valueOf(args[1]);
+        this.playerNames = Arrays.asList(args[1].split(","));
+        this.playerBehaviors = Arrays.asList(args[2].split(","));
+
     }
 
-    /**
-     * Gets the filename.
-     *
-     * @return the filename
-     */
     public String getFilename() {
         return filename;
     }
 
-    /**
-     * Gets the count of players.
-     *
-     * @return the count of players
-     */
-    public int getCountOfPlayers() {
-        return countOfPlayers;
+    public List<String> getPlayerNames() {
+        return playerNames;
+    }
+
+    public List<String> getPlayerBehaviors() {
+        return playerBehaviors;
     }
 
 }

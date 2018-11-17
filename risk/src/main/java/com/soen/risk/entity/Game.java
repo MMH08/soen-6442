@@ -25,28 +25,14 @@ public class Game extends Observable {
     /**
      * Assign to map reference, new arraylist for players, and adding all players.
      *
-     * @param filename       Having reference of map class
-     * @param countOfPlayers Number of players playing game
+//     * @param filename       Having reference of map class
+//     * @param countOfPlayers Number of players playing game
      */
-    public Game(String filename, int countOfPlayers) {
-        this.map = new Map();
-        this.map.load(filename);
-
-        if (map.isValid()) {
-            this.players = new ArrayList<>();
-            this.addPlayers(countOfPlayers);
-        }
+    public Game(Map map, List<Player> players) {
+        this.map = map;
+        this.players = players;
     }
 
-    /**
-     * Initializing Player with countries and army assignment
-     */
-    public void initialize() {
-        this.setCurrentPlayer(this.getPlayers().get(0));
-        allocateInitialCountries();
-        for (Player player : this.players)
-            player.allocateInitialArmy();
-    }
 
     /**
      * Change current player after its turn is over.
@@ -67,9 +53,11 @@ public class Game extends Observable {
     }
 
     // visit this function again
+
     /**
      * Getting Player object  from Country Name
-     * @param countryName 
+     *
+     * @param countryName
      * @return Player object corresponding to the country
      */
     public Player getPlayerFromCountry(String countryName) {
@@ -83,7 +71,7 @@ public class Game extends Observable {
         return null;
     }
 
-    
+
     private ArrayList<String> checkPlayerSpecificNeigbhouringCountries(LinkedList<Country> lc) {
         ArrayList<String> ar = new ArrayList<>();
         for (Country c1 : lc) {
@@ -101,9 +89,10 @@ public class Game extends Observable {
         return ar;
     }
 
-    
+
     /**
      * Return HashMap with countries and its neighboring countries not belong to player
+     *
      * @return HashMap of Neighboring countries of a Player Specific Country Name
      */
     public HashMap<String, ArrayList<String>> getPlayerNeighbouringCountries() {
@@ -143,14 +132,6 @@ public class Game extends Observable {
         }
     }
 
-
-  
-    private void addPlayers(int countOfPlayers) {
-        System.out.println("Adding players " + String.valueOf(countOfPlayers));
-        for (int i = 0; i < countOfPlayers; i++)
-            this.players.add(new Player(i));
-    }
-
     /**
      * Drop player after lose all countries
      *
@@ -182,11 +163,12 @@ public class Game extends Observable {
             players.get(indexOfPlayer).addCountry(map.getCountries().get(i));
             logger.log(Level.INFO, "Adding country " + map.getCountries().get(i).getName() + " to player " + players.get(indexOfPlayer).getName());
         }
-        /*for (Country country : map.getCountries()) {
-            int indexOfPlayer = rand.nextInt(players.size());
-            players.get(indexOfPlayer).addCountry(country);
-            logger.log(Level.INFO, "Adding country " + country.getName() + " to player " + players.get(indexOfPlayer).getName());
-        }*/
+    }
+
+    public void allocateInitialArmies() {
+        for(Player player: players){
+            player.allocateInitialArmy();
+        }
     }
 
 
@@ -212,37 +194,39 @@ public class Game extends Observable {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
     /*
      * To change Player and also notifies Observers regarding the change to the view
-     *  
+     *
      */
-    public void setCurrentPlayer(Player currentPlayer) {    
+    public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
         this.setChanged();
         this.notifyObservers(this);
     }
-    
+
     public Phase getCurrentPhase() {
         return currentPhase;
     }
 
     /*
      * To change Phase and also notifies Observers regarding the change to the Phase view
-     *  
+     *
      */
-	public void setCurrentPhase(Phase currentPhase) {
+    public void setCurrentPhase(Phase currentPhase) {
         this.currentPhase = currentPhase;
         this.setChanged();
         this.notifyObservers(this);
     }
 
-    
+
     /**
      * To check whether Game needs to end
+     *
      * @return boolean value returning whether value of Players has reached 1
      */
     public boolean isEndNear() {
-       return getPlayers().size() == 1;
+        return getPlayers().size() == 1;
     }
 
     public boolean allPlayersHaveZeroArmy() {
@@ -251,4 +235,5 @@ public class Game extends Observable {
         }
         return true;
     }
+
 }

@@ -11,6 +11,7 @@ import com.soen.risk.entity.player.human.HumanFortifyStrategy;
 import com.soen.risk.entity.player.human.HumanReinforceStrategy;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +33,6 @@ public class GamePlay {
     private static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
     private boolean isAttackWon;
-
     private Game game;
 
     private PhaseView phaseView;
@@ -40,8 +40,6 @@ public class GamePlay {
     private CardExchangeView cardExchangeView;
 
     private static GamePlay gamePlayInstance = null;
-
-
 
     public static GamePlay getInstance() {
         if (gamePlayInstance == null)
@@ -53,17 +51,10 @@ public class GamePlay {
     }
 
 
-    /**
-     * Response build for the Game Play object with necessary views
-     * //     * @param Response object to build
-     * //     * @param fileName for initiating  Game
-     *
-     * @param countOfPlayers for initiating Game
-     * @return response object
-     */
-    public void startGame(String filename, int countOfPlayers) {
-        this.game = new Game(filename, countOfPlayers);
+    public void newGame(Map map, List<Player> players) {
+        this.game = new Game(map, players);
 
+        // register views
         phaseView = new PhaseView();
         game.addObserver(phaseView);
 
@@ -75,15 +66,16 @@ public class GamePlay {
             player.addObserver(cardExchangeView);
         }
 
-        // record the changes in views
-        game.initialize();
+        game.setCurrentPlayer(players.get(0));
+        game.allocateInitialCountries();
+        game.allocateInitialArmies();
+
         for (Player player : game.getPlayers()) {
             for (Country country : player.getCountries()) {
                 country.addObserver(dominationView);
             }
         }
     }
-
 
     /**
      * Setting necessary phase information accordingly to phase name

@@ -36,10 +36,10 @@ public class PlayerTest {
     public static void setUp() {
     	p = GamePlay.getInstance();
         map = new Map();
-       game = new Game(Filename, 2);
-       map.load(Filename);
-       p1 = new Player(0);
-       p2 = new Player(1);
+//       game = new Game(Filename, 2);
+//       map.load(Filename);
+//       p1 = new Player(0);
+//       p2 = new Player(1);
  
        game.setCurrentPlayer(p1);
        

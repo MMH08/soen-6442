@@ -26,9 +26,9 @@ public class GameTest {
     @Before
 	public void setUp()
 	{
-		Game game= new Game(Filename,2);
-		p = GamePlay.getInstance();
-		p.setGame(game);
+//		Game game= new Game(Filename,2);
+//		p = GamePlay.getInstance();
+//		p.setGame(game);
 	}
     /**
      * Check Phase.

@@ -16,6 +16,7 @@ public class Player extends Observable {
     private static Logger logger = Logger.getLogger(Player.class.getName());
 
     private String name;
+    private PlayerType type;
     private int armyCapacity;
     private int exchangeArmy = 0;
     private int exchangeCount = 0;
@@ -30,11 +31,12 @@ public class Player extends Observable {
      *
      * @param number count of player
      */
-    public Player(int number) {
-        this.name = "Player_" + number;
+    public Player(String name, String behavior) {
+        this.name = name;
         this.countries = new ArrayList<>();
         this.cards = new ArrayList<>();
         this.armyCapacity = 0;
+        this.type = PlayerType.valueOf(behavior);
         //new ArrayList<>(Arrays.asList(Card.ARTILLERY, Card.INFANT, Card.INFANT, Card.CAVALRY, Card.CAVALRY, Card.CAVALRY, Card.CAVALRY));
     }
 
@@ -331,5 +333,9 @@ public class Player extends Observable {
 
     public void setFortifyStrategy(FortifyStrategy fortifyStrategy) {
         this.fortifyStrategy = fortifyStrategy;
+    }
+
+    public PlayerType getType() {
+        return type;
     }
 }

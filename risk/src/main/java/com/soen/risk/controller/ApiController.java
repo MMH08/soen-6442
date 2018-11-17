@@ -329,7 +329,9 @@ public class ApiController {
      * @return the string
      */
     @RequestMapping("/singleGamePlay")
-    public String startGame(@RequestParam("filename") String filename, @RequestParam("names") String playerNames, @RequestParam("behaviors") String behaviors) {
+    public String startGame(@RequestParam("filename") String filename,
+                            @RequestParam("names") String playerNames,
+                            @RequestParam("behaviors") String behaviors) {
         StartGame usecase = new StartGame(filename, playerNames, behaviors);
         usecase.execute();
         return "redirect:/phaseResolver";
