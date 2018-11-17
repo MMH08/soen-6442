@@ -1,13 +1,10 @@
 package com.soen.risk.entity;
 
+import com.soen.risk.interactor.GameDriver;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.soen.risk.interactor.GamePlay;
-
 import static org.junit.Assert.*;
-
-import java.util.ArrayList;
 
 /**
  * The Class GameTest.
@@ -23,14 +20,14 @@ public class GameTest {
     
 
     private Game game;
-    private GamePlay p;
+    private GameDriver p;
     static String path = "/home/varun/Downloads/";
     static String Filename = path + "playerTesting.map";
     @Before
 	public void setUp()
 	{
 		Game game= new Game(Filename,2);
-		p = GamePlay.getInstance();
+		p = GameDriver.getInstance();
 		p.setGame(game);
 	}
     /**

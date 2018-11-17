@@ -1,7 +1,7 @@
 package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
-import com.soen.risk.interactor.GamePlay;
+import com.soen.risk.interactor.GameDriver;
 import com.soen.risk.boundary.request.PhaseResolverRequest;
 import com.soen.risk.boundary.response.PhaseResolverResponse;
 
@@ -31,8 +31,8 @@ public class PhaseResolver implements Usecase {
      */
     @Override
     public PhaseResolverResponse execute() {
-        GamePlay gamePlay = GamePlay.getInstance();
-        response.setPhaseName(gamePlay.getGame().getCurrentPhase().toString());
+        GameDriver gameDriver = GameDriver.getInstance();
+        response.setPhaseName(gameDriver.getGame().getCurrentPhase().toString());
         return response;
     }
 }

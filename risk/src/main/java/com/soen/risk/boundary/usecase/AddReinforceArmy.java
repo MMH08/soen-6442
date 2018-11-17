@@ -3,7 +3,7 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.ReinforcePhaseRequest;
 import com.soen.risk.boundary.response.ReinforcePhaseResponse;
-import com.soen.risk.interactor.GamePlay;
+import com.soen.risk.interactor.GameDriver;
 
 /**
  * The Class AddReinforceArmy.
@@ -31,8 +31,8 @@ public class AddReinforceArmy implements Usecase {
      */
     @Override
     public ReinforcePhaseResponse execute() {
-        GamePlay gamePlay = GamePlay.getInstance();
-        gamePlay.executeReinforcePhase(this.request.getArmyCounts());
+        GameDriver gameDriver = GameDriver.getInstance();
+        gameDriver.executeReinforcePhase(this.request.getArmyCounts());
         return response;
     }
 }

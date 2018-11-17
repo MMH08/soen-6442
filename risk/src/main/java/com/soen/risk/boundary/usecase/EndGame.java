@@ -1,15 +1,15 @@
 package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
-import com.soen.risk.interactor.GamePlay;
+import com.soen.risk.interactor.GameDriver;
 
 public class EndGame implements Usecase {
 
 
     @Override
     public Object execute() {
-        GamePlay gamePlay = GamePlay.getInstance();
-        gamePlay = null;
+        GameDriver gameDriver = GameDriver.getInstance();
+        gameDriver = null;
         return null;
     }
 }

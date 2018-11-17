@@ -24,9 +24,9 @@ public class PhaseView implements Observer {
     private static Logger logger = Logger.getLogger(PhaseView.class.getName());
 
     /**
-     * Update the phaseName and playerName on each set statement of GamePlay.
+     * Update the phaseName and playerName on each set statement of GameDriver.
      *
-     * @param obs GamePlay instance to find the current player and current phase.
+     * @param obs GameDriver instance to find the current player and current phase.
      * @param o
      */
     @Override

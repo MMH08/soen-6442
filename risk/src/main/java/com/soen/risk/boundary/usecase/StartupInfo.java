@@ -3,7 +3,8 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.StartupInfoRequest;
 import com.soen.risk.boundary.response.StartupInfoResponse;
-import com.soen.risk.interactor.GamePlay;
+import com.soen.risk.interactor.GameDriver;
+import com.soen.risk.interactor.SingleMode;
 
 /**
  * The Class StartupInfo.
@@ -32,11 +33,11 @@ public class StartupInfo implements Usecase {
 
     @Override
     public StartupInfoResponse execute() {
-        GamePlay gamePlay = GamePlay.getInstance();
-        response = (StartupInfoResponse) gamePlay.getPhaseInfo(response);
+        SingleMode singleMode = SingleMode.getInstance();
+        response = (StartupInfoResponse) singleMode.getPhaseInfo(response);
 
-        response.setPhaseView(gamePlay.getPhaseView());
-        response.setDominationView(gamePlay.getDominationView());
+        response.setPhaseView(singleMode.getPhaseView());
+        response.setDominationView(singleMode.getDominationView());
 
         return response;
     }

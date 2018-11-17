@@ -39,7 +39,7 @@ public class Game extends Observable {
     }
 
     /**
-     * Initializing Player with countries and army assignment  
+     * Initializing Player with countries and army assignment
      */
     public void initialize() {
         this.setCurrentPlayer(this.getPlayers().get(0));
@@ -243,5 +243,12 @@ public class Game extends Observable {
      */
     public boolean isEndNear() {
        return getPlayers().size() == 1;
+    }
+
+    public boolean allPlayersHaveZeroArmy() {
+        for (Player p : this.getPlayers()) {
+            if (p.getArmyCapacity() != 0) return false;
+        }
+        return true;
     }
 }

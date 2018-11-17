@@ -4,7 +4,7 @@ import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.CardExchangeRequest;
 import com.soen.risk.boundary.response.CardExchangeResponse;
 import com.soen.risk.entity.Card;
-import com.soen.risk.interactor.GamePlay;
+import com.soen.risk.interactor.GameDriver;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -46,8 +46,8 @@ public class CardExchange implements Usecase {
      */
     private void removeCard(String cards[]) {
         logger.log(Level.INFO, "Valid scenario - card exchange");
-        GamePlay.getInstance().getGame().getCurrentPlayer().removeCard(cards);
-        GamePlay.getInstance().getGame().getCurrentPlayer().assignExchangeArmies();
+        GameDriver.getInstance().getGame().getCurrentPlayer().removeCard(cards);
+        GameDriver.getInstance().getGame().getCurrentPlayer().assignExchangeArmies();
     }
     private void validationCheck(String str)
     {
@@ -97,7 +97,7 @@ public class CardExchange implements Usecase {
 
 
 
-//    	GamePlay gamePlay = GamePlay.getInstance();
+//    	GameDriver gamePlay = GameDriver.getInstance();
 //    	boolean bExchanged = gamePlay.executeExchange(request.getCardsExchanged());
 //         if(bExchanged) {
 //         response.setObservers(observers);

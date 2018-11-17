@@ -3,7 +3,7 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.ReinforceInfoRequest;
 import com.soen.risk.boundary.response.ReinforceInfoResponse;
-import com.soen.risk.interactor.GamePlay;
+import com.soen.risk.interactor.GameDriver;
 
 public class ReinforceInfo implements Usecase  {
 
@@ -30,17 +30,17 @@ public class ReinforceInfo implements Usecase  {
      */
     @Override
     public ReinforceInfoResponse execute() {
-       GamePlay gamePlay = GamePlay.getInstance();
-        response = (ReinforceInfoResponse) gamePlay.getPhaseInfo(response);
-        response.setCardExchangeView(gamePlay.getCardExchangeView());
-        response.setPhaseView(GamePlay.getInstance().getPhaseView());
-        response.setDominationView(GamePlay.getInstance().getDominationView());
+       GameDriver gameDriver = GameDriver.getInstance();
+        response = (ReinforceInfoResponse) gameDriver.getPhaseInfo(response);
+        response.setCardExchangeView(gameDriver.getCardExchangeView());
+        response.setPhaseView(GameDriver.getInstance().getPhaseView());
+        response.setDominationView(GameDriver.getInstance().getDominationView());
         return response;
     }
 
 //	@Override
 //	public void update() {
-//		GamePlay gamePlay = GamePlay.getInstance();
+//		GameDriver gamePlay = GameDriver.getInstance();
 //		gamePlay.addNewArmies();
 //	}
 }
