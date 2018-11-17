@@ -1,5 +1,10 @@
 package com.soen.risk.interactor;
 
+import com.soen.risk.boundary.Response;
+import com.soen.risk.boundary.response.AttackInfoResponse;
+import com.soen.risk.boundary.response.FortifyInfoResponse;
+import com.soen.risk.boundary.response.ReinforceInfoResponse;
+import com.soen.risk.boundary.response.StartupInfoResponse;
 import com.soen.risk.entity.*;
 import com.soen.risk.entity.player.human.HumanAttackStrategy;
 import com.soen.risk.entity.player.human.HumanFortifyStrategy;
@@ -23,8 +28,8 @@ import java.util.logging.Logger;
  * @since 2018-11-1
  */
 
-public class GameDriver {
-    private static Logger logger = Logger.getLogger(GameDriver.class.getName());
+public class GamePlay {
+    private static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
     private boolean isAttackWon;
 
@@ -32,8 +37,108 @@ public class GameDriver {
     private AttackStrategy attackStrategy;
     private FortifyStrategy fortifyStrategy;
 
-    public GameDriver() {
+    private Game game;
+
+    private PhaseView phaseView;
+    private DominationView dominationView;
+    private CardExchangeView cardExchangeView;
+
+    private static GamePlay gamePlayInstance = null;
+
+
+
+    public static GamePlay getInstance() {
+        if (gamePlayInstance == null)
+            gamePlayInstance = new GamePlay();
+        return gamePlayInstance;
     }
+
+    private GamePlay() {
+    }
+
+
+    /**
+     * Response build for the Game Play object with necessary views
+     * //     * @param Response object to build
+     * //     * @param fileName for initiating  Game
+     *
+     * @param countOfPlayers for initiating Game
+     * @return response object
+     */
+    public void startGame(String filename, int countOfPlayers) {
+        this.game = new Game(filename, countOfPlayers);
+
+        phaseView = new PhaseView();
+        game.addObserver(phaseView);
+
+        // register the observer - dominationView
+        dominationView = new DominationView(game.getMap().getNumberOfCountries());
+        cardExchangeView = new CardExchangeView();
+        for (Player player : game.getPlayers()) {
+            player.addObserver(dominationView);
+            player.addObserver(cardExchangeView);
+        }
+
+        // record the changes in views
+        game.initialize();
+        for (Player player : game.getPlayers()) {
+            for (Country country : player.getCountries()) {
+                country.addObserver(dominationView);
+            }
+        }
+    }
+
+
+    /**
+     * Setting necessary phase information accordingly to phase name
+     * //* @param Response object with phase info
+     *
+     * @return Response object with required info for each phase
+     */
+    public Response getPhaseInfo(Response response) {
+        if (game.getCurrentPhase().equals(Phase.STARTUP)) {
+            ((StartupInfoResponse) response).setCountryName(game.getCurrentPlayer().nextCountryToAssignArmy());
+            ((StartupInfoResponse) response).setArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
+        } else if (game.getCurrentPhase().equals(Phase.REINFORCE)) {
+            ((ReinforceInfoResponse) response).setReinforceArmyCapacity(game.getCurrentPlayer().calculateReinforceCount(game.getMap()));
+            ((ReinforceInfoResponse) response).setCountries(game.getCurrentPlayer().getCountryNames());
+            ((ReinforceInfoResponse) response).setCardExchangeEnabled(game.getCurrentPlayer().isCardExchangeEnabled());
+        } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
+            ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
+            ((AttackInfoResponse) response).setAllCountryNames(game.getPlayerNeighbouringCountries());
+        } else if (game.getCurrentPhase().equals(Phase.FORTIFY)) {
+            ((FortifyInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
+            ((FortifyInfoResponse) response).setEndGame(game.isEndNear());
+        }
+        return response;
+    }
+
+
+    public PhaseView getPhaseView() {
+        return phaseView;
+    }
+
+    public void setPhaseView(PhaseView phaseView) {
+        this.phaseView = phaseView;
+    }
+
+    public DominationView getDominationView() {
+        return dominationView;
+    }
+
+    public void setDominationView(DominationView dominationView) {
+        this.dominationView = dominationView;
+    }
+
+    public CardExchangeView getCardExchangeView() {
+        return cardExchangeView;
+    }
+
+    public void setCardExchangeView(CardExchangeView cardExchangeView) {
+        this.cardExchangeView = cardExchangeView;
+    }
+
+
 
     // -----------------------------------------------------------------------------------------------------------------
 
@@ -44,7 +149,7 @@ public class GameDriver {
      * @param countryName for the startup
      * @param armyCount   to assign for each Country
      */
-    public void executeStartupPhase(Game game, String countryName, int armyCount) {
+    public void executeStartupPhase(String countryName, int armyCount) {
         Country country = game.getMap().findByCountryName(countryName);
         game.getCurrentPlayer().addArmy(country, armyCount);
         // updates
@@ -56,7 +161,7 @@ public class GameDriver {
      * To initiate Reinforce Phase with necessary armyCounts
      * //     * @param List of armyCounts of a given player
      */
-    public void executeReinforcePhase(Game game, ArrayList<Integer> armyCounts) {
+    public void executeReinforcePhase(ArrayList<Integer> armyCounts) {
         game.getCurrentPlayer().reinforce(new HumanReinforceStrategy(armyCounts));
         // updates
         game.getCurrentPlayer().resetExchangeArmy();
@@ -74,7 +179,7 @@ public class GameDriver {
      * @param skipAttack-option   for skipping atack by user
      * @param allOutMode-         to set value for All out Mode
      */
-    public void executeAttackPhase(Game game, String attackingCountry, String defendingCountry, int attackingDiceCount,
+    public void executeAttackPhase(String attackingCountry, String defendingCountry, int attackingDiceCount,
                                    int defendingDiceCount, int skipAttack, int allOutMode) {
         //Add players random issue one player get no army
         //Exception handling
@@ -141,7 +246,7 @@ public class GameDriver {
      * @param endCountry       for army transfer
      * @param armyCount-number of armies to be trnasfered
      */
-    public void executeFortificationPhase(Game game, String startCountry, String endCountry, int armyCount) {
+    public void executeFortificationPhase(String startCountry, String endCountry, int armyCount) {
         Country start = game.getMap().findByCountryName(startCountry);
         Country end = game.getMap().findByCountryName(endCountry);
         logger.log(Level.INFO, String.valueOf(start.getArmy()) + " " + String.valueOf(end.getArmy()));
@@ -160,5 +265,12 @@ public class GameDriver {
     // -----------------------------------------------------------------------------------------------------------------
 
 
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 }
 

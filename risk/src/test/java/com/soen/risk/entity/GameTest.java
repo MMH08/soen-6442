@@ -1,6 +1,6 @@
 package com.soen.risk.entity;
 
-import com.soen.risk.interactor.GameDriver;
+import com.soen.risk.interactor.GamePlay;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,14 +20,14 @@ public class GameTest {
     
 
     private Game game;
-    private GameDriver p;
+    private GamePlay p;
     static String path = "/home/varun/Downloads/";
     static String Filename = path + "playerTesting.map";
     @Before
 	public void setUp()
 	{
 		Game game= new Game(Filename,2);
-		p = GameDriver.getInstance();
+		p = GamePlay.getInstance();
 		p.setGame(game);
 	}
     /**

@@ -3,7 +3,7 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.StartGameRequest;
 import com.soen.risk.boundary.response.StartGameResponse;
-import com.soen.risk.interactor.GameDriver;
+import com.soen.risk.interactor.GamePlay;
 import com.soen.risk.interactor.SingleMode;
 
 /**
@@ -34,8 +34,8 @@ public class StartGame implements Usecase {
      */
     @Override
     public StartGameResponse execute() {
-        SingleMode singleMode = SingleMode.getInstance();
-        singleMode.startGame(request.getFilename(), request.getCountOfPlayers());
+        GamePlay gamePlay = GamePlay.getInstance();
+        gamePlay.startGame(request.getFilename(), request.getCountOfPlayers());
         return response;
     }
 }

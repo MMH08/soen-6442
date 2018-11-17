@@ -316,7 +316,7 @@ public class ApiController {
      * @param countOfPlayers the count of players
      * @return the string
      */
-    @RequestMapping("/GameDriver")
+    @RequestMapping("/GamePlay")
     public String startGame(@RequestParam("filename") String filename, @RequestParam("players") String countOfPlayers) {
         StartGame usecase = new StartGame(filename, countOfPlayers);
         usecase.execute();

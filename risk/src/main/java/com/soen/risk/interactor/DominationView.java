@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * Use case to buildGame the game play will be responsible to attach the domination view to all the players that are
  * playing the game. The observer should be attached after the players have been spawned, i.e.,
- * in the buildGame method of GameDriver.
+ * in the buildGame method of GamePlay.
  * @author Varun Singhal
  * @since 04-11-2018
  * @version 1.0.2

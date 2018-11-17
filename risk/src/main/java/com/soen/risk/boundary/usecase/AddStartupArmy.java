@@ -3,7 +3,7 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.StartupPhaseRequest;
 import com.soen.risk.boundary.response.StartupPhaseResponse;
-import com.soen.risk.interactor.GameDriver;
+import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class AddStartupArmy.
@@ -35,8 +35,8 @@ public class AddStartupArmy implements Usecase {
      */
     @Override
     public StartupPhaseResponse execute() {
-        GameDriver gameDriver = GameDriver.getInstance();
-        gameDriver.executeStartupPhase(request.getCountryName(), request.getArmyCount());
+        GamePlay gamePlay = GamePlay.getInstance();
+        gamePlay.executeStartupPhase(request.getCountryName(), request.getArmyCount());
         return response;
     }
 }

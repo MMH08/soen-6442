@@ -6,10 +6,9 @@ import static org.junit.Assert.assertNotEquals;
 import java.util.Arrays;
 import java.util.List;
 
+import com.soen.risk.interactor.GamePlay;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.soen.risk.interactor.GameDriver;
 
 /**
  * The Class PlayerTest.
@@ -25,7 +24,7 @@ public class PlayerTest {
      * The game.
      */
     private static Game game;
-    private static GameDriver p;
+    private static GamePlay p;
     static String path = "/home/varun/Downloads/";
     static String Filename = path + "playerTesting.map";
     private static Player p1;
@@ -35,7 +34,7 @@ public class PlayerTest {
      */
     @BeforeClass
     public static void setUp() {
-    	p = GameDriver.getInstance();
+    	p = GamePlay.getInstance();
         map = new Map();
        game = new Game(Filename, 2);
        map.load(Filename);

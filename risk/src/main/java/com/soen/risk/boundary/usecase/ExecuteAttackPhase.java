@@ -3,7 +3,7 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.AttackPhaseRequest;
 import com.soen.risk.boundary.response.AttackPhaseResponse;
-import com.soen.risk.interactor.GameDriver;
+import com.soen.risk.interactor.GamePlay;
 
 public class ExecuteAttackPhase implements Usecase {
     private AttackPhaseRequest request;
@@ -16,8 +16,8 @@ public class ExecuteAttackPhase implements Usecase {
 
     @Override
     public AttackPhaseResponse execute() {
-        GameDriver gameDriver = GameDriver.getInstance();
-        gameDriver.executeAttackPhase(request.getAttackingCountry(), request.getDefendingCountry(),
+        GamePlay gamePlay = GamePlay.getInstance();
+        gamePlay.executeAttackPhase(request.getAttackingCountry(), request.getDefendingCountry(),
                 request.getAttackingDiceCount(), request.getDefendingDiceCount(), request.getSkipAttack(),
                 request.getAllOutMode());
         return response;

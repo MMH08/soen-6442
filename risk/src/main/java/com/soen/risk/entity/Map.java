@@ -1,6 +1,6 @@
 package com.soen.risk.entity;
 
-import com.soen.risk.interactor.GameDriver;
+import com.soen.risk.interactor.GamePlay;
 
 import java.io.File;
 import java.io.FileReader;
@@ -175,7 +175,7 @@ public class Map {
         int startId = startCountry.getId();
         int endId = endCountry.getId();
 
-        LinkedList<LinkedList<Country>> ll = GameDriver.getInstance().getGame().getMap().getAdjCountry();
+        LinkedList<LinkedList<Country>> ll = GamePlay.getInstance().getGame().getMap().getAdjCountry();
 
         LinkedList<Integer> adj[] = new LinkedList[ll.size()];
         for (int i = 0; i < ll.size(); i++) {
@@ -385,7 +385,7 @@ public class Map {
     private boolean searchPathBetweenCountries(LinkedList adj[], int currentCountry, int shift, List<Country> countries) {
         boolean v[] = new boolean[adj.length];
         LinkedList<Integer> movingPath = new LinkedList();
-        ArrayList<Country> coun = GameDriver.getInstance().getGame().getMap().getCountries();
+        ArrayList<Country> coun = GamePlay.getInstance().getGame().getMap().getCountries();
         ArrayList<ArrayList<Integer>> allPaths = new ArrayList<ArrayList<Integer>>();
 
         //Start searching for path between both countries

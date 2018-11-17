@@ -3,7 +3,7 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.FortifyInfoRequest;
 import com.soen.risk.boundary.response.FortifyInfoResponse;
-import com.soen.risk.interactor.GameDriver;
+import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class FortifyInfo.
@@ -35,10 +35,10 @@ public class FortifyInfo implements Usecase {
      */
     @Override
     public FortifyInfoResponse execute() {
-        GameDriver gameDriver = GameDriver.getInstance();
-        response = (FortifyInfoResponse) gameDriver.getPhaseInfo(response);
-        response.setPhaseView(GameDriver.getInstance().getPhaseView());
-        response.setDominationView(GameDriver.getInstance().getDominationView());
+        GamePlay gamePlay = GamePlay.getInstance();
+        response = (FortifyInfoResponse) gamePlay.getPhaseInfo(response);
+        response.setPhaseView(GamePlay.getInstance().getPhaseView());
+        response.setDominationView(GamePlay.getInstance().getDominationView());
         return response;
     }
 }

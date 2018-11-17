@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
  * <h2>CardExchangeView</h2>
- * CardExchangeView Class will be attached to the GameDriver during the reinforcement Phase.
+ * CardExchangeView Class will be attached to the GamePlay during the reinforcement Phase.
  * Exits after a card exchange happens.
  *
  * @author Nivedha
@@ -28,7 +28,7 @@ public class CardExchangeView implements Observer {
     /**
      * Add the Player Name and Card names to the observable on card exchange.
      *
-     * @param obs GameDriver instance to find the PlayerName and CardNames given
+     * @param obs GamePlay instance to find the PlayerName and CardNames given
      * @param o
      */
     @Override
