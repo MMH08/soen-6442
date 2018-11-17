@@ -33,10 +33,6 @@ public class GamePlay {
 
     private boolean isAttackWon;
 
-    private ReinforceStrategy reinforceStrategy;
-    private AttackStrategy attackStrategy;
-    private FortifyStrategy fortifyStrategy;
-
     private Game game;
 
     private PhaseView phaseView;
@@ -113,33 +109,6 @@ public class GamePlay {
         return response;
     }
 
-
-    public PhaseView getPhaseView() {
-        return phaseView;
-    }
-
-    public void setPhaseView(PhaseView phaseView) {
-        this.phaseView = phaseView;
-    }
-
-    public DominationView getDominationView() {
-        return dominationView;
-    }
-
-    public void setDominationView(DominationView dominationView) {
-        this.dominationView = dominationView;
-    }
-
-    public CardExchangeView getCardExchangeView() {
-        return cardExchangeView;
-    }
-
-    public void setCardExchangeView(CardExchangeView cardExchangeView) {
-        this.cardExchangeView = cardExchangeView;
-    }
-
-
-
     // -----------------------------------------------------------------------------------------------------------------
 
 
@@ -162,7 +131,8 @@ public class GamePlay {
      * //     * @param List of armyCounts of a given player
      */
     public void executeReinforcePhase(ArrayList<Integer> armyCounts) {
-        game.getCurrentPlayer().reinforce(new HumanReinforceStrategy(armyCounts));
+        game.getCurrentPlayer().setReinforceStrategy(new HumanReinforceStrategy(armyCounts));
+        game.getCurrentPlayer().reinforce();
         // updates
         game.getCurrentPlayer().resetExchangeArmy();
         game.updateCurrentPhase();
@@ -200,7 +170,8 @@ public class GamePlay {
 
         AttackStrategy attackStrategy = new HumanAttackStrategy(attackingCon, defendingCon, attackingDiceCount,
                 defendingDiceCount, allOutMode);
-        game.getCurrentPlayer().attack(attackStrategy);
+        game.getCurrentPlayer().setAttackStrategy(attackStrategy);
+        game.getCurrentPlayer().attack();
         int countOfAttack = attackStrategy.getAttackCounter();
 
         if (attackingCon.getArmy() == 0) {
@@ -252,8 +223,8 @@ public class GamePlay {
         logger.log(Level.INFO, String.valueOf(start.getArmy()) + " " + String.valueOf(end.getArmy()));
         Country startCountryObj = game.getMap().findByCountryName(startCountry);
         Country endCountryObj = game.getMap().findByCountryName(endCountry);
-
-        if (game.getCurrentPlayer().fortify(new HumanFortifyStrategy(startCountryObj, endCountryObj, armyCount), game.getMap())) {
+        game.getCurrentPlayer().setFortifyStrategy(new HumanFortifyStrategy(startCountryObj, endCountryObj, armyCount));
+        if (game.getCurrentPlayer().fortify(game.getMap())) {
             logger.log(Level.INFO, String.valueOf(start.getArmy()) + " " + String.valueOf(end.getArmy()));
             // updates
             game.updateCurrentPhase();
@@ -272,5 +243,31 @@ public class GamePlay {
     public void setGame(Game game) {
         this.game = game;
     }
+
+
+    public PhaseView getPhaseView() {
+        return phaseView;
+    }
+
+    public void setPhaseView(PhaseView phaseView) {
+        this.phaseView = phaseView;
+    }
+
+    public DominationView getDominationView() {
+        return dominationView;
+    }
+
+    public void setDominationView(DominationView dominationView) {
+        this.dominationView = dominationView;
+    }
+
+    public CardExchangeView getCardExchangeView() {
+        return cardExchangeView;
+    }
+
+    public void setCardExchangeView(CardExchangeView cardExchangeView) {
+        this.cardExchangeView = cardExchangeView;
+    }
+
 }
 

@@ -21,6 +21,9 @@ public class Player extends Observable {
     private int exchangeCount = 0;
     private List<Country> countries;
     private List<Card> cards;
+    private ReinforceStrategy reinforceStrategy;
+    private AttackStrategy attackStrategy;
+    private FortifyStrategy fortifyStrategy;
 
     /**
      * Initialise the player with given suffix and empty list of owned countries.
@@ -70,27 +73,21 @@ public class Player extends Observable {
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    /**
-     * To add army in robin round fashion
-     *
-     * @param country   Country object for startup
-     * @param armyCount for startup
-     */
     public void addArmy(Country country, int armyCount) {
         country.setArmy(country.getArmy() + armyCount);
         setArmyCapacity(getArmyCapacity() - armyCount);
     }
 
-    public void reinforce(ReinforceStrategy reinforceStrategy) {
+    public void reinforce() {
         reinforceStrategy.execute(countries);
     }
 
-    public void attack(AttackStrategy attackStrategy) {
+    public void attack() {
         attackStrategy.execute();
     }
 
 
-    public boolean fortify(FortifyStrategy fortifyStrategy, Map map) {
+    public boolean fortify(Map map) {
         return fortifyStrategy.execute(map, countries);
     }
 
@@ -114,7 +111,6 @@ public class Player extends Observable {
      *
      * @param m Reference of map class
      */
-
     public int calculateReinforceCount(Map m) {
         //Check if player has all country of a continent
         for (Continent ctt : m.getContinents()) {
@@ -128,23 +124,13 @@ public class Player extends Observable {
                 }
             }
             if (size == count) {
-                //int armies = getCardExchangeArmies();
-//                if (armies != 0 && armies > 0) {
-//                    return ctt.getControlValue() + armies;
-//                } else {
                 return ctt.getControlValue() + getExchangeArmy();
-                // }
             }
 
         }
         //If Player do not have all country of a continent
         int number_of_countries = this.getCountries().size();
-        //int armies = getCardExchangeArmies();
-//        if (armies != 0 && armies > 0) {
-//            return Math.max(3, (int) Math.ceil(number_of_countries / 3.0)) + armies;
-//        } else {
         return Math.max(3, (int) Math.ceil(number_of_countries / 3.0)) + getExchangeArmy();
-        //}
     }
 
     private Country findByCountryName(String s) {
@@ -323,4 +309,27 @@ public class Player extends Observable {
         notifyObservers(this);
     }
 
+    public ReinforceStrategy getReinforceStrategy() {
+        return reinforceStrategy;
+    }
+
+    public void setReinforceStrategy(ReinforceStrategy reinforceStrategy) {
+        this.reinforceStrategy = reinforceStrategy;
+    }
+
+    public AttackStrategy getAttackStrategy() {
+        return attackStrategy;
+    }
+
+    public void setAttackStrategy(AttackStrategy attackStrategy) {
+        this.attackStrategy = attackStrategy;
+    }
+
+    public FortifyStrategy getFortifyStrategy() {
+        return fortifyStrategy;
+    }
+
+    public void setFortifyStrategy(FortifyStrategy fortifyStrategy) {
+        this.fortifyStrategy = fortifyStrategy;
+    }
 }
