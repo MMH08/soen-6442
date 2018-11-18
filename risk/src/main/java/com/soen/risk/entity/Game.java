@@ -95,7 +95,7 @@ public class Game extends Observable {
      *
      * @return HashMap of Neighboring countries of a Player Specific Country Name
      */
-    public HashMap<String, ArrayList<String>> getPlayerNeighbouringCountries() {
+    public HashMap<String, ArrayList<String>> getNeighbouringCountries() {
         LinkedList<LinkedList<Country>> ll = map.getAdjCountry();
         HashMap<String, ArrayList<String>> neighbouring = new HashMap<String, ArrayList<String>>();
         for (Country c : currentPlayer.getCountries()) {

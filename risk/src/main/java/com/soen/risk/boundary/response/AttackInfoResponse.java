@@ -1,6 +1,7 @@
 package com.soen.risk.boundary.response;
 
 import com.soen.risk.boundary.Response;
+import com.soen.risk.entity.Country;
 import com.soen.risk.interactor.DominationView;
 import com.soen.risk.interactor.PhaseView;
 
@@ -17,14 +18,17 @@ public class AttackInfoResponse implements Response {
     private DominationView dominationView;
 
     public AttackInfoResponse() {
+        countryNames = new ArrayList<>();
+        allCountryNames = new HashMap<>();
     }
 
     public List<String> getCountryNames() {
         return countryNames;
     }
 
-    public void setCountryNames(List<String> countryNames) {
-        this.countryNames = countryNames;
+    public void setCountryNames(List<Country> countries) {
+        for (Country country : countries)
+            this.countryNames.add(country.getName());
     }
 
     public HashMap<String, ArrayList<String>> getAllCountryNames() {

@@ -1,10 +1,12 @@
 package com.soen.risk.boundary.response;
 
 import com.soen.risk.boundary.Response;
+import com.soen.risk.entity.Country;
 import com.soen.risk.interactor.CardExchangeView;
 import com.soen.risk.interactor.DominationView;
 import com.soen.risk.interactor.PhaseView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +22,10 @@ public class ReinforceInfoResponse implements Response {
     private DominationView dominationView;
     private CardExchangeView cardExchangeView;
 
+    public ReinforceInfoResponse() {
+        countries = new ArrayList<>();
+    }
+
     public int getReinforceArmyCapacity() {
         return reinforceArmyCapacity;
     }
@@ -32,8 +38,9 @@ public class ReinforceInfoResponse implements Response {
         return countries;
     }
 
-    public void setCountries(List<String> countries) {
-        this.countries = countries;
+    public void setCountries(List<Country> countries) {
+        for (Country country : countries)
+            this.countries.add(country.getName());
     }
 
     public List<String> getCards() {

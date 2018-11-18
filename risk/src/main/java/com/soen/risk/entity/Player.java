@@ -18,10 +18,12 @@ public class Player extends Observable {
     private String name;
     private PlayerType type;
     private int armyCapacity;
-    private int exchangeArmy = 0;
-    private int exchangeCount = 0;
     private List<Country> countries;
     private List<Card> cards;
+
+    private int exchangeArmy = 0;
+    private int exchangeCount = 0;
+
     private ReinforceStrategy reinforceStrategy;
     private AttackStrategy attackStrategy;
     private FortifyStrategy fortifyStrategy;
@@ -29,7 +31,7 @@ public class Player extends Observable {
     /**
      * Initialise the player with given suffix and empty list of owned countries.
      *
-     * @param number count of player
+//     * @param number count of player
      */
     public Player(String name, String behavior) {
         this.name = name;
@@ -92,7 +94,6 @@ public class Player extends Observable {
     public boolean fortify(Map map) {
         return fortifyStrategy.execute(map, countries);
     }
-
 
     // -----------------------------------------------------------------------------------------------------------------
 
@@ -163,13 +164,13 @@ public class Player extends Observable {
 
     }
 
-    //Return All Countries Name of Player
-    public List<String> getCountryNames() {
-        ArrayList<String> names = new ArrayList<>();
-        for (Country country : countries)
-            names.add(country.getName());
-        return names;
-    }
+//    //Return All Countries Name of Player
+//    public List<String> getCountryNames() {
+//        ArrayList<String> names = new ArrayList<>();
+//        for (Country country : countries)
+//            names.add(country.getName());
+//        return names;
+//    }
 
 
     /**
