@@ -126,7 +126,7 @@ public class Map {
             pw.println("[Territories]");
             for (Country country : countries) {
                 String tem = country.getName() + "," + country.getCoordinateX() + "," + country.getCoordinateY() + "," +
-                        this.getCountryFromContinents(country) + "," + this.getNeighbouringCountries(country.getName());
+                        this.getContinent(country) + "," + this.getNeighbouringCountries(country.getName());
                 logger.log(Level.INFO, this.getNeighbouringCountries(country.getName()));
                 logger.log(Level.INFO, tem);
                 pw.println(tem);
@@ -164,11 +164,11 @@ public class Map {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+
     /**
-     * 
      * @param startCountry Starting country name
-     * @param endCountry Checking Ending country name
-     * @param countries List of countries to check for path
+     * @param endCountry   Checking Ending country name
+     * @param countries    List of countries to check for path
      * @return boolean value to denote if path exists
      */
     public boolean pathExists(Country startCountry, Country endCountry, List<Country> countries) {
@@ -200,7 +200,7 @@ public class Map {
     // --------------------------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------------------------
 
-  
+
     private void addNewContinent(String temp) {
         logger.log(Level.FINE, "Adding continent " + temp);
         String split_continent[] = temp.split("=");
@@ -209,7 +209,7 @@ public class Map {
         continents.add(cont);
     }
 
-    
+
     private void addNewCountry(String temp) {
         logger.log(Level.FINE, "Adding new country " + temp);
         String split_country[] = temp.split(",");
@@ -278,7 +278,7 @@ public class Map {
      * @author Manmeet Singh
      * @since 2018-10-07
      */
-    private String getCountryFromContinents(Country c) {
+    private String getContinent(Country c) {
         for (Continent con : continents) {
             for (Country coun : con.getCountries()) {
                 if (coun.getName().equals(c.getName())) {
@@ -289,7 +289,7 @@ public class Map {
         return "";
     }
 
-   
+
     private String getNeighbouringCountries(String country) {
         for (LinkedList<Country> ll : this.adjCountry) {
             if (ll.get(0).getName().equals(country)) {
@@ -311,11 +311,10 @@ public class Map {
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    
+
     /**
-     * 
      * @param allowedCountries List of countries to be assigned as adjacent
-     * @param movingPath Path of a country
+     * @param movingPath       Path of a country
      * @return to denote whether path is valid or not
      */
     private boolean checkPathValid(List<Country> allowedCountries, List<Integer> movingPath) {
@@ -337,7 +336,6 @@ public class Map {
     }
 
     /**
-     * 
      * @param path
      * @param allPaths
      */
@@ -349,7 +347,7 @@ public class Map {
         allPaths.add(temp);
     }
 
-    
+
     private int countNumberOfPath(LinkedList adj[], int start, int dest, int PathCount, boolean visited[], LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths) {
         visited[start] = true;
         path.add(start);
@@ -381,7 +379,7 @@ public class Map {
         return PathCount;
     }
 
-  
+
     private boolean searchPathBetweenCountries(LinkedList adj[], int currentCountry, int shift, List<Country> countries) {
         boolean v[] = new boolean[adj.length];
         LinkedList<Integer> movingPath = new LinkedList();
@@ -450,8 +448,7 @@ public class Map {
         return false;
     }
 
-    
-   
+
     private void checkingContacting(LinkedList adj[], int CurrentCountry, boolean visited[], LinkedList<Integer> movingPath) {
         visited[CurrentCountry] = true;
         movingPath.add(CurrentCountry);
@@ -466,12 +463,12 @@ public class Map {
     public boolean checkIsolatedCountry() {
         int currentCoun = this.countries.get(0).getId();    //Convert Country name to their ids
         LinkedList<LinkedList<Country>> ll = this.adjCountry;
-       
+
         LinkedList<Integer> adj[] = new LinkedList[ll.size()];
         for (int i = 0; i < ll.size(); i++) {
             adj[i] = new LinkedList();
         }
-       
+
         for (LinkedList<Country> ll1 : ll) {
             int index = ll1.get(0).getId();
             int j = 0;
@@ -483,7 +480,7 @@ public class Map {
 
             }
         }
-        
+
         boolean v[] = new boolean[adj.length];
         LinkedList<Integer> movingPath = new LinkedList();
         //Start searching for path between both countries
@@ -496,20 +493,15 @@ public class Map {
             return true;
         }
     }
-    
-    public List<Country> getNeighbouringCountry(List<Country> countries, Country c)
-    {
-    	for(LinkedList<Country> ll: adjCountry)
-    	{
-    		Country c1 = ll.get(0);
-    		
-    		if(c1.getName().equals(c.getName())) {
-    			return ll;
-    			
-    		}
-    	}
-    	return null;
+
+    public List<Country> getNeighbouringCountry(Country c) {
+        for (LinkedList<Country> ll : adjCountry) {
+            Country c1 = ll.get(0);
+            if (c1.getName().equals(c.getName())) return ll;
+        }
+        return null;
     }
+
     //------------------------------------------------------------------------------------------------------------------
     public String getName() {
         return name;

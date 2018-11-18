@@ -171,6 +171,22 @@ public class Game extends Observable {
         }
     }
 
+    /**
+     * To check whether Game needs to end
+     *
+     * @return boolean value returning whether value of Players has reached 1
+     */
+    public boolean isEndNear() {
+        return getPlayers().size() == 1;
+    }
+
+    public boolean allPlayersHaveZeroArmy() {
+        for (Player p : this.getPlayers()) {
+            if (p.getArmyCapacity() != 0) return false;
+        }
+        return true;
+    }
+
 
     // -------------------------------------------------------------
 
@@ -217,23 +233,6 @@ public class Game extends Observable {
         this.currentPhase = currentPhase;
         this.setChanged();
         this.notifyObservers(this);
-    }
-
-
-    /**
-     * To check whether Game needs to end
-     *
-     * @return boolean value returning whether value of Players has reached 1
-     */
-    public boolean isEndNear() {
-        return getPlayers().size() == 1;
-    }
-
-    public boolean allPlayersHaveZeroArmy() {
-        for (Player p : this.getPlayers()) {
-            if (p.getArmyCapacity() != 0) return false;
-        }
-        return true;
     }
 
 }

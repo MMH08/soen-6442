@@ -33,7 +33,7 @@ public class HumanAttackStrategy implements AttackStrategy {
     }
 
     @Override
-    public void execute(List<Country> countries, Map map) {
+    public void execute(Map map, List<Country> countries) {
         if (allOutMode == 1) {
             logger.log(Level.INFO, "Entered all out mode ... ");
             while (!(attackingCountry.getArmy() == 0 || defendingCountry.getArmy() == 0)) {

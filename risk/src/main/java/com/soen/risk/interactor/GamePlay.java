@@ -1,8 +1,5 @@
 package com.soen.risk.interactor;
 
-import com.soen.risk.boundary.Response;
-import com.soen.risk.boundary.response.AttackInfoResponse;
-import com.soen.risk.boundary.response.FortifyInfoResponse;
 import com.soen.risk.entity.*;
 import com.soen.risk.entity.player.human.HumanAttackStrategy;
 import com.soen.risk.entity.player.human.HumanFortifyStrategy;
@@ -47,7 +44,6 @@ public class GamePlay {
 
     private GamePlay() {
     }
-
 
     public void newGame(Map map, List<Player> players) {
         this.game = new Game(map, players);
@@ -137,7 +133,7 @@ public class GamePlay {
         AttackStrategy attackStrategy = new HumanAttackStrategy(attackingCon, defendingCon, attackingDiceCount,
                 defendingDiceCount, allOutMode);
         game.getCurrentPlayer().setAttackStrategy(attackStrategy);
-        game.getCurrentPlayer().attack();
+        game.getCurrentPlayer().attack(game.getMap());
         int countOfAttack = attackStrategy.getAttackCounter();
 
         if (attackingCon.getArmy() == 0) {
@@ -210,30 +206,16 @@ public class GamePlay {
         this.game = game;
     }
 
-
     public PhaseView getPhaseView() {
         return phaseView;
-    }
-
-    public void setPhaseView(PhaseView phaseView) {
-        this.phaseView = phaseView;
     }
 
     public DominationView getDominationView() {
         return dominationView;
     }
 
-    public void setDominationView(DominationView dominationView) {
-        this.dominationView = dominationView;
-    }
-
     public CardExchangeView getCardExchangeView() {
         return cardExchangeView;
     }
-
-    public void setCardExchangeView(CardExchangeView cardExchangeView) {
-        this.cardExchangeView = cardExchangeView;
-    }
-
 }
 
