@@ -496,7 +496,20 @@ public class Map {
             return true;
         }
     }
-
+    
+    public List<Country> getNeighbouringCountry(List<Country> countries, Country c)
+    {
+    	for(LinkedList<Country> ll: adjCountry)
+    	{
+    		Country c1 = ll.get(0);
+    		
+    		if(c1.getName().equals(c.getName())) {
+    			return ll;
+    			
+    		}
+    	}
+    	return null;
+    }
     //------------------------------------------------------------------------------------------------------------------
     public String getName() {
         return name;

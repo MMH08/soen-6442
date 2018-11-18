@@ -2,9 +2,11 @@ package com.soen.risk.entity.player.human;
 
 import com.soen.risk.entity.AttackStrategy;
 import com.soen.risk.entity.Country;
+import com.soen.risk.entity.Map;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +19,8 @@ public class HumanAttackStrategy implements AttackStrategy {
     private int defendingDiceCount;
     private int allOutMode;
     private int counter;
+    private List<Country> won;
+	private List<Country> lost;
 
     public HumanAttackStrategy(Country attackingCountry, Country defendingCountry, int attackingDiceCount,
                                int defendingDiceCount, int allOutMode) {
@@ -29,7 +33,7 @@ public class HumanAttackStrategy implements AttackStrategy {
     }
 
     @Override
-    public void execute() {
+    public void execute(List<Country> countries, Map map) {
         if (allOutMode == 1) {
             logger.log(Level.INFO, "Entered all out mode ... ");
             while (!(attackingCountry.getArmy() == 0 || defendingCountry.getArmy() == 0)) {
@@ -149,4 +153,12 @@ public class HumanAttackStrategy implements AttackStrategy {
         return win;
 
     }
+    public List<Country> getWon() {
+		return won;
+	}
+
+	
+	public List<Country> getLost() {
+		return lost;
+	}
 }

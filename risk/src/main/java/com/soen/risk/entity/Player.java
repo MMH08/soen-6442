@@ -84,8 +84,8 @@ public class Player extends Observable {
         reinforceStrategy.execute(countries);
     }
 
-    public void attack() {
-        attackStrategy.execute();
+    public void attack(Map map) {
+        attackStrategy.execute(this.countries,map);
     }
 
 
