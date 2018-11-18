@@ -3,9 +3,9 @@ package com.soen.risk.boundary.response;
 import com.soen.risk.boundary.Response;
 
 /**
- * The Class PhaseResolverResponse.
+ * The Class GameDriverResponse.
  */
-public class PhaseResolverResponse implements Response {
+public class GameDriverResponse implements Response {
     
     /** The phase name. */
     private String phaseName;

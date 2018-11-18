@@ -320,21 +320,13 @@ public class ApiController {
         return model;
     }
 
-
-    /**
-     * Start game.
-     *
-     * @param filename       the filename
-//     * @param countOfPlayers the count of players
-     * @return the string
-     */
     @RequestMapping("/singleGamePlay")
     public String startGame(@RequestParam("filename") String filename,
                             @RequestParam("names") String playerNames,
-                            @RequestParam("behaviors") String behaviors) {
-        StartGame usecase = new StartGame(filename, playerNames, behaviors);
+                            @RequestParam("behaviors") String playerBehaviors) {
+        StartGame usecase = new StartGame(filename, playerNames, playerBehaviors);
         usecase.execute();
-        return "redirect:/phaseResolver";
+        return "redirect:/gameDriver";
     }
 
 
@@ -343,10 +335,10 @@ public class ApiController {
      *
      * @return the string
      */
-    @RequestMapping("/phaseResolver")
-    public String phaseResolver() {
-        PhaseResolver usecase = new PhaseResolver();
-        PhaseResolverResponse response = usecase.execute();
+    @RequestMapping("/gameDriver")
+    public String gameDriver() {
+        GameDriver usecase = new GameDriver();
+        GameDriverResponse response = usecase.execute();
         logger.log(Level.INFO, "redirecting to phase - " + response.getPhaseName());
         return "redirect:/" + response.getPhaseName();
     }
@@ -382,7 +374,7 @@ public class ApiController {
 
         AddStartupArmy usecase = new AddStartupArmy(armyCount, countryName);
         StartupPhaseResponse response = usecase.execute();
-        return "redirect:/phaseResolver";
+        return "redirect:/gameDriver";
     }
 
     /**
@@ -417,7 +409,7 @@ public class ApiController {
     public String addReinforceArmy(@RequestParam("armyCounts") String armyCounts) {
         AddReinforceArmy usecase = new AddReinforceArmy(armyCounts);
         usecase.execute();
-        return "redirect:/phaseResolver";
+        return "redirect:/gameDriver";
     }
 
 
@@ -431,7 +423,7 @@ public class ApiController {
     public String ExchangeCards(@RequestParam("cards") String cards) {
         CardExchange usecase = new CardExchange(cards);
         usecase.execute();
-        return "redirect:/phaseResolver";
+        return "redirect:/gameDriver";
     }
 
     /**
@@ -462,7 +454,7 @@ public class ApiController {
         ExecuteAttackPhase usecase = new ExecuteAttackPhase(attackingCountry, attackingDiceCount, defendingCountry,
                 defendingDiceCount, skipAttack, allOutMode);
         usecase.execute();
-        return "redirect:/phaseResolver";
+        return "redirect:/gameDriver";
     }
 
 
@@ -497,7 +489,7 @@ public class ApiController {
                                   @RequestParam("armyCount") String armyCount) {
         MoveFortifyArmy usecase = new MoveFortifyArmy(startCountry, endCountry, armyCount);
         FortifyPhaseResponse response = usecase.execute();
-        return "redirect:/phaseResolver";
+        return "redirect:/gameDriver";
     }
 
     @RequestMapping("/endGame")

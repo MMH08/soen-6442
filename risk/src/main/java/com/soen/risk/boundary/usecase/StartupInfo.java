@@ -3,8 +3,8 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.StartupInfoRequest;
 import com.soen.risk.boundary.response.StartupInfoResponse;
+import com.soen.risk.entity.Player;
 import com.soen.risk.interactor.GamePlay;
-import com.soen.risk.interactor.SingleMode;
 
 /**
  * The Class StartupInfo.
@@ -33,9 +33,13 @@ public class StartupInfo implements Usecase {
 
     @Override
     public StartupInfoResponse execute() {
+        //domain
         GamePlay gamePlay = GamePlay.getInstance();
-        response = (StartupInfoResponse) gamePlay.getPhaseInfo(response);
-
+        Player player = gamePlay.getGame().getCurrentPlayer();
+        //form
+        response.setCountryName(player.nextCountryToAssignArmy());
+        response.setArmyCapacity(player.getArmyCapacity());
+        //views
         response.setPhaseView(gamePlay.getPhaseView());
         response.setDominationView(gamePlay.getDominationView());
 

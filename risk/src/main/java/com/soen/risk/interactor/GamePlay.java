@@ -3,8 +3,6 @@ package com.soen.risk.interactor;
 import com.soen.risk.boundary.Response;
 import com.soen.risk.boundary.response.AttackInfoResponse;
 import com.soen.risk.boundary.response.FortifyInfoResponse;
-import com.soen.risk.boundary.response.ReinforceInfoResponse;
-import com.soen.risk.boundary.response.StartupInfoResponse;
 import com.soen.risk.entity.*;
 import com.soen.risk.entity.player.human.HumanAttackStrategy;
 import com.soen.risk.entity.player.human.HumanFortifyStrategy;
@@ -75,30 +73,6 @@ public class GamePlay {
                 country.addObserver(dominationView);
             }
         }
-    }
-
-    /**
-     * Setting necessary phase information accordingly to phase name
-     * //* @param Response object with phase info
-     *
-     * @return Response object with required info for each phase
-     */
-    public Response getPhaseInfo(Response response) {
-        if (game.getCurrentPhase().equals(Phase.STARTUP)) {
-            ((StartupInfoResponse) response).setCountryName(game.getCurrentPlayer().nextCountryToAssignArmy());
-            ((StartupInfoResponse) response).setArmyCapacity(game.getCurrentPlayer().getArmyCapacity());
-        } else if (game.getCurrentPhase().equals(Phase.REINFORCE)) {
-            ((ReinforceInfoResponse) response).setReinforceArmyCapacity(game.getCurrentPlayer().calculateReinforceCount(game.getMap()));
-            ((ReinforceInfoResponse) response).setCountries(game.getCurrentPlayer().getCountryNames());
-            ((ReinforceInfoResponse) response).setCardExchangeEnabled(game.getCurrentPlayer().isCardExchangeEnabled());
-        } else if (game.getCurrentPhase().equals(Phase.ATTACK)) {
-            ((AttackInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
-            ((AttackInfoResponse) response).setAllCountryNames(game.getPlayerNeighbouringCountries());
-        } else if (game.getCurrentPhase().equals(Phase.FORTIFY)) {
-            ((FortifyInfoResponse) response).setCountryNames(game.getCurrentPlayer().getCountryNames());
-            ((FortifyInfoResponse) response).setEndGame(game.isEndNear());
-        }
-        return response;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
