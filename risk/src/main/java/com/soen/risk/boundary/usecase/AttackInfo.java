@@ -28,7 +28,7 @@ public class AttackInfo implements Usecase {
         Player player = game.getCurrentPlayer();
         //
         response.setCountryNames(player.getCountries());
-        response.setAllCountryNames(game.getNeighbouringCountries());
+        response.setAllCountryNames(game.getMap().getAdjCountries(player.getCountries()));
         // views
         response.setPhaseView(gameplay.getPhaseView());
         response.setDominationView(gameplay.getDominationView());

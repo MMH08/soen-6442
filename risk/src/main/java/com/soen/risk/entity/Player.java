@@ -23,6 +23,7 @@ public class Player extends Observable {
 
     private int exchangeArmy = 0;
     private int exchangeCount = 0;
+    private boolean isAttackWon;
 
     private ReinforceStrategy reinforceStrategy;
     private AttackStrategy attackStrategy;
@@ -30,8 +31,8 @@ public class Player extends Observable {
 
     /**
      * Initialise the player with given suffix and empty list of owned countries.
-     *
-//     * @param number count of player
+     * <p>
+     * //     * @param number count of player
      */
     public Player(String name, String behavior) {
         this.name = name;
@@ -39,6 +40,7 @@ public class Player extends Observable {
         this.cards = new ArrayList<>();
         this.armyCapacity = 0;
         this.type = PlayerType.valueOf(behavior);
+        this.isAttackWon = false;
         //new ArrayList<>(Arrays.asList(Card.ARTILLERY, Card.INFANT, Card.INFANT, Card.CAVALRY, Card.CAVALRY, Card.CAVALRY, Card.CAVALRY));
     }
 
@@ -302,5 +304,13 @@ public class Player extends Observable {
 
     public PlayerType getType() {
         return type;
+    }
+
+    public boolean isAttackWon() {
+        return isAttackWon;
+    }
+
+    public void setAttackWon(boolean attackWon) {
+        isAttackWon = attackWon;
     }
 }

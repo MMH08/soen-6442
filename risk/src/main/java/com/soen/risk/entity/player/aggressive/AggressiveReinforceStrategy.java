@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AggressiveReinforceStrategy implements ReinforceStrategy {
     @Override
-    public void execute(Map map, List<Country> countries) {
+    public void execute(List<Country> countries) {
 
     }
 }

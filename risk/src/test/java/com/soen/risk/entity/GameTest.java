@@ -38,7 +38,7 @@ public class GameTest {
     public void checkPhasePlayers() 
     {    	
     	p.getGame().setCurrentPhase(Phase.REINFORCE);
-    	p.getGame().updateCurrentPhase();
+    	//p.getGame().updateCurrentPhase();
     	assertEquals("attackPhase",p.getGame().getCurrentPhase().toString());
     }
     @Test

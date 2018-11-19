@@ -22,13 +22,11 @@ import java.util.logging.Logger;
 public class Map {
     private static Logger logger = Logger.getLogger(Map.class.getName());
     private String name;
-    //public int counter = 1;
     private ArrayList<Continent> continents;
     private ArrayList<Country> countries;
     private LinkedList<LinkedList<Country>> adjCountry;
     private LinkedList<Object> list_country;
     private String fileName;
-    //private LinkedList<Integer> adj[];
 
     /**
      * Initiating continents, countries, 2D linkedlist of country
@@ -175,13 +173,11 @@ public class Map {
         int startId = startCountry.getId();
         int endId = endCountry.getId();
 
-        LinkedList<LinkedList<Country>> ll = GamePlay.getInstance().getGame().getMap().getAdjCountry();
-
-        LinkedList<Integer> adj[] = new LinkedList[ll.size()];
-        for (int i = 0; i < ll.size(); i++) {
+        LinkedList<Integer> adj[] = new LinkedList[adjCountry.size()];
+        for (int i = 0; i < adjCountry.size(); i++) {
             adj[i] = new LinkedList();
         }
-        for (LinkedList<Country> ll1 : ll) {
+        for (LinkedList<Country> ll1 : adjCountry) {
             int index = ll1.get(0).getId();
             int j = 0;
             for (Country c : ll1) {
@@ -199,6 +195,42 @@ public class Map {
 
     // --------------------------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------------------------
+
+    /**
+     * todo: rename the function and optimise the loop
+     * Return HashMap with countries and its neighboring countries not belong to player
+     *
+     * @return HashMap of Neighboring countries of a Player Specific Country Name
+     */
+    public HashMap<String, ArrayList<String>> getAdjCountries(List<Country> countries) {
+        HashMap<String, ArrayList<String>> neighbouring = new HashMap<>();
+        for (Country c : countries) {
+            for (LinkedList<Country> lc : adjCountry) {
+                if (c.getName().equals(lc.get(0).getName())) {
+                    neighbouring.put(c.getName(), checkPlayerSpecificNeigbhouringCountries(lc, countries));
+                }
+            }
+        }
+        return neighbouring;
+    }
+
+    private ArrayList<String> checkPlayerSpecificNeigbhouringCountries(LinkedList<Country> lc,
+                                                                       List<Country> countries) {
+        ArrayList<String> ar = new ArrayList<>();
+        for (Country c1 : lc) {
+            int flag = 0;
+            for (Country c : countries) {
+                if (c1.getName().equals(c.getName())) {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0) {
+                ar.add(c1.getName());
+            }
+        }
+        return ar;
+    }
 
 
     private void addNewContinent(String temp) {

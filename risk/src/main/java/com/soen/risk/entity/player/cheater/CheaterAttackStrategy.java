@@ -5,19 +5,27 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class CheaterAttackStrategy implements AttackStrategy {
+
     private List<Country> won;
-    private List<Country> lost;
+    private HashMap<Country, Country> lost;
+    private boolean isComplete;
+
+    public CheaterAttackStrategy() {
+        won = new ArrayList<>();
+        lost = new HashMap<>();
+        isComplete = true;
+
+    }
 
     @Override
     public void execute(Map map, List<Country> countries) {
-        won = new ArrayList<>();
-        lost = new ArrayList<>();
         for (Country c : countries) {
             List<Country> ll = map.getNeighbouringCountry(c);
-            List<Country> coun = new ArrayList<>();
+            //List<Country> coun = new ArrayList<>();
             for (int i = 1; i < ll.size(); i++) {
                 if (checkNeighbouringCountry(countries, ll.get(i))) {
                     checkDuplicacy(ll.get(i));
@@ -49,18 +57,18 @@ public class CheaterAttackStrategy implements AttackStrategy {
 
     }
 
-    @Override
-    public int getAttackCounter() {
-        return 0;
-    }
-
     public List<Country> getWon() {
         return won;
     }
 
 
-    public List<Country> getLost() {
+    public HashMap<Country, Country> getLost() {
         return lost;
+    }
+
+    @Override
+    public boolean isComplete() {
+        return isComplete;
     }
 
 }

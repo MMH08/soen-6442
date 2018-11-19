@@ -32,6 +32,9 @@ public class GameDriver implements Usecase {
     @Override
     public GameDriverResponse execute() {
         GamePlay gamePlay = GamePlay.getInstance();
+
+
+
         response.setPhaseName(gamePlay.getGame().getCurrentPhase().toString());
         return response;
     }
