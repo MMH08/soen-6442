@@ -243,6 +243,7 @@ public class Game extends Observable {
      */
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
+        logger.log(Level.INFO, "Changing player to " + currentPlayer);
         this.setChanged();
         this.notifyObservers(this);
     }
@@ -257,6 +258,7 @@ public class Game extends Observable {
      */
     void setCurrentPhase(Phase currentPhase) {
         this.currentPhase = currentPhase;
+        logger.log(Level.INFO, "Changing phase to " + currentPhase);
         this.setChanged();
         this.notifyObservers(this);
     }

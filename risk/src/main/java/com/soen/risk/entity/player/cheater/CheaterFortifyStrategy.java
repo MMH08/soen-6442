@@ -9,6 +9,6 @@ import java.util.List;
 public class CheaterFortifyStrategy implements FortifyStrategy {
     @Override
     public boolean execute(Map map, List<Country> allowedCountries) {
-        return false;
+        return true;
     }
 }

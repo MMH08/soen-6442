@@ -7,6 +7,7 @@ import com.soen.risk.entity.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
 public class CheaterAttackStrategy implements AttackStrategy {
 
@@ -46,6 +47,7 @@ public class CheaterAttackStrategy implements AttackStrategy {
     private void checkDuplicacy(Country c) {
         if (won.size() == 0) {
             won.add(c);
+            logger.log(Level.INFO, "Adding country to won - " + c.getName());
         } else {
             for (Country c1 : won) {
                 if (c1.getName().equals(c.getName())) {
@@ -53,6 +55,7 @@ public class CheaterAttackStrategy implements AttackStrategy {
                 }
             }
             won.add(c);
+            logger.log(Level.INFO, "Adding country to won - " + c.getName());
         }
 
     }
