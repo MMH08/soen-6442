@@ -396,6 +396,7 @@ public class ApiController {
         model.addObject("cards", response.getCards());
         model.addObject("cardExchangeEnabled", response.isCardExchangeEnabled());
         model.addObject("cardExchangeView", response.getCardExchangeView());
+        model.addObject("endGame", response.isEndGame());
         return model;
     }
 

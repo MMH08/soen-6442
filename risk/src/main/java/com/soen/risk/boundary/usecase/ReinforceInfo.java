@@ -31,6 +31,7 @@ public class ReinforceInfo implements Usecase {
         response.setCountries(player.getCountries());
         response.setReinforceArmyCapacity(reinforceCapacity);
         response.setCardExchangeEnabled(player.isCardExchangeEnabled());
+        response.setEndGame(game.isEndNear());
 
         response.setCardExchangeView(GamePlay.getInstance().getCardExchangeView());
         response.setPhaseView(GamePlay.getInstance().getPhaseView());

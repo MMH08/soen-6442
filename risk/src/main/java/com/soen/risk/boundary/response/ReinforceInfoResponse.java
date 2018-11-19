@@ -18,6 +18,7 @@ public class ReinforceInfoResponse implements Response {
     private List<String> cards;
     private int reinforceArmyCapacity;
     private boolean cardExchangeEnabled;
+    private boolean endGame;
     private PhaseView phaseView;
     private DominationView dominationView;
     private CardExchangeView cardExchangeView;
@@ -81,5 +82,13 @@ public class ReinforceInfoResponse implements Response {
 
     public void setCardExchangeView(CardExchangeView cardExchangeView) {
         this.cardExchangeView = cardExchangeView;
+    }
+
+    public boolean isEndGame() {
+        return endGame;
+    }
+
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
     }
 }
