@@ -68,23 +68,6 @@ public class Game extends Observable {
         return null;
     }
 
-    /**
-     * Drop player after lose all countries
-     * todo: remove using object
-     *
-     * @param p Player needed to remove from game
-     */
-    private void dropPlayer(Player p) {
-        int i = 0;
-        for (Player p1 : players) {
-            if (p.equals(p1)) {
-                players.remove(i);
-                break;
-            }
-            i++;
-        }
-    }
-
 
     /**
      * To check whether Game needs to end
@@ -148,14 +131,14 @@ public class Game extends Observable {
         if (currentPlayer.getCountries().size() == 0) {
             logger.log(Level.INFO, "all countries lost by attacker");
             currentPlayer.sendCardsTo((Player) losts.values().toArray()[losts.size() - 1]);
-            dropPlayer(currentPlayer);
+            players.remove(currentPlayer);
             updateCurrentPlayer(); // jump the player
             updateCurrentPhase();
             updateCurrentPhase(); // jump to reinforce
         }
         dropEmptyPlayers();
 
-        if(isEndNear()) updateCurrentPhase();
+        if (isEndNear()) updateCurrentPhase();
     }
 
     /**
@@ -221,16 +204,15 @@ public class Game extends Observable {
 
     private void dropEmptyPlayers() {
         // drop players who lost all the countries
-        Iterator<Player> playerIterator = players.iterator();
-        Player player = null;
-        while (playerIterator.hasNext()) {
-            player = playerIterator.next();
+        ArrayList<Player> toRemove = new ArrayList<>();
+        for(Player player : players){
             if (player.getCountries().size() == 0) {
                 logger.log(Level.INFO, "all countries lost by " + player.getName());
                 player.sendCardsTo(currentPlayer);
-                dropPlayer(player);
+                toRemove.add(player);
             }
         }
+        players.removeAll(toRemove);
     }
 
     // --------------------------------------------------------------------------------------------------------
