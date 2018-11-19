@@ -123,13 +123,13 @@ public class MapBuilder {
 
     /**
      * Saving the map to an external folder
-     * @param User given folder location
+    // * @param User given folder location
      */
     public String save(String downloadFolder) {
-        map.setFileName(downloadFolder + map.getName() + ".map");
+        //map.setFileName();
         if (map.isValid()){
             logger.log(Level.INFO, "Map is valid ");
-            map.save();
+            map.save(downloadFolder + map.getName() + ".map");
         }
         return map.getFileName();
     }

@@ -26,7 +26,7 @@ public class Map {
     private ArrayList<Country> countries;
     private LinkedList<LinkedList<Country>> adjCountry;
     private LinkedList<Object> list_country;
-    private String fileName;
+    //private String fileName;
 
     /**
      * Initiating continents, countries, 2D linkedlist of country
@@ -74,15 +74,14 @@ public class Map {
     /**
      * This method receive map from file and add to adjCountry object.
      *
-     * @param filename Path of File with name of file
+  //   * @param filename Path of File with name of file
      * @author Amit Sachdeva
      * @since 2018-10-06
      */
-    public void load(String filename) {
-        this.fileName = filename;
-        logger.log(Level.INFO, "Reading filename " + this.fileName);
+    public void load(String fileName) {
+        logger.log(Level.INFO, "Reading filename " + fileName);
         try {
-            Scanner readingFile = new Scanner(new FileReader(this.fileName));
+            Scanner readingFile = new Scanner(new FileReader(fileName));
             int flagContinent = 0, flagCountry = 0;
             //TODO: add map name using content in the file.
             while (readingFile.hasNext()) {
@@ -110,10 +109,10 @@ public class Map {
      * @author Manmeet Singh
      * @since 2018-10-07
      */
-    public void save() {
+    public void save(String filePath) {
         try {
-            logger.log(Level.INFO, "Saving map to " + fileName);
-            PrintWriter pw = new PrintWriter(new File(this.fileName));
+            logger.log(Level.INFO, "Saving map to " + filePath);
+            PrintWriter pw = new PrintWriter(new File(filePath));
             pw.println("Map=" + this.name);
             pw.println();
             pw.println("[Continents]");
@@ -565,15 +564,6 @@ public class Map {
 
     public ArrayList<Continent> getContinents() {
         return continents;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        logger.log(Level.INFO, "Setting filename " + fileName);
-        this.fileName = fileName;
     }
 
     //Get map on basis of country object
