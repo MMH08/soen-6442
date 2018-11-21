@@ -182,9 +182,9 @@ public class Player extends Observable {
         setExchangeArmy(0);
     }
 
-    public void sendCardsTo(Player currentPlayer) {
+    public void sendCardsTo(Player otherPlayer) {
         for (Card card : cards) {
-            currentPlayer.addCard(card);
+            otherPlayer.addCard(card);
         }
         setCards(new ArrayList<>());
     }
@@ -220,10 +220,7 @@ public class Player extends Observable {
                 flag = 1;
             }
         }
-        if (flag == 0)
-            return true;
-        else
-            return false;
+        return flag == 0;
     }
 
     public String toString() {
