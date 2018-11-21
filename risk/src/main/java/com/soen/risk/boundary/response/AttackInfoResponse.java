@@ -2,8 +2,8 @@ package com.soen.risk.boundary.response;
 
 import com.soen.risk.boundary.Response;
 import com.soen.risk.entity.Country;
-import com.soen.risk.interactor.DominationView;
-import com.soen.risk.interactor.PhaseView;
+import com.soen.risk.views.DominationView;
+import com.soen.risk.views.PhaseView;
 
 import java.util.ArrayList;
 import java.util.HashMap;

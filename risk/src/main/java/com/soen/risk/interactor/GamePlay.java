@@ -1,13 +1,11 @@
 package com.soen.risk.interactor;
 
 import com.soen.risk.entity.*;
-import com.soen.risk.entity.player.human.HumanAttackStrategy;
-import com.soen.risk.entity.player.human.HumanFortifyStrategy;
-import com.soen.risk.entity.player.human.HumanReinforceStrategy;
+import com.soen.risk.views.CardExchangeView;
+import com.soen.risk.views.DominationView;
+import com.soen.risk.views.PhaseView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
