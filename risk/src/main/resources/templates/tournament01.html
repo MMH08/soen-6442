@@ -15,14 +15,22 @@
                 <div id="textpadding">
                     <h2>Risk - Game Play</h2>
                     <div class="sticky">
-                    <i class="fa fa-info-circle" aria-hidden="true"></i> <b>Single Game - 1 of 2</b>
+                    <i class="fa fa-info-circle" aria-hidden="true"></i> <b>Tournament -  1 of 2</b>
                     </div>
                     <br/>
-                    <form th:action="@{/singleGame02}" method="get">
+                    <form th:action="@{/tournament02}" method="get">
                         <table>
                             <tr>
                                 <td># players</td>
                                 <td><input type="text" name="players"/></td>
+                            </tr>
+                            <tr>
+                                <td># maps</td>
+                                <td><input type="text" name="maps"/></td>
+                            </tr>
+                            <tr>
+                                <td># Games</td>
+                                <td><input type="text" name="games"/></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -31,8 +39,6 @@
                         </table>
                     </form>
                 </div>
-
-
             </div>
         </div>
     </div>

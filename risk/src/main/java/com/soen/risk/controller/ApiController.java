@@ -343,6 +343,37 @@ public class ApiController {
         return "redirect:/" + response.getPhaseName();
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @RequestMapping("/tournament01")
+    public String tournament01(){
+        return "tournament01";
+    }
+
+    @RequestMapping("/tournament02")
+    public ModelAndView tournament02(@RequestParam("players") String countOfPlayers,
+                                     @RequestParam("maps") String countOfMaps,
+                                     @RequestParam("games") String countOfGames) {
+        ModelAndView model = new ModelAndView("/tournament02");
+        model.addObject("countOfPlayers", countOfPlayers);
+        model.addObject("countOfMaps", countOfMaps);
+        model.addObject("countOfGames", countOfGames);
+        return model;
+    }
+
+    @RequestMapping("/tournamentPlay")
+    public String tournamentPlay(@RequestParam("filenames") String filenames,
+                                 @RequestParam("names") String playerNames,
+                                 @RequestParam("behaviors") String behaviors,
+                                 @RequestParam("turns") String turns,
+                                 @RequestParam("games") String countOfGames){
+        StartTournament usecase = new StartTournament(filenames, playerNames, behaviors, turns, countOfGames);
+        usecase.execute();
+        return "redirect:/tournamentDriver";
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
     /**
      * Startup phase.
      *

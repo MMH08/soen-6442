@@ -93,6 +93,7 @@ public class GameDriver implements Usecase {
             }
         }
         response.setPhaseName(game.getCurrentPhase().toString());
+        response.setGameEnd(game.isEndNear());
         return response;
     }
 

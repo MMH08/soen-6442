@@ -15,14 +15,18 @@
                 <div id="textpadding">
                     <h2>Risk - Game Play</h2>
                     <div class="sticky">
-                    <i class="fa fa-info-circle" aria-hidden="true"></i> <b>Single Game - 2 of 2</b>
+                    <i class="fa fa-info-circle" aria-hidden="true"></i> <b>Tournament - 2 of 2</b>
                     </div>
                     <br/>
-                    <form th:action="@{/singleGamePlay}" method="get">
+                    <form th:action="@{/tournamentPlay}" method="get">
                         <table>
+                            <tr th:each="counter : ${#numbers.sequence(1, __${countOfMaps}__)}">
+                                <td th:text="Map file path # + ${counter}"></td>
+                                <td><input type="text" name="filename" class="filename"/></td>
+                            </tr>
                             <tr>
-                                <td>Map file path</td>
-                                <td><input type="text" name="filename"/></td>
+                                <td>&ensp;</td>
+                                <td>&ensp;</td>
                             </tr>
                             <tr th:each="counter : ${#numbers.sequence( 1, __${countOfPlayers}__)}">
                                 <td class="name" th:text="Player_ + ${counter}"></td>
@@ -37,7 +41,13 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>Count of turns for each game</td>
+                                <td><input type="text" name="turns"></td>
+                            </tr>
+                            <tr>
                                 <td>
+                                    <input type="hidden" name="games" th:value="${countOfGames}">
+                                    <input type="hidden" name="filenames" id="filenames" value="">
                                     <input type="hidden" name="behaviors" id="behaviors" value="">
                                     <input type="hidden" name="names" id="names" value="">
                                 </td>
@@ -72,6 +82,14 @@
             });
             console.log(names);
             $("#names").val(names.join(","));
+
+            //
+            var filenames = new Array();
+            $(".filename").each(function(){
+                filenames.push($(this).val());
+            });
+            console.log(filenames);
+            $("#filenames").val(filenames.join(","));
 
             //
             $("form").submit();
