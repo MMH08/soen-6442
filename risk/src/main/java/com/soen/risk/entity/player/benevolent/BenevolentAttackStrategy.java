@@ -21,6 +21,8 @@ public class BenevolentAttackStrategy implements AttackStrategy {
 
     @Override
     public void execute(Map map, List<Country> countries) {
+    	isComplete = true;
+       return;
 
     }
 
