@@ -9,14 +9,16 @@ import com.soen.risk.entity.Map;
 public class CheaterAttackStrategy implements AttackStrategy {
 	private List<Country> won;
 	private List<Country> lost;
+	public CheaterAttackStrategy() {
+		won = new ArrayList<>();
+		lost = new ArrayList<>();
+	}
     @Override
     public void execute(List<Country> countries, Map map) {
-    	won = new ArrayList<>();
-    	lost = new ArrayList<>();
+    	
     	for(Country c: countries)
     	{
     		List<Country> ll = map.getNeighbouringCountry(countries, c);
-    		List<Country> coun = new ArrayList<>();
     		for(int i=1;i<ll.size();i++)
     		{
     			if(checkNeighbouringCountry(countries,ll.get(i)))
