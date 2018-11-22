@@ -80,14 +80,9 @@ public class Game extends Observable {
 
     /**
      * To initiate startup Phase with necessary country and armies
-     *
-     * @param countryName for the startup
-     * @param armyCount   to assign for each Country
      */
-    public void executeStartupPhase(String countryName, int armyCount) {
-        Country country = getMap().findByCountryName(countryName);
-        getCurrentPlayer().addArmy(country, armyCount);
-        // updates
+    public void executeStartupPhase() {
+        currentPlayer.startup();
         updateCurrentPlayer();
         if (allPlayersHaveZeroArmy()) updateCurrentPhase();
     }

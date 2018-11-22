@@ -9,15 +9,19 @@ import com.soen.risk.entity.PlayerType;
 import com.soen.risk.entity.player.aggressive.AggressiveAttackStrategy;
 import com.soen.risk.entity.player.aggressive.AggressiveFortifyStrategy;
 import com.soen.risk.entity.player.aggressive.AggressiveReinforceStrategy;
+import com.soen.risk.entity.player.aggressive.AggressiveStartupStrategy;
 import com.soen.risk.entity.player.benevolent.BenevolentAttackStrategy;
 import com.soen.risk.entity.player.benevolent.BenevolentFortifyStrategy;
 import com.soen.risk.entity.player.benevolent.BenevolentReinforceStrategy;
+import com.soen.risk.entity.player.benevolent.BenevolentStartupStrategy;
 import com.soen.risk.entity.player.cheater.CheaterAttackStrategy;
 import com.soen.risk.entity.player.cheater.CheaterFortifyStrategy;
 import com.soen.risk.entity.player.cheater.CheaterReinforceStrategy;
+import com.soen.risk.entity.player.cheater.CheaterStartupStrategy;
 import com.soen.risk.entity.player.random.RandomAttackStrategy;
 import com.soen.risk.entity.player.random.RandomFortifyStrategy;
 import com.soen.risk.entity.player.random.RandomReinforceStrategy;
+import com.soen.risk.entity.player.random.RandomStartupStrategy;
 import com.soen.risk.interactor.GamePlay;
 
 import java.util.logging.Level;
@@ -55,6 +59,18 @@ public class GameDriver implements Usecase {
         Game game = GamePlay.getInstance().getGame();
 
         while (isLoopActive(game)) {
+            if (game.getCurrentPhase().equals(Phase.STARTUP)) {
+                if (game.getCurrentPlayer().getType().equals(PlayerType.CHEATER)) {
+                    game.getCurrentPlayer().setStartupStrategy(new CheaterStartupStrategy());
+                } else if (game.getCurrentPlayer().getType().equals(PlayerType.AGGRESSIVE)) {
+                    game.getCurrentPlayer().setStartupStrategy(new AggressiveStartupStrategy());
+                } else if (game.getCurrentPlayer().getType().equals(PlayerType.BENEVOLENT)) {
+                    game.getCurrentPlayer().setStartupStrategy(new BenevolentStartupStrategy());
+                } else if (game.getCurrentPlayer().getType().equals(PlayerType.RANDOM)) {
+                    game.getCurrentPlayer().setStartupStrategy(new RandomStartupStrategy());
+                }
+                game.executeStartupPhase();
+            }
             if (game.getCurrentPhase().equals(Phase.REINFORCE)) {
                 if (game.getCurrentPlayer().getType().equals(PlayerType.CHEATER)) {
                     game.getCurrentPlayer().setReinforceStrategy(new CheaterReinforceStrategy());
@@ -101,8 +117,6 @@ public class GameDriver implements Usecase {
         if(game.isEndNear())
             return false;
         if(game.getCurrentPlayer().getType().equals(PlayerType.HUMAN))
-            return false;
-        if(game.getCurrentPhase().equals(Phase.STARTUP))
             return false;
         return true;
     }

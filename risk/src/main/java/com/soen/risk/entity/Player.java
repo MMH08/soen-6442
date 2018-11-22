@@ -25,6 +25,7 @@ public class Player extends Observable {
     private int exchangeCount = 0;
     private boolean isAttackWon;
 
+    private StartupStrategy startupStrategy;
     private ReinforceStrategy reinforceStrategy;
     private AttackStrategy attackStrategy;
     private FortifyStrategy fortifyStrategy;
@@ -69,19 +70,24 @@ public class Player extends Observable {
      *
      * @return Object of country to which army is assign
      */
-    public String nextCountryToAssignArmy() {
+    public Country nextCountryToAssignArmy() {
         for (Country country : countries) {
             if (country.isEmpty())
-                return country.getName();
+                return country;
         }
-        return countries.get(countries.size() - 1).getName();
+        return countries.get(countries.size() - 1);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    public void addArmy(Country country, int armyCount) {
-        country.setArmy(country.getArmy() + armyCount);
-        setArmyCapacity(getArmyCapacity() - armyCount);
+//    public void addArmy(Country country, int armyCount) {
+//        country.setArmy(country.getArmy() + armyCount);
+//        setArmyCapacity(getArmyCapacity() - armyCount);
+//    }
+
+    public void startup() {
+        int consumedArmy = startupStrategy.execute(this.nextCountryToAssignArmy(), this.armyCapacity);
+        setArmyCapacity(getArmyCapacity() - consumedArmy);
     }
 
     public void reinforce() {
@@ -309,5 +315,13 @@ public class Player extends Observable {
 
     public void setAttackWon(boolean attackWon) {
         isAttackWon = attackWon;
+    }
+
+    public StartupStrategy getStartupStrategy() {
+        return startupStrategy;
+    }
+
+    public void setStartupStrategy(StartupStrategy startupStrategy) {
+        this.startupStrategy = startupStrategy;
     }
 }

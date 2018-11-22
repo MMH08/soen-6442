@@ -4,6 +4,7 @@ import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.StartupPhaseRequest;
 import com.soen.risk.boundary.response.StartupPhaseResponse;
 import com.soen.risk.entity.Game;
+import com.soen.risk.entity.player.human.HumanStartupStrategy;
 import com.soen.risk.interactor.GamePlay;
 
 /**
@@ -37,7 +38,9 @@ public class AddStartupArmy implements Usecase {
     @Override
     public StartupPhaseResponse execute() {
         Game game = GamePlay.getInstance().getGame();
-        game.executeStartupPhase(request.getCountryName(), request.getArmyCount());
+        game.getCurrentPlayer().setStartupStrategy(new HumanStartupStrategy(request.getArmyCount()));
+        game.executeStartupPhase();
+        //game.executeStartupPhase(request.getCountryName(), request.getArmyCount());
         return response;
     }
 }
