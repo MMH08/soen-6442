@@ -2,9 +2,9 @@ package com.soen.risk.boundary.response;
 
 import com.soen.risk.boundary.Response;
 import com.soen.risk.entity.Country;
-import com.soen.risk.interactor.CardExchangeView;
-import com.soen.risk.interactor.DominationView;
-import com.soen.risk.interactor.PhaseView;
+import com.soen.risk.views.CardExchangeView;
+import com.soen.risk.views.DominationView;
+import com.soen.risk.views.PhaseView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,7 @@ public class ReinforceInfoResponse implements Response {
     private List<String> cards;
     private int reinforceArmyCapacity;
     private boolean cardExchangeEnabled;
+    private boolean endGame;
     private PhaseView phaseView;
     private DominationView dominationView;
     private CardExchangeView cardExchangeView;
@@ -81,5 +82,13 @@ public class ReinforceInfoResponse implements Response {
 
     public void setCardExchangeView(CardExchangeView cardExchangeView) {
         this.cardExchangeView = cardExchangeView;
+    }
+
+    public boolean isEndGame() {
+        return endGame;
+    }
+
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
     }
 }

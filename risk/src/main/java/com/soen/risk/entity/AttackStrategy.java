@@ -1,10 +1,25 @@
 package com.soen.risk.entity;
 
+import com.soen.risk.boundary.Response;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 
 public interface AttackStrategy {
-    void execute(List<Country> countries, Map map);
-    int getAttackCounter();
+    void execute(Map map, List<Country> countries);
+
+    /**
+     * @return won country against other country
+     */
     List<Country> getWon();
-    List<Country> getLost();
+
+    /**
+     * @return lost country against other country
+     */
+    HashMap<Country, Country> getLost();
+
+    boolean isComplete();
+
+    static Logger logger = Logger.getLogger(AttackStrategy.class.getName());
 }

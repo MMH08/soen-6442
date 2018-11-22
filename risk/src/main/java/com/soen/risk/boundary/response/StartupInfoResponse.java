@@ -1,10 +1,8 @@
 package com.soen.risk.boundary.response;
 
 import com.soen.risk.boundary.Response;
-import com.soen.risk.interactor.DominationView;
-import com.soen.risk.interactor.PhaseView;
-
-import java.util.List;
+import com.soen.risk.views.DominationView;
+import com.soen.risk.views.PhaseView;
 
 /**
  * The Class StartupInfoResponse.

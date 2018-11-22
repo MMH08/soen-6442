@@ -23,6 +23,7 @@ public class Player extends Observable {
 
     private int exchangeArmy = 0;
     private int exchangeCount = 0;
+    private boolean isAttackWon;
 
     private ReinforceStrategy reinforceStrategy;
     private AttackStrategy attackStrategy;
@@ -30,8 +31,8 @@ public class Player extends Observable {
 
     /**
      * Initialise the player with given suffix and empty list of owned countries.
-     *
-//     * @param number count of player
+     * <p>
+     * //     * @param number count of player
      */
     public Player(String name, String behavior) {
         this.name = name;
@@ -39,6 +40,7 @@ public class Player extends Observable {
         this.cards = new ArrayList<>();
         this.armyCapacity = 0;
         this.type = PlayerType.valueOf(behavior);
+        this.isAttackWon = false;
         //new ArrayList<>(Arrays.asList(Card.ARTILLERY, Card.INFANT, Card.INFANT, Card.CAVALRY, Card.CAVALRY, Card.CAVALRY, Card.CAVALRY));
     }
 
@@ -83,11 +85,11 @@ public class Player extends Observable {
     }
 
     public void reinforce() {
-        reinforceStrategy.execute(countries);
+        reinforceStrategy.execute(this.countries);
     }
 
     public void attack(Map map) {
-        attackStrategy.execute(this.countries,map);
+        attackStrategy.execute(map, this.countries);
     }
 
 
@@ -107,34 +109,6 @@ public class Player extends Observable {
     }
 
     // -------------------------------------------------------------
-
-    /**
-     * calculateReinforceCount(Map m): Checking if player has all countries of whole continent then give army according to
-     * control value, otherwise give armies according to countries player own.
-     *
-     * @param m Reference of map class
-     */
-    public int calculateReinforceCount(Map m) {
-        //Check if player has all country of a continent
-        for (Continent ctt : m.getContinents()) {
-            int size = ctt.getCountries().size();
-            int count = 0;
-            for (Country player_countries : this.getCountries()) {
-                for (Country continent_countries : ctt.getCountries()) {
-                    if (continent_countries.getName().equals(player_countries.getName())) {
-                        count++;
-                    }
-                }
-            }
-            if (size == count) {
-                return ctt.getControlValue() + getExchangeArmy();
-            }
-
-        }
-        //If Player do not have all country of a continent
-        int number_of_countries = this.getCountries().size();
-        return Math.max(3, (int) Math.ceil(number_of_countries / 3.0)) + getExchangeArmy();
-    }
 
     private Country findByCountryName(String s) {
         for (Country c : countries) if (c.getName().equals(s)) return c;
@@ -163,14 +137,6 @@ public class Player extends Observable {
         notifyObservers(this);
 
     }
-
-//    //Return All Countries Name of Player
-//    public List<String> getCountryNames() {
-//        ArrayList<String> names = new ArrayList<>();
-//        for (Country country : countries)
-//            names.add(country.getName());
-//        return names;
-//    }
 
 
     /**
@@ -216,9 +182,9 @@ public class Player extends Observable {
         setExchangeArmy(0);
     }
 
-    public void sendCardsTo(Player currentPlayer) {
+    public void sendCardsTo(Player otherPlayer) {
         for (Card card : cards) {
-            currentPlayer.addCard(card);
+            otherPlayer.addCard(card);
         }
         setCards(new ArrayList<>());
     }
@@ -254,10 +220,7 @@ public class Player extends Observable {
                 flag = 1;
             }
         }
-        if (flag == 0)
-            return true;
-        else
-            return false;
+        return flag == 0;
     }
 
     public String toString() {
@@ -338,5 +301,13 @@ public class Player extends Observable {
 
     public PlayerType getType() {
         return type;
+    }
+
+    public boolean isAttackWon() {
+        return isAttackWon;
+    }
+
+    public void setAttackWon(boolean attackWon) {
+        isAttackWon = attackWon;
     }
 }

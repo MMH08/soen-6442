@@ -3,17 +3,25 @@ package com.soen.risk.boundary.usecase;
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.FortifyPhaseRequest;
 import com.soen.risk.boundary.response.FortifyPhaseResponse;
+import com.soen.risk.entity.Country;
+import com.soen.risk.entity.Game;
+import com.soen.risk.entity.Map;
+import com.soen.risk.entity.player.human.HumanFortifyStrategy;
 import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class MoveFortifyArmy.
  */
 public class MoveFortifyArmy implements Usecase {
-    
-    /** The request. */
+
+    /**
+     * The request.
+     */
     private FortifyPhaseRequest request;
-    
-    /** The response. */
+
+    /**
+     * The response.
+     */
     private FortifyPhaseResponse response;
 
     /**
@@ -31,8 +39,14 @@ public class MoveFortifyArmy implements Usecase {
      */
     @Override
     public FortifyPhaseResponse execute() {
-        GamePlay gamePlay = GamePlay.getInstance();
-        gamePlay.executeFortificationPhase(request.getStartCountry(), request.getEndCountry(), request.getArmyCount());
+        Game game = GamePlay.getInstance().getGame();
+        //domain
+        Map map = game.getMap();
+        Country startCountry = map.findByCountryName(request.getStartCountry());
+        Country endCountry = map.findByCountryName(request.getEndCountry());
+        //strategy
+        game.getCurrentPlayer().setFortifyStrategy(new HumanFortifyStrategy(startCountry, endCountry, request.getArmyCount()));
+        game.executeFortificationPhase();
 
         return response;
     }

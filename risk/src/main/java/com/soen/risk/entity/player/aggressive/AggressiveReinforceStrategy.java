@@ -1,6 +1,7 @@
 package com.soen.risk.entity.player.aggressive;
 
 import com.soen.risk.entity.Country;
+import com.soen.risk.entity.Map;
 import com.soen.risk.entity.ReinforceStrategy;
 
 import java.util.List;

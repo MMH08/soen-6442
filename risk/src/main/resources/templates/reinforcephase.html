@@ -60,96 +60,12 @@
         </div>
     </div>
 
-    <!--<script>-->
-    <!--var count=0;-->
-    <!--$(document).ready(function() {-->
-    <!--var valuecard = $("#showpopup").attr("value");-->
-    <!--if(valuecard == null){-->
-    <!--}-->
-    <!--else{-->
-    <!--count++;-->
-    <!--displaymodal();-->
-    <!--}-->
-    <!--});-->
-    <!---->
-    <!--/* Limit card checkbox selection to 3 */-->
-    <!--var limit = 3;-->
-    <!--$('input.single-checkbox').on('change', function(evt) {-->
-    <!--if($(this).siblings(':checked').length >= limit) {-->
-    <!--this.checked = false;-->
-    <!--}-->
-    <!--});-->
-    <!---->
-    <!---->
-    <!--/* To exit the card exchange view and restricting exit if >5 cards */-->
-    <!--var span = document.getElementsByClassName("close")[0];-->
-    <!--span.onclick = function() {-->
-    <!--if($("#cardscount").val() <5) { -->
-    <!--var modal = document.getElementById('myModal');-->
-    <!--modal.style.display = "none";-->
-    <!--}-->
-    <!--else {-->
-    <!--alert("please exchange cards to proceed further!");-->
-    <!--}  -->
-    <!--}-->
-    <!---->
-    <!--/* Validation of number or cards selected for exchange */-->
-    <!--/* Validation to check only all same or all different cards selected. */-->
-    <!--/* Ajax call to update cards and reinforcement armies when cards exchanged */-->
-    <!---->
-    <!--/*<![CDATA[*/-->
-    <!--$('#exchange').on('click', function(e){-->
-    <!--e.preventDefault();-->
-    <!--var excards = []; -->
-    <!--$.each($("input[name='cardselected']:checked"), function(){            -->
-    <!--excards.push($(this).val());-->
-    <!--});-->
-    <!--if(excards === undefined || excards.length==0) {-->
-    <!--alert("Please select cards for exchange");-->
-    <!--}-->
-    <!--else if(excards.length<3) {-->
-    <!--alert("Please select three cards to make an exchange!")-->
-    <!--}-->
-    <!--else if (getOccurrence(excards, "Calvary")==2 || getOccurrence(excards, "Infant")==2 || getOccurrence(excards, "Artillery")==2 ){-->
-    <!--alert("Please select all same or all distinct cards for exchange");-->
-    <!--}-->
-    <!--else{-->
-    <!--$.ajax({-->
-    <!--url : '/CardExchange',-->
-    <!--method : 'POST',-->
-    <!--data : "cards="+excards,-->
-    <!--success : function() {-->
-    <!--var modal = document.getElementById('myModal');-->
-    <!--modal.style.display = "none";-->
-    <!--window.location.hash = 'reload';-->
-    <!--location.reload(true);-->
-    <!--}-->
-    <!--});	-->
-    <!--}-->
-    <!--});-->
-
-    <!---->
-    <!--/* Differentiate javascript reload from new page load */-->
-    <!--document.addEventListener("DOMContentLoaded", function(event) { -->
-    <!--if(window.location.hash == "#reload"){-->
-    <!--var modal = document.getElementById('myModal');-->
-    <!--modal.style.display = "none";-->
-    <!--}-->
-    <!--});-->
-
-    <!--function getOccurrence(array, value) {-->
-    <!--var count = 0;-->
-    <!--array.forEach((v) => (v === value && count++));-->
-    <!--return count;-->
-    <!--}-->
-
-
     <!--</script>-->
     <div th:replace="layout :: footer"/>
 </div>
 <div th:replace="layout :: cardExchangeView"></div>
 <span style="display:none" th:text="${cardExchangeEnabled}" id="cardExchangeEnabled"></span>
-
+<span id="isEnd" th:text="${isEnd}" style="display:none"></span>
 </body>
 <script>
         if($("#cardExchangeEnabled").text()=='true'){
@@ -180,6 +96,12 @@
     $("#reinforceAddArmy").submit();
     });
 
+</script>
+<script>
+    if($("#isEnd").text() == 'true'){
+        alert("Game is over !");
+        window.location("/endGame");
+    }
 </script>
 
 </html>

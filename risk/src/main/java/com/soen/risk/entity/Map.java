@@ -22,13 +22,11 @@ import java.util.logging.Logger;
 public class Map {
     private static Logger logger = Logger.getLogger(Map.class.getName());
     private String name;
-    //public int counter = 1;
     private ArrayList<Continent> continents;
     private ArrayList<Country> countries;
     private LinkedList<LinkedList<Country>> adjCountry;
     private LinkedList<Object> list_country;
-    private String fileName;
-    //private LinkedList<Integer> adj[];
+    //private String fileName;
 
     /**
      * Initiating continents, countries, 2D linkedlist of country
@@ -76,15 +74,14 @@ public class Map {
     /**
      * This method receive map from file and add to adjCountry object.
      *
-     * @param filename Path of File with name of file
+  //   * @param filename Path of File with name of file
      * @author Amit Sachdeva
      * @since 2018-10-06
      */
-    public void load(String filename) {
-        this.fileName = filename;
-        logger.log(Level.INFO, "Reading filename " + this.fileName);
+    public void load(String fileName) {
+        logger.log(Level.INFO, "Reading filename " + fileName);
         try {
-            Scanner readingFile = new Scanner(new FileReader(this.fileName));
+            Scanner readingFile = new Scanner(new FileReader(fileName));
             int flagContinent = 0, flagCountry = 0;
             //TODO: add map name using content in the file.
             while (readingFile.hasNext()) {
@@ -112,10 +109,10 @@ public class Map {
      * @author Manmeet Singh
      * @since 2018-10-07
      */
-    public void save() {
+    public void save(String filePath) {
         try {
-            logger.log(Level.INFO, "Saving map to " + fileName);
-            PrintWriter pw = new PrintWriter(new File(this.fileName));
+            logger.log(Level.INFO, "Saving map to " + filePath);
+            PrintWriter pw = new PrintWriter(new File(filePath));
             pw.println("Map=" + this.name);
             pw.println();
             pw.println("[Continents]");
@@ -126,7 +123,7 @@ public class Map {
             pw.println("[Territories]");
             for (Country country : countries) {
                 String tem = country.getName() + "," + country.getCoordinateX() + "," + country.getCoordinateY() + "," +
-                        this.getCountryFromContinents(country) + "," + this.getNeighbouringCountries(country.getName());
+                        this.getContinent(country) + "," + this.getNeighbouringCountries(country.getName());
                 logger.log(Level.INFO, this.getNeighbouringCountries(country.getName()));
                 logger.log(Level.INFO, tem);
                 pw.println(tem);
@@ -164,24 +161,22 @@ public class Map {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+
     /**
-     * 
      * @param startCountry Starting country name
-     * @param endCountry Checking Ending country name
-     * @param countries List of countries to check for path
+     * @param endCountry   Checking Ending country name
+     * @param countries    List of countries to check for path
      * @return boolean value to denote if path exists
      */
     public boolean pathExists(Country startCountry, Country endCountry, List<Country> countries) {
         int startId = startCountry.getId();
         int endId = endCountry.getId();
 
-        LinkedList<LinkedList<Country>> ll = GamePlay.getInstance().getGame().getMap().getAdjCountry();
-
-        LinkedList<Integer> adj[] = new LinkedList[ll.size()];
-        for (int i = 0; i < ll.size(); i++) {
+        LinkedList<Integer> adj[] = new LinkedList[adjCountry.size()];
+        for (int i = 0; i < adjCountry.size(); i++) {
             adj[i] = new LinkedList();
         }
-        for (LinkedList<Country> ll1 : ll) {
+        for (LinkedList<Country> ll1 : adjCountry) {
             int index = ll1.get(0).getId();
             int j = 0;
             for (Country c : ll1) {
@@ -200,7 +195,43 @@ public class Map {
     // --------------------------------------------------------------------------------------------------------------
     // --------------------------------------------------------------------------------------------------------------
 
-  
+    /**
+     * todo: rename the function and optimise the loop
+     * Return HashMap with countries and its neighboring countries not belong to player
+     *
+     * @return HashMap of Neighboring countries of a Player Specific Country Name
+     */
+    public HashMap<String, ArrayList<String>> getAdjCountries(List<Country> countries) {
+        HashMap<String, ArrayList<String>> neighbouring = new HashMap<>();
+        for (Country c : countries) {
+            for (LinkedList<Country> lc : adjCountry) {
+                if (c.getName().equals(lc.get(0).getName())) {
+                    neighbouring.put(c.getName(), checkPlayerSpecificNeigbhouringCountries(lc, countries));
+                }
+            }
+        }
+        return neighbouring;
+    }
+
+    private ArrayList<String> checkPlayerSpecificNeigbhouringCountries(LinkedList<Country> lc,
+                                                                       List<Country> countries) {
+        ArrayList<String> ar = new ArrayList<>();
+        for (Country c1 : lc) {
+            int flag = 0;
+            for (Country c : countries) {
+                if (c1.getName().equals(c.getName())) {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0) {
+                ar.add(c1.getName());
+            }
+        }
+        return ar;
+    }
+
+
     private void addNewContinent(String temp) {
         logger.log(Level.FINE, "Adding continent " + temp);
         String split_continent[] = temp.split("=");
@@ -209,7 +240,7 @@ public class Map {
         continents.add(cont);
     }
 
-    
+
     private void addNewCountry(String temp) {
         logger.log(Level.FINE, "Adding new country " + temp);
         String split_country[] = temp.split(",");
@@ -278,7 +309,7 @@ public class Map {
      * @author Manmeet Singh
      * @since 2018-10-07
      */
-    private String getCountryFromContinents(Country c) {
+    private String getContinent(Country c) {
         for (Continent con : continents) {
             for (Country coun : con.getCountries()) {
                 if (coun.getName().equals(c.getName())) {
@@ -289,7 +320,7 @@ public class Map {
         return "";
     }
 
-   
+
     private String getNeighbouringCountries(String country) {
         for (LinkedList<Country> ll : this.adjCountry) {
             if (ll.get(0).getName().equals(country)) {
@@ -311,11 +342,10 @@ public class Map {
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    
+
     /**
-     * 
      * @param allowedCountries List of countries to be assigned as adjacent
-     * @param movingPath Path of a country
+     * @param movingPath       Path of a country
      * @return to denote whether path is valid or not
      */
     private boolean checkPathValid(List<Country> allowedCountries, List<Integer> movingPath) {
@@ -337,7 +367,6 @@ public class Map {
     }
 
     /**
-     * 
      * @param path
      * @param allPaths
      */
@@ -349,7 +378,7 @@ public class Map {
         allPaths.add(temp);
     }
 
-    
+
     private int countNumberOfPath(LinkedList adj[], int start, int dest, int PathCount, boolean visited[], LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths) {
         visited[start] = true;
         path.add(start);
@@ -381,7 +410,7 @@ public class Map {
         return PathCount;
     }
 
-  
+
     private boolean searchPathBetweenCountries(LinkedList adj[], int currentCountry, int shift, List<Country> countries) {
         boolean v[] = new boolean[adj.length];
         LinkedList<Integer> movingPath = new LinkedList();
@@ -450,8 +479,7 @@ public class Map {
         return false;
     }
 
-    
-   
+
     private void checkingContacting(LinkedList adj[], int CurrentCountry, boolean visited[], LinkedList<Integer> movingPath) {
         visited[CurrentCountry] = true;
         movingPath.add(CurrentCountry);
@@ -466,12 +494,12 @@ public class Map {
     public boolean checkIsolatedCountry() {
         int currentCoun = this.countries.get(0).getId();    //Convert Country name to their ids
         LinkedList<LinkedList<Country>> ll = this.adjCountry;
-       
+
         LinkedList<Integer> adj[] = new LinkedList[ll.size()];
         for (int i = 0; i < ll.size(); i++) {
             adj[i] = new LinkedList();
         }
-       
+
         for (LinkedList<Country> ll1 : ll) {
             int index = ll1.get(0).getId();
             int j = 0;
@@ -483,7 +511,7 @@ public class Map {
 
             }
         }
-        
+
         boolean v[] = new boolean[adj.length];
         LinkedList<Integer> movingPath = new LinkedList();
         //Start searching for path between both countries
@@ -496,20 +524,15 @@ public class Map {
             return true;
         }
     }
-    
-    public List<Country> getNeighbouringCountry(List<Country> countries, Country c)
-    {
-    	for(LinkedList<Country> ll: adjCountry)
-    	{
-    		Country c1 = ll.get(0);
-    		
-    		if(c1.getName().equals(c.getName())) {
-    			return ll;
-    			
-    		}
-    	}
-    	return null;
+
+    public List<Country> getNeighbouringCountry(Country c) {
+        for (LinkedList<Country> ll : adjCountry) {
+            Country c1 = ll.get(0);
+            if (c1.getName().equals(c.getName())) return ll;
+        }
+        return null;
     }
+
     //------------------------------------------------------------------------------------------------------------------
     public String getName() {
         return name;
@@ -541,15 +564,6 @@ public class Map {
 
     public ArrayList<Continent> getContinents() {
         return continents;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        logger.log(Level.INFO, "Setting filename " + fileName);
-        this.fileName = fileName;
     }
 
     //Get map on basis of country object

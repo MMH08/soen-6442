@@ -90,21 +90,12 @@ public class MapBuilder {
      * Getting country objects and adding to Map
      */
     private void addCountryObjects() {
-        //Countries
-//        ArrayList<Country> temp = new ArrayList<>();
         int i = 0;
         for (String s : this.countries) {
             Country c = new Country(i, s);
             c.setCoordinateX("0");
             c.setCoordinateY("0");
             map.addCountry(c);
-//            for (Continent con : map.getContinents()) {
-//                if (con.getName().equals(countryOwners.get(i))) {
-//                    con.addCountry(c);
-//                    break;
-//                }
-//            }
-//            temp.add(c);
             i++;
         }
     }
@@ -123,14 +114,13 @@ public class MapBuilder {
 
     /**
      * Saving the map to an external folder
-     * @param User given folder location
+    // * @param User given folder location
      */
-    public String save(String downloadFolder) {
-        map.setFileName(downloadFolder + map.getName() + ".map");
+    public void save(String downloadFolder) {
+        //map.setFileName();
         if (map.isValid()){
             logger.log(Level.INFO, "Map is valid ");
-            map.save();
+            map.save(downloadFolder + map.getName() + ".map");
         }
-        return map.getFileName();
     }
 }

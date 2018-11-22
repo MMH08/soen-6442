@@ -1,4 +1,4 @@
-package com.soen.risk.interactor;
+package com.soen.risk.views;
 
 import com.soen.risk.entity.Player;
 
