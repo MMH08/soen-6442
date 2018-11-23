@@ -12,7 +12,7 @@ public class CheaterFortifyStrategy implements FortifyStrategy {
     public boolean execute(Map map, List<Country> allowedCountries) {
     	for(Country c: allowedCountries)
     	{
-    		List<Country> ll = map.getNeighbouringCountry(allowedCountries, c);
+    		List<Country> ll = map.getNeighbouringCountry(c);
     		for(int i=1;i<ll.size();i++)
     		{
     			if(checkNeighbouringCountry(allowedCountries,ll.get(i)))
