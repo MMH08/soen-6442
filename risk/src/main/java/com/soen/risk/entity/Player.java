@@ -90,8 +90,8 @@ public class Player extends Observable {
         setArmyCapacity(getArmyCapacity() - consumedArmy);
     }
 
-    public void reinforce() {
-        reinforceStrategy.execute(this.countries);
+    public void reinforce(Map map) {
+        reinforceStrategy.execute(map, this.countries);
     }
 
     public void attack(Map map) {

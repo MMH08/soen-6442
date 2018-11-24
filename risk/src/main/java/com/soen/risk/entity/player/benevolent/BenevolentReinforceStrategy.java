@@ -10,9 +10,10 @@ import java.util.List;
 
 public class BenevolentReinforceStrategy implements ReinforceStrategy {
     @Override
-    public void execute(List<Country> countries) {
-    	Country con_max =  Collections.max(countries, Comparator.comparing(s1 -> s1.getArmy()));    
-    	Country con_min =  Collections.min(countries, Comparator.comparing(s -> s.getArmy()));       
-    	con_min.setArmy(con_max.getArmy());
+    public void execute(Map map, List<Country> countries) {
+        //todo : multiple weakest country - divide the reinforce count and add to country
+        int reinforceCount = ReinforceStrategy.calculateArmyCount(map, countries);
+        Country weakestCountry = Collections.min(countries, Comparator.comparing(Country::getArmy));
+        weakestCountry.addArmy(reinforceCount);
     }
 }

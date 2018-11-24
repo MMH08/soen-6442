@@ -89,7 +89,7 @@ public class Game extends Observable {
 
 
     public void executeReinforcePhase() {
-        getCurrentPlayer().reinforce();
+        getCurrentPlayer().reinforce(map);
         // updates
         getCurrentPlayer().resetExchangeArmy();
         updateCurrentPhase();

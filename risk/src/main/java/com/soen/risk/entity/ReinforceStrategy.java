@@ -3,7 +3,7 @@ package com.soen.risk.entity;
 import java.util.List;
 
 public interface ReinforceStrategy  {
-    void execute(List<Country> countries);
+    void execute(Map map, List<Country> countries);
 
     static int calculateArmyCount(Map map, List<Country> countries){
         //Check if player has all country of a continent

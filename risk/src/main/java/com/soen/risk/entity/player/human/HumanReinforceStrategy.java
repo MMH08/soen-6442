@@ -18,7 +18,7 @@ public class HumanReinforceStrategy implements ReinforceStrategy {
     }
 
     @Override
-    public void execute(List<Country> countries) {
+    public void execute(Map map, List<Country> countries) {
         int i = 0;
         for (Country c : countries) {
             logger.log(Level.INFO, "Adding reinforce army to country " + c.getName() + ", army count " + armyCounts.get(i));
