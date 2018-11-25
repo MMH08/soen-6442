@@ -1,0 +1,13 @@
+Map=eg
+
+[Continents]
+Continent1=1
+Continent2=2
+Continent3=3
+
+[Territories]
+Country1,0,0,Continent1,Country1,Country2
+Country2,0,0,Continent1,Country2,Country3
+Country3,0,0,Continent2,Country1,Country2,Country4,Country5
+Country4,0,0,Continent2,Country2,Country3
+Country5,0,0,Continent3,Country1,Country4,Country5

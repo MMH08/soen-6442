@@ -1,0 +1,9 @@
+Map=demo
+
+[Continents]
+Continent1=1
+Continent2=1
+
+[Territories]
+Country1,0,0,Continent1,Country2
+Country2,0,0,Continent2,Country1
