@@ -28,7 +28,7 @@ public class DominationView implements Observer {
      * Constructor for Domination View
      * @param totalCountries- Count of Total Number of Countries required to display in Domination View
      */
-    DominationView(int totalCountries) {
+    public DominationView(int totalCountries) {
         this.totalCountries = totalCountries;
         playersInfo = new HashMap<>();
     }

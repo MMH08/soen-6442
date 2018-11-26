@@ -79,4 +79,9 @@ public class Country extends Observable {
     public boolean isEmpty() {
         return this.army == 0;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

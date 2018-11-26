@@ -21,7 +21,7 @@ public class CardExchangeView implements Observer {
     private HashMap<String, List<String>> cards;
     private static Logger logger = Logger.getLogger(CardExchangeView.class.getName());
 
-    CardExchangeView() {
+    public CardExchangeView() {
         cards = new HashMap<>();
     }
 
