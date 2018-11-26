@@ -10,15 +10,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.*;
 
+import java.io.File;
+import java.io.IOException;
 /**
  * The Class MapTest.
  */
+import java.util.Scanner;
 public class MapTest {
 
     /**
      * The map.
      */
     private static Map map, map1, map2, map3, map4;
+    String fileName="createnew.map";
 
     /**
      * Sets the up.
@@ -33,67 +37,17 @@ public class MapTest {
     @BeforeClass
     public static void set() {
         map1 = new Map();
-        Country c1 = new Country(0, "A");
-        Country c2 = new Country(1, "B");
-        Country c3 = new Country(2, "C");
-        Country c4 = new Country(3, "D");
-        Country c5 = new Country(4, "B");
-        map1.addCountry(c1);
-        map1.addCountry(c2);
-        map1.addCountry(c3);
-        map1.addCountry(c4);
-        map1.addCountry(c5);
+        map1.load("map1.map");
 
         map2 = new Map();
-        Continent c11 = new Continent("A");
-        c11.setControlValue(11);
-        Continent c22 = new Continent("B");
-        c22.setControlValue(13);
-        Continent c33 = new Continent("C");
-        c33.setControlValue(15);
-        Continent c44 = new Continent("D");
-        c44.setControlValue(17);
-        Continent c55 = new Continent("B");
-        c55.setControlValue(18);
-        map2.addContinent(c11);
-        map2.addContinent(c22);
-        map2.addContinent(c33);
-        map2.addContinent(c44);
-        map2.addContinent(c55);
-
+        map2.load("map2.map");
+      
         map3 = new Map();
-        Country c111 = new Country(0, "A");
-        Country c222 = new Country(1, "B");
-        Country c333 = new Country(2, "C");
-        Country c444 = new Country(3, "D");
-        Country c555 = new Country(4, "E");
-        map3.addCountry(c111);
-        map3.addCountry(c222);
-        map3.addCountry(c333);
-        map3.addCountry(c444);
-        map3.addCountry(c555);
-        String s[] = {c111.getName(), c222.getName(), c333.getName(), c444.getName()};
-        map3.map_name_creation(s);
-        String s1[] = {c222.getName(), c333.getName(), c444.getName(), c111.getName()};
-        String s2[] = {c333.getName(), c444.getName(), c111.getName(), c222.getName()};
-        String s3[] = {c444.getName(), c333.getName(), c222.getName(), c111.getName()};
-        String s4[] = {c555.getName()};
-        map3.map_name_creation(s1);
-        map3.map_name_creation(s2);
-        map3.map_name_creation(s3);
-        map3.map_name_creation(s4);
-        map3.map_country_object_creation();
+        map3.load("map3.map");
+      
         map4 = new Map();
-    }
-
-    /**
-     * The Filename.
-     */
-    //String path = "/home/varun/Downloads/001_I72_Ghtroc 720/";
-    String path = "/home/varun/Downloads/";
-    String Filename = path + "001_I72_Ghtroc 720.map";
-    String invalidFile = path + "invalid.map";
-
+        map4.load("invalid.map");
+        }
     /**
      * Adds the country.
      */
@@ -111,9 +65,9 @@ public class MapTest {
      */
     @Test
     public void load() {
-        map.load(Filename);
-        assertEquals(8, map.getContinents().size());
-        assertEquals(99, map.getCountries().size());
+      map.load(fileName);
+      assertEquals(2, map.getContinents().size());
+      assertEquals(4, map.getCountries().size());
     }
 
 
@@ -167,7 +121,7 @@ public class MapTest {
      */
     @Test
     public void map_name_creation() {
-        map.load(Filename);
+       map.load(fileName);
         assertNotNull(map.getListCountry());
     }
 
@@ -177,7 +131,7 @@ public class MapTest {
      */
     @Test
     public void map_country_object_creation() {
-        map.load(Filename);
+       map.load(fileName);
         map.map_country_object_creation();
         assertNotNull(map.getAdjCountry());
     }
@@ -210,9 +164,9 @@ public class MapTest {
 
     }
 
-    @Test
+   @Test
     public void isValid() {
-        map4.load(invalidFile);
+    
         assertFalse(map4.isValid());
     }
 

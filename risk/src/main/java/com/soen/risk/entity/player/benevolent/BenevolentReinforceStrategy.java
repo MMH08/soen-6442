@@ -4,15 +4,35 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.ReinforceStrategy;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class BenevolentReinforceStrategy implements ReinforceStrategy {
     @Override
-    public void execute(List<Country> countries) {
-    	Country con_max =  Collections.max(countries, Comparator.comparing(s1 -> s1.getArmy()));    
-    	Country con_min =  Collections.min(countries, Comparator.comparing(s -> s.getArmy()));       
-    	con_min.setArmy(con_max.getArmy());
+    public void execute(Map map, List<Country> countries) {
+        int count = 1;
+    	ArrayList<Country> weakCountries = new ArrayList<>(); 
+        int reinforceCount = ReinforceStrategy.calculateArmyCount(map, countries);
+        Country weakestCountry = Collections.min(countries, Comparator.comparing(Country::getArmy));
+        int weakestArmycount = weakestCountry.getArmy();
+        for (Country c: countries)
+        {
+        	if(weakestArmycount == c.getArmy())
+        	{
+        		weakCountries.add(c);
+        	}
+        }
+        while(count<=reinforceCount) {
+        	for (Country weakestCountries : weakCountries) {
+        		if(count <= reinforceCount) {
+        			weakestCountries.addArmy(1);
+        			count++;
+        		}
+        	}
+        }
     }
 }
+
+
