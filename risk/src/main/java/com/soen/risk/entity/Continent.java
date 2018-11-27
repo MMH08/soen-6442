@@ -1,5 +1,6 @@
 package com.soen.risk.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,7 +14,7 @@ import java.util.logging.Logger;
  * @since 2018-11-01
  * @version 1.0.2
  */
-public class Continent {
+public class Continent implements Serializable {
 	private static Logger logger = Logger.getLogger(Continent.class.getName());
 	private String name;
 	private int controlValue;

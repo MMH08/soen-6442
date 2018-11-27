@@ -1,5 +1,6 @@
 package com.soen.risk.entity;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,7 +13,7 @@ import java.util.logging.Logger;
  * @version 2.0.0
  * @since 2018-10-31
  */
-public class Player extends Observable {
+public class Player extends Observable implements Serializable {
     private static Logger logger = Logger.getLogger(Player.class.getName());
 
     private String name;

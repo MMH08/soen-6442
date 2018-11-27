@@ -531,4 +531,29 @@ public class ApiController {
         return "redirect:/";
     }
 
+    @RequestMapping("/save00")
+    public ModelAndView saveGame() {
+        ModelAndView model = new ModelAndView("saveGame");
+        SaveGame usecase = new SaveGame();
+        SaveGameResponse response = usecase.execute();
+        model.addObject("", response.getSavedFileName());
+        
+        return model;
+    }
+    
+    @RequestMapping("/load00")
+    public ModelAndView loadGame(@RequestParam("savedFileName") String savedFileName) {
+    	ModelAndView model = new ModelAndView("/loadSuccess");
+        LoadSavedGame usecase=new LoadSavedGame(savedFileName);
+        LoadSavedGameResponse response=usecase.execute();
+        if (response.getStatus())
+        	model.addObject("msg", "success");
+        
+        else 
+        	{
+        	model.addObject("msg", "failure");
+        	}
+        
+        return model;
+    }
 }
