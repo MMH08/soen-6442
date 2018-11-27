@@ -6,7 +6,9 @@ import com.soen.risk.views.DominationView;
 import com.soen.risk.views.PhaseView;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.Serializable;
 
 /**
  * <h2>Game Play</h2>
@@ -22,7 +24,7 @@ import java.util.logging.Logger;
  * @since 2018-11-1
  */
 
-public class GamePlay {
+public class GamePlay implements Serializable {
     private static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
 
@@ -38,6 +40,13 @@ public class GamePlay {
         if (gamePlayInstance == null)
             gamePlayInstance = new GamePlay();
         return gamePlayInstance;
+    }
+    
+    public static void setInstance(GamePlay gamePlay)
+    {
+    	gamePlayInstance=gamePlay;
+    	logger.log(Level.INFO, "Setting instance" );
+    	
     }
 
     private GamePlay() {

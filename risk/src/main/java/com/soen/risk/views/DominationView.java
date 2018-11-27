@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.Serializable;
 
 /**
  * Use case to buildGame the game play will be responsible to attach the domination view to all the players that are
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * @since 04-11-2018
  * @version 1.0.2
  */
-public class DominationView implements Observer {
+public class DominationView implements Observer,Serializable {
 
     private static Logger logger = Logger.getLogger(DominationView.class.getName());
     private HashMap<String, PlayerInfo> playersInfo;
@@ -126,7 +127,7 @@ public class DominationView implements Observer {
         this.playersInfo = playersInfo;
     }
 
-    class PlayerInfo {
+    class PlayerInfo implements Serializable {
         private HashMap<String, Integer> countries;
         private int totalArmyCount;
         private String share;

@@ -14,25 +14,20 @@
             <div class="overflow">
                 <div id="textpadding">
                     <h2>Risk - Game Play</h2>
-                    <div class="sticky">
-                        <i class="fa fa-info-circle" aria-hidden="true"></i> <b>Select the game mode</b>
-                    </div>
+                    
                     <br/>
-                    <table>
-                        <tr>
-                            <td><a th:href="@{/singleGame01}">Single Game Mode</a></td>
-                        </tr>
-                        <tr>
-                            <td><a th:href="@{/tournament01}">Tournament Mode</a></td>
-                        </tr>
-                         <tr>
-                              <form th:action="@{/load00}" method="get">
-                               <td>Enter File Name to load</td>
+                    <form th:action="@{/load00}" method="get">
+                        <table>
+                            <tr>
+                                <td>Enter File Name to load</td>
                                 <td><input type="text" name="savedFileName"/></td>
+                            </tr>
+                            <tr>
+                                <td></td>
                                 <td><input type="submit" name="submit" value="Submit"></td>
-                                </form>
-                        </tr>
-                    </table>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
 
 

@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.Serializable;
 /**
  * <h2>CardExchangeView</h2>
  * CardExchangeView Class will be attached to the GamePlay during the reinforcement Phase.
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * @since 05/11/2018
  * @version 1.0.2
  */
-public class CardExchangeView implements Observer {
+public class CardExchangeView implements Observer,Serializable {
     private HashMap<String, List<String>> cards;
     private static Logger logger = Logger.getLogger(CardExchangeView.class.getName());
 
