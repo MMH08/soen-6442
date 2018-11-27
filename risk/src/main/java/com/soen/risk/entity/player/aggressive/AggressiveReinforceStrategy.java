@@ -12,5 +12,17 @@ public class AggressiveReinforceStrategy implements ReinforceStrategy {
     @Override
 
     public void execute(Map map, List<Country> countries) {
+    	int armyCount = ReinforceStrategy.calculateArmyCount(map, countries);
+    	int max = Integer.MIN_VALUE;
+    	Country maxCountry = null;
+    	for(Country c: countries)
+    	{
+    		if(c.getArmy()>max)
+    		{
+    			max = c.getArmy();
+    			maxCountry = c;
+    		}
+    	}
+    	maxCountry.setArmy(maxCountry.getArmy() + armyCount);
     }
 }
