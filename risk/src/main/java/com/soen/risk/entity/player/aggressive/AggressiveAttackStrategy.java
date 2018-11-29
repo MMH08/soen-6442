@@ -18,7 +18,7 @@ public class AggressiveAttackStrategy implements AttackStrategy {
     public AggressiveAttackStrategy() {
         this.won = new ArrayList<>();
         this.lost = new HashMap<>();
-        this.isComplete = false;
+        this.isComplete = true;
     }
 
     /**
