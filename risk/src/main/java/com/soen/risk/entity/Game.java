@@ -126,7 +126,7 @@ public class Game extends Observable implements Serializable {
         // if current player lost all the countries
         if (currentPlayer.getCountries().size() == 0) {
             logger.log(Level.INFO, "all countries lost by attacker");
-            currentPlayer.sendCardsTo((Player) losts.values().toArray()[losts.size() - 1]);
+            currentPlayer.sendCardsTo(getOwner((Country) losts.values().toArray()[losts.size() - 1]));
             players.remove(currentPlayer);
             updateCurrentPlayer(); // jump the player
             updateCurrentPhase();
@@ -195,6 +195,7 @@ public class Game extends Observable implements Serializable {
         for (Player p : this.getPlayers()) {
             if (p.getArmyCapacity() != 0) return false;
         }
+        logger.log(Level.INFO, "All players have zero armies");
         return true;
     }
 

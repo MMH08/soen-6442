@@ -5,56 +5,93 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
 public class AggressiveAttackStrategy implements AttackStrategy {
     private List<Country> won;
     private HashMap<Country, Country> lost;
     private boolean isComplete;
+    private int attackCounter;
 
     public AggressiveAttackStrategy() {
         this.won = new ArrayList<>();
         this.lost = new HashMap<>();
         this.isComplete = true;
     }
-    
-    private Country AttackingCountry(List<Country> countries)
-    {
-    	int max = Integer.MIN_VALUE;
-    	Country maxCountry = null;
-    	for(Country c: countries)
-    	{
-    		if(c.getArmy()>max)
-    		{
-    			max = c.getArmy();
-    			maxCountry = c;
-    		}
-    	}
-    	return maxCountry;
+
+    /**
+     * Aggressive player will keep on attacking till the time one thing happens:
+     * 1. either he lost the attacking country
+     * 2. or it runs out of options to attack, i.e., for loop runs completely.
+     *
+     * @param map       Map
+     * @param countries list of countries
+     */
+    @Override
+    public void execute(Map map, List<Country> countries) {
+        Country attackingCountry = this.findStrongestCountry(countries);
+        List<Country> defendingCountries = this.findDefendingCountries(map, attackingCountry, countries);
+
+        for (Country defendingCountry : defendingCountries) {
+            ArrayList<Boolean> wins = this.playGame(attackingCountry, defendingCountry);
+            for (boolean win : wins) {
+                if (win) {
+                    logger.log(Level.INFO, "Attacker won 1 army.");
+                    attackingCountry.setArmy(attackingCountry.getArmy() + 1);
+                    defendingCountry.setArmy(defendingCountry.getArmy() - 1);
+                } else {
+                    logger.log(Level.INFO, "Defender won 1 army.");
+                    attackingCountry.setArmy(attackingCountry.getArmy() - 1);
+                    defendingCountry.setArmy(defendingCountry.getArmy() + 1);
+                }
+            }
+            if (defendingCountry.getArmy() == 0) {
+                logger.log(Level.INFO, "Defending country lost all the army");
+                AttackStrategy.exchangeArmy(attackingCountry, defendingCountry, attackCounter);
+                attackCounter = 0; // reset counter for future fights. ownership will be changed once and for all.
+                won.add(defendingCountry);
+
+            } else if (attackingCountry.getArmy() == 0) {
+                logger.log(Level.INFO, "Attacking country lost all the army");
+                AttackStrategy.exchangeArmy(defendingCountry, attackingCountry, attackCounter);
+                lost.put(attackingCountry, defendingCountry);
+                return; // exit the function
+            }
+        }
     }
-    private List<Country> attackedCountry(Map map, Country attackingCountry, List<Country> countries)
-    {
-    	List<Country> ll = map.getNeighbouringCountry(attackingCountry);
-    	List<Country> attackedCountry = new ArrayList<Country>();
-    	for(Country c: ll) {    		
-    			int flag = 0;
-		    	for(Country checkCountry: countries)
-		    	{
-		    		if(c.getName().equals(checkCountry.getName()))
-		    		{
-		    			flag  = 1;
-		    			break;
-		    		}
-		    	}
-		    	if(flag == 0)
-		    	{
-		    		attackedCountry.add(c);
-		    	}
-    	}	
-    	return attackedCountry;
+
+    private Country findStrongestCountry(List<Country> countries) {
+        int max = Integer.MIN_VALUE;
+        Country maxCountry = null;
+        for (Country c : countries) {
+            if (c.getArmy() > max) {
+                max = c.getArmy();
+                maxCountry = c;
+            }
+        }
+        return maxCountry;
     }
+
+    private List<Country> findDefendingCountries(Map map, Country attackingCountry, List<Country> countries) {
+        List<Country> ll = map.getNeighbouringCountry(attackingCountry);
+        List<Country> attackedCountry = new ArrayList<Country>();
+        for (Country c : ll) {
+            int flag = 0;
+            for (Country checkCountry : countries) {
+                if (c.getName().equals(checkCountry.getName())) {
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 0) {
+                attackedCountry.add(c);
+            }
+        }
+        return attackedCountry;
+    }
+
     private int normalizeAttackDiceCount(Country attackingCountry) {
         if (attackingCountry.getArmy() >= 3) return 3;
         if (attackingCountry.getArmy() == 2) return 2;
@@ -68,116 +105,15 @@ public class AggressiveAttackStrategy implements AttackStrategy {
         if (attackingCountry.getArmy() == 1) return 1;
         return 0;
     }
-    private ArrayList<Boolean> playGame(Country attackingCountry, Country attackedCountry)
-    {
-        ArrayList<Boolean> win = new ArrayList<>();
 
+    private ArrayList<Boolean> playGame(Country attackingCountry, Country defendingCountry) {
+        logger.log(Level.INFO, "Attack by aggressive : " + attackingCountry + " on " + defendingCountry);
         int attackingDiceCount = normalizeAttackDiceCount(attackingCountry);
-        int defendingDiceCount = normalizeDefendingDiceCount(attackedCountry, attackingCountry);
+        int defendingDiceCount = normalizeDefendingDiceCount(defendingCountry, attackingCountry);
+        attackCounter = attackCounter + defendingDiceCount;
 
-        if (defendingDiceCount <= 0 || attackingDiceCount <= 0) {
-            return win;
-        }
+        return AttackStrategy.simulateDiceRoll(attackingDiceCount, defendingDiceCount);
 
-        int dicI1[] = new int[attackingDiceCount];
-        int dicI2[] = new int[defendingDiceCount];
-
-
-        for (int i = 0; i < dicI1.length; i++) {
-            dicI1[i] = 1 + (int) (9.0 * Math.random());
-        }
-
-        for (int i = 0; i < dicI2.length; i++) {
-            dicI2[i] = 1 + (int) (9.0 * Math.random());
-        }
-        Arrays.sort(dicI1);
-        Arrays.sort(dicI2);
-
-        if (dicI1.length == 1) {
-            if (dicI1[0] >= dicI2[0]) {
-                win.add(true);
-            } else {
-                win.add(false);
-            }
-        } else if (dicI1.length == 2) {
-            if (dicI2.length == 1) {
-                if (dicI1[1] >= dicI2[0]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-            } else if (dicI2.length == 2) {
-                if (dicI1[1] >= dicI2[1]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-                if (dicI1[0] >= dicI2[0]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-            }
-        } else if (dicI1.length == 3) {
-            if (dicI2.length == 1) {
-                if (dicI1[2] >= dicI2[0]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-            } else if (dicI2.length == 2) {
-                if (dicI1[2] >= dicI2[1]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-                if (dicI1[1] >= dicI2[0]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-            }
-        }
-        return win;
-
-    }
-    @Override
-    public void execute(Map map, List<Country> countries) {
-    	Country attackingCountry = this.AttackingCountry(countries);
-    	List<Country> ListAttackedCountry = this.attackedCountry(map, attackingCountry, countries);
-    	Country attackedCountry = ListAttackedCountry.get(1);
-    	int flag = 0;
-    	while(flag !=1)
-    	{
-    		ArrayList<Boolean> b = new ArrayList<Boolean>();
-    		b = this.playGame(attackingCountry,attackedCountry);
-    		for(int i=0;i<b.size();i++)
-    		{
-    			if(b.get(i) == true)
-    			{
-    				attackingCountry.setArmy(attackingCountry.getArmy()+1);
-    				attackedCountry.setArmy(attackedCountry.getArmy()-1);
-    			}
-    			else
-    			{
-    				attackingCountry.setArmy(attackingCountry.getArmy()-1);
-    				attackedCountry.setArmy(attackedCountry.getArmy()+1);
-    			}
-    		}
-    		if(attackedCountry.getArmy() == 0)
-    		{
-    			won.add(attackingCountry);
-    			lost.put(attackedCountry,attackingCountry);
-    			flag=1;
-    		}
-    		else if(attackingCountry.getArmy() == 0)
-    		{
-    			won.add(attackedCountry);
-    			lost.put(attackingCountry,attackedCountry);
-    			flag=1;
-    		}
-    	}
-    	
     }
 
     public List<Country> getWon() {

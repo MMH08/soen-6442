@@ -6,7 +6,6 @@ import com.soen.risk.entity.Map;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -56,37 +55,13 @@ public class HumanAttackStrategy implements AttackStrategy, Serializable {
 
         if (attackingCountry.getArmy() == 0) {
             logger.log(Level.INFO, "Attacking country lost all the army");
-            exchangeArmy(defendingCountry, attackingCountry);
+            AttackStrategy.exchangeArmy(defendingCountry, attackingCountry, attackCounter);
             lost.put(attackingCountry, defendingCountry);
         } else if (defendingCountry.getArmy() == 0) {
             logger.log(Level.INFO, "Defending country lost all the army");
-            exchangeArmy(attackingCountry, defendingCountry);
+            AttackStrategy.exchangeArmy(attackingCountry, defendingCountry, attackCounter);
             won.add(defendingCountry);
         }
-    }
-
-    private void exchangeArmy(Country from, Country to) {
-        if (from.getArmy() <= attackCounter) {
-            to.setArmy(from.getArmy() - 1);
-            from.setArmy(1);
-        } else {
-            to.setArmy(attackCounter);
-            from.setArmy(from.getArmy() - attackCounter);
-        }
-    }
-
-    private int normalizeAttackDiceCount() {
-        if (attackingCountry.getArmy() >= 3) return 3;
-        if (attackingCountry.getArmy() == 2) return 2;
-        if (attackingCountry.getArmy() == 1) return 1;
-        return attackingDiceCount;
-    }
-
-    private int normalizeDefendingDiceCount() {
-        if (defendingCountry.getArmy() >= 2) return 2;
-        if (defendingCountry.getArmy() == 1) return 1;
-        if (attackingCountry.getArmy() == 1) return 1;
-        return defendingDiceCount;
     }
 
     private void executeOneAttackPhase() {
@@ -106,77 +81,38 @@ public class HumanAttackStrategy implements AttackStrategy, Serializable {
         }
     }
 
-    private ArrayList<Boolean> attackPlay() {
-        ArrayList<Boolean> win = new ArrayList<>();
+    private int normalizeAttackDiceCount() {
+        if (attackingCountry.getArmy() >= 3) {
+            if (attackingDiceCount == 0) return 3;
+            if (attackingDiceCount <= 3) return attackingDiceCount; // can be 1,2,3
+            return 3; // normalized to 3
+        }
+        if (attackingCountry.getArmy() == 2) {
+            if (attackingDiceCount == 0) return 2;
+            if (attackingDiceCount <= 2) return attackingDiceCount; // can be 1,2
+            return 2; // normalized to 2
+        }
+        if (attackingCountry.getArmy() == 1) return 1; // allowed only 1
+        return attackingDiceCount;
+    }
 
+    private int normalizeDefendingDiceCount() {
+        if (defendingCountry.getArmy() >= 2) {
+            if (defendingDiceCount == 0) return 2;
+            if (defendingDiceCount <= 2) return defendingDiceCount; // can be 1, 2
+            return 2; // normalised to 2
+        }
+        if (defendingCountry.getArmy() == 1) return 1; // allowed value only 1
+        if (attackingCountry.getArmy() == 1) return 1; // allowed value only 1
+        return defendingDiceCount;
+    }
+
+    private ArrayList<Boolean> attackPlay() {
         attackingDiceCount = normalizeAttackDiceCount();
         defendingDiceCount = normalizeDefendingDiceCount();
-
-        if (defendingDiceCount <= 0 || attackingDiceCount <= 0) {
-            return win;
-        }
-
-        int dicI1[] = new int[attackingDiceCount];
-        int dicI2[] = new int[defendingDiceCount];
         attackCounter = attackCounter + defendingDiceCount; //revisit this code
 
-
-        for (int i = 0; i < dicI1.length; i++) {
-            dicI1[i] = 1 + (int) (9.0 * Math.random());
-        }
-
-        for (int i = 0; i < dicI2.length; i++) {
-            dicI2[i] = 1 + (int) (9.0 * Math.random());
-        }
-        Arrays.sort(dicI1);
-        Arrays.sort(dicI2);
-
-        if (dicI1.length == 1) {
-            if (dicI1[0] >= dicI2[0]) {
-                win.add(true);
-            } else {
-                win.add(false);
-            }
-        } else if (dicI1.length == 2) {
-            if (dicI2.length == 1) {
-                if (dicI1[1] >= dicI2[0]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-            } else if (dicI2.length == 2) {
-                if (dicI1[1] >= dicI2[1]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-                if (dicI1[0] >= dicI2[0]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-            }
-        } else if (dicI1.length == 3) {
-            if (dicI2.length == 1) {
-                if (dicI1[2] >= dicI2[0]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-            } else if (dicI2.length == 2) {
-                if (dicI1[2] >= dicI2[1]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-                if (dicI1[1] >= dicI2[0]) {
-                    win.add(true);
-                } else {
-                    win.add(false);
-                }
-            }
-        }
-        return win;
+        return AttackStrategy.simulateDiceRoll(attackingDiceCount, defendingDiceCount);
 
     }
 

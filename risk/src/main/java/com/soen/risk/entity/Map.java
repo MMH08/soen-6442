@@ -2,22 +2,13 @@ package com.soen.risk.entity;
 
 import com.soen.risk.interactor.GamePlay;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.springframework.util.ResourceUtils;
 
 /**
  * <h2>Map Class</h2>
@@ -83,23 +74,13 @@ public class Map implements Serializable {
 
     /**
      * This method receive map from file and add to adjCountry object.
+     * <p>
      *
-  //   * @param filename Path of File with name of file
+     * @param fileName Path of File with name of file
      * @author Amit Sachdeva
      * @since 2018-10-06
      */
     public void load(String fileName) {
-    	File file;
-		try {
-			file = ResourceUtils.getFile("classpath:map/"+fileName);
-			fileName=file.getAbsolutePath();
-		} 
-		catch (FileNotFoundException fileNotFound) 
-		{
-			logger.log(Level.SEVERE, fileNotFound.getMessage());
-		}
-
-    	
         logger.log(Level.INFO, "Reading filename " + fileName);
         try {
             Scanner readingFile = new Scanner(new FileReader(fileName));
@@ -130,11 +111,11 @@ public class Map implements Serializable {
      * @author Manmeet Singh
      * @since 2018-10-07
      */
-   /* public void save(String filePath) {
+    public void save(String filePath) {
         try {
             logger.log(Level.INFO, "Saving map to " + filePath);
             PrintWriter pw = new PrintWriter(new File(filePath));
-            
+
             pw.println("Map=" + this.name);
             pw.println();
             pw.println("[Continents]");
@@ -155,42 +136,8 @@ public class Map implements Serializable {
             logger.log(Level.SEVERE, e.getMessage());
         }
 
-      }*/
-    
-    public void save(String fileName)
-    {
-    	Path newFilePath = Paths.get("src/main/resources/map/"+fileName);
-        try {
-			Files.createFile(newFilePath);
-			FileWriter fw = new FileWriter("src/main/resources/map/"+fileName, true);
-		    BufferedWriter bw = new BufferedWriter(fw);
-		    PrintWriter pw = new PrintWriter(bw);
-			
-				pw.println("Map=" + this.name);
-	            pw.println();
-	            pw.println("[Continents]");
-	            for (Continent continent : continents) {
-	                pw.println(continent.getName() + "=" + continent.getControlValue());
-	            }
-	            pw.println();
-	            pw.println("[Territories]");
-	            for (Country country : countries) {
-	                String tem = country.getName() + "," + country.getCoordinateX() + "," + country.getCoordinateY() + "," +
-	                        this.getContinent(country) + "," + this.getNeighbouringCountries(country.getName());
-	                logger.log(Level.INFO, this.getNeighbouringCountries(country.getName()));
-	                logger.log(Level.INFO, tem);
-	                pw.println(tem);
-	            }
-			pw.close();
-
-			
-			
-		} 
-        catch (IOException ioException) {
-			
-        	logger.log(Level.SEVERE, ioException.getMessage());
-		}
     }
+
 
     /**
      * Validates the continents and country objects for duplicate values.
@@ -536,7 +483,7 @@ public class Map implements Serializable {
     }
 
 
-    private void checkingContacting(LinkedList adj[], int CurrentCountry, boolean visited[], LinkedList<Integer> movingPath) {
+    private void checkingContacting(LinkedList[] adj, int CurrentCountry, boolean[] visited, LinkedList<Integer> movingPath) {
         visited[CurrentCountry] = true;
         movingPath.add(CurrentCountry);
         Iterator<Integer> i = adj[CurrentCountry].listIterator();
@@ -581,6 +528,11 @@ public class Map implements Serializable {
         }
     }
 
+    /**
+     * This method is responsible to fetch the neighbouring countries to given country.
+     * @param c find neighbour of given country
+     * @return list of country
+     */
     public List<Country> getNeighbouringCountry(Country c) {
         for (LinkedList<Country> ll : adjCountry) {
             Country c1 = ll.get(0);

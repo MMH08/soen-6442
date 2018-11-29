@@ -70,6 +70,7 @@ public class GameDriver implements Usecase {
                     game.getCurrentPlayer().setStartupStrategy(new RandomStartupStrategy());
                 }
                 game.executeStartupPhase();
+                break; // re-evaluate if the player is human or not
             }
             if (game.getCurrentPhase().equals(Phase.REINFORCE)) {
                 if (game.getCurrentPlayer().getType().equals(PlayerType.CHEATER)) {

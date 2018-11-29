@@ -315,6 +315,7 @@ public class Player extends Observable implements Serializable {
     }
 
     public void setAttackWon(boolean attackWon) {
+        logger.log(Level.INFO, "Setting attackWon flag " + attackWon);
         isAttackWon = attackWon;
     }
 

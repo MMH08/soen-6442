@@ -5,37 +5,36 @@ import com.soen.risk.entity.FortifyStrategy;
 import com.soen.risk.entity.Map;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
 
 public class RandomFortifyStrategy implements FortifyStrategy {
+    /**
+     * Randomly start fortification from one of the allowedCountries, if loop completes without fortification
+     * then that means fortification was not possible, hence return true to exit the phase.
+     *
+     * @param map              Map
+     * @param allowedCountries owned countries by the player
+     * @return if fortification was success
+     */
     @Override
     public boolean execute(Map map, List<Country> allowedCountries) {
-    	Country startCountry;
-        Country endCountry;
-        int armyCount = 0;
-        int i = 1;
-    	int strongestCountryindex = 0;
-    	endCountry = allowedCountries.get(strongestCountryindex);
-    	while(i < allowedCountries.size() ) {
-    		startCountry = allowedCountries.get(i);
-    		if (map.pathExists(startCountry, endCountry, allowedCountries)) {
-    			if (startCountry.getArmy()>1 && startCountry.getArmy()%2 == 0) {
-    				armyCount = startCountry.getArmy()/2 ;
-    				startCountry.setArmy (startCountry.getArmy() - armyCount);
-    				endCountry.setArmy (endCountry.getArmy() + armyCount);
-    			}
-    			else if (startCountry.getArmy()>1 && startCountry.getArmy()%2 == 1) {
-    				armyCount = (startCountry.getArmy()-1)/2;
-    				startCountry.setArmy (startCountry.getArmy() - armyCount);
-    				endCountry.setArmy (endCountry.getArmy() + armyCount);
-    			}
-    			return true;
-    		}
-    		else {   	
-    			i++;   	
-    		}
-    	}
-    	return true; 
+        Collections.shuffle(allowedCountries);
+        for (Country startCountry : allowedCountries) {
+            List<Country> neighbours = map.getNeighbouringCountry(startCountry);
+            // treat all neighbours as end country
+            for (Country endCountry : neighbours) {
+                // endCountry is owned by the same player
+                // and there is a path between them then fortify and return true
+                if (allowedCountries.contains(endCountry) && map.pathExists(startCountry, endCountry, allowedCountries)) {
+                    int armyCount = startCountry.getArmy() / 2;
+                    startCountry.setArmy(startCountry.getArmy() - armyCount);
+                    endCountry.setArmy(endCountry.getArmy() + armyCount);
+                    logger.log(Level.INFO, "Fortification between " + startCountry + " and " + endCountry + " count : " + armyCount);
+                    return true;
+                }
+            }
+        }
+        return true;
     }
 }

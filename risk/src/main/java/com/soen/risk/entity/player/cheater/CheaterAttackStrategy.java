@@ -5,6 +5,7 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,42 +24,24 @@ public class CheaterAttackStrategy implements AttackStrategy {
 
     }
 
+    /**
+     * Automatically conquer the neighbouring countries
+     *
+     * @param map       Map
+     * @param countries countries owned by the player
+     */
     @Override
     public void execute(Map map, List<Country> countries) {
         for (Country c : countries) {
-            List<Country> ll = map.getNeighbouringCountry(c);
-            //List<Country> coun = new ArrayList<>();
-            for (int i = 1; i < ll.size(); i++) {
-                if (checkNeighbouringCountry(countries, ll.get(i))) {
-                    checkDuplicacy(ll.get(i));
+            List<Country> neighbours = map.getNeighbouringCountry(c);
+            logger.log(Level.INFO, "Neighbours of " + c + " are :" + neighbours);
+            for (Country neighbour : neighbours) {
+                if (!countries.contains(neighbour) && !won.contains(neighbour)) {
+                    logger.log(Level.INFO, "Adding country to won list " + neighbour);
+                    won.add(neighbour);
                 }
             }
         }
-    }
-
-    private boolean checkNeighbouringCountry(List<Country> countries, Country c) {
-        for (Country c1 : countries) {
-            if (c1.getName().equals(c.getName())) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void checkDuplicacy(Country c) {
-        if (won.size() == 0) {
-            won.add(c);
-            logger.log(Level.INFO, "Adding country to won - " + c.getName());
-        } else {
-            for (Country c1 : won) {
-                if (c1.getName().equals(c.getName())) {
-                    return;
-                }
-            }
-            won.add(c);
-            logger.log(Level.INFO, "Adding country to won - " + c.getName());
-        }
-
     }
 
     public List<Country> getWon() {
