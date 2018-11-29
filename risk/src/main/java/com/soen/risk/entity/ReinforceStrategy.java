@@ -3,10 +3,23 @@ package com.soen.risk.entity;
 import java.util.List;
 import java.util.logging.Logger;
 
-public interface ReinforceStrategy  {
+public interface ReinforceStrategy {
+    /**
+     * Additional armies provided to the player to reinforce
+     *
+     * @param map       Map
+     * @param countries owned by the player
+     */
     void execute(Map map, List<Country> countries);
 
-    static int calculateArmyCount(Map map, List<Country> countries){
+    /**
+     * Calculate the army count with the help of map and countries available to the player.
+     *
+     * @param map       Map
+     * @param countries countries owned by the player
+     * @return
+     */
+    static int calculateArmyCount(Map map, List<Country> countries) {
         //Check if player has all country of a continent
         for (Continent ctt : map.getContinents()) {
             int size = ctt.getCountries().size();
@@ -27,5 +40,6 @@ public interface ReinforceStrategy  {
         int number_of_countries = countries.size();
         return Math.max(3, (int) Math.ceil(number_of_countries / 3.0));
     }
+
     Logger logger = Logger.getLogger(ReinforceStrategy.class.getName());
 }
