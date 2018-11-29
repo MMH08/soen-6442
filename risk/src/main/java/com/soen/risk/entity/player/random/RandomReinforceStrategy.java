@@ -23,7 +23,7 @@ public class RandomReinforceStrategy implements ReinforceStrategy {
         Random rand = new Random();
         // till we consume the reinforce army count, keep on adding the count to random countries.
         while (reinforceArmy > 0) {
-            Country country = countries.get(rand.nextInt());
+            Country country = countries.get(rand.nextInt(countries.size()));
             country.addArmy(1);
             reinforceArmy = reinforceArmy - 1;
             logger.log(Level.INFO, "Current reinforce count " + reinforceArmy + ", added army to " + country);
