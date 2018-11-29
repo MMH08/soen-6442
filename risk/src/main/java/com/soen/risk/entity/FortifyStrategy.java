@@ -5,5 +5,5 @@ import java.util.logging.Logger;
 
 public interface FortifyStrategy {
     boolean execute(Map map, List<Country> allowedCountries);
-    static Logger logger = Logger.getLogger(FortifyStrategy.class.getName());
+    Logger logger = Logger.getLogger(FortifyStrategy.class.getName());
 }

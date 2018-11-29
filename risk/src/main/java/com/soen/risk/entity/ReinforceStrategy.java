@@ -1,6 +1,7 @@
 package com.soen.risk.entity;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public interface ReinforceStrategy  {
     void execute(Map map, List<Country> countries);
@@ -26,4 +27,5 @@ public interface ReinforceStrategy  {
         int number_of_countries = countries.size();
         return Math.max(3, (int) Math.ceil(number_of_countries / 3.0));
     }
+    Logger logger = Logger.getLogger(ReinforceStrategy.class.getName());
 }

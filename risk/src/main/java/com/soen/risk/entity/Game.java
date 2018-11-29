@@ -195,6 +195,7 @@ public class Game extends Observable implements Serializable {
         for (Player p : this.getPlayers()) {
             if (p.getArmyCapacity() != 0) return false;
         }
+        logger.log(Level.INFO, "All players have zero armies");
         return true;
     }
 

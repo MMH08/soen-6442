@@ -1,5 +1,7 @@
 package com.soen.risk.entity;
 
+import java.util.logging.Logger;
+
 public interface StartupStrategy {
 
     /**
@@ -8,4 +10,5 @@ public interface StartupStrategy {
      * @return is the consumed army count
      */
     int execute(Country country, int armyCapacity);
+    Logger logger = Logger.getLogger(StartupStrategy.class.getName());
 }
