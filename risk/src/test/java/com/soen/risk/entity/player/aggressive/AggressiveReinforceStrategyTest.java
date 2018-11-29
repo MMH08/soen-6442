@@ -3,6 +3,8 @@
  */
 package com.soen.risk.entity.player.aggressive;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,12 +29,15 @@ public class AggressiveReinforceStrategyTest {
 	
 	Map map;
 	public AggressiveReinforceStrategy aggReinforceStrategy;
+	Path  parentPath = FileSystems.getDefault().getPath(".").toAbsolutePath();
+    String relativePath = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "createnew.map";
 	
 	@Before
 	public void setUp(){
 			map=new Map();
 			aggReinforceStrategy=new AggressiveReinforceStrategy();
-			map.load("createnew.map"); 
+			map.load(parentPath+relativePath);
+			
 			
 			
 		}

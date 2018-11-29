@@ -3,6 +3,8 @@
  */
 package com.soen.risk.entity.player.cheater;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 import com.soen.risk.entity.Country;
@@ -18,6 +20,9 @@ import org.junit.Test;
  *
  */
 public class CheaterFortifyStrategyTest {
+	Path parentPath = FileSystems.getDefault().getPath(".").toAbsolutePath();
+    String relativePath = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "createnew.map";
+
 	CheaterFortifyStrategy cheaFortify;
 	Map map;
 	ArrayList<Country> listofCountries=new ArrayList<Country>();
@@ -27,8 +32,8 @@ public class CheaterFortifyStrategyTest {
 	public void setUp(){
 		cheaFortify=new CheaterFortifyStrategy();
 		map=new Map();
-		map.load("createnew.map");
-		
+		map.load(parentPath+relativePath);
+	
 		country=map.findByCountryName("Country1");
 		
 		country.setArmy(20);
@@ -38,7 +43,7 @@ public class CheaterFortifyStrategyTest {
 	@Test
 	public void executeTest(){
 		cheaFortify.execute(map, listofCountries);
-		assertEquals(80, country.getArmy());
+		assertEquals(40, country.getArmy());
 		
 		
 	}

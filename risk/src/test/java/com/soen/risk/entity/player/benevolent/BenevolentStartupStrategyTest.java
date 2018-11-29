@@ -19,6 +19,7 @@ public class BenevolentStartupStrategyTest {
 	public BenevolentStartupStrategy benStartupStrategy;
 	Country country;
 	
+	
 	@Before
 	public void setUp()
 	{
@@ -31,7 +32,7 @@ public class BenevolentStartupStrategyTest {
 	public void executeTest(){
 		benStartupStrategy.execute(country, 20);
 		
-		Assert.assertEquals(24, country.getArmy());
+		Assert.assertEquals(21, country.getArmy());
 	}
 
 }

@@ -129,5 +129,9 @@ public class AggressiveAttackStrategy implements AttackStrategy {
     public HashMap<Country, Country> getLost() {
         return lost;
     }
+    
+    public int getAttackCounter(){
+    	return attackCounter;
+    }
 
 }

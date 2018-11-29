@@ -12,6 +12,8 @@ import org.junit.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 /**
  * The Class MapTest.
  */
@@ -21,8 +23,14 @@ public class MapTest {
     /**
      * The map.
      */
-    private static Map map, map1, map2, map3, map4;
-    String fileName="createnew.map";
+    private  static Map map, map1, map2, map3, map4;
+    static Path  parentPath = FileSystems.getDefault().getPath(".").toAbsolutePath();
+    static String relativePath = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "createnew.map";
+    static String relativePath1 = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "map1.map";
+    static String relativePath2 = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "map2.map";
+    static String relativePath3 = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "map3.map";
+    static String relativePath4 = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "invalid.map";
+    
 
     /**
      * Sets the up.
@@ -32,21 +40,22 @@ public class MapTest {
     @Before
     public void setUp() throws Exception {
         map = new Map();
+        
     }
 
     @BeforeClass
-    public static void set() {
+    public  static  void set() {
         map1 = new Map();
-        map1.load("map1.map");
+        map1.load(parentPath+relativePath1);
 
         map2 = new Map();
-        map2.load("map2.map");
+        map2.load(parentPath+relativePath2);
       
         map3 = new Map();
-        map3.load("map3.map");
+        map3.load(parentPath+relativePath3);
       
         map4 = new Map();
-        map4.load("invalid.map");
+        map4.load(parentPath+relativePath4);
         }
     /**
      * Adds the country.
@@ -65,7 +74,7 @@ public class MapTest {
      */
     @Test
     public void load() {
-      map.load(fileName);
+    map.load(parentPath+relativePath);
       assertEquals(2, map.getContinents().size());
       assertEquals(4, map.getCountries().size());
     }
@@ -121,7 +130,7 @@ public class MapTest {
      */
     @Test
     public void map_name_creation() {
-       map.load(fileName);
+    	map.load(parentPath+relativePath);
         assertNotNull(map.getListCountry());
     }
 
@@ -131,7 +140,7 @@ public class MapTest {
      */
     @Test
     public void map_country_object_creation() {
-       map.load(fileName);
+    	map.load(parentPath+relativePath);
         map.map_country_object_creation();
         assertNotNull(map.getAdjCountry());
     }

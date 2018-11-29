@@ -8,5 +8,8 @@ package com.soen.risk.entity.player.cheater;
  *
  */
 public class CheaterStartupStrategyTest {
+	public void executeTest(){
+		
+	}
 
 }
