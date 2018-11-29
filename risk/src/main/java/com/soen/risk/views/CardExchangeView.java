@@ -2,6 +2,7 @@ package com.soen.risk.views;
 
 import com.soen.risk.entity.Player;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * @since 05/11/2018
  * @version 1.0.2
  */
-public class CardExchangeView implements Observer {
+public class CardExchangeView implements Observer, Serializable {
     private HashMap<String, List<String>> cards;
     private static Logger logger = Logger.getLogger(CardExchangeView.class.getName());
 

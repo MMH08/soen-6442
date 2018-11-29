@@ -4,6 +4,7 @@ import com.soen.risk.entity.Continent;
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
  */
 
 
-public class MapBuilder {
+public class MapBuilder implements Serializable {
     private static Logger logger = Logger.getLogger(MapBuilder.class.getName());
 
     private String mapName;

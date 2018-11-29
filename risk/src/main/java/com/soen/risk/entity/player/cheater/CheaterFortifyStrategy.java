@@ -10,25 +10,22 @@ import java.util.logging.Level;
 public class CheaterFortifyStrategy implements FortifyStrategy {
     @Override
     public boolean execute(Map map, List<Country> allowedCountries) {
-    	for(Country c: allowedCountries)
-    	{
-    		List<Country> ll = map.getNeighbouringCountry(c);
-    		for(int i=1;i<ll.size();i++)
-    		{
-    			if(checkNeighbouringCountry(allowedCountries,ll.get(i),map))
-    			{
-    				c.setArmy(c.getArmy()*2);
-    				break;
-    			}
-    		}    		
-    	}
-    	return true;
-    }
-    private boolean checkNeighbouringCountry(List<Country> allowedCountries, Country neighborCountry, Map map)
-    {
-    	
         for (Country c : allowedCountries) {
-            for (Country neighborCountry : map.getNeighbouringCountry(c)) {
+            List<Country> ll = map.getNeighbouringCountry(c);
+            for (int i = 1; i < ll.size(); i++) {
+                if (checkNeighbouringCountry(allowedCountries, ll.get(i), map)) {
+                    c.setArmy(c.getArmy() * 2);
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkNeighbouringCountry(List<Country> allowedCountries, Country neighborCountry, Map map) {
+
+        for (Country c : allowedCountries) {
+            for (Country neighborCountry1 : map.getNeighbouringCountry(c)) {
                 // if c shares border with opponent player's country
                 if (!allowedCountries.contains(neighborCountry)) {
                     logger.log(Level.INFO, "Double the army in country " + c);

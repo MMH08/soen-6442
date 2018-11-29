@@ -2,6 +2,7 @@ package com.soen.risk.views;
 
 import com.soen.risk.entity.Game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
  * @since 02/11/2018
  * @version 1.0.2
  */
-public class PhaseView implements Observer {
+public class PhaseView implements Observer, Serializable {
 
     private String phaseName = "";
     private String playerName = "";

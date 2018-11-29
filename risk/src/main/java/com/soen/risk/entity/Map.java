@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,7 +29,7 @@ import org.springframework.util.ResourceUtils;
  * @author : Nivetha
  * @version 1.0.2
  */
-public class Map {
+public class Map implements Serializable {
     private static Logger logger = Logger.getLogger(Map.class.getName());
     private String name;
     private ArrayList<Continent> continents;

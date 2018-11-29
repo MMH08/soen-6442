@@ -1,5 +1,6 @@
 package com.soen.risk.entity;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +14,7 @@ import java.util.logging.Logger;
  * @version 1.0.2
  * @since 2018-11-05
  */
-public class Game extends Observable {
+public class Game extends Observable implements Serializable {
     private static Logger logger = Logger.getLogger(Game.class.getName());
 
     private Map map;

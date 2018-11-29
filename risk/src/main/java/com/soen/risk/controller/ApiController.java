@@ -346,7 +346,7 @@ public class ApiController {
     // -----------------------------------------------------------------------------------------------------------------
 
     @RequestMapping("/tournament01")
-    public String tournament01(){
+    public String tournament01() {
         return "tournament01";
     }
 
@@ -366,7 +366,7 @@ public class ApiController {
                                  @RequestParam("names") String playerNames,
                                  @RequestParam("behaviors") String behaviors,
                                  @RequestParam("turns") String turns,
-                                 @RequestParam("games") String countOfGames){
+                                 @RequestParam("games") String countOfGames) {
         StartTournament usecase = new StartTournament(filenames, playerNames, behaviors, turns, countOfGames);
         usecase.execute();
         return "redirect:/tournamentDriver";
@@ -531,4 +531,31 @@ public class ApiController {
         return "redirect:/";
     }
 
+    @RequestMapping("/saveGame")
+    public String saveGame() {
+        return "savegame";
+    }
+
+    @RequestMapping(value = "/saveGame", method = RequestMethod.POST)
+    public String createSaveGameFile(@RequestParam("fileName") String fileName) {
+        SaveGame usecase = new SaveGame(fileName);
+        usecase.execute();
+        return "redirect:/";
+    }
+
+    @RequestMapping("/loadGame")
+    public ModelAndView loadGameInfo() {
+        ModelAndView model = new ModelAndView("loadgame");
+        LoadGameInfo usecase = new LoadGameInfo();
+        LoadGameInfoResponse response = usecase.execute();
+        model.addObject("filenames", response.getFilenames());
+        return model;
+    }
+
+    @RequestMapping(value = "/loadGame", method = RequestMethod.POST)
+    public String loadGame(@RequestParam("filename") String filename){
+        LoadGame usecase = new LoadGame(filename);
+        usecase.execute();
+        return "redirect:/gameDriver";
+    }
 }

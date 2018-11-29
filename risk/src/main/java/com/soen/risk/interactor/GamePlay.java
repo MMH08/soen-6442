@@ -1,11 +1,16 @@
 package com.soen.risk.interactor;
 
-import com.soen.risk.entity.*;
+import com.soen.risk.entity.Country;
+import com.soen.risk.entity.Game;
+import com.soen.risk.entity.Map;
+import com.soen.risk.entity.Player;
 import com.soen.risk.views.CardExchangeView;
 import com.soen.risk.views.DominationView;
 import com.soen.risk.views.PhaseView;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -22,7 +27,7 @@ import java.util.logging.Logger;
  * @since 2018-11-1
  */
 
-public class GamePlay {
+public class GamePlay implements Serializable {
     private static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
 
@@ -40,33 +45,55 @@ public class GamePlay {
         return gamePlayInstance;
     }
 
+    public static void setInstance(GamePlay gamePlay) {
+        logger.log(Level.INFO, "Setting instance");
+        gamePlayInstance = gamePlay;
+    }
+
     private GamePlay() {
     }
 
     public void newGame(Map map, List<Player> players) {
         this.game = new Game(map, players);
 
-        // register views
+        // initialize views
         phaseView = new PhaseView();
-        game.addObserver(phaseView);
-
-        // register the observer - dominationView
         dominationView = new DominationView(game.getMap().getNumberOfCountries());
         cardExchangeView = new CardExchangeView();
-        for (Player player : game.getPlayers()) {
-            player.addObserver(dominationView);
-            player.addObserver(cardExchangeView);
-        }
+
+        // register views
+        registerGame();
+
+        // register the observer - dominationView
+        registerPlayers();
 
         game.setCurrentPlayer(players.get(0));
         game.allocateInitialCountries();
         game.allocateInitialArmies();
 
+        registerCountries();
+    }
+
+    public void registerCountries() {
         for (Player player : game.getPlayers()) {
             for (Country country : player.getCountries()) {
+                logger.log(Level.INFO, "Registering country " + country.toString());
                 country.addObserver(dominationView);
             }
         }
+    }
+
+    public void registerPlayers() {
+        for (Player player : game.getPlayers()) {
+            logger.log(Level.INFO, "Registering player " + player.getName());
+            player.addObserver(dominationView);
+            player.addObserver(cardExchangeView);
+        }
+    }
+
+    public void registerGame() {
+        logger.log(Level.INFO, "Registering phaseView");
+        game.addObserver(phaseView);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

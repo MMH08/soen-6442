@@ -4,9 +4,10 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.FortifyStrategy;
 import com.soen.risk.entity.Map;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class HumanFortifyStrategy implements FortifyStrategy {
+public class HumanFortifyStrategy implements FortifyStrategy, Serializable {
     private Country startCountry;
     private Country endCountry;
     private int armyCount;

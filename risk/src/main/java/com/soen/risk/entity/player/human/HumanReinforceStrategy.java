@@ -4,11 +4,12 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.ReinforceStrategy;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HumanReinforceStrategy implements ReinforceStrategy {
+public class HumanReinforceStrategy implements ReinforceStrategy, Serializable {
     private List<Integer> armyCounts;
     private static Logger logger = Logger.getLogger(HumanReinforceStrategy.class.getName());
 

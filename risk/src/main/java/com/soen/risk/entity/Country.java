@@ -1,5 +1,6 @@
 package com.soen.risk.entity;
 
+import java.io.Serializable;
 import java.util.Observable;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Observable;
  * @version 1.0.2
  * @since 2018-10-30
  */
-public class Country extends Observable {
+public class Country extends Observable implements Serializable {
     private String name;
     private String coordinateX;
     private String coordinateY;
