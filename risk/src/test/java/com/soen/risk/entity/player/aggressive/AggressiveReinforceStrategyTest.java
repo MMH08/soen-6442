@@ -60,12 +60,8 @@ public class AggressiveReinforceStrategyTest {
 			armiesCount1.add(c.getArmy());
 		}
 		Collections.sort(armiesCount1, Collections.reverseOrder());
-		
-		
 		assertThat(armiesCount1.get(0) , greaterThan(armiesCount.get(0)));
-		
-			
-		
+	
 		
 		
 	}
