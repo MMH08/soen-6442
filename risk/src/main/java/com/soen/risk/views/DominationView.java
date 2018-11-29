@@ -3,30 +3,32 @@ package com.soen.risk.views;
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Player;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.io.Serializable;
 
 /**
  * Use case to buildGame the game play will be responsible to attach the domination view to all the players that are
  * playing the game. The observer should be attached after the players have been spawned, i.e.,
  * in the buildGame method of GamePlay.
+ *
  * @author Varun Singhal
- * @since 04-11-2018
  * @version 1.0.2
+ * @since 04-11-2018
  */
-public class DominationView implements Observer,Serializable {
+public class DominationView implements Observer, Serializable {
 
     private static Logger logger = Logger.getLogger(DominationView.class.getName());
     private HashMap<String, PlayerInfo> playersInfo;
     private int totalCountries;
 
-  
+
     /**
      * Constructor for Domination View
+     *
      * @param totalCountries- Count of Total Number of Countries required to display in Domination View
      */
     public DominationView(int totalCountries) {
@@ -56,11 +58,9 @@ public class DominationView implements Observer,Serializable {
     }
 
     // country has been added or dropped -- recalculate the share.
+
     /**
      * Update the DominationView object with his name and share of armies
-     *
-     * @param obs Player instance to be updated
-     *
      */
     private void updatePlayer(Player p) {
         PlayerInfo playerinfo = playersInfo.getOrDefault(p.getName(), new PlayerInfo());
@@ -85,10 +85,9 @@ public class DominationView implements Observer,Serializable {
     }
 
     // army count has been updated for the country. -- update total army count
+
     /**
      * Update the Country with updated total armyCount needed for view
-     *
-     * @param Country object to be modified with army count
      */
     private void updateCountry(Country c) {
         for (String playerName : playersInfo.keySet()) {
@@ -107,7 +106,6 @@ public class DominationView implements Observer,Serializable {
     /**
      * Update the Player with updated total armyCount needed for view
      *
-     * @param PlayerObject
      * @return Country count of a Player
      */
     private int calculateTotalCount(PlayerInfo playerInfo) {
@@ -127,7 +125,7 @@ public class DominationView implements Observer,Serializable {
         this.playersInfo = playersInfo;
     }
 
-    class PlayerInfo implements Serializable {
+    class PlayerInfo implements Serializable{
         private HashMap<String, Integer> countries;
         private int totalArmyCount;
         private String share;

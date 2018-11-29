@@ -2,13 +2,13 @@ package com.soen.risk.views;
 
 import com.soen.risk.entity.Player;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.io.Serializable;
 /**
  * <h2>CardExchangeView</h2>
  * CardExchangeView Class will be attached to the GamePlay during the reinforcement Phase.
@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @since 05/11/2018
  * @version 1.0.2
  */
-public class CardExchangeView implements Observer,Serializable {
+public class CardExchangeView implements Observer, Serializable {
     private HashMap<String, List<String>> cards;
     private static Logger logger = Logger.getLogger(CardExchangeView.class.getName());
 

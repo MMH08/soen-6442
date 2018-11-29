@@ -9,7 +9,7 @@ import com.soen.risk.boundary.Response;
  * @author fly
  *
  */
-public class LoadSavedGameResponse implements Response{
+public class LoadGameResponse implements Response{
 	
 	private boolean status;
 

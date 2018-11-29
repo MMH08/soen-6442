@@ -9,10 +9,10 @@ import com.soen.risk.boundary.Request;
  * @author fly
  *
  */
-public class LoadSavedGameRequest implements Request {
+public class LoadGameRequest implements Request {
 	private String fileName;
 	
-	 public LoadSavedGameRequest(String... args) {
+	 public LoadGameRequest(String... args) {
 	        setFileName(args[0]);
 	        
 	    }
