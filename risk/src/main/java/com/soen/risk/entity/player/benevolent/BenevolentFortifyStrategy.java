@@ -34,7 +34,7 @@ public class BenevolentFortifyStrategy implements FortifyStrategy {
             for (Country startCountry : allowedCountries) {
                 // endCountry is owned by the same player
                 // and there is a path between them then fortify and return true
-                if (!startCountry.getName().equals(endCountry.getName()) && map.pathExists(startCountry, endCountry, allowedCountries)) {
+                if (isValidMove(map, allowedCountries, endCountry, startCountry)) {
                     int armyCount = startCountry.getArmy() / 2;
                     startCountry.setArmy(startCountry.getArmy() - armyCount);
                     endCountry.setArmy(endCountry.getArmy() + armyCount);
@@ -45,5 +45,9 @@ public class BenevolentFortifyStrategy implements FortifyStrategy {
 
         }
         return true;
+    }
+
+    private boolean isValidMove(Map map, List<Country> allowedCountries, Country endCountry, Country startCountry) {
+        return !startCountry.getName().equals(endCountry.getName()) && startCountry.getArmy() > endCountry.getArmy() && map.pathExists(startCountry, endCountry, allowedCountries);
     }
 }
