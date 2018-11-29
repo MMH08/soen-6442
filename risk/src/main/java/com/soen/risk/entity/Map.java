@@ -540,7 +540,114 @@ public class Map implements Serializable {
         }
         return null;
     }
-
+    
+    
+    
+    //MAKE FINAL MAP 
+    private void checkLinkMap(Country cc, Country ff, LinkedList<LinkedList<Country>> country)
+	{
+		for(List<Country> ll: country)
+		{
+			
+			if(ll.get(0).getName().equals(ff.getName()))
+			{
+				for(Country c: ll)
+				{
+					if(c.getName().equals(cc.getName()))
+					{
+						return;
+					}
+				}
+				ll.add(cc);
+			}
+		}
+	}
+	public void finalMap()	
+	{		
+		for(List<Country> ll: adjCountry)
+		{
+			Country cc = ll.get(0);
+			int j=1;
+			while(j<ll.size())
+			{
+				this.checkLinkMap(cc,ll.get(j),adjCountry);
+				j++;
+			}
+		}		
+	}
+	
+	
+	//CHECK MAP IF COUNTRY IN CONTINENT IS Connected
+	private void DFSUtil(int v,boolean visited[], int arr[][], ArrayList<Integer> ar) 
+    { 
+        // Mark the current node as visited and print it 
+        visited[v] = true; 
+        ar.add(v);
+        // Recur for all the vertices adjacent to this vertex 
+        for(int i=0;i<arr[v].length;i++)
+        {
+        	//System.out.println(visited[v]);
+        	if(arr[v][i]==1 && !visited[i])
+        	{
+        		DFSUtil(i, visited, arr,ar);
+        	}
+        }
+    } 
+  
+    // The function to do DFS traversal. It uses recursive DFSUtil() 
+    private int DFS(int arr[][], int V, int v) 
+    { 
+        // Mark all the vertices as not visited(set as 
+        // false by default in java) 
+        boolean visited[] = new boolean[V]; 
+        Arrays.fill(visited, false);
+        // Call the recursive helper function to print DFS traversal 
+        ArrayList<Integer> ar = new ArrayList<>();
+        DFSUtil(v, visited, arr,ar); 
+        return ar.size();
+    }
+	private ArrayList checkSubGraph(Country c, List<Country> countries)
+	{
+		for(LinkedList<Country> ll: adjCountry)
+		{
+			if(ll.get(0).getName().equals(c.getName()))
+			{
+				ArrayList<Country> ar = new ArrayList<>();
+				for(int i=1;i<ll.size();i++)
+				{
+					if(countries.contains(ll.get(i)))
+					{
+						ar.add(ll.get(i));
+					}
+				}
+				return ar;
+			}
+		}
+		return null;
+	}
+	public boolean checkContinentCountriesConnected()
+	{
+		for(Continent c: continents)
+		{
+			int arr[][] = new int[countries.size()][countries.size()];
+			for(int i=0;i<countries.size();i++) {
+			Arrays.fill(arr[i], 0);}
+			for(Country c1: c.getCountries())
+			{
+				ArrayList<Country> aa = new ArrayList<>();
+				aa = this.checkSubGraph(c1, c.getCountries());
+				for(Country mm: aa)
+				{
+					arr[c1.getId()][mm.getId()]=1;
+				}
+			}
+			if(this.DFS(arr,countries.size(),c.getCountries().get(0).getId()) != c.getCountries().size())
+			{
+				return false;
+			}
+		}
+		return true;
+	}
     //------------------------------------------------------------------------------------------------------------------
     public String getName() {
         return name;
