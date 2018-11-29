@@ -6,6 +6,7 @@ import com.soen.risk.entity.Map;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 
 public class RandomFortifyStrategy implements FortifyStrategy {
     /**
@@ -29,6 +30,7 @@ public class RandomFortifyStrategy implements FortifyStrategy {
                     int armyCount = startCountry.getArmy() / 2;
                     startCountry.setArmy(startCountry.getArmy() - armyCount);
                     endCountry.setArmy(endCountry.getArmy() + armyCount);
+                    logger.log(Level.INFO, "Fortification between " + startCountry + " and " + endCountry + " count : " + armyCount);
                     return true;
                 }
             }
