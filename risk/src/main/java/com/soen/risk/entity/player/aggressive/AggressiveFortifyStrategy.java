@@ -28,7 +28,7 @@ public class AggressiveFortifyStrategy implements FortifyStrategy {
                 // endCountry is owned by the same player
                 // and there is a path between them then fortify and return true
                 if (isValidMove(map, allowedCountries, endCountry, startCountry)) {
-                    int armyCount = startCountry.getArmy() / 2;
+                    int armyCount = startCountry.getArmy() - 1;
                     startCountry.setArmy(startCountry.getArmy() - armyCount);
                     endCountry.setArmy(endCountry.getArmy() + armyCount);
                     logger.log(Level.INFO, "Fortification between " + startCountry + " and " + endCountry + " count : " + armyCount);
