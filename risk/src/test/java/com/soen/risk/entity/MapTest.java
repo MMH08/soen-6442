@@ -8,6 +8,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.soen.risk.entity.Map;
+
 import org.junit.*;
 
 import java.io.File;
@@ -18,6 +21,7 @@ import java.nio.file.Path;
  * The Class MapTest.
  */
 import java.util.Scanner;
+import java.util.*;
 public class MapTest {
 
     /**
@@ -30,7 +34,6 @@ public class MapTest {
     static String relativePath2 = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "map2.map";
     static String relativePath3 = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "map3.map";
     static String relativePath4 = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "invalid.map";
-    
 
     /**
      * Sets the up.
@@ -178,8 +181,20 @@ public class MapTest {
     
         assertFalse(map4.isValid());
     }
-
-
+   	@Test
+   	public void checkContinentCountriesConnected()
+   	{
+   		assertFalse(map4.checkContinentCountriesConnected());
+   	}
+   	
+   	@Test
+   	public void finalMap()
+   	{
+   		LinkedList<LinkedList<Country>> ll = new LinkedList<LinkedList<Country>>();
+   		ll= map4.getAdjCountry();
+   		map4.finalMap();
+   		assertFalse(ll, map4.getAdjCountry());
+   	}
     @Test
     public void getAdjCountries() {
     }
