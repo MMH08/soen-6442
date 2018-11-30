@@ -21,7 +21,7 @@
                     <form th:action="@{/tournamentPlay}" method="get">
                         <table>
                             <tr th:each="counter : ${#numbers.sequence(1, __${countOfMaps}__)}">
-                                <td th:text="Map file path # + ${counter}"></td>
+                                <td th:text="Map_+ ${counter}"></td>
                                 <td><input type="text" name="filename" class="filename"/></td>
                             </tr>
                             <tr>

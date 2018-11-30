@@ -369,7 +369,7 @@ public class ApiController {
                                  @RequestParam("games") String countOfGames) {
         StartTournament usecase = new StartTournament(filenames, playerNames, behaviors, turns, countOfGames);
         usecase.execute();
-        return "redirect:/tournamentDriver";
+        return "redirect:/";
     }
 
     //------------------------------------------------------------------------------------------------------------------
