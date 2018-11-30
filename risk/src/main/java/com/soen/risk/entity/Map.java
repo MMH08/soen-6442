@@ -1,7 +1,5 @@
 package com.soen.risk.entity;
 
-import com.soen.risk.interactor.GamePlay;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
@@ -414,10 +412,9 @@ public class Map implements Serializable {
     }
 
 
-    private boolean searchPathBetweenCountries(LinkedList adj[], int currentCountry, int shift, List<Country> countries) {
-        boolean v[] = new boolean[adj.length];
+    private boolean searchPathBetweenCountries(LinkedList[] adj, int currentCountry, int shift, List<Country> countries) {
+        boolean[] v = new boolean[adj.length];
         LinkedList<Integer> movingPath = new LinkedList();
-        ArrayList<Country> coun = GamePlay.getInstance().getGame().getMap().getCountries();
         ArrayList<ArrayList<Integer>> allPaths = new ArrayList<ArrayList<Integer>>();
 
         //Start searching for path between both countries
