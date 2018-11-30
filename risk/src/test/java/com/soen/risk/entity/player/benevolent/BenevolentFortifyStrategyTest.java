@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.greaterThan;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,6 +24,7 @@ import org.junit.Test;
 public class BenevolentFortifyStrategyTest {
 	BenevolentFortifyStrategy benFortifyStrategy;
 	Map map;
+	ArrayList countries=new ArrayList<>();
 	Path  parentPath = FileSystems.getDefault().getPath(".").toAbsolutePath();
     String relativePath = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "createnew.map";
 	
@@ -35,16 +37,18 @@ public class BenevolentFortifyStrategyTest {
 		map.findByCountryName("Country1").setArmy(10);
 		map.findByCountryName("Country2").setArmy(20);
 		 map.findByCountryName("Country3").setArmy(30);
-		
+		 
+		 countries.add(map.findByCountryName("Country2"));
+		 countries.add(map.findByCountryName("Country3"));
 		
 	}
 	
 	@Test
 	public void executeTest(){
-		/*
-		benFortifyStrategy.execute(map, map.getCountries());
 		
-		assertThat("army",map.findByCountryName("Country1").getArmy(),greaterThan(10));*/
+		benFortifyStrategy.execute(map, countries);
+		
+		assertThat("army",map.findByCountryName("Country2").getArmy(),greaterThan(20));
 		
 		
 		

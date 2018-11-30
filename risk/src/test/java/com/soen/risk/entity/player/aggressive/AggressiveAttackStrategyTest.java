@@ -6,6 +6,7 @@ package com.soen.risk.entity.player.aggressive;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,18 +41,9 @@ public class AggressiveAttackStrategyTest {
 	@Test
 	public void executeTest(){
 		ArrayList<Country> allowedCountries=new ArrayList();
-		
-		allowedCountries.add(map.findByCountryName("Country2"));
-		
-		
-		
+		allowedCountries.add(map.findByCountryName("Country4"));
 		aggAttackStrategy.execute(map, allowedCountries);
-		aggAttackStrategy.getWon().contains(map.findByCountryName("Country1"));
-		
-		//Assert.assertNotEquals(20, map.findByCountryName("Country2").getArmy());
-		//Assert.assertTrue(aggAttackStrategy.getWon().contains(map.findByCountryName("Country2")));
 		Assert.assertNotEquals(0, aggAttackStrategy.getAttackCounter());
-		
 		
 	}
 	

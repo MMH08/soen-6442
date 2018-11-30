@@ -9,6 +9,7 @@ package com.soen.risk.entity.player.aggressive;
  */
 public class AggressiveStartupStrategyTest {
 	
+	
 	public void executeTest(){
 		
 	}

@@ -32,19 +32,15 @@ public class AggressiveFortifyStrategyTest {
 	ArrayList<Country> allowedCountries;
 	Path  parentPath = FileSystems.getDefault().getPath(".").toAbsolutePath();
     String relativePath = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "createnew.map";
-    static  GamePlay gamePlay;
-    static Game game;
-    static Player player;
-    ArrayList players=new ArrayList<>();
+    
+    
     
     
 	
 	@Before
 	public void setUp(){
 			map=new Map();
-			player=new Player("Player1","AGGRESSIVE");
-			players.add(player);
-			game=new Game(map, players);
+			
 			aggfortifyStrategy=new AggressiveFortifyStrategy();
 			map.load(parentPath+relativePath);
 			map.findByCountryName("Country1").setArmy(10);
@@ -53,21 +49,18 @@ public class AggressiveFortifyStrategyTest {
 			map.findByCountryName("Country4").setArmy(13);
 			allowedCountries=new ArrayList();
 			allowedCountries.add(map.findByCountryName("Country2"));
+			allowedCountries.add(map.findByCountryName("Country3"));
 			
-			ArrayList tempList=new ArrayList();
-			tempList.add(map.findByCountryName("Country3"));
-			tempList.add(map.findByCountryName("Country4"));
-			map.setCountries(tempList);
-			game.setMap(map);
-			gamePlay.setInstance(gamePlay);
+			
+			
 			
 	}
 	
 	@Test
 	public void executeTest(){
-		/*aggfortifyStrategy.execute(map, allowedCountries);
+		aggfortifyStrategy.execute(map, allowedCountries);
 		
-		Assert.assertEquals(25, map.findByCountryName("Country2").getArmy());*/
+		Assert.assertEquals(23, map.findByCountryName("Country2").getArmy());
 	}
 	
 	
