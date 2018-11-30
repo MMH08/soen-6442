@@ -27,6 +27,7 @@ public interface AttackStrategy {
     static void exchangeArmy(Country from, Country to, int attackCounter) {
         if (from.getArmy() <= attackCounter) {
             logger.log(Level.INFO, "Exchange : From country has less army than attackCounter " + attackCounter + ", from" + from + " to " + to);
+            logger.log(Level.INFO, "Exchange :  Moving " + (from.getArmy() -1) + " army from " + from + " to " + to);
             to.setArmy(from.getArmy() - 1);
             from.setArmy(1);
         } else {

@@ -25,7 +25,7 @@ public class CheaterAttackStrategy implements AttackStrategy {
     }
 
     /**
-     * Automatically conquer the neighbouring countries
+     * Automatically conquer the neighbouring countries of all of its countries.
      *
      * @param map       Map
      * @param countries countries owned by the player

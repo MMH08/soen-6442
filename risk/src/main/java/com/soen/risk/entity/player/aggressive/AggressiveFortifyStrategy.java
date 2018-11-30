@@ -7,36 +7,40 @@ import com.soen.risk.entity.Map;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
 
 public class AggressiveFortifyStrategy implements FortifyStrategy {
+    /**
+     * Maximise the army count in one country, which is possible if endCountry is the strongest country and
+     * we move the armies from the second best country.
+     *
+     * @param map              Map
+     * @param allowedCountries owned countries by the player
+     * @return if fortification was possible
+     */
     @Override
     public boolean execute(Map map, List<Country> allowedCountries) {
-    	Country startCountry;
-        Country endCountry;
-        int armyCount = 0;
-        int i = 1;
-        Collections.sort(allowedCountries,Collections.reverseOrder(Comparator.comparing(Country::getArmy)));
-    	int strongestCountryindex = 0;
-    	endCountry = allowedCountries.get(strongestCountryindex);
-    	while(i < allowedCountries.size() ) {
-    		startCountry = allowedCountries.get(i);
-    		if (map.pathExists(startCountry, endCountry, allowedCountries)) {
-    			if (startCountry.getArmy()>1 && startCountry.getArmy()%2 == 0) {
-    				armyCount = startCountry.getArmy()/2 ;
-    				startCountry.setArmy (startCountry.getArmy() - armyCount);
-    				endCountry.setArmy (endCountry.getArmy() + armyCount);
-    			}
-    			else if (startCountry.getArmy()>1 && startCountry.getArmy()%2 == 1) {
-    				armyCount = (startCountry.getArmy()-1)/2;
-    				startCountry.setArmy (startCountry.getArmy() - armyCount);
-    				endCountry.setArmy (endCountry.getArmy() + armyCount);
-    			}
-    			return true;
-    		}
-    		else {   	
-    			i++;   	
-    		}
-    	}
-    	return true; 
+        allowedCountries.sort(Collections.reverseOrder(Comparator.comparing(Country::getArmy)));
+
+        for (int endCountryIndex = 0; endCountryIndex < allowedCountries.size(); endCountryIndex++) {
+            Country endCountry = allowedCountries.get(endCountryIndex);
+            for (Country startCountry : allowedCountries) {
+                // endCountry is owned by the same player
+                // and there is a path between them then fortify and return true
+                if (isValidMove(map, allowedCountries, endCountry, startCountry)) {
+                    int armyCount = startCountry.getArmy() / 2;
+                    startCountry.setArmy(startCountry.getArmy() - armyCount);
+                    endCountry.setArmy(endCountry.getArmy() + armyCount);
+                    logger.log(Level.INFO, "Fortification between " + startCountry + " and " + endCountry + " count : " + armyCount);
+                    return true;
+                }
+            }
+
+        }
+        return true;
+    }
+
+    private boolean isValidMove(Map map, List<Country> allowedCountries, Country endCountry, Country startCountry) {
+        return !startCountry.getName().equals(endCountry.getName()) && map.pathExists(startCountry, endCountry, allowedCountries);
     }
 }

@@ -35,29 +35,33 @@ public class AggressiveAttackStrategy implements AttackStrategy {
         List<Country> defendingCountries = this.findDefendingCountries(map, attackingCountry, countries);
 
         for (Country defendingCountry : defendingCountries) {
-            ArrayList<Boolean> wins = this.playGame(attackingCountry, defendingCountry);
-            for (boolean win : wins) {
-                if (win) {
-                    logger.log(Level.INFO, "Attacker won 1 army.");
-                    attackingCountry.setArmy(attackingCountry.getArmy() + 1);
-                    defendingCountry.setArmy(defendingCountry.getArmy() - 1);
-                } else {
-                    logger.log(Level.INFO, "Defender won 1 army.");
-                    attackingCountry.setArmy(attackingCountry.getArmy() - 1);
-                    defendingCountry.setArmy(defendingCountry.getArmy() + 1);
+            boolean continueAttack = true;
+            while (continueAttack) {
+                ArrayList<Boolean> wins = this.playGame(attackingCountry, defendingCountry);
+                for (boolean win : wins) {
+                    if (win) {
+                        logger.log(Level.INFO, "Attacker won 1 army.");
+                        attackingCountry.setArmy(attackingCountry.getArmy() + 1);
+                        defendingCountry.setArmy(defendingCountry.getArmy() - 1);
+                    } else {
+                        logger.log(Level.INFO, "Defender won 1 army.");
+                        attackingCountry.setArmy(attackingCountry.getArmy() - 1);
+                        defendingCountry.setArmy(defendingCountry.getArmy() + 1);
+                    }
                 }
-            }
-            if (defendingCountry.getArmy() == 0) {
-                logger.log(Level.INFO, "Defending country lost all the army");
-                AttackStrategy.exchangeArmy(attackingCountry, defendingCountry, attackCounter);
-                attackCounter = 0; // reset counter for future fights. ownership will be changed once and for all.
-                won.add(defendingCountry);
+                if (defendingCountry.getArmy() == 0) {
+                    logger.log(Level.INFO, "Defending country lost all the army");
+                    AttackStrategy.exchangeArmy(attackingCountry, defendingCountry, attackCounter);
+                    attackCounter = 0; // reset counter for future fights. ownership will be changed once and for all.
+                    won.add(defendingCountry);
+                    continueAttack = false;
 
-            } else if (attackingCountry.getArmy() == 0) {
-                logger.log(Level.INFO, "Attacking country lost all the army");
-                AttackStrategy.exchangeArmy(defendingCountry, attackingCountry, attackCounter);
-                lost.put(attackingCountry, defendingCountry);
-                return; // exit the function
+                } else if (attackingCountry.getArmy() == 0) {
+                    logger.log(Level.INFO, "Attacking country lost all the army");
+                    AttackStrategy.exchangeArmy(defendingCountry, attackingCountry, attackCounter);
+                    lost.put(attackingCountry, defendingCountry);
+                    return; // exit the function
+                }
             }
         }
     }
@@ -129,9 +133,9 @@ public class AggressiveAttackStrategy implements AttackStrategy {
     public HashMap<Country, Country> getLost() {
         return lost;
     }
-    
-    public int getAttackCounter(){
-    	return attackCounter;
+
+    public int getAttackCounter() {
+        return attackCounter;
     }
 
 }
