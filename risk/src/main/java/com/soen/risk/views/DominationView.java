@@ -66,10 +66,10 @@ public class DominationView implements Observer, Serializable {
         PlayerInfo playerinfo = playersInfo.getOrDefault(p.getName(), new PlayerInfo());
         playerinfo.setCountries(new HashMap<>()); //reset the countries
         for (Country country : p.getCountries()) {
-            logger.log(Level.INFO, "Adding country to player : " + p.getName() + " country : " + country.getName());
             playerinfo.addCountry(country.getName(), country.getArmy());
             playerinfo.setTotalArmyCount(calculateTotalCount(playerinfo));
         }
+        logger.log(Level.INFO, p + playerinfo.toString());
         playersInfo.put(p.getName(), playerinfo);
 
         //update share for every player
@@ -151,7 +151,6 @@ public class DominationView implements Observer, Serializable {
         }
 
         public void setTotalArmyCount(int totalArmyCount) {
-            logger.log(Level.INFO, "Updating total army count" + totalArmyCount);
             this.totalArmyCount = totalArmyCount;
         }
 
@@ -164,8 +163,12 @@ public class DominationView implements Observer, Serializable {
         }
 
         public void setShare(float share) {
-            logger.log(Level.INFO, "Updating share - " + share);
             this.share = String.valueOf(share) + " %";
+        }
+
+        @Override
+        public String toString() {
+            return String.valueOf(countries);
         }
     }
 }
