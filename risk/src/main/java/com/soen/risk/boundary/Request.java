@@ -11,5 +11,6 @@ import java.util.logging.Logger;
 public interface Request {
     
     /** The logger. */
-    public static Logger logger = Logger.getLogger(Request.class.getName());
+    Logger logger = Logger.getLogger(Request.class.getName());
+
 }
