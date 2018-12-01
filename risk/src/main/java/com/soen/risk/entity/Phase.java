@@ -6,7 +6,7 @@ package com.soen.risk.entity;
  *
  * @author Hina
  * @since 05-11-2018
- * @@version 1.0.2
+ * @version 1.0.2
  */
 public enum Phase {
     

@@ -117,7 +117,7 @@ public class GameDriver implements Usecase {
                 }
                 game.executeFortificationPhase();
             }
-            if (noOfAllowedTurns != 0 && currentTurnCount >= noOfAllowedTurns) {
+            if (noOfAllowedTurns != 0 && currentTurnCount >= noOfAllowedTurns*4) {
                 response.setWinner("Draw");
                 return response;
             }

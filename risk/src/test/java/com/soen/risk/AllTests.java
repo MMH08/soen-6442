@@ -2,6 +2,7 @@ package com.soen.risk;
 
 import com.soen.risk.boundary.usecase.LoadGameTest;
 import com.soen.risk.boundary.usecase.SaveGameTest;
+import com.soen.risk.boundary.usecase.StartTournamentTest;
 import com.soen.risk.entity.GameTest;
 import com.soen.risk.entity.MapTest;
 import com.soen.risk.entity.PlayerTest;
@@ -34,7 +35,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * The Class AllTests.
  */
 @RunWith(Suite.class)
-@SuiteClasses({LoadGameTest.class, SaveGameTest.class,
+@SuiteClasses({LoadGameTest.class, SaveGameTest.class, StartTournamentTest.class,
         PlayerTest.class, MapTest.class, GameTest.class,
         AggressiveStartupStrategyTest.class, AggressiveReinforceStrategyTest.class, AggressiveAttackStrategyTest.class, AggressiveFortifyStrategyTest.class,
         BenevolentStartupStrategyTest.class, BenevolentReinforceStrategyTest.class, BenevolentAttackStrategyTest.class, BenevolentFortifyStrategyTest.class,
