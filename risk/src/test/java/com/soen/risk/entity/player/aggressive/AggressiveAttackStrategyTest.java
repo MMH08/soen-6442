@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AggressiveAttackStrategyTest {
+
     private Map map;
     private AttackStrategy aggressive;
     private Country country1;
@@ -79,8 +80,6 @@ public class AggressiveAttackStrategyTest {
                     aggressive.getLost().get(country3) == country4);
         }
     }
-
-
 }
 
 

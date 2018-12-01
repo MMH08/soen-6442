@@ -12,7 +12,9 @@ import java.util.Collections;
 
 import static org.junit.Assert.*;
 
+
 public class BenevolentFortifyStrategyTest {
+
 
     private Map map;
     private FortifyStrategy benevolent;
@@ -72,7 +74,7 @@ public class BenevolentFortifyStrategyTest {
         benevolent.execute(map, Arrays.asList(country1, country2, country3));
         assertEquals(10, country2.getArmy());
         assertTrue((20 == country3.getArmy() && 10 == country1.getArmy()) ||
-                        (20 == country1.getArmy() && 10 == country3.getArmy()));
+                (20 == country1.getArmy() && 10 == country3.getArmy()));
     }
 
 
