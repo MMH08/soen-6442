@@ -134,6 +134,7 @@ public class RandomAttackStrategy implements AttackStrategy, Serializable {
         if (countries.isEmpty()) return;
         attackingCountry = countries.get(countries.size() / 2);
         List<Country> ListAttackedCountry = this.attackedCountry(map, countries);
+        if(ListAttackedCountry.size() == 0) return;
         defendingCountry = ListAttackedCountry.get(ListAttackedCountry.size() / 2);
         logger.log(Level.INFO, "Attacking country : " + attackingCountry + ", defending : " + defendingCountry);
 

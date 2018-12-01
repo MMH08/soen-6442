@@ -5,10 +5,7 @@ import com.soen.risk.entity.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -107,5 +104,12 @@ public class RandomAttackStrategyTest {
         } else if (!random.getLost().isEmpty()) {
             assertEquals(expectedLoss, random.getLost());
         }
+    }
+
+    @Test
+    public void AttackingCountryWithNoConnectedOpponent_ShouldNotAttack() {
+        random.execute(map, Arrays.asList(country1, country2, country3, country4));
+        assertEquals(0, random.getAttackCounter());
+
     }
 }
