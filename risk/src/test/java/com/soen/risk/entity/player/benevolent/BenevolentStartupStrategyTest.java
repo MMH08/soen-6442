@@ -1,38 +1,51 @@
-/**
- * 
- */
 package com.soen.risk.entity.player.benevolent;
 
-import org.junit.Test;
-
 import com.soen.risk.entity.Country;
-
-import org.junit.Assert;
+import com.soen.risk.entity.Map;
+import com.soen.risk.entity.StartupStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * @author fly
- *
- */
+import static org.junit.Assert.assertEquals;
+
 public class BenevolentStartupStrategyTest {
-	public BenevolentStartupStrategy benStartupStrategy;
-	Country country;
-	
-	
+
+	private Map map;
+	private StartupStrategy benevolent;
+	private Country country1;
+	private Country country4;
+	private Country country2;
+	private Country country3;
+
 	@Before
-	public void setUp()
-	{
-		benStartupStrategy=new BenevolentStartupStrategy();
-		country=new Country(22, "Africa");
-		country.addArmy(20);
+	public void setUp() {
+		map = new Map();
+		map.load("./fixture/demo.map");
+		benevolent = new BenevolentStartupStrategy();
+		country1 = map.findByCountryName("Country1");
+		country1.setArmy(10);
+		country2 = map.findByCountryName("Country2");
+		country2.setArmy(20);
+		country3 = map.findByCountryName("Country3");
+		country3.setArmy(40);
+		country4 = map.findByCountryName("Country4");
+		country4.setArmy(30);
+
 	}
-	
+
 	@Test
-	public void executeTest(){
-		benStartupStrategy.execute(country, 20);
-		
-		Assert.assertEquals(21, country.getArmy());
+	public void ZeroInitialArmy_ShouldAddOneArmy() {
+		int expectedCount = country1.getArmy() + 1;
+		benevolent.execute(country1, 10);
+		assertEquals(expectedCount, country1.getArmy());
+	}
+
+	@Test
+	public void WithInitialArmy_ShouldAddOneArmy() {
+		country1.setArmy(2);
+		int expectedCount = country1.getArmy() + 1;
+		benevolent.execute(country1, 3);
+		assertEquals(expectedCount, country1.getArmy());
 	}
 
 }

@@ -1,74 +1,88 @@
-/**
- * 
- */
 package com.soen.risk.entity.player.aggressive;
-
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.*;
-import org.junit.Assert.*;
-
 
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.FortifyStrategy;
-import com.soen.risk.entity.Game;
 import com.soen.risk.entity.Map;
-import com.soen.risk.entity.Player;
-import com.soen.risk.entity.player.human.HumanFortifyStrategy;
-import com.soen.risk.interactor.GamePlay;
+import org.junit.Before;
+import org.junit.Test;
 
-/**
- * @author fly
- *
- */
-//Need to rewrite 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+import static org.junit.Assert.*;
+
+
 public class AggressiveFortifyStrategyTest {
-	Map map;
-	public AggressiveFortifyStrategy aggfortifyStrategy;
-	ArrayList<Country> allowedCountries;
-	Path  parentPath = FileSystems.getDefault().getPath(".").toAbsolutePath();
-    String relativePath = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "createnew.map";
-    static  GamePlay gamePlay;
-    static Game game;
-    static Player player;
-    ArrayList players=new ArrayList<>();
-    
-    
-	
+
+	private Map map;
+	private FortifyStrategy aggressive;
+	private Country country1;
+	private Country country4;
+	private Country country2;
+	private Country country3;
+
 	@Before
-	public void setUp(){
-			map=new Map();
-			player=new Player("Player1","AGGRESSIVE");
-			players.add(player);
-			game=new Game(map, players);
-			aggfortifyStrategy=new AggressiveFortifyStrategy();
-			map.load(parentPath+relativePath);
-			map.findByCountryName("Country1").setArmy(10);
-			map.findByCountryName("Country2").setArmy(20);
-			map.findByCountryName("Country3").setArmy(7);
-			map.findByCountryName("Country4").setArmy(13);
-			allowedCountries=new ArrayList();
-			allowedCountries.add(map.findByCountryName("Country2"));
-			
-			ArrayList tempList=new ArrayList();
-			tempList.add(map.findByCountryName("Country3"));
-			tempList.add(map.findByCountryName("Country4"));
-			map.setCountries(tempList);
-			game.setMap(map);
-			gamePlay.setInstance(gamePlay);
-			
+	public void setUp() {
+		map = new Map();
+		map.load("./fixture/demo.map");
+		aggressive = new AggressiveFortifyStrategy();
+		country1 = map.findByCountryName("Country1");
+		country1.setArmy(10);
+		country2 = map.findByCountryName("Country2");
+		country2.setArmy(20);
+		country3 = map.findByCountryName("Country3");
+		country3.setArmy(10);
+		country4 = map.findByCountryName("Country4");
+		country4.setArmy(30);
 	}
-	
+
 	@Test
-	public void executeTest(){
-		/*aggfortifyStrategy.execute(map, allowedCountries);
-		
-		Assert.assertEquals(25, map.findByCountryName("Country2").getArmy());*/
+	public void ZeroCountry_ShouldChangeNothing() {
+		int[] expectedCounts = new int[]{10, 20, 10, 30};
+		aggressive.execute(map, new ArrayList<>());
+		assertArrayEquals(expectedCounts, new int[]{country1.getArmy(), country2.getArmy(), country3.getArmy(), country4.getArmy()});
 	}
-	
+
+	@Test
+	public void OneCountry_ShouldDoNothing() {
+		aggressive.execute(map, Collections.singletonList(country2));
+		assertEquals(20, country2.getArmy());
+	}
+
+	@Test
+	public void TwoCountryWithOneStrong_ShouldFortify() {
+		aggressive.execute(map, Arrays.asList(country1, country2));
+		assertEquals(1, country1.getArmy());
+		assertEquals(29, country2.getArmy());
+	}
+
+
+	@Test
+	public void TwoCountryWithOneStrongNoConnection_ShouldNotFortify() {
+		aggressive.execute(map, Arrays.asList(country1, country4));
+		assertEquals(10, country1.getArmy());
+		assertEquals(30, country4.getArmy());
+	}
+
+	/**
+	 * Three countries with one strong should fortify one strong, depends on sort which ever comes first.
+	 */
+	@Test
+	public void ThreeCountryWithOneStrong_ShouldFortifyOneStrong() {
+		aggressive.execute(map, Arrays.asList(country1, country2, country3));
+		assertEquals(29, country2.getArmy());
+		assertTrue((1 == country3.getArmy() && 10 == country1.getArmy()) ||
+				(1 == country1.getArmy() && 10 == country3.getArmy()));
+	}
+
+
+	@Test
+	public void ThreeCountryWithOneStrong_ShouldFortifySecondBest() {
+		aggressive.execute(map, Arrays.asList(country1, country2, country4));
+		assertEquals(30, country4.getArmy());
+		assertEquals(29, country2.getArmy());
+		assertEquals(1, country1.getArmy());
+	}
 	
 }

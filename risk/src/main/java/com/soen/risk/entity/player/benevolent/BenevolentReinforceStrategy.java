@@ -17,6 +17,7 @@ public class BenevolentReinforceStrategy implements ReinforceStrategy {
      */
     @Override
     public void execute(Map map, List<Country> countries) {
+        if(countries.isEmpty()) return ;
         ArrayList<Country> weakCountries = new ArrayList<>();
         int reinforceCount = ReinforceStrategy.calculateArmyCount(map, countries);
 
