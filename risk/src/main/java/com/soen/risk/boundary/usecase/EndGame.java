@@ -16,8 +16,7 @@ public class EndGame implements Usecase {
      */
     @Override
     public Object execute() {
-        GamePlay gamePlay = GamePlay.getInstance();
-        gamePlay = null;
+        GamePlay.setInstance(null);
         return null;
     }
 }

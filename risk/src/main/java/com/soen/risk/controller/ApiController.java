@@ -351,7 +351,8 @@ public class ApiController {
                             @RequestParam("names") String playerNames,
                             @RequestParam("behaviors") String playerBehaviors) {
         StartGame usecase = new StartGame(filename, playerNames, playerBehaviors);
-        usecase.execute();
+        StartGameResponse response = usecase.execute();
+        if(!response.isValid()) return "redirect:/singleGame03?winner=INVALID";
         return "redirect:/gameDriver";
     }
 

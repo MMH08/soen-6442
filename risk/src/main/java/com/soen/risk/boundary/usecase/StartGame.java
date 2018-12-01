@@ -50,7 +50,9 @@ public class StartGame implements Usecase {
         //initialise map
         Map map = new Map();
         map.load(request.getFilename());
-        if (!map.isValid()) return response;
+        response.setValid(map.isValid());
+
+        if (!response.isValid()) return response;
 
         //initialise players
         List<Player> players = new ArrayList<>();
