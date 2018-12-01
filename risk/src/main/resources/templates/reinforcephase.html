@@ -65,7 +65,6 @@
 </div>
 <div th:replace="layout :: cardExchangeView"></div>
 <span style="display:none" th:text="${cardExchangeEnabled}" id="cardExchangeEnabled"></span>
-<span id="isEnd" th:text="${isEnd}" style="display:none"></span>
 </body>
 <script>
         if($("#cardExchangeEnabled").text()=='true'){
@@ -96,12 +95,6 @@
     $("#reinforceAddArmy").submit();
     });
 
-</script>
-<script>
-    if($("#isEnd").text() == 'true'){
-        alert("Game is over !");
-        window.location("/endGame");
-    }
 </script>
 
 </html>

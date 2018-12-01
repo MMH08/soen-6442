@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="layout :: header"/>
+</head>
+<body>
+<div id="container" style="margin: 0px auto; width: 760px;">
+
+    <div th:replace="layout :: nav"/>
+
+    <div id="box">
+        <div id="content">
+            <div class="overflow">
+                <div id="textpadding">
+                    <h2>Risk - Game Play</h2>
+                    <div class="sticky">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> <b>Tournament - Result</b>
+                    </div>
+                    <br/>
+                    <table>
+                        <tr>
+                            <th>Winner</th>
+                            <th>Game</th>
+                            <th>Map</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span th:each="winner : ${winners}">
+                                    <span th:text="${winner}"></span><br/>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="game : ${games}">
+                                    <span th:text="${game}"></span><br>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="map : ${maps}">
+                                    <span th:text="${map}"></span><br>
+                                </span>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="layout :: footer"/>
+</div>
+
+</body>
+</html>

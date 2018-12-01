@@ -76,12 +76,5 @@
 
     <div th:replace="layout :: footer"/>
 </div>
-<span id="isEnd" th:text="${isEnd}" style="display:none"></span>
-<script>
-    if($("#isEnd").text() == 'true'){
-        alert("You won the game !");
-        window.location("/endGame");
-    }
-</script>
 </body>
 </html>
