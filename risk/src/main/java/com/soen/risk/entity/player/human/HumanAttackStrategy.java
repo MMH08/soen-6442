@@ -131,4 +131,8 @@ public class HumanAttackStrategy implements AttackStrategy, Serializable {
         return isComplete;
     }
 
+    public int getAttackCounter() {
+        return attackCounter;
+    }
+
 }

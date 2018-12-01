@@ -1,50 +1,67 @@
-/**
- * 
- */
 package com.soen.risk.entity.player.benevolent;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-
-import org.junit.Assert;
+import com.soen.risk.entity.Country;
+import com.soen.risk.entity.Map;
+import com.soen.risk.entity.ReinforceStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.soen.risk.entity.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
-/**
- * @author fly
- *
- */
+import static org.junit.Assert.assertEquals;
+
 public class BenevolentReinforceStrategyTest {
-	
-	 BenevolentReinforceStrategy benReinforceStrategy;
-	 Map map;
-	 Path  parentPath = FileSystems.getDefault().getPath(".").toAbsolutePath();
-	 String relativePath = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "createnew.map";
-	 
-	 
-	 @Before
-	 public void setUp(){
-		 benReinforceStrategy=new BenevolentReinforceStrategy();
-		 map =new Map();
-		 map.load(parentPath+relativePath);
-		 
-		 map.findByCountryName("Country1").setArmy(10);
-		 map.findByCountryName("Country2").setArmy(20);
-		 map.findByCountryName("Country3").setArmy(30);
-		 map.findByCountryName("Country4").setArmy(40);
-		}
-	 
-	 @Test
-	 public void executeTest()
-	 {
-		 benReinforceStrategy.execute(map, map.getCountries());
-		 assertThat("army",map.findByCountryName("Country1").getArmy(),greaterThan(10));
-	 }
-	 
+    private Map map;
+    private ReinforceStrategy benevolent;
+    private Country country1;
+    private Country country4;
+    private Country country2;
+    private Country country3;
+
+    @Before
+    public void setUp() {
+        map = new Map();
+        map.load("./fixture/demo.map");
+        benevolent = new BenevolentReinforceStrategy();
+        country1 = map.findByCountryName("Country1");
+        country1.setArmy(10);
+        country2 = map.findByCountryName("Country2");
+        country2.setArmy(20);
+        country3 = map.findByCountryName("Country3");
+        country3.setArmy(10);
+        country4 = map.findByCountryName("Country4");
+        country4.setArmy(30);
+    }
+
+    @Test
+    public void ZeroCountry_ShouldChangeNothing() {
+        benevolent.execute(map, new ArrayList<Country>());
+        assertEquals(country1.getArmy(), 10);
+    }
+
+
+    @Test
+    public void OneCountry_ShouldAddReinforceArmy() {
+        int reinforceArmy = ReinforceStrategy.calculateArmyCount(map, Collections.singletonList(country1));
+        benevolent.execute(map, Collections.singletonList(country1));
+        assertEquals(10 + reinforceArmy, country1.getArmy());
+    }
+
+    @Test
+    public void OneWeakCountry_ShouldAddReinforceArmyToOne() {
+        int reinforceArmy = ReinforceStrategy.calculateArmyCount(map, Arrays.asList(country1, country2));
+        benevolent.execute(map, Arrays.asList(country1, country2));
+        assertEquals(10 + reinforceArmy, country1.getArmy());
+    }
+
+    @Test
+    public void TwoWeakCountry_ShouldAddReinforceArmyToTwo() {
+        int reinforceArmy = ReinforceStrategy.calculateArmyCount(map, Arrays.asList(country1, country2, country3));
+        benevolent.execute(map, Arrays.asList(country1, country2, country3));
+        assertEquals(10 + reinforceArmy / 2, country1.getArmy());
+        assertEquals(10 + reinforceArmy / 2, country3.getArmy());
+    }
 
 }

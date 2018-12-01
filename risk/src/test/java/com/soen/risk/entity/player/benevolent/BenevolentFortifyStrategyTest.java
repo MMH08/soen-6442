@@ -1,57 +1,88 @@
-/**
- * 
- */
 package com.soen.risk.entity.player.benevolent;
 
+import com.soen.risk.entity.Country;
+import com.soen.risk.entity.FortifyStrategy;
 import com.soen.risk.entity.Map;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.util.ArrayList;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * @author fly
- *
- */
-//Need to rewrite-Uses GamePlay
-public class BenevolentFortifyStrategyTest {
-	BenevolentFortifyStrategy benFortifyStrategy;
-	Map map;
-	ArrayList countries=new ArrayList<>();
-	Path  parentPath = FileSystems.getDefault().getPath(".").toAbsolutePath();
-    String relativePath = FileSystems.getDefault().getSeparator() + "fixture" + FileSystems.getDefault().getSeparator() + "createnew.map";
-	
-	@Before
-	public void setUp(){
-		benFortifyStrategy=new BenevolentFortifyStrategy();
-		map=new Map();
-		
-		map.load(parentPath+relativePath);
-		map.findByCountryName("Country1").setArmy(10);
-		map.findByCountryName("Country2").setArmy(20);
-		 map.findByCountryName("Country3").setArmy(30);
-		 
-		 countries.add(map.findByCountryName("Country2"));
-		 countries.add(map.findByCountryName("Country3"));
-		
-	}
-	
-	@Test
-	public void executeTest(){
-		
-		benFortifyStrategy.execute(map, countries);
-		
-		assertThat("army",map.findByCountryName("Country2").getArmy(),greaterThan(20));
-		
-		
-		
-	}
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
+import static org.junit.Assert.*;
+
+
+public class BenevolentFortifyStrategyTest {
+
+
+    private Map map;
+    private FortifyStrategy benevolent;
+    private Country country1;
+    private Country country4;
+    private Country country2;
+    private Country country3;
+
+    @Before
+    public void setUp() {
+        map = new Map();
+        map.load("./fixture/demo.map");
+        benevolent = new BenevolentFortifyStrategy();
+        country1 = map.findByCountryName("Country1");
+        country1.setArmy(10);
+        country2 = map.findByCountryName("Country2");
+        country2.setArmy(20);
+        country3 = map.findByCountryName("Country3");
+        country3.setArmy(10);
+        country4 = map.findByCountryName("Country4");
+        country4.setArmy(30);
+    }
+
+    @Test
+    public void ZeroCountry_ShouldChangeNothing() {
+        int[] expectedCounts = new int[]{10, 20, 10, 30};
+        benevolent.execute(map, new ArrayList<>());
+        assertArrayEquals(expectedCounts, new int[]{country1.getArmy(), country2.getArmy(), country3.getArmy(), country4.getArmy()});
+    }
+
+    @Test
+    public void OneCountry_ShouldDoNothing() {
+        benevolent.execute(map, Collections.singletonList(country2));
+        assertEquals(20, country2.getArmy());
+    }
+
+    @Test
+    public void TwoCountryWithOneWeak_ShouldFortify() {
+        benevolent.execute(map, Arrays.asList(country1, country2));
+        assertEquals(20, country1.getArmy());
+        assertEquals(10, country2.getArmy());
+    }
+
+
+    @Test
+    public void TwoCountryWithOneWeakNoConnection_ShouldNotFortify() {
+        benevolent.execute(map, Arrays.asList(country1, country4));
+        assertEquals(10, country1.getArmy());
+        assertEquals(30, country4.getArmy());
+    }
+
+    /**
+     * Three countries with two weak should fortify one weak, depends on sort which ever comes first.
+     */
+    @Test
+    public void ThreeCountryWithTwoWeak_ShouldFortifyOneWeak() {
+        benevolent.execute(map, Arrays.asList(country1, country2, country3));
+        assertEquals(10, country2.getArmy());
+        assertTrue((20 == country3.getArmy() && 10 == country1.getArmy()) ||
+                (20 == country1.getArmy() && 10 == country3.getArmy()));
+    }
+
+
+    @Test
+    public void ThreeCountryWithOneWeak_ShouldFortifyUsingSecondBest() {
+        benevolent.execute(map, Arrays.asList(country1, country2, country4));
+        assertEquals(30, country4.getArmy());
+        assertEquals(10, country2.getArmy());
+        assertEquals(20, country1.getArmy());
+    }
 }

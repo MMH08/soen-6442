@@ -8,6 +8,14 @@ import java.util.List;
 import java.util.logging.Level;
 
 public class AggressiveReinforceStrategy implements ReinforceStrategy {
+    /**
+     * Aggressive strategy locates the strongest country, to add all of its reinforce army. In case,
+     * there is a draw, it will assign all of its reinforce army to the one which occurs first in
+     * the list of owned countries.
+     *
+     * @param map       Map
+     * @param countries owned by the player
+     */
     @Override
 
     public void execute(Map map, List<Country> countries) {
