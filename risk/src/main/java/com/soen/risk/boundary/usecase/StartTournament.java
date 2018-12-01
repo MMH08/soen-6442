@@ -2,6 +2,7 @@ package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.TournamentRequest;
+import com.soen.risk.boundary.response.GameDriverResponse;
 import com.soen.risk.boundary.response.TournamentResponse;
 
 import java.util.logging.Level;
@@ -28,6 +29,7 @@ public class StartTournament implements Usecase {
      */
     public StartTournament(String... args) {
         request = new TournamentRequest(args);
+        response = new TournamentResponse();
     }
 
     /**
@@ -47,17 +49,16 @@ public class StartTournament implements Usecase {
 
                 //game driver
                 GameDriver gameDriver = new GameDriver();
-                gameDriver.execute();
+                gameDriver.setNoOfAllowedTurns(request.getTurns());
+                GameDriverResponse driverRespone = gameDriver.execute();
+
                 logger.log(Level.INFO, "----------- end game " + countOfgame + " -------------");
-
-//                // todo : add more conditions to break
-//                if (gameDriverResponse.getGameEnd()) {
-//
-//                    GamePlay.setInstance(null); // reset gamePlay
-//                    break;
-//                }
-
-                // todo : store the result
+                logger.log(Level.INFO, "winner : " + driverRespone.getWinner());
+                
+                // store the result
+                response.addWinner(driverRespone.getWinner());
+                response.addMapName(fileName);
+                response.addGameCount("Game_" + countOfgame);
             }
         }
         return response;

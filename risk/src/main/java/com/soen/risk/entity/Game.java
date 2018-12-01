@@ -15,27 +15,39 @@ import java.util.logging.Logger;
  * @since 2018-11-05
  */
 public class Game extends Observable implements Serializable {
-    
-    /** The logger. */
+
+    /**
+     * The logger.
+     */
     private static Logger logger = Logger.getLogger(Game.class.getName());
 
-    /** The map. */
+    /**
+     * The map.
+     */
     private Map map;
-    
-    /** The players. */
+
+    /**
+     * The players.
+     */
     private List<Player> players;
 
-    /** The current player. */
+    /**
+     * The current player.
+     */
     private Player currentPlayer;
-    
-    /** The current phase. */
+
+    /**
+     * The current phase.
+     */
     //private boolean isAttackWon;
     private Phase currentPhase = Phase.STARTUP;
+
+    private String winner;
 
     /**
      * Instantiates a new game.
      *
-     * @param map the map
+     * @param map     the map
      * @param players the players
      */
     public Game(Map map, List<Player> players) {
@@ -93,7 +105,12 @@ public class Game extends Observable implements Serializable {
      * @return boolean value returning whether value of Players has reached 1
      */
     public boolean isEndNear() {
-        return getPlayers().size() == 1;
+        if (getPlayers().size() == 1) {
+            winner = getPlayers().get(0).getName();
+            logger.log(Level.INFO, "winner name : " + winner);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -157,7 +174,7 @@ public class Game extends Observable implements Serializable {
         }
         dropEmptyPlayers();
 
-        if (isEndNear()) updateCurrentPhase();
+        //if (isEndNear()) updateCurrentPhase();
     }
 
     /**
@@ -233,7 +250,7 @@ public class Game extends Observable implements Serializable {
     private void dropEmptyPlayers() {
         // drop players who lost all the countries
         ArrayList<Player> toRemove = new ArrayList<>();
-        for(Player player : players){
+        for (Player player : players) {
             if (player.getCountries().size() == 0) {
                 logger.log(Level.INFO, "all countries lost by " + player.getName());
                 player.sendCardsTo(currentPlayer);
@@ -331,4 +348,7 @@ public class Game extends Observable implements Serializable {
         this.notifyObservers(this);
     }
 
+    public String getWinner() {
+        return winner;
+    }
 }
