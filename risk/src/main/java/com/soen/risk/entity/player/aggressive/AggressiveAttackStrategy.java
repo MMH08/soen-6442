@@ -4,12 +4,13 @@ import com.soen.risk.entity.AttackStrategy;
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
-public class AggressiveAttackStrategy implements AttackStrategy {
+public class AggressiveAttackStrategy implements AttackStrategy, Serializable {
     private List<Country> won;
     private HashMap<Country, Country> lost;
     private boolean isComplete;

@@ -4,13 +4,14 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.ReinforceStrategy;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 
-public class BenevolentReinforceStrategy implements ReinforceStrategy {
+public class BenevolentReinforceStrategy implements ReinforceStrategy, Serializable {
     /**
      * @param map       Map
      * @param countries owned by the player

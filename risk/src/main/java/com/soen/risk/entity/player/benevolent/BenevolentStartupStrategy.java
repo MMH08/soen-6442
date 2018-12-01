@@ -3,7 +3,9 @@ package com.soen.risk.entity.player.benevolent;
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.StartupStrategy;
 
-public class BenevolentStartupStrategy implements StartupStrategy {
+import java.io.Serializable;
+
+public class BenevolentStartupStrategy implements StartupStrategy, Serializable {
 
     /**
      * Startup strategy for benevolent player

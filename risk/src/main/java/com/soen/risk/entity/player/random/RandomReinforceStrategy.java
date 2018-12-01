@@ -4,11 +4,12 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.ReinforceStrategy;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 
-public class RandomReinforceStrategy implements ReinforceStrategy {
+public class RandomReinforceStrategy implements ReinforceStrategy, Serializable {
 
     /**
      * Randomly add amount from the reinforce army count.

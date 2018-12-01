@@ -3,7 +3,9 @@ package com.soen.risk.entity.player.aggressive;
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.StartupStrategy;
 
-public class AggressiveStartupStrategy implements StartupStrategy {
+import java.io.Serializable;
+
+public class AggressiveStartupStrategy implements StartupStrategy, Serializable {
     /**
      * @param country      in which army has to be assigned
      * @param armyCapacity total army count available

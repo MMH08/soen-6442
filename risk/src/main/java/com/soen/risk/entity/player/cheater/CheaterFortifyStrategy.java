@@ -4,10 +4,11 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.FortifyStrategy;
 import com.soen.risk.entity.Map;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 
-public class CheaterFortifyStrategy implements FortifyStrategy {
+public class CheaterFortifyStrategy implements FortifyStrategy, Serializable {
 
     /**
      * double the army count if a neighbour country is encountered which is not present in allowedCountries.

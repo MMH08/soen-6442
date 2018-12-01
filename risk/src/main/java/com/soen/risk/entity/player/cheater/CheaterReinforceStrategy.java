@@ -4,10 +4,11 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.ReinforceStrategy;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 
-public class CheaterReinforceStrategy implements ReinforceStrategy {
+public class CheaterReinforceStrategy implements ReinforceStrategy, Serializable {
     @Override
     public void execute(Map map, List<Country> countries) {
         for (Country c : countries) {

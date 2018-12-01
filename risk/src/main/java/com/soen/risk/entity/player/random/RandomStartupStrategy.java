@@ -3,7 +3,9 @@ package com.soen.risk.entity.player.random;
 import com.soen.risk.entity.Country;
 import com.soen.risk.entity.StartupStrategy;
 
-public class RandomStartupStrategy implements StartupStrategy {
+import java.io.Serializable;
+
+public class RandomStartupStrategy implements StartupStrategy, Serializable {
     /**
      * Adding 1 army count out of startup armies
      *

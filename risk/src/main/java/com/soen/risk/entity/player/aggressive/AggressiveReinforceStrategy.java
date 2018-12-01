@@ -4,10 +4,11 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.Map;
 import com.soen.risk.entity.ReinforceStrategy;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 
-public class AggressiveReinforceStrategy implements ReinforceStrategy {
+public class AggressiveReinforceStrategy implements ReinforceStrategy, Serializable {
     /**
      * Aggressive strategy locates the strongest country, to add all of its reinforce army. In case,
      * there is a draw, it will assign all of its reinforce army to the one which occurs first in

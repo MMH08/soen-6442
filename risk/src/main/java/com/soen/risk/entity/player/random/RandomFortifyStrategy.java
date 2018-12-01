@@ -4,11 +4,12 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.FortifyStrategy;
 import com.soen.risk.entity.Map;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
-public class RandomFortifyStrategy implements FortifyStrategy {
+public class RandomFortifyStrategy implements FortifyStrategy, Serializable {
     /**
      * Randomly start fortification from one of the allowedCountries, if loop completes without fortification
      * then that means fortification was not possible, hence return true to exit the phase.

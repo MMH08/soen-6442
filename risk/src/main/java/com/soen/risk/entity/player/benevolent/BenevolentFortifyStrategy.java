@@ -4,12 +4,13 @@ import com.soen.risk.entity.Country;
 import com.soen.risk.entity.FortifyStrategy;
 import com.soen.risk.entity.Map;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 
-public class BenevolentFortifyStrategy implements FortifyStrategy {
+public class BenevolentFortifyStrategy implements FortifyStrategy, Serializable {
 
     /**
      * Start from the weakest country and try to move the army from the strongest country. If the path
