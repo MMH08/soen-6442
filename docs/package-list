@@ -5,4 +5,10 @@ com.soen.risk.boundary.response
 com.soen.risk.boundary.usecase
 com.soen.risk.controller
 com.soen.risk.entity
+com.soen.risk.entity.player.aggressive
+com.soen.risk.entity.player.benevolent
+com.soen.risk.entity.player.cheater
+com.soen.risk.entity.player.human
+com.soen.risk.entity.player.random
 com.soen.risk.interactor
+com.soen.risk.views
