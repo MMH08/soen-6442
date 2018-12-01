@@ -16,7 +16,7 @@ public class PlayerTest {
     @Before
     public void setUp() {
         player = new Player("player_1", "HUMAN");
-        country0 = new Country(0, "Country0");
+        country0 = new Country(0, "country0");
         player.addCountry(country0);
         player.setCards(new ArrayList<>(Arrays.asList(Card.ARTILLERY, Card.CAVALRY, Card.INFANT)));
     }
@@ -24,7 +24,7 @@ public class PlayerTest {
 
     @Test
     public void addCountry() {
-        player.addCountry(new Country(1, "Country1"));
+        player.addCountry(new Country(1, "country1"));
         assertEquals(2, player.getCountries().size());
     }
 
