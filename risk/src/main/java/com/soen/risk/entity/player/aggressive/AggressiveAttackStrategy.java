@@ -62,6 +62,7 @@ public class AggressiveAttackStrategy implements AttackStrategy, Serializable {
         for (Country defendingCountry : defendingCountries) {
             boolean continueAttack = true;
             while (continueAttack) {
+                if(attackCounter > 100) continueAttack = false;
                 ArrayList<Boolean> wins = this.playGame(attackingCountry, defendingCountry);
                 for (boolean win : wins) {
                     if (win) {
