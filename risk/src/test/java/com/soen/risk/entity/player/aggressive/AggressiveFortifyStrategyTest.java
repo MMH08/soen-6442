@@ -12,16 +12,46 @@ import java.util.Collections;
 
 import static org.junit.Assert.*;
 
-
+/**
+ * The Class AggressiveFortifyStrategyTest.
+ *
+ * @author Manmeet
+ */
 public class AggressiveFortifyStrategyTest {
 
+    /**
+     * The map.
+     */
     private Map map;
+
+    /**
+     * The aggressive.
+     */
     private FortifyStrategy aggressive;
+
+    /**
+     * The country 1.
+     */
     private Country country1;
+
+    /**
+     * The country 4.
+     */
     private Country country4;
+
+    /**
+     * The country 2.
+     */
     private Country country2;
+
+    /**
+     * The country 3.
+     */
     private Country country3;
 
+    /**
+     * Set up.
+     */
     @Before
     public void setUp() {
         map = new Map();
@@ -37,6 +67,9 @@ public class AggressiveFortifyStrategyTest {
         country4.setArmy(30);
     }
 
+    /**
+     * Zero country should change nothing.
+     */
     @Test
     public void ZeroCountry_ShouldChangeNothing() {
         int[] expectedCounts = new int[]{10, 20, 10, 30};
@@ -44,12 +77,18 @@ public class AggressiveFortifyStrategyTest {
         assertArrayEquals(expectedCounts, new int[]{country1.getArmy(), country2.getArmy(), country3.getArmy(), country4.getArmy()});
     }
 
+    /**
+     * One country should do nothing.
+     */
     @Test
     public void OneCountry_ShouldDoNothing() {
         aggressive.execute(map, Collections.singletonList(country2));
         assertEquals(20, country2.getArmy());
     }
 
+    /**
+     * Two country with one strong should fortify.
+     */
     @Test
     public void TwoCountryWithOneStrong_ShouldFortify() {
         aggressive.execute(map, Arrays.asList(country1, country2));
@@ -58,6 +97,9 @@ public class AggressiveFortifyStrategyTest {
     }
 
 
+    /**
+     * Two country with one strong no connection should not fortify.
+     */
     @Test
     public void TwoCountryWithOneStrongNoConnection_ShouldNotFortify() {
         aggressive.execute(map, Arrays.asList(country1, country4));
@@ -77,6 +119,9 @@ public class AggressiveFortifyStrategyTest {
     }
 
 
+    /**
+     * Three country with one strong should fortify second best.
+     */
     @Test
     public void ThreeCountryWithOneStrong_ShouldFortifySecondBest() {
         aggressive.execute(map, Arrays.asList(country1, country2, country4));

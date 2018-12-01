@@ -5,22 +5,64 @@ import com.soen.risk.entity.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
-
+/**
+ * The Class RandomAttackStrategyTest.
+ *
+ * @author varun
+ */
 public class RandomAttackStrategyTest {
 
+    /**
+     * The map.
+     */
     private Map map;
+
+    /**
+     * The random.
+     */
     private RandomAttackStrategy random;
+
+    /**
+     * The country 1.
+     */
     private Country country1;
+
+    /**
+     * The country 4.
+     */
     private Country country4;
+
+    /**
+     * The country 2.
+     */
     private Country country2;
+
+    /**
+     * The country 3.
+     */
     private Country country3;
+
+    /**
+     * The expected loss.
+     */
     private HashMap<Country, Country> expectedLoss;
+
+    /**
+     * The expected won.
+     */
     private List<Country> expectedWon;
 
+    /**
+     * Set up.
+     */
     @Before
     public void setUp() {
         map = new Map();
@@ -38,6 +80,9 @@ public class RandomAttackStrategyTest {
         expectedWon = new ArrayList<>();
     }
 
+    /**
+     * Zero country should change nothing.
+     */
     @Test
     public void ZeroCountry_ShouldChangeNothing() {
         random.execute(map, new ArrayList<>());
@@ -46,6 +91,9 @@ public class RandomAttackStrategyTest {
         assertEquals(0, random.getAttackCounter());
     }
 
+    /**
+     * One country should attack one opponent.
+     */
     @Test
     public void OneCountry_ShouldAttackOneOpponent() {
         expectedLoss.put(country2, country1);

@@ -8,7 +8,16 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The Class CheaterReinforceStrategy.
+ *
+ * @author Hina
+ */
 public class CheaterReinforceStrategy implements ReinforceStrategy, Serializable {
+
+    /* (non-Javadoc)
+     * @see com.soen.risk.entity.ReinforceStrategy#execute(com.soen.risk.entity.Map, java.util.List)
+     */
     @Override
     public void execute(Map map, List<Country> countries) {
         for (Country c : countries) {

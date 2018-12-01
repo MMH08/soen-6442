@@ -21,15 +21,20 @@ import java.util.logging.Logger;
  */
 public class DominationView implements Observer, Serializable {
 
+    /** The logger. */
     private static Logger logger = Logger.getLogger(DominationView.class.getName());
+    
+    /** The players info. */
     private HashMap<String, PlayerInfo> playersInfo;
+    
+    /** The total countries. */
     private int totalCountries;
 
 
     /**
-     * Constructor for Domination View
+     * Constructor for Domination View.
      *
-     * @param totalCountries- Count of Total Number of Countries required to display in Domination View
+     * @param totalCountries the total countries
      */
     public DominationView(int totalCountries) {
         this.totalCountries = totalCountries;
@@ -37,10 +42,10 @@ public class DominationView implements Observer, Serializable {
     }
 
     /**
-     * Update the Player and his assigned countries with army count
+     * Update the Player and his assigned countries with army count.
      *
      * @param obs PLayer instance to find the player information
-     * @param o
+     * @param o the o
      */
     @Override
     public void update(Observable obs, Object o) {
@@ -60,7 +65,9 @@ public class DominationView implements Observer, Serializable {
     // country has been added or dropped -- recalculate the share.
 
     /**
-     * Update the DominationView object with his name and share of armies
+     * Update the DominationView object with his name and share of armies.
+     *
+     * @param p the p
      */
     private void updatePlayer(Player p) {
         PlayerInfo playerinfo = playersInfo.getOrDefault(p.getName(), new PlayerInfo());
@@ -87,7 +94,9 @@ public class DominationView implements Observer, Serializable {
     // army count has been updated for the country. -- update total army count
 
     /**
-     * Update the Country with updated total armyCount needed for view
+     * Update the Country with updated total armyCount needed for view.
+     *
+     * @param c the c
      */
     private void updateCountry(Country c) {
         for (String playerName : playersInfo.keySet()) {
@@ -104,8 +113,9 @@ public class DominationView implements Observer, Serializable {
     }
 
     /**
-     * Update the Player with updated total armyCount needed for view
+     * Update the Player with updated total armyCount needed for view.
      *
+     * @param playerInfo the player info
      * @return Country count of a Player
      */
     private int calculateTotalCount(PlayerInfo playerInfo) {
@@ -117,55 +127,121 @@ public class DominationView implements Observer, Serializable {
     }
 
 
+    /**
+     * Gets the players info.
+     *
+     * @return the players info
+     */
     public HashMap<String, PlayerInfo> getPlayersInfo() {
         return playersInfo;
     }
 
+    /**
+     * Sets the players info.
+     *
+     * @param playersInfo the players info
+     */
     public void setPlayersInfo(HashMap<String, PlayerInfo> playersInfo) {
         this.playersInfo = playersInfo;
     }
 
+    /**
+     * The Class PlayerInfo.
+     */
     class PlayerInfo implements Serializable{
+        
+        /** The countries. */
         private HashMap<String, Integer> countries;
+        
+        /** The total army count. */
         private int totalArmyCount;
+        
+        /** The share. */
         private String share;
 
+        /**
+         * Instantiates a new player info.
+         */
         PlayerInfo() {
             countries = new HashMap<>();
         }
 
+        /**
+         * Adds the country.
+         *
+         * @param countryName the country name
+         * @param armyCount the army count
+         */
         public void addCountry(String countryName, int armyCount) {
             countries.put(countryName, armyCount);
         }
 
+        /**
+         * Gets the countries.
+         *
+         * @return the countries
+         */
         public HashMap<String, Integer> getCountries() {
             return countries;
         }
 
+        /**
+         * Sets the countries.
+         *
+         * @param countries the countries
+         */
         public void setCountries(HashMap<String, Integer> countries) {
             this.countries = countries;
         }
 
+        /**
+         * Gets the total army count.
+         *
+         * @return the total army count
+         */
         public int getTotalArmyCount() {
             return totalArmyCount;
         }
 
+        /**
+         * Sets the total army count.
+         *
+         * @param totalArmyCount the new total army count
+         */
         public void setTotalArmyCount(int totalArmyCount) {
             this.totalArmyCount = totalArmyCount;
         }
 
+        /**
+         * Gets the share.
+         *
+         * @return the share
+         */
         public String getShare() {
             return share;
         }
 
+        /**
+         * Sets the share.
+         *
+         * @param share the new share
+         */
         public void setShare(String share) {
             this.share = share;
         }
 
+        /**
+         * Sets the share.
+         *
+         * @param share the new share
+         */
         public void setShare(float share) {
             this.share = String.valueOf(share) + " %";
         }
 
+        /* (non-Javadoc)
+         * @see java.lang.Object#toString()
+         */
         @Override
         public String toString() {
             return String.valueOf(countries);

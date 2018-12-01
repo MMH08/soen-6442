@@ -28,31 +28,59 @@ import java.util.logging.Logger;
  */
 
 public class GamePlay implements Serializable {
+    
+    /** The logger. */
     private static Logger logger = Logger.getLogger(GamePlay.class.getName());
 
 
+    /** The game. */
     private Game game;
 
+    /** The phase view. */
     private PhaseView phaseView;
+    
+    /** The domination view. */
     private DominationView dominationView;
+    
+    /** The card exchange view. */
     private CardExchangeView cardExchangeView;
 
+    /** The game play instance. */
     private static GamePlay gamePlayInstance = null;
 
+    /**
+     * Gets the single instance of GamePlay.
+     *
+     * @return single instance of GamePlay
+     */
     public static GamePlay getInstance() {
         if (gamePlayInstance == null)
             gamePlayInstance = new GamePlay();
         return gamePlayInstance;
     }
 
+    /**
+     * Sets the instance.
+     *
+     * @param gamePlay the new instance
+     */
     public static void setInstance(GamePlay gamePlay) {
         logger.log(Level.INFO, "Setting instance");
         gamePlayInstance = gamePlay;
     }
 
+    /**
+     * Instantiates a new game play.
+     */
     private GamePlay() {
     }
 
+    /**
+     * New game.
+     *
+     * @param map the map
+     * @param players the players
+     */
     public void newGame(Map map, List<Player> players) {
         this.game = new Game(map, players);
 
@@ -74,6 +102,9 @@ public class GamePlay implements Serializable {
         registerCountries();
     }
 
+    /**
+     * Register countries.
+     */
     public void registerCountries() {
         for (Player player : game.getPlayers()) {
             for (Country country : player.getCountries()) {
@@ -83,6 +114,9 @@ public class GamePlay implements Serializable {
         }
     }
 
+    /**
+     * Register players.
+     */
     public void registerPlayers() {
         for (Player player : game.getPlayers()) {
             logger.log(Level.INFO, "Registering player " + player.getName());
@@ -91,6 +125,9 @@ public class GamePlay implements Serializable {
         }
     }
 
+    /**
+     * Register game.
+     */
     public void registerGame() {
         logger.log(Level.INFO, "Registering phaseView");
         game.addObserver(phaseView);
@@ -98,22 +135,47 @@ public class GamePlay implements Serializable {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Gets the game.
+     *
+     * @return the game
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * Sets the game.
+     *
+     * @param game the new game
+     */
     public void setGame(Game game) {
         this.game = game;
     }
 
+    /**
+     * Gets the phase view.
+     *
+     * @return the phase view
+     */
     public PhaseView getPhaseView() {
         return phaseView;
     }
 
+    /**
+     * Gets the domination view.
+     *
+     * @return the domination view
+     */
     public DominationView getDominationView() {
         return dominationView;
     }
 
+    /**
+     * Gets the card exchange view.
+     *
+     * @return the card exchange view
+     */
     public CardExchangeView getCardExchangeView() {
         return cardExchangeView;
     }

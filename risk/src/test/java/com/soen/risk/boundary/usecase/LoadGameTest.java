@@ -8,10 +8,6 @@ import com.soen.risk.entity.player.benevolent.BenevolentAttackStrategy;
 import com.soen.risk.entity.player.benevolent.BenevolentFortifyStrategy;
 import com.soen.risk.entity.player.benevolent.BenevolentReinforceStrategy;
 import com.soen.risk.entity.player.benevolent.BenevolentStartupStrategy;
-import com.soen.risk.entity.player.cheater.CheaterAttackStrategy;
-import com.soen.risk.entity.player.cheater.CheaterFortifyStrategy;
-import com.soen.risk.entity.player.cheater.CheaterReinforceStrategy;
-import com.soen.risk.entity.player.cheater.CheaterStartupStrategy;
 import com.soen.risk.interactor.GamePlay;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,10 +17,21 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+/**
+ * The Class LoadGameTest.
+ *
+ * @author Hina
+ */
 public class LoadGameTest {
 
+    /**
+     * The game.
+     */
     private Game game;
 
+    /**
+     * Sets the game.
+     */
     @Before
     public void setUp() {
         Map map = new Map();
@@ -35,7 +42,7 @@ public class LoadGameTest {
         GamePlay gamePlay = GamePlay.getInstance();
         gamePlay.newGame(map, players);
         game = gamePlay.getGame();
-        for (Player player : game.getPlayers()){
+        for (Player player : game.getPlayers()) {
             player.setStartupStrategy(new BenevolentStartupStrategy());
             player.setReinforceStrategy(new BenevolentReinforceStrategy());
             player.setAttackStrategy(new BenevolentAttackStrategy());
@@ -43,6 +50,9 @@ public class LoadGameTest {
         }
     }
 
+    /**
+     * Load game should retain current status.
+     */
     @Test
     public void LoadGame_ShouldRetainCurrentStatus() {
         saveLoad();
@@ -50,6 +60,9 @@ public class LoadGameTest {
         assertEquals(game.getPlayers().get(0), game.getCurrentPlayer());
     }
 
+    /**
+     * Change phase should retain current phase.
+     */
     @Test
     public void ChangePhase_ShouldRetainCurrentPhase() {
         while (game.getCurrentPhase().equals(Phase.STARTUP)) {
@@ -59,6 +72,9 @@ public class LoadGameTest {
         assertEquals(Phase.REINFORCE, game.getCurrentPhase());
     }
 
+    /**
+     * Change player should retain current player.
+     */
     @Test
     public void ChangePlayer_ShouldRetainCurrentPlayer() {
         while (game.getCurrentPhase().equals(Phase.STARTUP)) {
@@ -73,6 +89,9 @@ public class LoadGameTest {
         assertNotEquals(firstTurn, game.getCurrentPlayer());
     }
 
+    /**
+     * Save load utility.
+     */
     private void saveLoad() {
         new SaveGame("load-test.ser").execute();
         new LoadGame("load-test.ser").execute();

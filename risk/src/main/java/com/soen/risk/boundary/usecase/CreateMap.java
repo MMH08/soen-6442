@@ -7,13 +7,19 @@ import com.soen.risk.interactor.MapBuilder;
 
 /**
  * The Class CreateMap.
+ *
+ * @author Amit
  */
 public class CreateMap implements Usecase {
 
-    /** The request. */
+    /**
+     * The request.
+     */
     private CreateMapRequest request;
-    
-    /** The response. */
+
+    /**
+     * The response.
+     */
     private CreateMapResponse response;
 
     /**
@@ -26,7 +32,9 @@ public class CreateMap implements Usecase {
         response = new CreateMapResponse();
     }
 
-    /* (non-Javadoc)
+    /**
+     * This use case is responsible to create map and save the file in the download folder requested
+     *
      * @see com.soen.risk.boundary.Usecase#execute()
      */
     @Override

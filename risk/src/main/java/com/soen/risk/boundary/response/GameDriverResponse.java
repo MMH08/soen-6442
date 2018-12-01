@@ -9,6 +9,8 @@ public class GameDriverResponse implements Response {
     
     /** The phase name. */
     private String phaseName;
+    
+    /** The is game end. */
     private Boolean isGameEnd;
 
     /**
@@ -29,10 +31,20 @@ public class GameDriverResponse implements Response {
         this.phaseName = phaseName;
     }
 
+    /**
+     * Gets the game end.
+     *
+     * @return the game end
+     */
     public Boolean getGameEnd() {
         return isGameEnd;
     }
 
+    /**
+     * Sets the game end.
+     *
+     * @param gameEnd the new game end
+     */
     public void setGameEnd(Boolean gameEnd) {
         isGameEnd = gameEnd;
     }

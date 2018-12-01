@@ -13,16 +13,56 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 
+/**
+ * The Class HumanAttackStrategyTest.
+ *
+ * @author Amit, Varun
+ */
 public class HumanAttackStrategyTest {
+
+    /**
+     * The map.
+     */
     private Map map;
+
+    /**
+     * The human.
+     */
     private HumanAttackStrategy human;
+
+    /**
+     * The country 1.
+     */
     private Country country1;
+
+    /**
+     * The country 4.
+     */
     private Country country4;
+
+    /**
+     * The country 2.
+     */
     private Country country2;
+
+    /**
+     * The country 3.
+     */
     private Country country3;
+
+    /**
+     * The expected loss.
+     */
     private HashMap<Country, Country> expectedLoss;
+
+    /**
+     * The expected won.
+     */
     private List<Country> expectedWon;
 
+    /**
+     * Set up.
+     */
     @Before
     public void setUp() {
         map = new Map();
@@ -39,6 +79,9 @@ public class HumanAttackStrategyTest {
         expectedWon = new ArrayList<>();
     }
 
+    /**
+     * Skip attack should do nothing.
+     */
     @Test
     public void SkipAttack_ShouldDoNothing() {
         human = new HumanAttackStrategy(country1, country2, 0, 0, 1, 0);
@@ -48,6 +91,9 @@ public class HumanAttackStrategyTest {
         assertArrayEquals(expectedCounts, new int[]{country1.getArmy(), country2.getArmy(), country3.getArmy(), country4.getArmy()});
     }
 
+    /**
+     * Attacking with two army should attack twice.
+     */
     @Test
     public void AttackingWithTwoArmy_ShouldAttackTwice() {
         human = new HumanAttackStrategy(country1, country2, 3, 2, 0, 0);
@@ -56,6 +102,9 @@ public class HumanAttackStrategyTest {
         assertFalse(human.isComplete());
     }
 
+    /**
+     * Attacking with three army two dice should attack twice.
+     */
     @Test
     public void AttackingWithThreeArmyTwoDice_ShouldAttackTwice() {
         human = new HumanAttackStrategy(country4, country2, 2, 2, 0, 0);
@@ -64,6 +113,9 @@ public class HumanAttackStrategyTest {
         assertFalse(human.isComplete());
     }
 
+    /**
+     * Attacking with three army three dice should attack once.
+     */
     @Test
     public void AttackingWithThreeArmyThreeDice_ShouldAttackOnce() {
         human = new HumanAttackStrategy(country4, country3, 3, 2, 0, 0);
@@ -72,6 +124,9 @@ public class HumanAttackStrategyTest {
         assertFalse(human.isComplete());
     }
 
+    /**
+     * Attacking with three army two dice should attack once.
+     */
     @Test
     public void AttackingWithThreeArmyTwoDice_ShouldAttackOnce() {
         human = new HumanAttackStrategy(country4, country3, 2, 2, 0, 0);
@@ -80,6 +135,9 @@ public class HumanAttackStrategyTest {
         assertFalse(human.isComplete());
     }
 
+    /**
+     * Attacking with all out mode should lose or win.
+     */
     @Test
     public void AttackingWithAlloutMode_ShouldLoseOrWin() {
         human = new HumanAttackStrategy(country4, country2, 0, 0, 0, 1);

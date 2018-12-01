@@ -11,16 +11,41 @@ import java.io.ObjectInputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
+/**
+ * The Class LoadGame.
+ *
+ * @author Hina
+ */
 public class LoadGame implements Usecase {
+
+    /**
+     * The request.
+     */
     private LoadGameRequest request;
+
+    /**
+     * The response.
+     */
     private LoadGameResponse response;
 
+    /**
+     * Instantiates a new load game.
+     *
+     * @param args the args
+     */
     public LoadGame(String... args) {
         request = new LoadGameRequest(args);
         response = new LoadGameResponse();
     }
 
 
+    /**
+     * Loads the saved game from the folder placed beside the project directory's src folder.
+     * This retains the phase and current player status. However, refreshes the views by attaching
+     * them again.
+     *
+     * @see com.soen.risk.boundary.Usecase#execute()
+     */
     @Override
     public LoadGameResponse execute() {
         Path parentPath = FileSystems.getDefault().getPath(".").toAbsolutePath();

@@ -9,12 +9,36 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * The Class CheaterStartupStrategyTest.
+ *
+ * @author Hina
+ */
 public class CheaterStartupStrategyTest {
+
+    /**
+     * The map.
+     */
     private Map map;
+
+    /**
+     * The cheater.
+     */
     private StartupStrategy cheater;
+
+    /**
+     * The country 1.
+     */
     private Country country1;
+
+    /**
+     * The country 4.
+     */
     private Country country4;
 
+    /**
+     * Set up.
+     */
     @Before
     public void setUp() {
         map = new Map();
@@ -24,6 +48,9 @@ public class CheaterStartupStrategyTest {
         country4 = map.findByCountryName("country4");
     }
 
+    /**
+     * Zero initial army should add one army.
+     */
     @Test
     public void ZeroInitialArmy_ShouldAddOneArmy() {
         country1.setArmy(0);
@@ -31,6 +58,9 @@ public class CheaterStartupStrategyTest {
         assertEquals(1, country1.getArmy());
     }
 
+    /**
+     * With initial army should add one army.
+     */
     @Test
     public void WithInitialArmy_ShouldAddOneArmy() {
         int expectedCount = country1.getArmy() + 1;

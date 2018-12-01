@@ -7,14 +7,33 @@ package com.soen.risk.entity;
  * @version 1.0.2
  */
 
+/**
+ * The Enum Card.
+ */
 public enum Card {
-    INFANT("Infant"), CAVALRY("Cavalry"), ARTILLERY("Artillery");
+    
+    /** The infant. */
+    INFANT("Infant"), 
+ /** The cavalry. */
+ CAVALRY("Cavalry"), 
+ /** The artillery. */
+ ARTILLERY("Artillery");
+    
+    /** The name. */
     private final String name;
 
+    /**
+     * Instantiates a new card.
+     *
+     * @param name the name
+     */
     private Card(String name) {
         this.name = name;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Enum#toString()
+     */
     public String toString() {
         return this.name;
     }

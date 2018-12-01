@@ -11,17 +11,56 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * The Class AggressiveAttackStrategyTest.
+ *
+ * @author Manmeet, varun
+ */
 public class AggressiveAttackStrategyTest {
 
+    /**
+     * The map.
+     */
     private Map map;
+
+    /**
+     * The aggressive.
+     */
     private AttackStrategy aggressive;
+
+    /**
+     * The country 1.
+     */
     private Country country1;
+
+    /**
+     * The country 4.
+     */
     private Country country4;
+
+    /**
+     * The country 2.
+     */
     private Country country2;
+
+    /**
+     * The country 3.
+     */
     private Country country3;
+
+    /**
+     * The expected loss.
+     */
     private HashMap<Country, Country> expectedLoss;
+
+    /**
+     * The expected won.
+     */
     private List<Country> expectedWon;
 
+    /**
+     * Set up.
+     */
     @Before
     public void setUp() {
         map = new Map();
@@ -39,6 +78,9 @@ public class AggressiveAttackStrategyTest {
         expectedWon = new ArrayList<>();
     }
 
+    /**
+     * One country should attack one opponent.
+     */
     @Test
     public void OneCountry_ShouldAttackOneOpponent() {
         expectedLoss.put(country2, country1);
@@ -52,13 +94,19 @@ public class AggressiveAttackStrategyTest {
         }
     }
 
+    /**
+     * Three country not surrounded by opponent should attack none.
+     */
     @Test
-    public void ThreeCountryNotSurroundedByOponent_ShouldAttackNone() {
+    public void ThreeCountryNotSurroundedByOpponent_ShouldAttackNone() {
         aggressive.execute(map, Arrays.asList(country1, country2, country3));
         assertEquals(expectedWon, aggressive.getWon());
         assertEquals(expectedLoss, aggressive.getLost());
     }
 
+    /**
+     * One country should attack all opponent.
+     */
     @Test
     public void OneCountry_ShouldAttackAllOpponent() {
         aggressive.execute(map, Collections.singletonList(country3));

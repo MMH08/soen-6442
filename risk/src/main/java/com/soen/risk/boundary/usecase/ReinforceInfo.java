@@ -8,17 +8,35 @@ import com.soen.risk.entity.Player;
 import com.soen.risk.entity.ReinforceStrategy;
 import com.soen.risk.interactor.GamePlay;
 
+/**
+ * The Class ReinforceInfo.
+ */
 public class ReinforceInfo implements Usecase {
 
+    /**
+     * The request.
+     */
     private ReinforceInfoRequest request;
+
+    /**
+     * The response.
+     */
     private ReinforceInfoResponse response;
 
+    /**
+     * Instantiates a new reinforce info.
+     *
+     * @param args the args
+     */
     public ReinforceInfo(String... args) {
         request = new ReinforceInfoRequest(args);
         response = new ReinforceInfoResponse();
     }
 
-    /* (non-Javadoc)
+    /**
+     * This is responsible to deliver the info related to reinforcement, which involve the
+     * name of countries for the given player and the allowed maximum reinforce army count.
+     *
      * @see com.soen.risk.boundary.Usecase#execute()
      */
     @Override

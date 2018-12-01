@@ -1,8 +1,8 @@
-Map=map1
+Map=zero-country
 
 [Continents]
-
-
+C1=10
+C2=20
 
 [Territories]
 A,0,0,

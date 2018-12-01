@@ -1,11 +1,12 @@
-Map=createnew
+Map=duplicate-continent
 
 [Continents]
 Continent1=2
 Continent2=3
+Continent1=7
 
 [Territories]
 Country1,0,0,Continent2,Country2,Country3
-Country2,0,0,Continent2,Country3,
+Country2,0,0,Continent2,Country2,Country3,Country4
 Country3,0,0,Continent1,Country2,Country3
 Country4,0,0,Continent1,Country1,Country2,Country3,Country4

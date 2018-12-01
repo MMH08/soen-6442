@@ -10,6 +10,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The Class AggressiveFortifyStrategy.
+ *
+ * @author Amit
+ */
 public class AggressiveFortifyStrategy implements FortifyStrategy, Serializable {
     /**
      * Maximise the army count in one country, which is possible if endCountry is the strongest country and
@@ -41,6 +46,15 @@ public class AggressiveFortifyStrategy implements FortifyStrategy, Serializable 
         return true;
     }
 
+    /**
+     * Checks if is valid move.
+     *
+     * @param map              the map
+     * @param allowedCountries the allowed countries
+     * @param endCountry       the end country
+     * @param startCountry     the start country
+     * @return true, if is valid move
+     */
     private boolean isValidMove(Map map, List<Country> allowedCountries, Country endCountry, Country startCountry) {
         return !startCountry.getName().equals(endCountry.getName()) && map.pathExists(startCountry, endCountry, allowedCountries);
     }

@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The Class AggressiveReinforceStrategy.
+ *
+ * @author Amit
+ */
 public class AggressiveReinforceStrategy implements ReinforceStrategy, Serializable {
     /**
      * Aggressive strategy locates the strongest country, to add all of its reinforce army. In case,

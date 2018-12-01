@@ -5,9 +5,15 @@ import com.soen.risk.entity.StartupStrategy;
 
 import java.io.Serializable;
 
+/**
+ * The Class RandomStartupStrategy.
+ *
+ * @author Manmeet
+ */
 public class RandomStartupStrategy implements StartupStrategy, Serializable {
+
     /**
-     * Adding 1 army count out of startup armies
+     * Adding 1 army count out of startup armies.
      *
      * @param country      in which army has to be assigned
      * @param armyCapacity total army count available

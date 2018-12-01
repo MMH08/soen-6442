@@ -10,12 +10,36 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The Class AggressiveAttackStrategy.
+ *
+ * @author Amit
+ */
 public class AggressiveAttackStrategy implements AttackStrategy, Serializable {
+
+    /**
+     * The won.
+     */
     private List<Country> won;
+
+    /**
+     * The lost.
+     */
     private HashMap<Country, Country> lost;
+
+    /**
+     * The is complete.
+     */
     private boolean isComplete;
+
+    /**
+     * The attack counter.
+     */
     private int attackCounter;
 
+    /**
+     * Instantiates a new aggressive attack strategy.
+     */
     public AggressiveAttackStrategy() {
         this.won = new ArrayList<>();
         this.lost = new HashMap<>();
@@ -67,6 +91,12 @@ public class AggressiveAttackStrategy implements AttackStrategy, Serializable {
         }
     }
 
+    /**
+     * Find strongest country.
+     *
+     * @param countries the countries
+     * @return the country
+     */
     private Country findStrongestCountry(List<Country> countries) {
         int max = Integer.MIN_VALUE;
         Country maxCountry = null;
@@ -79,6 +109,14 @@ public class AggressiveAttackStrategy implements AttackStrategy, Serializable {
         return maxCountry;
     }
 
+    /**
+     * Find defending countries.
+     *
+     * @param map              the map
+     * @param attackingCountry the attacking country
+     * @param countries        the countries
+     * @return the list
+     */
     private List<Country> findDefendingCountries(Map map, Country attackingCountry, List<Country> countries) {
         List<Country> ll = map.getNeighbouringCountry(attackingCountry);
         List<Country> attackedCountry = new ArrayList<Country>();
@@ -97,6 +135,12 @@ public class AggressiveAttackStrategy implements AttackStrategy, Serializable {
         return attackedCountry;
     }
 
+    /**
+     * Normalize attack dice count.
+     *
+     * @param attackingCountry the attacking country
+     * @return the int
+     */
     private int normalizeAttackDiceCount(Country attackingCountry) {
         if (attackingCountry.getArmy() >= 3) return 3;
         if (attackingCountry.getArmy() == 2) return 2;
@@ -104,6 +148,13 @@ public class AggressiveAttackStrategy implements AttackStrategy, Serializable {
         return 0;
     }
 
+    /**
+     * Normalize defending dice count.
+     *
+     * @param defendingCountry the defending country
+     * @param attackingCountry the attacking country
+     * @return the int
+     */
     private int normalizeDefendingDiceCount(Country defendingCountry, Country attackingCountry) {
         if (defendingCountry.getArmy() >= 2) return 2;
         if (defendingCountry.getArmy() == 1) return 1;
@@ -111,6 +162,13 @@ public class AggressiveAttackStrategy implements AttackStrategy, Serializable {
         return 0;
     }
 
+    /**
+     * Play game.
+     *
+     * @param attackingCountry the attacking country
+     * @param defendingCountry the defending country
+     * @return the array list
+     */
     private ArrayList<Boolean> playGame(Country attackingCountry, Country defendingCountry) {
         logger.log(Level.INFO, "Attack by aggressive : " + attackingCountry + " on " + defendingCountry);
         int attackingDiceCount = normalizeAttackDiceCount(attackingCountry);
@@ -121,20 +179,34 @@ public class AggressiveAttackStrategy implements AttackStrategy, Serializable {
 
     }
 
+    /* (non-Javadoc)
+     * @see com.soen.risk.entity.AttackStrategy#getWon()
+     */
     public List<Country> getWon() {
         return won;
     }
 
 
+    /* (non-Javadoc)
+     * @see com.soen.risk.entity.AttackStrategy#isComplete()
+     */
     @Override
     public boolean isComplete() {
         return isComplete;
     }
 
+    /* (non-Javadoc)
+     * @see com.soen.risk.entity.AttackStrategy#getLost()
+     */
     public HashMap<Country, Country> getLost() {
         return lost;
     }
 
+    /**
+     * Gets the attack counter.
+     *
+     * @return the attack counter
+     */
     public int getAttackCounter() {
         return attackCounter;
     }

@@ -10,6 +10,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The Class BenevolentFortifyStrategy.
+ *
+ * @author Nivetha
+ */
 public class BenevolentFortifyStrategy implements FortifyStrategy, Serializable {
 
     /**
@@ -48,6 +53,15 @@ public class BenevolentFortifyStrategy implements FortifyStrategy, Serializable 
         return true;
     }
 
+    /**
+     * Checks if is valid move.
+     *
+     * @param map              the map
+     * @param allowedCountries the allowed countries
+     * @param endCountry       the end country
+     * @param startCountry     the start country
+     * @return true, if is valid move
+     */
     private boolean isValidMove(Map map, List<Country> allowedCountries, Country endCountry, Country startCountry) {
         return !startCountry.getName().equals(endCountry.getName()) && startCountry.getArmy() > endCountry.getArmy() && map.pathExists(startCountry, endCountry, allowedCountries);
     }

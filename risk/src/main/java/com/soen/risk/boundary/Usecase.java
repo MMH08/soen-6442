@@ -10,8 +10,9 @@ import java.util.logging.Logger;
  *  1. Request
  *  2. Response
  *  3. Interactor
+ *  4. Entity
  *
- * @param <T> the generic type
+ * @param <T> the response type
  */
 public interface Usecase<T> {
     
@@ -19,7 +20,7 @@ public interface Usecase<T> {
     static Logger logger = Logger.getLogger(Usecase.class.getName());
 
     /**
-     * Execute.
+     * Execute the use case.
      *
      * @return the t
      */

@@ -5,10 +5,15 @@ import com.soen.risk.entity.StartupStrategy;
 
 import java.io.Serializable;
 
+/**
+ * The Class BenevolentStartupStrategy.
+ *
+ * @author Nivetha
+ */
 public class BenevolentStartupStrategy implements StartupStrategy, Serializable {
 
     /**
-     * Startup strategy for benevolent player
+     * Startup strategy for benevolent player.
      *
      * @param country      in which army has to be assigned
      * @param armyCapacity total army count available

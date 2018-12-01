@@ -31,7 +31,9 @@ public class FortifyInfo implements Usecase {
         this.response = new FortifyInfoResponse();
     }
 
-    /* (non-Javadoc)
+    /**
+     * Generate information screen for the fortify phase.
+     *
      * @see com.soen.risk.boundary.Usecase#execute()
      */
     @Override

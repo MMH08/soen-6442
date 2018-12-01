@@ -34,7 +34,9 @@ public class MoveFortifyArmy implements Usecase {
         response = new FortifyPhaseResponse();
     }
 
-    /* (non-Javadoc)
+    /**
+     * Fortify is responsible to execute the fortification phase, by capturing input from the ui
+     *
      * @see com.soen.risk.boundary.Usecase#execute()
      */
     @Override

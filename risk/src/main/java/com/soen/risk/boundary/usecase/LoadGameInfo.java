@@ -10,15 +10,38 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.logging.Level;
 
+/**
+ * The Class LoadGameInfo.
+ *
+ * @author Hina
+ */
 public class LoadGameInfo implements Usecase {
+
+    /**
+     * The request.
+     */
     private LoadGameInfoRequest request;
+
+    /**
+     * The response.
+     */
     private LoadGameInfoResponse response;
 
+    /**
+     * Instantiates a new load game info.
+     *
+     * @param args the args
+     */
     public LoadGameInfo(String... args) {
         response = new LoadGameInfoResponse();
         request = new LoadGameInfoRequest(args);
     }
 
+    /**
+     * Load the saved games for the input tag in UI.
+     *
+     * @see com.soen.risk.boundary.Usecase#execute()
+     */
     @Override
     public LoadGameInfoResponse execute() {
         Path parentPath = FileSystems.getDefault().getPath(".").toAbsolutePath();

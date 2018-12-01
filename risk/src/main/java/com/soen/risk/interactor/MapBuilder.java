@@ -16,22 +16,47 @@ import java.util.logging.Logger;
  * Map is saved as text file to a external folder<br/>
  *
  * @author Amit
- * @since 03/11/2018
  * @version 1.0.2
+ * @since 03/11/2018
  */
 
 
 public class MapBuilder implements Serializable {
+    
+    /** The logger. */
     private static Logger logger = Logger.getLogger(MapBuilder.class.getName());
 
+    /** The map name. */
     private String mapName;
+    
+    /** The continents. */
     private List<String> continents;
+    
+    /** The countries. */
     private List<String> countries;
+    
+    /** The control values. */
     private List<Integer> controlValues;
+    
+    /** The country owners. */
     private List<String> countryOwners;
+    
+    /** The connections. */
     private List<List<String>> connections;
+    
+    /** The map. */
     private Map map;
 
+    /**
+     * Instantiates a new map builder.
+     *
+     * @param name the name
+     * @param continents the continents
+     * @param controlValues the control values
+     * @param countries the countries
+     * @param countryOwners the country owners
+     * @param connections the connections
+     */
     public MapBuilder(String name, List<String> continents, List<Integer> controlValues, List<String> countries,
                       List<String> countryOwners, List<List<String>> connections) {
         map = new Map();
@@ -75,7 +100,7 @@ public class MapBuilder implements Serializable {
     }
     
     /**
-     * Getting continent objects and adding to Map
+     * Getting continent objects and adding to Map.
      */
     private void addContinentObjects() {
         int i = 0;
@@ -88,7 +113,7 @@ public class MapBuilder implements Serializable {
     }
     
     /**
-     * Getting country objects and adding to Map
+     * Getting country objects and adding to Map.
      */
     private void addCountryObjects() {
         int i = 0;
@@ -103,7 +128,7 @@ public class MapBuilder implements Serializable {
     
     
     /**
-     * Mapping country to Continents
+     * Mapping country to Continents.
      */
     private void addCountryToContinents() {
         int i = 0;
@@ -115,7 +140,9 @@ public class MapBuilder implements Serializable {
 
     /**
      * Saving the map to an external folder
-    // * @param User given folder location
+     *     // * @param User given folder location.
+     *
+     * @param downloadFolder the download folder
      */
     public void save(String downloadFolder) {
         //map.setFileName();

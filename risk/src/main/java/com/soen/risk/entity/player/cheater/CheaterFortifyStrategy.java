@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The Class CheaterFortifyStrategy.
+ *
+ * @author Hina
+ */
 public class CheaterFortifyStrategy implements FortifyStrategy, Serializable {
 
     /**

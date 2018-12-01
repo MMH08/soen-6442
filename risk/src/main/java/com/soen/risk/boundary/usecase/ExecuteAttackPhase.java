@@ -9,15 +9,36 @@ import com.soen.risk.entity.Player;
 import com.soen.risk.entity.player.human.HumanAttackStrategy;
 import com.soen.risk.interactor.GamePlay;
 
+/**
+ * The Class ExecuteAttackPhase.
+ */
 public class ExecuteAttackPhase implements Usecase {
+
+    /**
+     * The request.
+     */
     private AttackPhaseRequest request;
+
+    /**
+     * The response.
+     */
     private AttackPhaseResponse response;
 
+    /**
+     * Instantiates a new execute attack phase.
+     *
+     * @param args the args
+     */
     public ExecuteAttackPhase(String... args) {
         request = new AttackPhaseRequest(args);
         response = new AttackPhaseResponse();
     }
 
+    /**
+     * Human strategy to receive the input arguments for attack phase using web UI.
+     *
+     * @see com.soen.risk.boundary.Usecase#execute()
+     */
     @Override
     public AttackPhaseResponse execute() {
         Game game = GamePlay.getInstance().getGame();

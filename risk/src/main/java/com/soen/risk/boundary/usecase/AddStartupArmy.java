@@ -9,6 +9,8 @@ import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class AddStartupArmy.
+ *
+ * @author Nivetha
  */
 public class AddStartupArmy implements Usecase {
 
@@ -32,7 +34,9 @@ public class AddStartupArmy implements Usecase {
         response = new StartupPhaseResponse();
     }
 
-    /* (non-Javadoc)
+    /**
+     * Execute startup phase with the use input provided by the human.
+     *
      * @see com.soen.risk.boundary.Usecase#execute()
      */
     @Override

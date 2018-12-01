@@ -30,6 +30,9 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 
+/**
+ * The Class AllTests.
+ */
 @RunWith(Suite.class)
 @SuiteClasses({LoadGameTest.class, SaveGameTest.class,
         PlayerTest.class, MapTest.class, GameTest.class,

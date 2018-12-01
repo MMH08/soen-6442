@@ -1,0 +1,11 @@
+Map=duplicate-country
+
+[Continents]
+Continent1=4
+Continent2=5
+
+[Territories]
+Country1,0,0,Continent1,Country1,Country2,Country3
+Country1,0,0,Continent1,Country1,Country2
+Country3,0,0,Continent2,Country1,Country3,Country4
+Country4,0,0,Continent2,Country3,Country4

@@ -13,13 +13,36 @@ import java.util.Collections;
 import static org.junit.Assert.assertEquals;
 
 
+/**
+ * The Class CheaterReinforceStrategyTest.
+ *
+ * @author Hina
+ */
 public class CheaterReinforceStrategyTest {
 
+    /**
+     * The map.
+     */
     private Map map;
+
+    /**
+     * The cheater.
+     */
     private ReinforceStrategy cheater;
+
+    /**
+     * The country 1.
+     */
     private Country country1;
+
+    /**
+     * The country 4.
+     */
     private Country country4;
 
+    /**
+     * Set up.
+     */
     @Before
     public void setUp() {
         map = new Map();
@@ -31,6 +54,9 @@ public class CheaterReinforceStrategyTest {
         country4.setArmy(20);
     }
 
+    /**
+     * Zero country should change nothing.
+     */
     @Test
     public void ZeroCountry_ShouldChangeNothing() {
         int expectedCount = country1.getArmy();
@@ -38,6 +64,9 @@ public class CheaterReinforceStrategyTest {
         assertEquals(expectedCount, country1.getArmy());
     }
 
+    /**
+     * One country should double army count.
+     */
     @Test
     public void OneCountry_ShouldDoubleArmyCount() {
         int expectedCount = country1.getArmy() * 2;
@@ -45,6 +74,9 @@ public class CheaterReinforceStrategyTest {
         assertEquals(expectedCount, country1.getArmy());
     }
 
+    /**
+     * Two disconnected countries should double army count.
+     */
     @Test
     public void TwoDisconnectedCountries_ShouldDoubleArmyCount() {
         int expectedCount1 = country1.getArmy() * 2;

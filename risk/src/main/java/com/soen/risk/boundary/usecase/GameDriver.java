@@ -28,6 +28,8 @@ import java.util.logging.Level;
 
 /**
  * The Class GameDriver.
+ *
+ * @author varun
  */
 public class GameDriver implements Usecase {
 
@@ -51,7 +53,10 @@ public class GameDriver implements Usecase {
         response = new GameDriverResponse();
     }
 
-    /* (non-Javadoc)
+    /**
+     * Use case responsible to automate the moves in case, the strategies don't need input
+     * from user interaction.
+     *
      * @see com.soen.risk.boundary.Usecase#execute()
      */
     @Override
@@ -70,7 +75,8 @@ public class GameDriver implements Usecase {
                     game.getCurrentPlayer().setStartupStrategy(new RandomStartupStrategy());
                 }
                 game.executeStartupPhase();
-                if(game.getCurrentPlayer().getType().equals(PlayerType.HUMAN)) break; // re-evaluate if the player is human or not
+                if (game.getCurrentPlayer().getType().equals(PlayerType.HUMAN))
+                    break; // re-evaluate if the player is human or not
             }
             if (game.getCurrentPhase().equals(Phase.REINFORCE)) {
                 if (game.getCurrentPlayer().getType().equals(PlayerType.CHEATER)) {
@@ -115,11 +121,11 @@ public class GameDriver implements Usecase {
     }
 
     private boolean isLoopActive(Game game) {
-        if(game.isEndNear()) {
+        if (game.isEndNear()) {
             logger.log(Level.INFO, "Exiting the game");
             return false;
         }
-        if(game.getCurrentPlayer().getType().equals(PlayerType.HUMAN))
+        if (game.getCurrentPlayer().getType().equals(PlayerType.HUMAN))
             return false;
         return true;
     }

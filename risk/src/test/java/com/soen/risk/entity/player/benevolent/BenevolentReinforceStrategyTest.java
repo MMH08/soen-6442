@@ -12,14 +12,46 @@ import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * The Class BenevolentReinforceStrategyTest.
+ *
+ * @author Nivetha
+ */
 public class BenevolentReinforceStrategyTest {
+
+    /**
+     * The map.
+     */
     private Map map;
+
+    /**
+     * The benevolent.
+     */
     private ReinforceStrategy benevolent;
+
+    /**
+     * The country 1.
+     */
     private Country country1;
+
+    /**
+     * The country 4.
+     */
     private Country country4;
+
+    /**
+     * The country 2.
+     */
     private Country country2;
+
+    /**
+     * The country 3.
+     */
     private Country country3;
 
+    /**
+     * Set up.
+     */
     @Before
     public void setUp() {
         map = new Map();
@@ -35,6 +67,9 @@ public class BenevolentReinforceStrategyTest {
         country4.setArmy(30);
     }
 
+    /**
+     * Zero country should change nothing.
+     */
     @Test
     public void ZeroCountry_ShouldChangeNothing() {
         benevolent.execute(map, new ArrayList<Country>());
@@ -42,6 +77,9 @@ public class BenevolentReinforceStrategyTest {
     }
 
 
+    /**
+     * One country should add reinforce army.
+     */
     @Test
     public void OneCountry_ShouldAddReinforceArmy() {
         int reinforceArmy = ReinforceStrategy.calculateArmyCount(map, Collections.singletonList(country1));
@@ -49,6 +87,9 @@ public class BenevolentReinforceStrategyTest {
         assertEquals(10 + reinforceArmy, country1.getArmy());
     }
 
+    /**
+     * One weak country should add reinforce army to one.
+     */
     @Test
     public void OneWeakCountry_ShouldAddReinforceArmyToOne() {
         int reinforceArmy = ReinforceStrategy.calculateArmyCount(map, Arrays.asList(country1, country2));
@@ -56,6 +97,9 @@ public class BenevolentReinforceStrategyTest {
         assertEquals(10 + reinforceArmy, country1.getArmy());
     }
 
+    /**
+     * Two weak country should add reinforce army to two.
+     */
     @Test
     public void TwoWeakCountry_ShouldAddReinforceArmyToTwo() {
         int reinforceArmy = ReinforceStrategy.calculateArmyCount(map, Arrays.asList(country1, country2, country3));

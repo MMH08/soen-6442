@@ -308,11 +308,22 @@ public class ApiController {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Single game 01.
+     *
+     * @return the string
+     */
     @RequestMapping("/singleGame01")
     public String singleGame01() {
         return "singlegame01";
     }
 
+    /**
+     * Single game 02.
+     *
+     * @param countOfPlayers the count of players
+     * @return the model and view
+     */
     @RequestMapping("/singleGame02")
     public ModelAndView singleGame02(@RequestParam("players") String countOfPlayers) {
         ModelAndView model = new ModelAndView("/singlegame02");
@@ -320,6 +331,14 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Start game.
+     *
+     * @param filename the filename
+     * @param playerNames the player names
+     * @param playerBehaviors the player behaviors
+     * @return the string
+     */
     @RequestMapping("/singleGamePlay")
     public String startGame(@RequestParam("filename") String filename,
                             @RequestParam("names") String playerNames,
@@ -345,11 +364,24 @@ public class ApiController {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Tournament 01.
+     *
+     * @return the string
+     */
     @RequestMapping("/tournament01")
     public String tournament01() {
         return "tournament01";
     }
 
+    /**
+     * Tournament 02.
+     *
+     * @param countOfPlayers the count of players
+     * @param countOfMaps the count of maps
+     * @param countOfGames the count of games
+     * @return the model and view
+     */
     @RequestMapping("/tournament02")
     public ModelAndView tournament02(@RequestParam("players") String countOfPlayers,
                                      @RequestParam("maps") String countOfMaps,
@@ -361,6 +393,16 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Tournament play.
+     *
+     * @param filenames the filenames
+     * @param playerNames the player names
+     * @param behaviors the behaviors
+     * @param turns the turns
+     * @param countOfGames the count of games
+     * @return the string
+     */
     @RequestMapping("/tournamentPlay")
     public String tournamentPlay(@RequestParam("filenames") String filenames,
                                  @RequestParam("names") String playerNames,
@@ -476,6 +518,17 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Attach phase execute.
+     *
+     * @param attackingCountry the attacking country
+     * @param attackingDiceCount the attacking dice count
+     * @param defendingCountry the defending country
+     * @param defendingDiceCount the defending dice count
+     * @param skipAttack the skip attack
+     * @param allOutMode the all out mode
+     * @return the string
+     */
     @RequestMapping("/attackPhase/attack")
     public String attachPhaseExecute(@RequestParam(value = "attackingCountry", defaultValue = "null") String attackingCountry,
                                      @RequestParam(value = "attackingDiceCount", defaultValue = "0") String attackingDiceCount,
@@ -524,6 +577,11 @@ public class ApiController {
         return "redirect:/gameDriver";
     }
 
+    /**
+     * End game.
+     *
+     * @return the string
+     */
     @RequestMapping("/endGame")
     public String endGame() {
         EndGame usecase = new EndGame();
@@ -531,11 +589,22 @@ public class ApiController {
         return "redirect:/";
     }
 
+    /**
+     * Save game.
+     *
+     * @return the string
+     */
     @RequestMapping("/saveGame")
     public String saveGame() {
         return "savegame";
     }
 
+    /**
+     * Creates the save game file.
+     *
+     * @param fileName the file name
+     * @return the string
+     */
     @RequestMapping(value = "/saveGame", method = RequestMethod.POST)
     public String createSaveGameFile(@RequestParam("fileName") String fileName) {
         SaveGame usecase = new SaveGame(fileName);
@@ -543,6 +612,11 @@ public class ApiController {
         return "redirect:/";
     }
 
+    /**
+     * Load game info.
+     *
+     * @return the model and view
+     */
     @RequestMapping("/loadGame")
     public ModelAndView loadGameInfo() {
         ModelAndView model = new ModelAndView("loadgame");
@@ -552,6 +626,12 @@ public class ApiController {
         return model;
     }
 
+    /**
+     * Load game.
+     *
+     * @param filename the filename
+     * @return the string
+     */
     @RequestMapping(value = "/loadGame", method = RequestMethod.POST)
     public String loadGame(@RequestParam("filename") String filename){
         LoadGame usecase = new LoadGame(filename);

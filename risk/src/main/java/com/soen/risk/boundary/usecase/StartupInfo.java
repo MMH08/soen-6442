@@ -8,6 +8,8 @@ import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class StartupInfo.
+ *
+ * @author Manmeet
  */
 public class StartupInfo implements Usecase {
 
@@ -31,6 +33,11 @@ public class StartupInfo implements Usecase {
         response = new StartupInfoResponse();
     }
 
+    /**
+     * Fetch the army capacity available to assign to the next available country in the queue.
+     *
+     * @return response
+     */
     @Override
     public StartupInfoResponse execute() {
         //domain

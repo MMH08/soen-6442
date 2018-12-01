@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 
+/**
+ * The Class RandomReinforceStrategy.
+ *
+ * @author varun
+ */
 public class RandomReinforceStrategy implements ReinforceStrategy, Serializable {
 
     /**
@@ -19,7 +24,7 @@ public class RandomReinforceStrategy implements ReinforceStrategy, Serializable 
      */
     @Override
     public void execute(Map map, List<Country> countries) {
-        if(countries.isEmpty()) return ;
+        if (countries.isEmpty()) return;
         int reinforceArmy = ReinforceStrategy.calculateArmyCount(map, countries);
 
         Random rand = new Random();

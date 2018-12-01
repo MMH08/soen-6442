@@ -15,15 +15,29 @@ import java.util.logging.Logger;
  * @since 2018-11-05
  */
 public class Game extends Observable implements Serializable {
+    
+    /** The logger. */
     private static Logger logger = Logger.getLogger(Game.class.getName());
 
+    /** The map. */
     private Map map;
+    
+    /** The players. */
     private List<Player> players;
 
+    /** The current player. */
     private Player currentPlayer;
+    
+    /** The current phase. */
     //private boolean isAttackWon;
     private Phase currentPhase = Phase.STARTUP;
 
+    /**
+     * Instantiates a new game.
+     *
+     * @param map the map
+     * @param players the players
+     */
     public Game(Map map, List<Player> players) {
         this.map = map;
         this.players = players;
@@ -46,6 +60,9 @@ public class Game extends Observable implements Serializable {
         }
     }
 
+    /**
+     * Allocate initial armies.
+     */
     public void allocateInitialArmies() {
         for (Player player : players) {
             player.allocateInitialArmy();
@@ -53,7 +70,7 @@ public class Game extends Observable implements Serializable {
     }
 
     /**
-     * Getting Player object  from Country Name
+     * Getting Player object  from Country Name.
      *
      * @param country obj
      * @return Player object corresponding to the country
@@ -71,7 +88,7 @@ public class Game extends Observable implements Serializable {
 
 
     /**
-     * To check whether Game needs to end
+     * To check whether Game needs to end.
      *
      * @return boolean value returning whether value of Players has reached 1
      */
@@ -80,7 +97,7 @@ public class Game extends Observable implements Serializable {
     }
 
     /**
-     * To initiate startup Phase with necessary country and armies
+     * To initiate startup Phase with necessary country and armies.
      */
     public void executeStartupPhase() {
         currentPlayer.startup();
@@ -89,6 +106,9 @@ public class Game extends Observable implements Serializable {
     }
 
 
+    /**
+     * Execute reinforce phase.
+     */
     public void executeReinforcePhase() {
         getCurrentPlayer().reinforce(map);
         // updates
@@ -96,6 +116,9 @@ public class Game extends Observable implements Serializable {
         updateCurrentPhase();
     }
 
+    /**
+     * Execute attack phase.
+     */
     public void executeAttackPhase() {
         currentPlayer.attack(map);
         boolean isComplete = currentPlayer.getAttackStrategy().isComplete();
@@ -138,7 +161,7 @@ public class Game extends Observable implements Serializable {
     }
 
     /**
-     * To initiate Fortification Phase with respective county and armies required
+     * To initiate Fortification Phase with respective county and armies required.
      */
     public void executeFortificationPhase() {
         if (currentPlayer.fortify(map)) {
@@ -191,6 +214,11 @@ public class Game extends Observable implements Serializable {
         }
     }
 
+    /**
+     * All players have zero army.
+     *
+     * @return true, if successful
+     */
     private boolean allPlayersHaveZeroArmy() {
         for (Player p : this.getPlayers()) {
             if (p.getArmyCapacity() != 0) return false;
@@ -199,6 +227,9 @@ public class Game extends Observable implements Serializable {
         return true;
     }
 
+    /**
+     * Drop empty players.
+     */
     private void dropEmptyPlayers() {
         // drop players who lost all the countries
         ArrayList<Player> toRemove = new ArrayList<>();
@@ -214,26 +245,56 @@ public class Game extends Observable implements Serializable {
 
     // --------------------------------------------------------------------------------------------------------
 
+    /**
+     * Gets the map.
+     *
+     * @return the map
+     */
     public Map getMap() {
         return map;
     }
 
+    /**
+     * Sets the map.
+     *
+     * @param map the new map
+     */
     public void setMap(Map map) {
         this.map = map;
     }
 
+    /**
+     * Gets the players.
+     *
+     * @return the players
+     */
     public List<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * Sets the players.
+     *
+     * @param players the new players
+     */
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
 
+    /**
+     * Gets the current player.
+     *
+     * @return the current player
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * Sets the current player.
+     *
+     * @param currentPlayer the new current player
+     */
     /*
      * To change Player and also notifies Observers regarding the change to the view
      *
@@ -245,10 +306,20 @@ public class Game extends Observable implements Serializable {
         this.notifyObservers(this);
     }
 
+    /**
+     * Gets the current phase.
+     *
+     * @return the current phase
+     */
     public Phase getCurrentPhase() {
         return currentPhase;
     }
 
+    /**
+     * Sets the current phase.
+     *
+     * @param currentPhase the new current phase
+     */
     /*
      * To change Phase and also notifies Observers regarding the change to the Phase view
      *

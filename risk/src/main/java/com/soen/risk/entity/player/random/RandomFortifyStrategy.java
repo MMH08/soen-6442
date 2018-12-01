@@ -9,6 +9,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The Class RandomFortifyStrategy.
+ *
+ * @author Amit
+ */
 public class RandomFortifyStrategy implements FortifyStrategy, Serializable {
     /**
      * Randomly start fortification from one of the allowedCountries, if loop completes without fortification

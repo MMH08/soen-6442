@@ -8,16 +8,30 @@ import java.io.File;
 
 import static org.junit.Assert.assertEquals;
 
-
+/**
+ * The Class SaveGameTest.
+ *
+ * @author Hina
+ */
 public class SaveGameTest {
+
+    /**
+     * The initial count of files.
+     */
     int initialCountOfFiles;
 
+    /**
+     * Set up.
+     */
     @Before
-    public void setUp(){
+    public void setUp() {
         LoadGameInfoResponse response = new LoadGameInfo().execute();
         initialCountOfFiles = response.getFilenames().size();
     }
 
+    /**
+     * Save game should write to disk.
+     */
     @Test
     public void SaveGame_ShouldWriteToDisk() {
         new SaveGame("test.ser").execute();

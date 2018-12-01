@@ -11,14 +11,22 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The Class BenevolentReinforceStrategy.
+ *
+ * @author Nivetha
+ */
 public class BenevolentReinforceStrategy implements ReinforceStrategy, Serializable {
+
     /**
+     * Execute.
+     *
      * @param map       Map
      * @param countries owned by the player
      */
     @Override
     public void execute(Map map, List<Country> countries) {
-        if(countries.isEmpty()) return ;
+        if (countries.isEmpty()) return;
         ArrayList<Country> weakCountries = new ArrayList<>();
         int reinforceCount = ReinforceStrategy.calculateArmyCount(map, countries);
 

@@ -1,0 +1,13 @@
+Map=isolated-country
+
+[Continents]
+C1=10
+C2=23
+
+
+[Territories]
+A,0,0,C1,A,B,C,D
+B,0,0,C2,B,C,D,A
+C,0,0,C2,C,D,B,A
+D,0,0,C1,D,C,B,A
+E,0,0,C1,E

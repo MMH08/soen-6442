@@ -13,16 +13,47 @@ import java.util.Collections;
 import static org.junit.Assert.*;
 
 
+/**
+ * The Class BenevolentFortifyStrategyTest.
+ *
+ * @author Nivetha, varun
+ */
 public class BenevolentFortifyStrategyTest {
 
 
+    /**
+     * The map.
+     */
     private Map map;
+
+    /**
+     * The benevolent.
+     */
     private FortifyStrategy benevolent;
+
+    /**
+     * The country 1.
+     */
     private Country country1;
+
+    /**
+     * The country 4.
+     */
     private Country country4;
+
+    /**
+     * The country 2.
+     */
     private Country country2;
+
+    /**
+     * The country 3.
+     */
     private Country country3;
 
+    /**
+     * Set up.
+     */
     @Before
     public void setUp() {
         map = new Map();
@@ -38,6 +69,9 @@ public class BenevolentFortifyStrategyTest {
         country4.setArmy(30);
     }
 
+    /**
+     * Zero country should change nothing.
+     */
     @Test
     public void ZeroCountry_ShouldChangeNothing() {
         int[] expectedCounts = new int[]{10, 20, 10, 30};
@@ -45,12 +79,18 @@ public class BenevolentFortifyStrategyTest {
         assertArrayEquals(expectedCounts, new int[]{country1.getArmy(), country2.getArmy(), country3.getArmy(), country4.getArmy()});
     }
 
+    /**
+     * One country should do nothing.
+     */
     @Test
     public void OneCountry_ShouldDoNothing() {
         benevolent.execute(map, Collections.singletonList(country2));
         assertEquals(20, country2.getArmy());
     }
 
+    /**
+     * Two country with one weak should fortify.
+     */
     @Test
     public void TwoCountryWithOneWeak_ShouldFortify() {
         benevolent.execute(map, Arrays.asList(country1, country2));
@@ -59,6 +99,9 @@ public class BenevolentFortifyStrategyTest {
     }
 
 
+    /**
+     * Two country with one weak no connection should not fortify.
+     */
     @Test
     public void TwoCountryWithOneWeakNoConnection_ShouldNotFortify() {
         benevolent.execute(map, Arrays.asList(country1, country4));
@@ -78,6 +121,9 @@ public class BenevolentFortifyStrategyTest {
     }
 
 
+    /**
+     * Three country with one weak should fortify using second best.
+     */
     @Test
     public void ThreeCountryWithOneWeak_ShouldFortifyUsingSecondBest() {
         benevolent.execute(map, Arrays.asList(country1, country2, country4));

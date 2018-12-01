@@ -11,11 +11,15 @@ import java.util.logging.Level;
  * The Class EditMap.
  */
 public class EditMap implements Usecase {
-    
-    /** The request. */
+
+    /**
+     * The request.
+     */
     private EditMapRequest request;
-    
-    /** The response. */
+
+    /**
+     * The response.
+     */
     private EditMapResponse response;
 
     /**
@@ -29,7 +33,9 @@ public class EditMap implements Usecase {
     }
 
 
-    /* (non-Javadoc)
+    /**
+     * Use case responsible to load map by loading the filename
+     *
      * @see com.soen.risk.boundary.Usecase#execute()
      */
     @Override

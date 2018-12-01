@@ -1,5 +1,18 @@
 package com.soen.risk.entity;
 
+/**
+ * The Enum PlayerType.
+ */
 public enum PlayerType {
-    HUMAN,BENEVOLENT,AGGRESSIVE,RANDOM,CHEATER;
+    
+    /** The human. */
+    HUMAN,
+/** The benevolent. */
+BENEVOLENT,
+/** The aggressive. */
+AGGRESSIVE,
+/** The random. */
+RANDOM,
+/** The cheater. */
+CHEATER;
 }

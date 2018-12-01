@@ -9,13 +9,19 @@ import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class AddReinforceArmy.
+ *
+ * @author varun
  */
 public class AddReinforceArmy implements Usecase {
-    
-    /** The request. */
+
+    /**
+     * The request.
+     */
     private ReinforcePhaseRequest request;
-    
-    /** The response. */
+
+    /**
+     * The response.
+     */
     private ReinforcePhaseResponse response;
 
     /**
@@ -23,12 +29,14 @@ public class AddReinforceArmy implements Usecase {
      *
      * @param args the args
      */
-    public AddReinforceArmy(String... args){
+    public AddReinforceArmy(String... args) {
         request = new ReinforcePhaseRequest(args);
 
     }
 
-    /* (non-Javadoc)
+    /**
+     * Execute reinforce phase with user input provided by the UI layer.
+     *
      * @see com.soen.risk.boundary.Usecase#execute()
      */
     @Override

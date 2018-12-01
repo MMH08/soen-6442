@@ -5,8 +5,16 @@ import com.soen.risk.entity.StartupStrategy;
 
 import java.io.Serializable;
 
+/**
+ * The Class AggressiveStartupStrategy.
+ *
+ * @author varun
+ */
 public class AggressiveStartupStrategy implements StartupStrategy, Serializable {
+
     /**
+     * Execute.
+     *
      * @param country      in which army has to be assigned
      * @param armyCapacity total army count available
      * @return consumed army count

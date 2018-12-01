@@ -9,17 +9,36 @@ import com.soen.risk.interactor.GamePlay;
 
 /**
  * The Class AttackInfo.
+ *
+ * @author Nivetha
  */
 public class AttackInfo implements Usecase {
 
+    /**
+     * The request.
+     */
     private AttackInfoRequest request;
+
+    /**
+     * The response.
+     */
     private AttackInfoResponse response;
 
+    /**
+     * Instantiates a new attack info.
+     *
+     * @param args the args
+     */
     public AttackInfo(String... args) {
         request = new AttackInfoRequest();
         response = new AttackInfoResponse();
     }
 
+    /**
+     * Fetch the current scenario of game to display in the UI
+     *
+     * @see com.soen.risk.boundary.Usecase#execute()
+     */
     @Override
     public AttackInfoResponse execute() {
         // domain objects

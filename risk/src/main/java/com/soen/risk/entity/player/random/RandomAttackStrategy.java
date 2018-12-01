@@ -11,14 +11,46 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 
+/**
+ * The Class RandomAttackStrategy.
+ *
+ * @author Manmeet, varun
+ */
 public class RandomAttackStrategy implements AttackStrategy, Serializable {
+
+    /**
+     * The attack counter.
+     */
     private int attackCounter;
+
+    /**
+     * The won.
+     */
     private List<Country> won;
+
+    /**
+     * The lost.
+     */
     private HashMap<Country, Country> lost;
+
+    /**
+     * The is complete.
+     */
     private boolean isComplete;
+
+    /**
+     * The attacking country.
+     */
     private Country attackingCountry;
+
+    /**
+     * The defending country.
+     */
     private Country defendingCountry;
 
+    /**
+     * Instantiates a new random attack strategy.
+     */
     public RandomAttackStrategy() {
         this.won = new ArrayList<>();
         this.lost = new HashMap<>();
@@ -26,6 +58,13 @@ public class RandomAttackStrategy implements AttackStrategy, Serializable {
         this.attackCounter = 0;
     }
 
+    /**
+     * Attacked country.
+     *
+     * @param map       the map
+     * @param countries the countries
+     * @return the list
+     */
     private List<Country> attackedCountry(Map map, List<Country> countries) {
         List<Country> ll = map.getNeighbouringCountry(attackingCountry);
         List<Country> attackedCountry = new ArrayList<Country>();
@@ -44,6 +83,11 @@ public class RandomAttackStrategy implements AttackStrategy, Serializable {
         return attackedCountry;
     }
 
+    /**
+     * Normalize attack dice count.
+     *
+     * @return the int
+     */
     private int normalizeAttackDiceCount() {
         if (attackingCountry.getArmy() >= 3) return 3;
         if (attackingCountry.getArmy() == 2) return 2;
@@ -51,6 +95,11 @@ public class RandomAttackStrategy implements AttackStrategy, Serializable {
         return 0;
     }
 
+    /**
+     * Normalize defending dice count.
+     *
+     * @return the int
+     */
     private int normalizeDefendingDiceCount() {
         if (defendingCountry.getArmy() >= 2) return 2;
         if (defendingCountry.getArmy() == 1) return 1;
@@ -58,6 +107,11 @@ public class RandomAttackStrategy implements AttackStrategy, Serializable {
         return 0;
     }
 
+    /**
+     * Play game.
+     *
+     * @return the array list
+     */
     private ArrayList<Boolean> playGame() {
 
         int attackingDiceCount = normalizeAttackDiceCount();
@@ -116,20 +170,34 @@ public class RandomAttackStrategy implements AttackStrategy, Serializable {
         }
     }
 
+    /* (non-Javadoc)
+     * @see com.soen.risk.entity.AttackStrategy#getWon()
+     */
     public List<Country> getWon() {
         return won;
     }
 
 
+    /* (non-Javadoc)
+     * @see com.soen.risk.entity.AttackStrategy#getLost()
+     */
     public HashMap<Country, Country> getLost() {
         return lost;
     }
 
+    /* (non-Javadoc)
+     * @see com.soen.risk.entity.AttackStrategy#isComplete()
+     */
     @Override
     public boolean isComplete() {
         return isComplete;
     }
 
+    /**
+     * Gets the attack counter.
+     *
+     * @return the attack counter
+     */
     public int getAttackCounter() {
         return attackCounter;
     }

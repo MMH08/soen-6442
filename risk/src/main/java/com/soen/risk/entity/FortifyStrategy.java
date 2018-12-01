@@ -3,6 +3,10 @@ package com.soen.risk.entity;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * The Interface FortifyStrategy.
+ * @author varun
+ */
 public interface FortifyStrategy {
     /**
      * Move army from one country to another, provided both the countries belong in the allowedCountries.
@@ -14,5 +18,6 @@ public interface FortifyStrategy {
      */
     boolean execute(Map map, List<Country> allowedCountries);
 
+    /** The logger. */
     Logger logger = Logger.getLogger(FortifyStrategy.class.getName());
 }

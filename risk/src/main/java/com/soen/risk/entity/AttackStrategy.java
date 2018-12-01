@@ -7,23 +7,51 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The Interface AttackStrategy.
+ * @author varun
+ */
 public interface AttackStrategy {
+
+    /**
+     * Execute.
+     *
+     * @param map the map
+     * @param countries the countries
+     */
     void execute(Map map, List<Country> countries);
 
     /**
+     * Gets the won.
+     *
      * @return won country against other country
      */
     List<Country> getWon();
 
     /**
+     * Gets the lost.
+     *
      * @return lost country against other country
      */
     HashMap<Country, Country> getLost();
 
+    /**
+     * Checks if is complete.
+     *
+     * @return true, if is complete
+     */
     boolean isComplete();
 
+    /** The logger. */
     Logger logger = Logger.getLogger(AttackStrategy.class.getName());
 
+    /**
+     * Exchange army.
+     *
+     * @param from the from
+     * @param to the to
+     * @param attackCounter the attack counter
+     */
     static void exchangeArmy(Country from, Country to, int attackCounter) {
         if (from.getArmy() <= attackCounter) {
             logger.log(Level.INFO, "Exchange : From country has less army than attackCounter " + attackCounter + ", from" + from + " to " + to);
@@ -37,6 +65,13 @@ public interface AttackStrategy {
         }
     }
 
+    /**
+     * Simulate dice roll.
+     *
+     * @param attackingDiceCount the attacking dice count
+     * @param defendingDiceCount the defending dice count
+     * @return the array list of wins
+     */
     static ArrayList<Boolean> simulateDiceRoll(int attackingDiceCount, int defendingDiceCount) {
         logger.log(Level.INFO, "Attacking dice count " + attackingDiceCount + ", defending dice count " + defendingDiceCount);
         ArrayList<Boolean> win = new ArrayList<>();

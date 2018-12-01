@@ -15,8 +15,10 @@ public class StartupInfoResponse implements Response {
     /** The army capacity. */
     private int armyCapacity;
 
+    /** The phase view. */
     private PhaseView phaseView;
 
+    /** The domination view. */
     private DominationView dominationView;
 
     /**
@@ -55,18 +57,38 @@ public class StartupInfoResponse implements Response {
         this.armyCapacity = armyCapacity;
     }
 
+    /**
+     * Gets the phase view.
+     *
+     * @return the phase view
+     */
     public PhaseView getPhaseView() {
         return phaseView;
     }
 
+    /**
+     * Sets the phase view.
+     *
+     * @param phaseView the new phase view
+     */
     public void setPhaseView(PhaseView phaseView) {
         this.phaseView = phaseView;
     }
 
+    /**
+     * Gets the domination view.
+     *
+     * @return the domination view
+     */
     public DominationView getDominationView() {
         return dominationView;
     }
 
+    /**
+     * Sets the domination view.
+     *
+     * @param dominationView the new domination view
+     */
     public void setDominationView(DominationView dominationView) {
         this.dominationView = dominationView;
     }

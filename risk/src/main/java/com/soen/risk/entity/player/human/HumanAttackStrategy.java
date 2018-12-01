@@ -11,20 +11,78 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The Class HumanAttackStrategy.
+ *
+ * @author Amit, varun
+ */
 public class HumanAttackStrategy implements AttackStrategy, Serializable {
+
+    /**
+     * The logger.
+     */
     private static Logger logger = Logger.getLogger(HumanAttackStrategy.class.getName());
 
+    /**
+     * The attacking country.
+     */
     private Country attackingCountry;
+
+    /**
+     * The defending country.
+     */
     private Country defendingCountry;
+
+    /**
+     * The attacking dice count.
+     */
     private int attackingDiceCount;
+
+    /**
+     * The defending dice count.
+     */
     private int defendingDiceCount;
+
+    /**
+     * The all out mode.
+     */
     private int allOutMode;
+
+    /**
+     * The attack counter.
+     */
     private int attackCounter;
+
+    /**
+     * The won.
+     */
     private List<Country> won;
+
+    /**
+     * The lost.
+     */
     private HashMap<Country, Country> lost;
+
+    /**
+     * The is complete.
+     */
     private boolean isComplete;
+
+    /**
+     * The skip attack.
+     */
     private int skipAttack;
 
+    /**
+     * Instantiates a new human attack strategy.
+     *
+     * @param attackingCountry   the attacking country
+     * @param defendingCountry   the defending country
+     * @param attackingDiceCount the attacking dice count
+     * @param defendingDiceCount the defending dice count
+     * @param skipAttack         the skip attack
+     * @param allOutMode         the all out mode
+     */
     public HumanAttackStrategy(Country attackingCountry, Country defendingCountry, int attackingDiceCount,
                                int defendingDiceCount, int skipAttack, int allOutMode) {
         this.attackingCountry = attackingCountry;
@@ -38,6 +96,9 @@ public class HumanAttackStrategy implements AttackStrategy, Serializable {
         this.lost = new HashMap<>();
     }
 
+    /* (non-Javadoc)
+     * @see com.soen.risk.entity.AttackStrategy#execute(com.soen.risk.entity.Map, java.util.List)
+     */
     @Override
     public void execute(Map map, List<Country> countries) {
         if (this.skipAttack == 1) {
@@ -64,6 +125,9 @@ public class HumanAttackStrategy implements AttackStrategy, Serializable {
         }
     }
 
+    /**
+     * Execute one attack phase.
+     */
     private void executeOneAttackPhase() {
         logger.log(Level.INFO, "Entered one attack phase ...");
         ArrayList<Boolean> wins = attackPlay();
@@ -81,6 +145,11 @@ public class HumanAttackStrategy implements AttackStrategy, Serializable {
         }
     }
 
+    /**
+     * Normalize attack dice count.
+     *
+     * @return the int
+     */
     private int normalizeAttackDiceCount() {
         if (attackingCountry.getArmy() >= 3) {
             if (attackingDiceCount == 0) return 3;
@@ -96,6 +165,11 @@ public class HumanAttackStrategy implements AttackStrategy, Serializable {
         return attackingDiceCount;
     }
 
+    /**
+     * Normalize defending dice count.
+     *
+     * @return the int
+     */
     private int normalizeDefendingDiceCount() {
         if (defendingCountry.getArmy() >= 2) {
             if (defendingDiceCount == 0) return 2;
@@ -107,6 +181,11 @@ public class HumanAttackStrategy implements AttackStrategy, Serializable {
         return defendingDiceCount;
     }
 
+    /**
+     * Attack play.
+     *
+     * @return the array list
+     */
     private ArrayList<Boolean> attackPlay() {
         attackingDiceCount = normalizeAttackDiceCount();
         defendingDiceCount = normalizeDefendingDiceCount();
@@ -116,21 +195,35 @@ public class HumanAttackStrategy implements AttackStrategy, Serializable {
 
     }
 
+    /* (non-Javadoc)
+     * @see com.soen.risk.entity.AttackStrategy#getWon()
+     */
     @Override
     public List<Country> getWon() {
         return won;
     }
 
+    /* (non-Javadoc)
+     * @see com.soen.risk.entity.AttackStrategy#getLost()
+     */
     @Override
     public HashMap<Country, Country> getLost() {
         return lost;
     }
 
+    /* (non-Javadoc)
+     * @see com.soen.risk.entity.AttackStrategy#isComplete()
+     */
     @Override
     public boolean isComplete() {
         return isComplete;
     }
 
+    /**
+     * Gets the attack counter.
+     *
+     * @return the attack counter
+     */
     public int getAttackCounter() {
         return attackCounter;
     }

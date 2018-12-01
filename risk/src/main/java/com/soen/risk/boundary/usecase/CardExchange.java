@@ -9,7 +9,11 @@ import com.soen.risk.interactor.GamePlay;
 import java.util.HashMap;
 import java.util.logging.Level;
 
-
+/**
+ * The Class CardExchange.
+ *
+ * @author Nivetha
+ */
 public class CardExchange implements Usecase {
 
     /**
@@ -32,6 +36,11 @@ public class CardExchange implements Usecase {
         response = new CardExchangeResponse();
     }
 
+    /**
+     * Removes the card.
+     *
+     * @param cards the cards
+     */
     /* (non-Javadoc)
      * @see com.soen.risk.boundary.Usecase#execute()
      */
@@ -41,6 +50,11 @@ public class CardExchange implements Usecase {
         GamePlay.getInstance().getGame().getCurrentPlayer().assignExchangeArmies();
     }
 
+    /**
+     * Validation check to make the card exchange.
+     *
+     * @param str the str
+     */
     private void validationCheck(String str) {
         HashMap<String, Integer> hp = new HashMap<>();
         String[] temp = str.split(", ");
@@ -73,6 +87,11 @@ public class CardExchange implements Usecase {
         }
     }
 
+    /**
+     * Usecase to exchange cards against armies.
+     *
+     * @see com.soen.risk.boundary.Usecase#execute()
+     */
     public CardExchangeResponse execute() {
         logger.log(Level.INFO, request.getCards().toString());
         String cardVal = request.getCards().toString().substring(1, request.getCards().toString().length() - 1);

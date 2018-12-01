@@ -19,16 +19,28 @@ import java.util.logging.Logger;
  * @version 1.0.2
  */
 public class Map implements Serializable {
+    
+    /** The logger. */
     private static Logger logger = Logger.getLogger(Map.class.getName());
+    
+    /** The name. */
     private String name;
+    
+    /** The continents. */
     private ArrayList<Continent> continents;
+    
+    /** The countries. */
     private ArrayList<Country> countries;
+    
+    /** The adj country. */
     private LinkedList<LinkedList<Country>> adjCountry;
+    
+    /** The list country. */
     private LinkedList<Object> list_country;
     //private String fileName;
 
     /**
-     * Initiating continents, countries, 2D linkedlist of country
+     * Initiating continents, countries, 2D linkedlist of country.
      */
     public Map() {
         this.continents = new ArrayList<>();
@@ -38,7 +50,7 @@ public class Map implements Serializable {
     }
 
     /**
-     * Add new continent to continent object     *
+     * Add new continent to continent object     *.
      *
      * @param continent new continent
      */
@@ -48,20 +60,32 @@ public class Map implements Serializable {
     }
 
     /**
-     * Add country to country object
+     * Add country to country object.
      *
-     * @param country
+     * @param country the country
      */
     public void addCountry(Country country) {
         logger.log(Level.INFO, "Adding country " + country.getName());
         countries.add(country);
     }
 
+    /**
+     * Find by country name.
+     *
+     * @param s the s
+     * @return the country
+     */
     public Country findByCountryName(String s) {
         for (Country c : countries) if (c.getName().equals(s)) return c;
         return null;
     }
 
+    /**
+     * Find by continent name.
+     *
+     * @param s the s
+     * @return the continent
+     */
     public Continent findByContinentName(String s) {
         for (Continent c : continents) if (c.getName().equals(s)) return c;
         return null;
@@ -74,8 +98,8 @@ public class Map implements Serializable {
      * This method receive map from file and add to adjCountry object.
      * <p>
      *
-     * @param fileName Path of File with name of file
      * @author Amit Sachdeva
+     * @param fileName Path of File with name of file
      * @since 2018-10-06
      */
     public void load(String fileName) {
@@ -98,6 +122,7 @@ public class Map implements Serializable {
 
             readingFile.close();
             this.map_country_object_creation();
+            this.finalMap();
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
@@ -107,6 +132,7 @@ public class Map implements Serializable {
      * This method save finally updated map in a file.
      *
      * @author Manmeet Singh
+     * @param filePath the file path
      * @since 2018-10-07
      */
     public void save(String filePath) {
@@ -141,9 +167,9 @@ public class Map implements Serializable {
      * Validates the continents and country objects for duplicate values.
      * Traversed adjacent countries and verified all countries are linked.
      *
+     * @author Nivetha
      * @return true is no duplicates found and if all countries are connected.
      * false for duplicate occurrence and if any country is isolated
-     * @author Nivetha
      * @since 2018-10-06
      */
 
@@ -151,9 +177,15 @@ public class Map implements Serializable {
         if (checkContinentDuplicacy()) return false;
         else if (checkCountryDuplicacy()) return false;
         else if (checkIsolatedCountry()) return false;
+        else if (!checkContinentCountriesConnected()) return false;
         return true;
     }
 
+    /**
+     * Gets the country names.
+     *
+     * @return the country names
+     */
     public List<String> getCountryNames() {
         ArrayList<String> names = new ArrayList<>();
         for (Country country : countries)
@@ -164,6 +196,8 @@ public class Map implements Serializable {
     // -----------------------------------------------------------------------------------------------------------------
 
     /**
+     * Path exists.
+     *
      * @param startCountry Starting country name
      * @param endCountry   Checking Ending country name
      * @param countries    List of countries to check for path
@@ -197,9 +231,9 @@ public class Map implements Serializable {
     // --------------------------------------------------------------------------------------------------------------
 
     /**
-     * todo: rename the function and optimise the loop
-     * Return HashMap with countries and its neighboring countries not belong to player
+     * Return HashMap with countries and its neighboring countries not belong to player.
      *
+     * @param countries the countries
      * @return HashMap of Neighboring countries of a Player Specific Country Name
      */
     public HashMap<String, ArrayList<String>> getAdjCountries(List<Country> countries) {
@@ -214,6 +248,13 @@ public class Map implements Serializable {
         return neighbouring;
     }
 
+    /**
+     * Check player specific neigbhouring countries.
+     *
+     * @param lc the lc
+     * @param countries the countries
+     * @return the array list
+     */
     private ArrayList<String> checkPlayerSpecificNeigbhouringCountries(LinkedList<Country> lc,
                                                                        List<Country> countries) {
         ArrayList<String> ar = new ArrayList<>();
@@ -233,6 +274,11 @@ public class Map implements Serializable {
     }
 
 
+    /**
+     * Adds the new continent.
+     *
+     * @param temp the temp
+     */
     private void addNewContinent(String temp) {
         logger.log(Level.FINE, "Adding continent " + temp);
         String split_continent[] = temp.split("=");
@@ -242,6 +288,11 @@ public class Map implements Serializable {
     }
 
 
+    /**
+     * Adds the new country.
+     *
+     * @param temp the temp
+     */
     private void addNewCountry(String temp) {
         logger.log(Level.FINE, "Adding new country " + temp);
         String split_country[] = temp.split(",");
@@ -268,6 +319,11 @@ public class Map implements Serializable {
         this.map_name_creation(arr);
     }
 
+    /**
+     * Map name creation.
+     *
+     * @param s the s
+     */
     //Creating map on basis of Country Name
     public void map_name_creation(String s[]) {
         LinkedList<String> temp_list = new LinkedList<>();
@@ -305,9 +361,9 @@ public class Map implements Serializable {
     /**
      * This method get continent for specific country.
      *
+     * @author Manmeet Singh
      * @param c Pass country object
      * @return Return Continent name.
-     * @author Manmeet Singh
      * @since 2018-10-07
      */
     private String getContinent(Country c) {
@@ -322,6 +378,12 @@ public class Map implements Serializable {
     }
 
 
+    /**
+     * Gets the neighbouring countries.
+     *
+     * @param country the country
+     * @return the neighbouring countries
+     */
     private String getNeighbouringCountries(String country) {
         for (LinkedList<Country> ll : this.adjCountry) {
             if (ll.get(0).getName().equals(country)) {
@@ -345,6 +407,8 @@ public class Map implements Serializable {
 
 
     /**
+     * Check path valid.
+     *
      * @param allowedCountries List of countries to be assigned as adjacent
      * @param movingPath       Path of a country
      * @return to denote whether path is valid or not
@@ -368,8 +432,10 @@ public class Map implements Serializable {
     }
 
     /**
-     * @param path
-     * @param allPaths
+     * Adds the path.
+     *
+     * @param path the path
+     * @param allPaths the all paths
      */
     private void addPath(LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths) {
         ArrayList<Integer> temp = new ArrayList<>();
@@ -380,6 +446,18 @@ public class Map implements Serializable {
     }
 
 
+    /**
+     * Count number of path.
+     *
+     * @param adj the adj
+     * @param start the start
+     * @param dest the dest
+     * @param PathCount the path count
+     * @param visited the visited
+     * @param path the path
+     * @param allPaths the all paths
+     * @return the int
+     */
     private int countNumberOfPath(LinkedList adj[], int start, int dest, int PathCount, boolean visited[], LinkedList<Integer> path, ArrayList<ArrayList<Integer>> allPaths) {
         visited[start] = true;
         path.add(start);
@@ -412,6 +490,15 @@ public class Map implements Serializable {
     }
 
 
+    /**
+     * Search path between countries.
+     *
+     * @param adj the adj
+     * @param currentCountry the current country
+     * @param shift the shift
+     * @param countries the countries
+     * @return true, if successful
+     */
     private boolean searchPathBetweenCountries(LinkedList[] adj, int currentCountry, int shift, List<Country> countries) {
         boolean[] v = new boolean[adj.length];
         LinkedList<Integer> movingPath = new LinkedList();
@@ -443,6 +530,11 @@ public class Map implements Serializable {
 
     // -----------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Check continent duplicacy.
+     *
+     * @return true, if successful
+     */
     public boolean checkContinentDuplicacy() {
         if (this.continents.size() == 0) {
             logger.log(Level.INFO, "Continents not found.");
@@ -461,6 +553,11 @@ public class Map implements Serializable {
     }
 
 
+    /**
+     * Check country duplicacy.
+     *
+     * @return true, if successful
+     */
     public boolean checkCountryDuplicacy() {
 
         if (this.countries.size() == 0) {
@@ -480,6 +577,14 @@ public class Map implements Serializable {
     }
 
 
+    /**
+     * Checking contacting.
+     *
+     * @param adj the adj
+     * @param CurrentCountry the current country
+     * @param visited the visited
+     * @param movingPath the moving path
+     */
     private void checkingContacting(LinkedList[] adj, int CurrentCountry, boolean[] visited, LinkedList<Integer> movingPath) {
         visited[CurrentCountry] = true;
         movingPath.add(CurrentCountry);
@@ -491,6 +596,11 @@ public class Map implements Serializable {
         }
     }
 
+    /**
+     * Check isolated country.
+     *
+     * @return true, if successful
+     */
     public boolean checkIsolatedCountry() {
         int currentCoun = this.countries.get(0).getId();    //Convert Country name to their ids
         LinkedList<LinkedList<Country>> ll = this.adjCountry;
@@ -527,6 +637,7 @@ public class Map implements Serializable {
 
     /**
      * This method is responsible to fetch the neighbouring countries to given country.
+     *
      * @param c find neighbour of given country
      * @return list of country
      */
@@ -537,157 +648,234 @@ public class Map implements Serializable {
         }
         return null;
     }
-    
-    
-    
+
+
+    /**
+     * Check link map.
+     *
+     * @param cc the cc
+     * @param ff the ff
+     * @param country the country
+     */
     //MAKE FINAL MAP 
-    private void checkLinkMap(Country cc, Country ff, LinkedList<LinkedList<Country>> country)
-	{
-		for(List<Country> ll: country)
-		{
-			
-			if(ll.get(0).getName().equals(ff.getName()))
-			{
-				for(Country c: ll)
-				{
-					if(c.getName().equals(cc.getName()))
-					{
-						return;
-					}
-				}
-				ll.add(cc);
-			}
-		}
-	}
-	public void finalMap()	
-	{		
-		for(List<Country> ll: adjCountry)
-		{
-			Country cc = ll.get(0);
-			int j=1;
-			while(j<ll.size())
-			{
-				this.checkLinkMap(cc,ll.get(j),adjCountry);
-				j++;
-			}
-		}		
-	}
-	
-	
-	//CHECK MAP IF COUNTRY IN CONTINENT IS Connected
-	private void DFSUtil(int v,boolean visited[], int arr[][], ArrayList<Integer> ar) 
-    { 
+    private void checkLinkMap(Country cc, Country ff, LinkedList<LinkedList<Country>> country) {
+        for (List<Country> ll : country) {
+
+            if (ll.get(0).getName().equals(ff.getName())) {
+                for (Country c : ll) {
+                    if (c.getName().equals(cc.getName())) {
+                        return;
+                    }
+                }
+                ll.add(cc);
+            }
+        }
+    }
+
+    /**
+     * Final map.
+     */
+    public void finalMap() {
+        for (List<Country> ll : adjCountry) {
+            Country cc = ll.get(0);
+            int j = 1;
+            while (j < ll.size()) {
+                this.checkLinkMap(cc, ll.get(j), adjCountry);
+                j++;
+            }
+        }
+    }
+
+
+    /**
+     * DFS util.
+     *
+     * @param v the v
+     * @param visited the visited
+     * @param arr the arr
+     * @param ar the ar
+     */
+    //CHECK MAP IF COUNTRY IN CONTINENT IS Connected
+    private void DFSUtil(int v, boolean visited[], int arr[][], ArrayList<Integer> ar) {
         // Mark the current node as visited and print it 
-        visited[v] = true; 
+        visited[v] = true;
         ar.add(v);
         // Recur for all the vertices adjacent to this vertex 
-        for(int i=0;i<arr[v].length;i++)
-        {
-        	//System.out.println(visited[v]);
-        	if(arr[v][i]==1 && !visited[i])
-        	{
-        		DFSUtil(i, visited, arr,ar);
-        	}
+        for (int i = 0; i < arr[v].length; i++) {
+            //System.out.println(visited[v]);
+            if (arr[v][i] == 1 && !visited[i]) {
+                DFSUtil(i, visited, arr, ar);
+            }
         }
-    } 
-  
+    }
+
+    /**
+     * Dfs.
+     *
+     * @param arr the arr
+     * @param V the v
+     * @param v the v
+     * @return the int
+     */
     // The function to do DFS traversal. It uses recursive DFSUtil() 
-    private int DFS(int arr[][], int V, int v) 
-    { 
+    private int DFS(int arr[][], int V, int v) {
         // Mark all the vertices as not visited(set as 
         // false by default in java) 
-        boolean visited[] = new boolean[V]; 
+        boolean visited[] = new boolean[V];
         Arrays.fill(visited, false);
         // Call the recursive helper function to print DFS traversal 
         ArrayList<Integer> ar = new ArrayList<>();
-        DFSUtil(v, visited, arr,ar); 
+        DFSUtil(v, visited, arr, ar);
         return ar.size();
     }
-	private ArrayList checkSubGraph(Country c, List<Country> countries)
-	{
-		for(LinkedList<Country> ll: adjCountry)
-		{
-			if(ll.get(0).getName().equals(c.getName()))
-			{
-				ArrayList<Country> ar = new ArrayList<>();
-				for(int i=1;i<ll.size();i++)
-				{
-					if(countries.contains(ll.get(i)))
-					{
-						ar.add(ll.get(i));
-					}
-				}
-				return ar;
-			}
-		}
-		return null;
-	}
-	public boolean checkContinentCountriesConnected()
-	{
-		for(Continent c: continents)
-		{
-			int arr[][] = new int[countries.size()][countries.size()];
-			for(int i=0;i<countries.size();i++) {
-			Arrays.fill(arr[i], 0);}
-			for(Country c1: c.getCountries())
-			{
-				ArrayList<Country> aa = new ArrayList<>();
-				aa = this.checkSubGraph(c1, c.getCountries());
-				for(Country mm: aa)
-				{
-					arr[c1.getId()][mm.getId()]=1;
-				}
-			}
-			if(this.DFS(arr,countries.size(),c.getCountries().get(0).getId()) != c.getCountries().size())
-			{
-				return false;
-			}
-		}
-		return true;
-	}
+
+    /**
+     * Check sub graph.
+     *
+     * @param c the c
+     * @param countries the countries
+     * @return the array list
+     */
+    private ArrayList checkSubGraph(Country c, List<Country> countries) {
+        for (LinkedList<Country> ll : adjCountry) {
+            if (ll.get(0).getName().equals(c.getName())) {
+                ArrayList<Country> ar = new ArrayList<>();
+                for (int i = 1; i < ll.size(); i++) {
+                    if (countries.contains(ll.get(i))) {
+                        ar.add(ll.get(i));
+                    }
+                }
+                return ar;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Check continent countries connected.
+     *
+     * @return true, if successful
+     */
+    public boolean checkContinentCountriesConnected() {
+        for (Continent c : continents) {
+            int arr[][] = new int[countries.size()][countries.size()];
+            for (int i = 0; i < countries.size(); i++) {
+                Arrays.fill(arr[i], 0);
+            }
+            for (Country c1 : c.getCountries()) {
+                ArrayList<Country> aa = new ArrayList<>();
+                aa = this.checkSubGraph(c1, c.getCountries());
+                for (Country mm : aa) {
+                    arr[c1.getId()][mm.getId()] = 1;
+                }
+            }
+            if (this.DFS(arr, countries.size(), c.getCountries().get(0).getId()) != c.getCountries().size()) {
+                logger.log(Level.INFO, "Connected subgraph test failed.");
+                return false;
+            }
+        }
+        logger.log(Level.INFO, "Connected subgraph test passed.");
+        return true;
+    }
+
+    /**
+     * Gets the name.
+     *
+     * @return the name
+     */
     //------------------------------------------------------------------------------------------------------------------
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the name.
+     *
+     * @param name the new name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets the countries.
+     *
+     * @return the countries
+     */
     public ArrayList<Country> getCountries() {
         return countries;
     }
 
+    /**
+     * Sets the countries.
+     *
+     * @param countries the new countries
+     */
     public void setCountries(ArrayList<Country> countries) {
         this.countries = countries;
     }
 
+    /**
+     * Gets the adj country.
+     *
+     * @return the adj country
+     */
     public LinkedList<LinkedList<Country>> getAdjCountry() {
         return adjCountry;
     }
 
+    /**
+     * Gets the list country.
+     *
+     * @return the list country
+     */
     public LinkedList<Object> getListCountry() {
         return list_country;
     }
 
+    /**
+     * Sets the adj country.
+     *
+     * @param adjCountry the new adj country
+     */
     public void setAdjCountry(LinkedList<LinkedList<Country>> adjCountry) {
         this.adjCountry = adjCountry;
     }
 
+    /**
+     * Gets the continents.
+     *
+     * @return the continents
+     */
     public ArrayList<Continent> getContinents() {
         return continents;
     }
 
+    /**
+     * Gets the map country object.
+     *
+     * @return the map country object
+     */
     //Get map on basis of country object
     public LinkedList<LinkedList<Country>> getMapCountryObject() {
         return adjCountry;
     }
 
+    /**
+     * Gets the number of countries.
+     *
+     * @return the number of countries
+     */
     //Get number of countries
     public int getNumberOfCountries() {
         return countries.size();
     }
 
+    /**
+     * Gets the number of continents.
+     *
+     * @return the number of continents
+     */
     //Get number of continents
     public int getNumberOfContinents() {
         return continents.size();

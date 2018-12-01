@@ -2,9 +2,7 @@ package com.soen.risk.boundary.usecase;
 
 import com.soen.risk.boundary.Usecase;
 import com.soen.risk.boundary.request.TournamentRequest;
-import com.soen.risk.boundary.response.GameDriverResponse;
 import com.soen.risk.boundary.response.TournamentResponse;
-import com.soen.risk.interactor.GamePlay;
 
 import java.util.logging.Level;
 
@@ -13,13 +11,30 @@ import java.util.logging.Level;
  */
 public class StartTournament implements Usecase {
 
+    /**
+     * The response.
+     */
     private TournamentResponse response;
+
+    /**
+     * The request.
+     */
     private TournamentRequest request;
 
+    /**
+     * Instantiates a new start tournament.
+     *
+     * @param args the args
+     */
     public StartTournament(String... args) {
         request = new TournamentRequest(args);
     }
 
+    /**
+     * Execute the tournament mode in loop.
+     *
+     * @see com.soen.risk.boundary.Usecase#execute()
+     */
     @Override
     public TournamentResponse execute() {
         for (String fileName : request.getFilenames()) {
