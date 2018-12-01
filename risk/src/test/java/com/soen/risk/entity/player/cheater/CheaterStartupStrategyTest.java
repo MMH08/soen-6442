@@ -26,16 +26,15 @@ public class CheaterStartupStrategyTest {
 
     @Test
     public void ZeroInitialArmy_ShouldAddOneArmy() {
-        int expectedCount = country1.getArmy() + 1;
+        country1.setArmy(0);
         cheater.execute(country1, 10);
-        assertEquals(expectedCount, country1.getArmy());
+        assertEquals(1, country1.getArmy());
     }
 
     @Test
     public void WithInitialArmy_ShouldAddOneArmy() {
-        country1.setArmy(2);
         int expectedCount = country1.getArmy() + 1;
-        cheater.execute(country1, 3);
+        cheater.execute(country1, 11);
         assertEquals(expectedCount, country1.getArmy());
     }
 

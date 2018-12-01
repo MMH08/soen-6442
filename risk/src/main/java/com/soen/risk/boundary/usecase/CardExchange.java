@@ -23,11 +23,6 @@ public class CardExchange implements Usecase {
     private CardExchangeResponse response;
 
     /**
-     * The observers.
-     */
-    //private List<CardObserver> observers = new ArrayList<CardObserver>();
-
-    /**
      * Instantiates a new card exchange.
      *
      * @param args the args
@@ -37,23 +32,19 @@ public class CardExchange implements Usecase {
         response = new CardExchangeResponse();
     }
 
-//    public void attach(CardObserver observer) {
-//        observers.add(observer);
-//    }
-
     /* (non-Javadoc)
      * @see com.soen.risk.boundary.Usecase#execute()
      */
-    private void removeCard(String cards[]) {
+    private void removeCard(String[] cards) {
         logger.log(Level.INFO, "Valid scenario - card exchange");
         GamePlay.getInstance().getGame().getCurrentPlayer().removeCard(cards);
         GamePlay.getInstance().getGame().getCurrentPlayer().assignExchangeArmies();
     }
-    private void validationCheck(String str)
-    {
+
+    private void validationCheck(String str) {
         HashMap<String, Integer> hp = new HashMap<>();
-        String temp[] = str.split(", ");
-        Card allCards[] = Card.values();
+        String[] temp = str.split(", ");
+        Card[] allCards = Card.values();
         for (int i = 0; i < temp.length; i++) {
             if (!hp.isEmpty()) {
                 if (!hp.containsKey(temp[i])) {
@@ -65,9 +56,8 @@ public class CardExchange implements Usecase {
                 hp.put(temp[i], 1);
             }
         }
-        for(String key: hp.keySet())
-        {
-            logger.log(Level.INFO, "JAI MATA DI"+key + " "+ hp.get(key));
+        for (String key : hp.keySet()) {
+            logger.log(Level.INFO, key + " " + hp.get(key));
         }
         if (hp.size() == 3) {
             removeCard(temp);
@@ -82,28 +72,16 @@ public class CardExchange implements Usecase {
                 removeCard(temp);
         }
     }
+
     public CardExchangeResponse execute() {
         logger.log(Level.INFO, request.getCards().toString());
-        String cardVal = request.getCards().toString().substring(1,request.getCards().toString().length()-1);
+        String cardVal = request.getCards().toString().substring(1, request.getCards().toString().length() - 1);
         logger.log(Level.INFO, cardVal);
 
-        if(cardVal.split(", ").length == 3)
-        {
+        if (cardVal.split(", ").length == 3) {
             validationCheck(cardVal);
         }
 
-
-
-
-
-
-//    	GamePlay gamePlay = GamePlay.getInstance();
-//    	boolean bExchanged = gamePlay.executeExchange(request.getCardsExchanged());
-//         if(bExchanged) {
-//         response.setObservers(observers);
-//         response.setState(1);
-//         }
-//
         return response;
     }
 

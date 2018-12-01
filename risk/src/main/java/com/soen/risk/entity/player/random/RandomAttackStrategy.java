@@ -68,13 +68,15 @@ public class RandomAttackStrategy implements AttackStrategy {
 
     /**
      * Random player - attack strategy
+     * Will exit the attack if it wins over one country or loses its own country.
      * Changes: added attackCounter, corrected the lost and won assignment,
      *
-     * @param map Map
+     * @param map       Map
      * @param countries list of owned countries
      */
     @Override
     public void execute(Map map, List<Country> countries) {
+        if (countries.isEmpty()) return;
         attackingCountry = countries.get(countries.size() / 2);
         List<Country> ListAttackedCountry = this.attackedCountry(map, countries);
         defendingCountry = ListAttackedCountry.get(ListAttackedCountry.size() / 2);
@@ -87,7 +89,7 @@ public class RandomAttackStrategy implements AttackStrategy {
 
         while (flag != 1 || j < randomNumber) {
             ArrayList<Boolean> wins = this.playGame();
-            for (boolean win: wins) {
+            for (boolean win : wins) {
                 if (win) {
                     logger.log(Level.INFO, "Attacker won 1 army.");
                     attackingCountry.setArmy(attackingCountry.getArmy() + 1);
@@ -125,5 +127,9 @@ public class RandomAttackStrategy implements AttackStrategy {
     @Override
     public boolean isComplete() {
         return isComplete;
+    }
+
+    public int getAttackCounter() {
+        return attackCounter;
     }
 }

@@ -36,6 +36,7 @@ public class AggressiveStartupStrategyTest {
 
     @Test
     public void ZeroInitialArmy_ShouldAddOneArmy() {
+        country1.setArmy(0);
         int expectedCount = country1.getArmy() + 1;
         aggressive.execute(country1, 10);
         assertEquals(expectedCount, country1.getArmy());
@@ -43,9 +44,8 @@ public class AggressiveStartupStrategyTest {
 
     @Test
     public void WithInitialArmy_ShouldAddOneArmy() {
-        country1.setArmy(2);
         int expectedCount = country1.getArmy() + 1;
-        aggressive.execute(country1, 3);
+        aggressive.execute(country1, 11);
         assertEquals(expectedCount, country1.getArmy());
     }
 

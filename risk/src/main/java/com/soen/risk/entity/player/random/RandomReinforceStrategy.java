@@ -18,6 +18,7 @@ public class RandomReinforceStrategy implements ReinforceStrategy {
      */
     @Override
     public void execute(Map map, List<Country> countries) {
+        if(countries.isEmpty()) return ;
         int reinforceArmy = ReinforceStrategy.calculateArmyCount(map, countries);
 
         Random rand = new Random();

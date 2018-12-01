@@ -19,8 +19,8 @@ public class AggressiveAttackStrategyTest {
     private Country country4;
     private Country country2;
     private Country country3;
-    HashMap<Country, Country> expectedLoss;
-    List<Country> expectedWon;
+    private HashMap<Country, Country> expectedLoss;
+    private List<Country> expectedWon;
 
     @Before
     public void setUp() {
@@ -63,19 +63,19 @@ public class AggressiveAttackStrategyTest {
     public void OneCountry_ShouldAttackAllOpponent() {
         aggressive.execute(map, Collections.singletonList(country3));
 
-        if (aggressive.getLost().isEmpty()) {
+        if (!aggressive.getWon().isEmpty() && aggressive.getLost().isEmpty()) {
             // case 1 - won both the opponents
             expectedWon.add(country1);
             expectedWon.add(country4);
             assertEquals(expectedWon, aggressive.getWon());
-        } else if (aggressive.getWon().isEmpty()) {
+        } else if (!aggressive.getLost().isEmpty() && aggressive.getWon().isEmpty()) {
             // Case 2 - lost the first attack
             assertTrue(aggressive.getLost().get(country3) == country4 ||
                     aggressive.getLost().get(country3) == country1);
         } else {
             // Case 3 - lost the second attack
-            assertTrue(aggressive.getWon() == country1 ||
-                    aggressive.getWon() == country4);
+            assertTrue(aggressive.getWon().contains(country1) ||
+                    aggressive.getWon().contains(country4));
             assertTrue(aggressive.getLost().get(country3) == country1 ||
                     aggressive.getLost().get(country3) == country4);
         }

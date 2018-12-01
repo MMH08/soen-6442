@@ -35,6 +35,7 @@ public class BenevolentStartupStrategyTest {
 
 	@Test
 	public void ZeroInitialArmy_ShouldAddOneArmy() {
+		country1.setArmy(0);
 		int expectedCount = country1.getArmy() + 1;
 		benevolent.execute(country1, 10);
 		assertEquals(expectedCount, country1.getArmy());
@@ -42,9 +43,8 @@ public class BenevolentStartupStrategyTest {
 
 	@Test
 	public void WithInitialArmy_ShouldAddOneArmy() {
-		country1.setArmy(2);
 		int expectedCount = country1.getArmy() + 1;
-		benevolent.execute(country1, 3);
+		benevolent.execute(country1, 20);
 		assertEquals(expectedCount, country1.getArmy());
 	}
 

@@ -36,7 +36,6 @@ public class Continent implements Serializable {
 	 * @param country
 	 */
 	public void addCountry(Country country) {
-		logger.log(Level.INFO, "Adding country " + country.getName());
 		this.countries.add(country);
 	}
 

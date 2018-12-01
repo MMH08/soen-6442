@@ -187,14 +187,14 @@ public class MapTest {
    		assertFalse(map4.checkContinentCountriesConnected());
    	}
    	
-   	@Test
-   	public void finalMap()
-   	{
-   		LinkedList<LinkedList<Country>> ll = new LinkedList<LinkedList<Country>>();
-   		ll= map4.getAdjCountry();
-   		map4.finalMap();
-   		assertFalse(ll, map4.getAdjCountry());
-   	}
+//   	@Test
+//   	public void finalMap()
+//   	{
+//   		LinkedList<LinkedList<Country>> ll = new LinkedList<LinkedList<Country>>();
+//   		ll= map4.getAdjCountry();
+//   		map4.finalMap();
+//   		assertFalse(ll, map4.getAdjCountry());
+//   	}
     @Test
     public void getAdjCountries() {
     }

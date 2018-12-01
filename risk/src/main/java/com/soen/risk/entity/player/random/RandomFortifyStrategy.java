@@ -26,7 +26,7 @@ public class RandomFortifyStrategy implements FortifyStrategy {
             for (Country endCountry : neighbours) {
                 // endCountry is owned by the same player
                 // and there is a path between them then fortify and return true
-                if (allowedCountries.contains(endCountry) && map.pathExists(startCountry, endCountry, allowedCountries)) {
+                if (!startCountry.getName().equals(endCountry.getName()) && allowedCountries.contains(endCountry) && map.pathExists(startCountry, endCountry, allowedCountries)) {
                     int armyCount = startCountry.getArmy() / 2;
                     startCountry.setArmy(startCountry.getArmy() - armyCount);
                     endCountry.setArmy(endCountry.getArmy() + armyCount);

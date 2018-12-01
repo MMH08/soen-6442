@@ -127,17 +127,15 @@ public class Player extends Observable implements Serializable {
      *
      * @param temp Array of Card Names
      */
-    public void removeCard(String temp[]) {
-        logger.log(Level.INFO, "Removing card " + temp);
+    public void removeCard(String[] temp) {
         for (String aTemp : temp) {
-            int count = 0;
+            logger.log(Level.INFO, "Removing card " + aTemp);
             for (Card c : cards) {
                 if (c.toString().equals(aTemp)) {
                     logger.log(Level.INFO, "Remove= " + c.toString());
                     cards.remove(c);
                     break;
                 }
-                count++;
             }
         }
         setChanged();
