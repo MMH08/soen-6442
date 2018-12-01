@@ -41,7 +41,6 @@ public class FortifyInfo implements Usecase {
         Game game = GamePlay.getInstance().getGame();
         //domain objects
         response.setCountryNames(game.getCurrentPlayer().getCountries());
-        response.setEndGame(game.isEndNear());
         //views
         response.setPhaseView(GamePlay.getInstance().getPhaseView());
         response.setDominationView(GamePlay.getInstance().getDominationView());

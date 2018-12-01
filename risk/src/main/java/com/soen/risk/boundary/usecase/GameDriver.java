@@ -43,6 +43,8 @@ public class GameDriver implements Usecase {
      */
     private GameDriverResponse response;
 
+    private int noOfAllowedTurns = 0;
+
     /**
      * Instantiates a new phase resolver.
      *
@@ -62,6 +64,7 @@ public class GameDriver implements Usecase {
     @Override
     public GameDriverResponse execute() {
         Game game = GamePlay.getInstance().getGame();
+        int currentTurnCount = 0;
 
         while (isLoopActive(game)) {
             if (game.getCurrentPhase().equals(Phase.STARTUP)) {
@@ -114,19 +117,33 @@ public class GameDriver implements Usecase {
                 }
                 game.executeFortificationPhase();
             }
+            if (noOfAllowedTurns != 0 && currentTurnCount >= noOfAllowedTurns) {
+                response.setWinner("Draw");
+                return response;
+            }
+            currentTurnCount++;
         }
         response.setPhaseName(game.getCurrentPhase().toString());
-        response.setGameEnd(game.isEndNear());
         return response;
     }
 
     private boolean isLoopActive(Game game) {
         if (game.isEndNear()) {
-            logger.log(Level.INFO, "Exiting the game");
+            logger.log(Level.INFO, "Exiting the game from active loop");
+            response.setWinner(game.getWinner());
+            response.setGameEnd(true);
             return false;
         }
         if (game.getCurrentPlayer().getType().equals(PlayerType.HUMAN))
             return false;
         return true;
+    }
+
+    public int getNoOfAllowedTurns() {
+        return noOfAllowedTurns;
+    }
+
+    public void setNoOfAllowedTurns(int noOfAllowedTurns) {
+        this.noOfAllowedTurns = noOfAllowedTurns;
     }
 }

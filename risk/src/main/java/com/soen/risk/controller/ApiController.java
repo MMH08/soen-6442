@@ -331,11 +331,18 @@ public class ApiController {
         return model;
     }
 
+    @RequestMapping("/singleGame03")
+    public ModelAndView singleGame03(@RequestParam("winner") String winner) {
+        ModelAndView model = new ModelAndView("/singlegame03");
+        model.addObject("winner", winner);
+        return model;
+    }
+
     /**
      * Start game.
      *
-     * @param filename the filename
-     * @param playerNames the player names
+     * @param filename        the filename
+     * @param playerNames     the player names
      * @param playerBehaviors the player behaviors
      * @return the string
      */
@@ -359,6 +366,9 @@ public class ApiController {
         GameDriver usecase = new GameDriver();
         GameDriverResponse response = usecase.execute();
         logger.log(Level.INFO, "redirecting to phase - " + response.getPhaseName());
+        if (response.getGameEnd()) {
+            return "redirect:/singleGame03?winner=" + response.getWinner();
+        }
         return "redirect:/" + response.getPhaseName();
     }
 
@@ -378,8 +388,8 @@ public class ApiController {
      * Tournament 02.
      *
      * @param countOfPlayers the count of players
-     * @param countOfMaps the count of maps
-     * @param countOfGames the count of games
+     * @param countOfMaps    the count of maps
+     * @param countOfGames   the count of games
      * @return the model and view
      */
     @RequestMapping("/tournament02")
@@ -396,22 +406,26 @@ public class ApiController {
     /**
      * Tournament play.
      *
-     * @param filenames the filenames
-     * @param playerNames the player names
-     * @param behaviors the behaviors
-     * @param turns the turns
+     * @param filenames    the filenames
+     * @param playerNames  the player names
+     * @param behaviors    the behaviors
+     * @param turns        the turns
      * @param countOfGames the count of games
      * @return the string
      */
     @RequestMapping("/tournamentPlay")
-    public String tournamentPlay(@RequestParam("filenames") String filenames,
-                                 @RequestParam("names") String playerNames,
-                                 @RequestParam("behaviors") String behaviors,
-                                 @RequestParam("turns") String turns,
-                                 @RequestParam("games") String countOfGames) {
+    public ModelAndView tournamentPlay(@RequestParam("filenames") String filenames,
+                                       @RequestParam("names") String playerNames,
+                                       @RequestParam("behaviors") String behaviors,
+                                       @RequestParam("turns") String turns,
+                                       @RequestParam("games") String countOfGames) {
         StartTournament usecase = new StartTournament(filenames, playerNames, behaviors, turns, countOfGames);
-        usecase.execute();
-        return "redirect:/";
+        TournamentResponse response = usecase.execute();
+        ModelAndView model = new ModelAndView("tournament03");
+        model.addObject("winners", response.getWinners());
+        model.addObject("maps", response.getMapNames());
+        model.addObject("games", response.getGameCounts());
+        return model;
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -469,7 +483,6 @@ public class ApiController {
         model.addObject("cards", response.getCards());
         model.addObject("cardExchangeEnabled", response.isCardExchangeEnabled());
         model.addObject("cardExchangeView", response.getCardExchangeView());
-        model.addObject("endGame", response.isEndGame());
         return model;
     }
 
@@ -521,12 +534,12 @@ public class ApiController {
     /**
      * Attach phase execute.
      *
-     * @param attackingCountry the attacking country
+     * @param attackingCountry   the attacking country
      * @param attackingDiceCount the attacking dice count
-     * @param defendingCountry the defending country
+     * @param defendingCountry   the defending country
      * @param defendingDiceCount the defending dice count
-     * @param skipAttack the skip attack
-     * @param allOutMode the all out mode
+     * @param skipAttack         the skip attack
+     * @param allOutMode         the all out mode
      * @return the string
      */
     @RequestMapping("/attackPhase/attack")
@@ -556,7 +569,7 @@ public class ApiController {
         model.addObject("phaseView", response.getPhaseView());
         model.addObject("dominationView", response.getDominationView());
         model.addObject("countryNames", response.getCountryNames());
-        model.addObject("isEnd", response.isEndGame());
+        //model.addObject("isEnd", response.isEndGame());
         return model;
     }
 
@@ -633,7 +646,7 @@ public class ApiController {
      * @return the string
      */
     @RequestMapping(value = "/loadGame", method = RequestMethod.POST)
-    public String loadGame(@RequestParam("filename") String filename){
+    public String loadGame(@RequestParam("filename") String filename) {
         LoadGame usecase = new LoadGame(filename);
         usecase.execute();
         return "redirect:/gameDriver";

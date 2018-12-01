@@ -26,8 +26,10 @@ public class ReinforceInfoResponse implements Response {
     /** The card exchange enabled. */
     private boolean cardExchangeEnabled;
     
-    /** The end game. */
-    private boolean endGame;
+//    /** The end game. */
+//    private boolean endGame;
+//
+//    private String winner;
     
     /** The phase view. */
     private PhaseView phaseView;
@@ -172,21 +174,29 @@ public class ReinforceInfoResponse implements Response {
         this.cardExchangeView = cardExchangeView;
     }
 
-    /**
-     * Checks if is end game.
-     *
-     * @return true, if is end game
-     */
-    public boolean isEndGame() {
-        return endGame;
-    }
-
-    /**
-     * Sets the end game.
-     *
-     * @param endGame the new end game
-     */
-    public void setEndGame(boolean endGame) {
-        this.endGame = endGame;
-    }
+//    /**
+//     * Checks if is end game.
+//     *
+//     * @return true, if is end game
+//     */
+//    public boolean isEndGame() {
+//        return endGame;
+//    }
+//
+//    /**
+//     * Sets the end game.
+//     *
+//     * @param endGame the new end game
+//     */
+//    public void setEndGame(boolean endGame) {
+//        this.endGame = endGame;
+//    }
+//
+//    public String getWinner() {
+//        return winner;
+//    }
+//
+//    public void setWinner(String winner) {
+//        this.winner = winner;
+//    }
 }

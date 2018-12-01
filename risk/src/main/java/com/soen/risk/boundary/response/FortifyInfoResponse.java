@@ -16,9 +16,6 @@ public class FortifyInfoResponse implements Response {
     /** The country names. */
     private List<String> countryNames;
 
-    /** The end game. */
-    private boolean endGame;
-
     /** The phase view. */
     private PhaseView phaseView;
 
@@ -87,21 +84,4 @@ public class FortifyInfoResponse implements Response {
         this.dominationView = dominationView;
     }
 
-    /**
-     * Checks if is end game.
-     *
-     * @return true, if is end game
-     */
-    public boolean isEndGame() {
-        return endGame;
-    }
-
-    /**
-     * Sets the end game.
-     *
-     * @param endGame the new end game
-     */
-    public void setEndGame(boolean endGame) {
-        this.endGame = endGame;
-    }
 }
