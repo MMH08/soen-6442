@@ -27,13 +27,13 @@ public class HumanAttackStrategyTest {
     public void setUp() {
         map = new Map();
         map.load("./fixture/demo.map");
-        country1 = map.findByCountryName("Country1");
+        country1 = map.findByCountryName("country1");
         country1.setArmy(1);
-        country2 = map.findByCountryName("Country2");
+        country2 = map.findByCountryName("country2");
         country2.setArmy(2);
-        country3 = map.findByCountryName("Country3");
+        country3 = map.findByCountryName("country3");
         country3.setArmy(1);
-        country4 = map.findByCountryName("Country4");
+        country4 = map.findByCountryName("country4");
         country4.setArmy(3);
         expectedLoss = new HashMap<>();
         expectedWon = new ArrayList<>();

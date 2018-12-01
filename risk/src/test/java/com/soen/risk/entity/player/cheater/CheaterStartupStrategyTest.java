@@ -20,8 +20,8 @@ public class CheaterStartupStrategyTest {
         map = new Map();
         map.load("./fixture/demo.map");
         cheater = new CheaterStartupStrategy();
-        country1 = map.findByCountryName("Country1");
-        country4 = map.findByCountryName("Country4");
+        country1 = map.findByCountryName("country1");
+        country4 = map.findByCountryName("country4");
     }
 
     @Test

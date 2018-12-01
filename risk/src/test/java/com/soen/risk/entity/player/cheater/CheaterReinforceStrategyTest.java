@@ -25,9 +25,9 @@ public class CheaterReinforceStrategyTest {
         map = new Map();
         map.load("./fixture/demo.map");
         cheater = new CheaterReinforceStrategy();
-        country1 = map.findByCountryName("Country1");
+        country1 = map.findByCountryName("country1");
         country1.setArmy(10);
-        country4 = map.findByCountryName("Country4");
+        country4 = map.findByCountryName("country4");
         country4.setArmy(20);
     }
 
