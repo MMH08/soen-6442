@@ -90,7 +90,7 @@ public class Map implements Serializable {
                 if (!line.equals("") && flagContinent == 1) this.addNewContinent(line);
                 else if (line.equals("") && flagContinent == 1) flagContinent = 0;
 
-                if (flagCountry == 1) this.addNewCountry(line);
+                if (!line.equals("") && flagCountry == 1) this.addNewCountry(line);
 
                 if (line.equals("[Continents]")) flagContinent = 1;
                 else if (line.equals("[Territories]")) flagCountry = 1;
@@ -236,7 +236,7 @@ public class Map implements Serializable {
     private void addNewContinent(String temp) {
         logger.log(Level.FINE, "Adding continent " + temp);
         String split_continent[] = temp.split("=");
-        Continent cont = new Continent(split_continent[0]);
+        Continent cont = new Continent(split_continent[0].trim().toLowerCase());
         cont.setControlValue(Integer.valueOf(split_continent[1]));
         continents.add(cont);
     }
@@ -245,12 +245,12 @@ public class Map implements Serializable {
     private void addNewCountry(String temp) {
         logger.log(Level.FINE, "Adding new country " + temp);
         String split_country[] = temp.split(",");
-        Country coun = new Country(countries.size(), split_country[0]);
-        coun.setCoordinateX(split_country[1]);
-        coun.setCoordinateY(split_country[2]);
+        Country coun = new Country(countries.size(), split_country[0].trim().toLowerCase());
+        coun.setCoordinateX(split_country[1].trim());
+        coun.setCoordinateY(split_country[2].trim());
         Iterator<Continent> il = continents.iterator();
 
-        String temp_continent_name = split_country[3];
+        String temp_continent_name = split_country[3].trim().toLowerCase();
         while (il.hasNext()) {
 
             Continent temp_cont = il.next();
@@ -261,9 +261,9 @@ public class Map implements Serializable {
         }
         this.countries.add(coun);
         String arr[] = new String[split_country.length - 3];
-        arr[0] = split_country[0];
+        arr[0] = split_country[0].trim().toLowerCase();
         for (int i = 4; i < split_country.length; i++) {
-            arr[i - 3] = split_country[i];
+            arr[i - 3] = split_country[i].trim().toLowerCase();
         }
         this.map_name_creation(arr);
     }
