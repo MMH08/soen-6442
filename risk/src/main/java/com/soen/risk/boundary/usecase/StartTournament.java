@@ -54,7 +54,7 @@ public class StartTournament implements Usecase {
 
                 logger.log(Level.INFO, "----------- end game " + countOfgame + " -------------");
                 logger.log(Level.INFO, "winner : " + driverRespone.getWinner());
-                
+
                 // store the result
                 response.addWinner(driverRespone.getWinner());
                 response.addMapName(fileName);
